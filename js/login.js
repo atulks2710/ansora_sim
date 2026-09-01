@@ -303,7 +303,7 @@ loginForm.addEventListener(
                         case "student":
 
                             window.location.href =
-                                "student-home.html";
+                                "student/student-home.html";
 
                             break;
 

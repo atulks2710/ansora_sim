@@ -1,0 +1,110 @@
+.portfolio-header {
+    background: linear-gradient(135deg, var(--bg-card) 0%, var(--accent-blue-dim) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.profile-img-container {
+    position: relative;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid var(--bg-main);
+    box-shadow: 0 0 20px var(--accent-blue-dim);
+    object-fit: cover;
+}
+
+.profile-info h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.profile-title { color: var(--accent-blue); font-size: 1.2rem; margin-bottom: 1rem; }
+.profile-meta { display: flex; gap: 2rem; color: var(--text-secondary); font-size: 0.9rem; }
+.profile-meta div { display: flex; align-items: center; gap: 0.5rem; }
+
+.portfolio-actions {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+.project-card:hover { border-color: var(--accent-cyan); transform: translateY(-5px); }
+.project-img { width: 100%; height: 160px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--border-color); }
+.project-content { padding: 1.5rem; }
+.project-title { font-size: 1.2rem; margin-bottom: 0.5rem; }
+.project-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; }
+
+.impact-score {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.cert-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.cert-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ansora-strategic-gold);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-hover);
+}
+.cert-icon { font-size: 2.5rem; color: var(--warning); }
+.cert-info h3 { margin-bottom: 0.2rem; }
+.cert-info p { font-size: 0.85rem; color: var(--text-secondary); }
+
+.verified-badge {
+    margin-left: auto;
+    font-size: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success);
+}
