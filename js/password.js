@@ -2,9 +2,10 @@
 // SKILLBRIDGE - PASSWORD PAGE
 // ==========================================
 
-// ------------------------------------------
-// FIREBASE CONFIG
-// ------------------------------------------
+
+// ==========================================
+// FIREBASE
+// ==========================================
 
 import {
     auth,
@@ -25,28 +26,18 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 
-// ------------------------------------------
-// ROLE ROUTER
-// ------------------------------------------
-
-import {
-    redirectByRole
-} from "./role-router.js";
-
-
 // ==========================================
 // GET SIGNUP DATA
 // ==========================================
 
-const signupData =
-    JSON.parse(
-        sessionStorage.getItem("signupData")
-    );
+const signupData = JSON.parse(
+    sessionStorage.getItem("signupData")
+);
 
 
-// ------------------------------------------
+// ==========================================
 // CHECK SIGNUP DATA
-// ------------------------------------------
+// ==========================================
 
 if (
     !signupData ||
@@ -59,9 +50,18 @@ if (
         "Signup information is missing. Please start again."
     );
 
-    window.location.href =
-        "signup.html";
+    window.location.href = "signup.html";
+
+    throw new Error("Missing signup data.");
 }
+
+
+// ==========================================
+// NORMALIZE ROLE
+// ==========================================
+
+const userRole =
+    signupData.role.toString().trim().toLowerCase();
 
 
 // ==========================================
@@ -71,27 +71,20 @@ if (
 const passwordForm =
     document.getElementById("passwordForm");
 
-
 const passwordInput =
     document.getElementById("password");
-
 
 const confirmPasswordInput =
     document.getElementById("confirmPassword");
 
-
 const passwordMessage =
     document.getElementById("passwordMessage");
-
 
 const matchMessage =
     document.getElementById("matchMessage");
 
-
 const createAccountButton =
-    document.getElementById(
-        "createAccountButton"
-    );
+    document.getElementById("createAccountButton");
 
 
 // ==========================================
@@ -101,18 +94,14 @@ const createAccountButton =
 const lengthRequirement =
     document.getElementById("length");
 
-
 const uppercaseRequirement =
     document.getElementById("uppercase");
-
 
 const lowercaseRequirement =
     document.getElementById("lowercase");
 
-
 const numberRequirement =
     document.getElementById("number");
-
 
 const specialRequirement =
     document.getElementById("special");
@@ -144,33 +133,25 @@ function checkPassword(password) {
     };
 
 
-    // --------------------------------------
-    // Update requirement UI
-    // --------------------------------------
-
     updateRequirement(
         lengthRequirement,
         rules.length
     );
-
 
     updateRequirement(
         uppercaseRequirement,
         rules.uppercase
     );
 
-
     updateRequirement(
         lowercaseRequirement,
         rules.lowercase
     );
 
-
     updateRequirement(
         numberRequirement,
         rules.number
     );
-
 
     updateRequirement(
         specialRequirement,
@@ -200,23 +181,21 @@ function updateRequirement(
 
         element.classList.add("valid");
 
-        const icon =
-            element.querySelector("span");
-
-        if (icon) {
-            icon.textContent = "✓";
-        }
-
     } else {
 
         element.classList.remove("valid");
 
-        const icon =
-            element.querySelector("span");
+    }
 
-        if (icon) {
-            icon.textContent = "✓";
-        }
+
+    const icon =
+        element.querySelector("span");
+
+
+    if (icon) {
+
+        icon.textContent =
+            isValid ? "✓" : "✓";
 
     }
 
@@ -268,8 +247,6 @@ function checkPasswordMatch() {
         confirmPasswordInput.value;
 
 
-    // Nothing typed yet
-
     if (!confirmPassword) {
 
         matchMessage.textContent = "";
@@ -278,14 +255,11 @@ function checkPasswordMatch() {
             "match-message";
 
         return false;
+
     }
 
 
-    // Passwords match
-
-    if (
-        password === confirmPassword
-    ) {
+    if (password === confirmPassword) {
 
         matchMessage.textContent =
             "Passwords match.";
@@ -294,10 +268,9 @@ function checkPasswordMatch() {
             "match-message success";
 
         return true;
+
     }
 
-
-    // Passwords don't match
 
     matchMessage.textContent =
         "Passwords do not match.";
@@ -329,7 +302,6 @@ showPasswordButtons.forEach(
 
                 const targetId =
                     button.dataset.target;
-
 
                 const target =
                     document.getElementById(
@@ -371,6 +343,103 @@ showPasswordButtons.forEach(
 
 
 // ==========================================
+// ROLE-BASED REDIRECT
+// ==========================================
+
+function redirectAfterSignup(role) {
+
+    const normalizedRole =
+        role.toString().trim().toLowerCase();
+
+
+    console.log(
+        "Redirecting user with role:",
+        normalizedRole
+    );
+
+
+    switch (normalizedRole) {
+
+
+        // ==================================
+        // STUDENT
+        // ==================================
+
+        case "student":
+
+            window.location.href =
+                "student/student-home.html";
+
+            break;
+
+
+        // ==================================
+        // ACADEMICIAN
+        // ==================================
+
+        case "academician":
+
+            window.location.href =
+                "academician/academician-home.html";
+
+            break;
+
+
+        // ==================================
+        // INDUSTRY
+        // ==================================
+
+        case "industry":
+
+            window.location.href =
+                "industry/index.html";
+
+            break;
+
+
+        // ==================================
+        // INSTITUTION
+        // ==================================
+
+        case "institution":
+
+            window.location.href =
+                "institution/institution-home.html";
+
+            break;
+
+
+        // ==================================
+        // INVALID ROLE
+        // ==================================
+
+        default:
+
+            console.error(
+                "Unknown role:",
+                normalizedRole
+            );
+
+            passwordMessage.textContent =
+                "Account created, but the selected role is invalid.";
+
+            passwordMessage.className =
+                "password-message error";
+
+            createAccountButton.disabled =
+                false;
+
+            createAccountButton.querySelector(
+                "span"
+            ).textContent =
+                "Create Account";
+
+    }
+
+}
+
+
+// ==========================================
 // CREATE ACCOUNT
 // ==========================================
 
@@ -381,21 +450,21 @@ passwordForm.addEventListener(
         event.preventDefault();
 
 
-        // Clear previous message
-
         passwordMessage.textContent = "";
+
+        passwordMessage.className =
+            "password-message";
 
 
         const password =
             passwordInput.value;
-
 
         const confirmPassword =
             confirmPasswordInput.value;
 
 
         // ==================================
-        // CHECK PASSWORD REQUIREMENTS
+        // CHECK PASSWORD
         // ==================================
 
         const rules =
@@ -415,6 +484,9 @@ passwordForm.addEventListener(
             passwordMessage.textContent =
                 "Please satisfy all password requirements.";
 
+            passwordMessage.className =
+                "password-message error";
+
             return;
 
         }
@@ -432,6 +504,9 @@ passwordForm.addEventListener(
             passwordMessage.textContent =
                 "Passwords do not match.";
 
+            passwordMessage.className =
+                "password-message error";
+
             return;
 
         }
@@ -445,17 +520,30 @@ passwordForm.addEventListener(
             true;
 
 
-        createAccountButton.querySelector(
-            "span"
-        ).textContent =
-            "Creating Account...";
+        const buttonText =
+            createAccountButton.querySelector(
+                "span"
+            );
+
+
+        if (buttonText) {
+
+            buttonText.textContent =
+                "Creating Account...";
+
+        }
 
 
         try {
 
             // ==================================
-            // CREATE FIREBASE ACCOUNT
+            // CREATE FIREBASE AUTH ACCOUNT
             // ==================================
+
+            console.log(
+                "Creating Firebase account..."
+            );
+
 
             const userCredential =
                 await createUserWithEmailAndPassword(
@@ -467,6 +555,12 @@ passwordForm.addEventListener(
 
             const user =
                 userCredential.user;
+
+
+            console.log(
+                "Firebase account created:",
+                user.uid
+            );
 
 
             // ==================================
@@ -482,8 +576,13 @@ passwordForm.addEventListener(
             );
 
 
+            console.log(
+                "Display name saved."
+            );
+
+
             // ==================================
-            // SAVE USER PROFILE TO FIRESTORE
+            // SAVE USER TO FIRESTORE
             // ==================================
 
             await setDoc(
@@ -501,7 +600,7 @@ passwordForm.addEventListener(
                         signupData.email,
 
                     role:
-                        signupData.role,
+                        userRole,
 
                     photoURL:
                         "",
@@ -510,12 +609,32 @@ passwordForm.addEventListener(
                         false,
 
                     emailVerified:
-                        true,
+                        false,
 
                     createdAt:
                         serverTimestamp()
 
                 }
+            );
+
+
+            console.log(
+                "User profile saved to Firestore."
+            );
+
+
+            // ==================================
+            // SAVE LOGIN DATA
+            // ==================================
+
+            sessionStorage.setItem(
+                "userRole",
+                userRole
+            );
+
+            sessionStorage.setItem(
+                "userEmail",
+                user.email
             );
 
 
@@ -529,25 +648,30 @@ passwordForm.addEventListener(
 
 
             // ==================================
-            // SUCCESS MESSAGE
+            // SUCCESS
             // ==================================
 
             passwordMessage.textContent =
-                "Account created successfully!";
+                "Account created successfully! Redirecting...";
 
             passwordMessage.className =
                 "password-message success";
 
 
+            console.log(
+                "Signup completed successfully."
+            );
+
+
             // ==================================
-            // REDIRECT BY ROLE
+            // REDIRECT
             // ==================================
 
             setTimeout(
                 () => {
 
-                    redirectByRole(
-                        signupData.role
+                    redirectAfterSignup(
+                        userRole
                     );
 
                 },
@@ -566,7 +690,7 @@ passwordForm.addEventListener(
 
 
             // ==================================
-            // FIREBASE ERROR HANDLING
+            // ERROR HANDLING
             // ==================================
 
             switch (error.code) {
@@ -604,6 +728,16 @@ passwordForm.addEventListener(
                     break;
 
 
+                case "permission-denied":
+
+                case "firestore/permission-denied":
+
+                    passwordMessage.textContent =
+                        "Account created, but Firestore permission was denied.";
+
+                    break;
+
+
                 default:
 
                     passwordMessage.textContent =
@@ -617,16 +751,20 @@ passwordForm.addEventListener(
                 "password-message error";
 
 
-            // Enable button again
+            // ==================================
+            // ENABLE BUTTON
+            // ==================================
 
             createAccountButton.disabled =
                 false;
 
 
-            createAccountButton.querySelector(
-                "span"
-            ).textContent =
-                "Create Account";
+            if (buttonText) {
+
+                buttonText.textContent =
+                    "Create Account";
+
+            }
 
         }
 

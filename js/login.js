@@ -318,7 +318,7 @@ loginForm.addEventListener(
                         case "industry":
 
                             window.location.href =
-                                "industry-home.html";
+                                "industry/index.html";
 
                             break;
 
@@ -326,7 +326,7 @@ loginForm.addEventListener(
                         case "institution":
 
                             window.location.href =
-                                "institution-home.html";
+                                "institution/institution-home.html";
 
                             break;
 

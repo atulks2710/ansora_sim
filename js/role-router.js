@@ -16,7 +16,7 @@ const rolePages = {
 
     academician: "academician/academician-home.html",
 
-    industry: "industry/industry-home.html",
+    industry: "industry/index.html",
 
     institution: "institution/institution-home.html"
 
