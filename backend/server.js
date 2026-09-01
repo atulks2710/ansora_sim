@@ -1,41 +1,15 @@
+// ==========================================
+// SKILLBRIDGE OTP BACKEND
+// ==========================================
+
 require("dotenv").config();
 
 const express = require("express");
+const nodemailer = require("nodemailer");
 const cors = require("cors");
 const crypto = require("crypto");
-const { Resend } = require("resend");
 
 const app = express();
-
-
-// ==========================================
-// CONFIGURATION
-// ==========================================
-
-const PORT = process.env.PORT || 5000;
-
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const EMAIL_FROM = process.env.EMAIL_FROM;
-
-
-// ==========================================
-// CHECK ENVIRONMENT VARIABLES
-// ==========================================
-
-if (!RESEND_API_KEY) {
-    console.error("ERROR: RESEND_API_KEY is missing.");
-}
-
-if (!EMAIL_FROM) {
-    console.error("ERROR: EMAIL_FROM is missing.");
-}
-
-
-// ==========================================
-// RESEND
-// ==========================================
-
-const resend = new Resend(RESEND_API_KEY);
 
 
 // ==========================================
@@ -51,7 +25,86 @@ app.use(express.json());
 // OTP STORAGE
 // ==========================================
 
+// Stores OTP separately for each email.
+//
+// Example:
+//
+// {
+//     "student1@gmail.com": {
+//         otp: "123456",
+//         expiresAt: 123456789,
+//         attempts: 0
+//     }
+// }
+
 const otpStore = {};
+
+
+// ==========================================
+// EMAIL CONFIGURATION CHECK
+// ==========================================
+
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+
+    console.warn(
+        "WARNING: EMAIL_USER or EMAIL_PASS is missing."
+    );
+
+}
+
+
+// ==========================================
+// GMAIL TRANSPORTER
+// ==========================================
+
+const transporter = nodemailer.createTransport({
+
+    service: "gmail",
+
+    auth: {
+
+        user: process.env.EMAIL_USER,
+
+        pass: process.env.EMAIL_PASS
+
+    }
+
+});
+
+
+// ==========================================
+// HEALTH CHECK
+// ==========================================
+
+app.get("/", (req, res) => {
+
+    res.json({
+
+        success: true,
+
+        message:
+            "SkillBridge OTP server is running."
+
+    });
+
+});
+
+
+// ==========================================
+// HEALTH CHECK FOR RENDER
+// ==========================================
+
+app.get("/health", (req, res) => {
+
+    res.status(200).json({
+
+        success: true,
+
+        message: "OK"
+
+    });
+
+});
 
 
 // ==========================================
@@ -68,20 +121,6 @@ function generateOTP() {
 
 
 // ==========================================
-// HEALTH CHECK
-// ==========================================
-
-app.get("/", (req, res) => {
-
-    res.json({
-        success: true,
-        message: "SkillBridge OTP server is running."
-    });
-
-});
-
-
-// ==========================================
 // SEND OTP
 // ==========================================
 
@@ -90,14 +129,14 @@ app.post("/send-otp", async (req, res) => {
     try {
 
         const email =
-            String(req.body.email || "")
-                .trim()
+            req.body.email
+                ?.trim()
                 .toLowerCase();
 
 
-        // --------------------------------------
-        // CHECK EMAIL
-        // --------------------------------------
+        // ======================================
+        // VALIDATE EMAIL
+        // ======================================
 
         if (!email) {
 
@@ -113,17 +152,39 @@ app.post("/send-otp", async (req, res) => {
         }
 
 
-        // --------------------------------------
+        // ======================================
+        // BASIC EMAIL VALIDATION
+        // ======================================
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (!emailPattern.test(email)) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Please provide a valid email address."
+
+            });
+
+        }
+
+
+        // ======================================
         // GENERATE OTP
-        // --------------------------------------
+        // ======================================
 
         const otp =
             generateOTP();
 
 
-        // --------------------------------------
-        // STORE OTP
-        // --------------------------------------
+        // ======================================
+        // SAVE OTP
+        // ======================================
 
         otpStore[email] = {
 
@@ -138,41 +199,61 @@ app.post("/send-otp", async (req, res) => {
         };
 
 
-        // --------------------------------------
+        console.log(
+            `Generated OTP for ${email}`
+        );
+
+
+        // ======================================
         // SEND EMAIL
-        // --------------------------------------
+        // ======================================
 
-        const { data, error } =
-            await resend.emails.send({
+        await transporter.sendMail({
 
-                from: EMAIL_FROM,
+            from:
+                `"SkillBridge" <${process.env.EMAIL_USER}>`,
 
-                to: [email],
+            to:
+                email,
 
-                subject:
-                    "Your SkillBridge Verification Code",
+            subject:
+                "Your SkillBridge Verification OTP",
 
-                html: `
+            text:
+                `Your SkillBridge verification OTP is ${otp}. This OTP is valid for 5 minutes. Do not share this OTP with anyone.`,
+
+            html: `
+
+                <div style="
+                    font-family: Arial, sans-serif;
+                    max-width: 600px;
+                    margin: auto;
+                    padding: 30px;
+                    background: #f7f7f7;
+                ">
 
                     <div style="
-                        font-family: Arial, sans-serif;
-                        max-width: 600px;
-                        margin: auto;
+                        background: white;
                         padding: 30px;
-                        color: #222;
+                        border-radius: 10px;
                     ">
 
-                        <h1>
+                        <h2 style="
+                            margin-bottom: 20px;
+                        ">
                             SkillBridge
-                        </h1>
+                        </h2>
+
 
                         <p>
                             Hello,
                         </p>
 
+
                         <p>
-                            Your verification code is:
+                            Your email verification code is:
                         </p>
+
 
                         <div style="
                             font-size: 36px;
@@ -180,77 +261,51 @@ app.post("/send-otp", async (req, res) => {
                             letter-spacing: 10px;
                             margin: 25px 0;
                         ">
-
                             ${otp}
-
                         </div>
+
 
                         <p>
                             This OTP is valid for
                             <strong>5 minutes</strong>.
                         </p>
 
+
                         <p>
-                            Do not share this code
-                            with anyone.
+                            Please do not share this
+                            verification code with anyone.
                         </p>
 
+
                         <hr>
+
 
                         <p style="
                             color: #777;
                             font-size: 13px;
                         ">
-
-                            This email was sent by
-                            SkillBridge.
-
+                            This email was sent by SkillBridge.
                         </p>
 
                     </div>
 
-                `
+                </div>
 
-            });
+            `
 
-
-        // --------------------------------------
-        // RESEND ERROR
-        // --------------------------------------
-
-        if (error) {
-
-            console.error(
-                "Resend email error:",
-                error
-            );
+        });
 
 
-            delete otpStore[email];
-
-
-            return res.status(500).json({
-
-                success: false,
-
-                message:
-                    "Failed to send OTP."
-
-            });
-
-        }
-
-
-        // --------------------------------------
+        // ======================================
         // SUCCESS
-        // --------------------------------------
+        // ======================================
 
         console.log(
             `OTP sent successfully to ${email}`
         );
 
 
-        res.json({
+        return res.status(200).json({
 
             success: true,
 
@@ -265,17 +320,32 @@ app.post("/send-otp", async (req, res) => {
     catch (error) {
 
         console.error(
-            "Send OTP error:",
+            "Email sending error:",
             error
         );
 
 
-        res.status(500).json({
+        // Remove OTP if email failed
+
+        const email =
+            req.body.email
+                ?.trim()
+                .toLowerCase();
+
+
+        if (email) {
+
+            delete otpStore[email];
+
+        }
+
+
+        return res.status(500).json({
 
             success: false,
 
             message:
-                "Failed to send OTP."
+                "Failed to send OTP. Please try again."
 
         });
 
@@ -293,18 +363,19 @@ app.post("/verify-otp", (req, res) => {
     try {
 
         const email =
-            String(req.body.email || "")
-                .trim()
+            req.body.email
+                ?.trim()
                 .toLowerCase();
 
+
         const otp =
-            String(req.body.otp || "")
-                .trim();
+            req.body.otp
+                ?.trim();
 
 
-        // --------------------------------------
-        // CHECK INPUT
-        // --------------------------------------
+        // ======================================
+        // VALIDATE INPUT
+        // ======================================
 
         if (!email || !otp) {
 
@@ -320,9 +391,9 @@ app.post("/verify-otp", (req, res) => {
         }
 
 
-        // --------------------------------------
-        // GET STORED OTP
-        // --------------------------------------
+        // ======================================
+        // FIND STORED OTP
+        // ======================================
 
         const storedData =
             otpStore[email];
@@ -342,9 +413,9 @@ app.post("/verify-otp", (req, res) => {
         }
 
 
-        // --------------------------------------
+        // ======================================
         // CHECK EXPIRY
-        // --------------------------------------
+        // ======================================
 
         if (
             Date.now() >
@@ -366,9 +437,9 @@ app.post("/verify-otp", (req, res) => {
         }
 
 
-        // --------------------------------------
+        // ======================================
         // CHECK ATTEMPTS
-        // --------------------------------------
+        // ======================================
 
         if (
             storedData.attempts >= 5
@@ -377,7 +448,7 @@ app.post("/verify-otp", (req, res) => {
             delete otpStore[email];
 
 
-            return res.status(400).json({
+            return res.status(429).json({
 
                 success: false,
 
@@ -389,9 +460,9 @@ app.post("/verify-otp", (req, res) => {
         }
 
 
-        // --------------------------------------
+        // ======================================
         // CHECK OTP
-        // --------------------------------------
+        // ======================================
 
         if (
             storedData.otp !== otp
@@ -412,14 +483,19 @@ app.post("/verify-otp", (req, res) => {
         }
 
 
-        // --------------------------------------
+        // ======================================
         // OTP CORRECT
-        // --------------------------------------
+        // ======================================
 
         delete otpStore[email];
 
 
-        res.json({
+        console.log(
+            `OTP verified successfully for ${email}`
+        );
+
+
+        return res.status(200).json({
 
             success: true,
 
@@ -434,12 +510,12 @@ app.post("/verify-otp", (req, res) => {
     catch (error) {
 
         console.error(
-            "Verify OTP error:",
+            "OTP verification error:",
             error
         );
 
 
-        res.status(500).json({
+        return res.status(500).json({
 
             success: false,
 
@@ -454,8 +530,30 @@ app.post("/verify-otp", (req, res) => {
 
 
 // ==========================================
-// START SERVER
+// 404 HANDLER
 // ==========================================
+
+app.use((req, res) => {
+
+    res.status(404).json({
+
+        success: false,
+
+        message:
+            "Endpoint not found."
+
+    });
+
+});
+
+
+// ==========================================
+// SERVER
+// ==========================================
+
+const PORT =
+    process.env.PORT || 10000;
+
 
 app.listen(
     PORT,
@@ -463,7 +561,7 @@ app.listen(
     () => {
 
         console.log(
-            `SkillBridge OTP server running on port ${PORT}`
+            `SkillBridge server running on port ${PORT}`
         );
 
     }
