@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Login to SkillBridge">
+
+    <title>Login | SkillBridge</title>
+
+    <link
+        rel="stylesheet"
+        href="css/login.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         BACKGROUND
+    ========================================== -->
+
+    <div class="page-background">
+
+        <div class="grid-background"></div>
+
+        <div class="background-glow glow-top"></div>
+
+        <div class="background-glow glow-bottom"></div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="login-header">
+
+        <a
+            href="index.html"
+            class="brand">
+
+            <div class="brand-mark">
+                SB
+            </div>
+
+            <div class="brand-name">
+                SKILL<span>BRIDGE</span>
+            </div>
+
+        </a>
+
+
+        <div class="header-signup">
+
+            <span>
+                Don't have an account?
+            </span>
+
+            <a href="signup.html">
+                Create Account
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         MAIN
+    ========================================== -->
+
+    <main class="login-wrapper">
+
+
+        <!-- =====================================
+             LEFT SIDE
+        ====================================== -->
+
+        <section class="login-intro">
+
+
+            <div class="intro-label">
+
+                <span></span>
+
+                WELCOME BACK
+
+            </div>
+
+
+            <h1>
+
+                Your next
+                <strong>opportunity</strong>
+                starts here.
+
+            </h1>
+
+
+            <p>
+
+                Sign in to continue your journey
+                across academia, skills and industry.
+
+            </p>
+
+
+            <!-- FEATURES -->
+
+            <div class="intro-points">
+
+
+                <div class="intro-point">
+
+                    <span class="point-number">
+                        01
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Discover
+                        </h3>
+
+                        <p>
+                            Find opportunities aligned
+                            with your skills and goals.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="intro-point">
+
+                    <span class="point-number">
+                        02
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Connect
+                        </h3>
+
+                        <p>
+                            Build meaningful connections
+                            with academia and industry.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="intro-point">
+
+                    <span class="point-number">
+                        03
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Grow
+                        </h3>
+
+                        <p>
+                            Turn your skills into
+                            real-world opportunities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             LOGIN CARD
+        ====================================== -->
+
+        <section class="login-card">
+
+
+            <!-- CARD HEADER -->
+
+            <div class="card-top">
+
+                <div class="secure-badge">
+
+                    <span class="secure-dot"></span>
+
+                    SECURE LOGIN
+
+                </div>
+
+
+                <span class="step-label">
+                    SKILLBRIDGE
+                </span>
+
+            </div>
+
+
+
+            <!-- HEADING -->
+
+            <div class="form-heading">
+
+                <h2>
+                    Welcome back
+                </h2>
+
+                <p>
+                    Sign in to access your account.
+                </p>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form id="loginForm">
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+
+                    <span
+                        id="emailError"
+                        class="input-error">
+                    </span>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <div class="password-label-row">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <a
+                            href="#"
+                            id="forgotPassword">
+
+                            Forgot password?
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required>
+
+
+                        <button
+                            type="button"
+                            id="togglePassword">
+
+                            Show
+
+                        </button>
+
+                    </div>
+
+
+                    <span
+                        id="passwordError"
+                        class="input-error">
+                    </span>
+
+                </div>
+
+
+
+                <!-- REMEMBER -->
+
+                <div class="remember-row">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe">
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+                            Remember me
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="loginMessage"
+                    class="login-message">
+                </div>
+
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton">
+
+                    <span>
+                        Login to SkillBridge
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <!-- LOADING -->
+
+                <div
+                    class="login-loading"
+                    id="loginLoading">
+
+                    <span class="spinner"></span>
+
+                    Signing you in...
+
+                </div>
+
+
+            </form>
+
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <span></span>
+
+                <small>
+                    SECURE ACCESS
+                </small>
+
+                <span></span>
+
+            </div>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security-note">
+
+                <div class="security-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Secure authentication
+                    </strong>
+
+                    <p>
+                        Your credentials are protected by
+                        Firebase Authentication.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- CREATE ACCOUNT -->
+
+            <div class="create-account">
+
+                Don't have an account?
+
+                <a href="signup.html">
+                    Create one
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="login-footer">
+
+        <span>
+            © 2026 SkillBridge
+        </span>
+
+        <span>
+            Connect · Learn · Build · Grow
+        </span>
+
+    </footer>
+
+
+    <script
+        type="module"
+        src="js/login.js">
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Email | SkillBridge</title>
+
+    <link rel="stylesheet"
+          href="css/otp.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- BACKGROUND -->
+
+    <div class="page-background">
+
+        <div class="grid-background"></div>
+
+        <div class="background-glow glow-top"></div>
+
+        <div class="background-glow glow-bottom"></div>
+
+    </div>
+
+
+
+    <!-- HEADER -->
+
+    <header class="signup-header">
+
+        <a href="index.html"
+           class="brand">
+
+            <div class="brand-mark">
+                SB
+            </div>
+
+            <div class="brand-name">
+                SKILL<span>BRIDGE</span>
+            </div>
+
+        </a>
+
+
+        <div class="header-text">
+
+            EMAIL VERIFICATION
+
+        </div>
+
+    </header>
+
+
+
+    <!-- MAIN -->
+
+    <main class="otp-wrapper">
+
+
+        <!-- LEFT SIDE -->
+
+        <section class="otp-intro">
+
+            <div class="intro-label">
+
+                <span></span>
+
+                SECURITY CHECK
+
+            </div>
+
+
+            <h1>
+
+                Verify your
+                <strong>identity.</strong>
+
+            </h1>
+
+
+            <p>
+
+                We've sent a one-time verification
+                code to your email address. Enter the
+                code to continue creating your account.
+
+            </p>
+
+
+            <div class="verification-info">
+
+                <div class="info-number">
+                    01
+                </div>
+
+                <div>
+
+                    <h3>
+                        Check your inbox
+                    </h3>
+
+                    <p>
+                        Look for an email from SkillBridge.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="verification-info">
+
+                <div class="info-number">
+                    02
+                </div>
+
+                <div>
+
+                    <h3>
+                        Enter your code
+                    </h3>
+
+                    <p>
+                        The verification code is valid
+                        for 5 minutes.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="verification-info">
+
+                <div class="info-number">
+                    03
+                </div>
+
+                <div>
+
+                    <h3>
+                        Create your password
+                    </h3>
+
+                    <p>
+                        After verification, secure
+                        your new account.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- OTP CARD -->
+
+        <section class="otp-card">
+
+
+            <!-- STEPS -->
+
+            <div class="card-header">
+
+                <div class="step-indicator">
+
+                    <span class="step completed">
+                        ✓
+                    </span>
+
+                    <span class="step-line active"></span>
+
+                    <span class="step active">
+                        02
+                    </span>
+
+                    <span class="step-line"></span>
+
+                    <span class="step">
+                        03
+                    </span>
+
+                </div>
+
+
+                <span class="step-text">
+                    VERIFY EMAIL
+                </span>
+
+            </div>
+
+
+
+            <!-- TITLE -->
+
+            <div class="otp-heading">
+
+                <div class="mail-icon">
+                    @
+                </div>
+
+                <h2>
+                    Check your email
+                </h2>
+
+                <p>
+                    We sent a 6-digit verification
+                    code to
+                </p>
+
+                <strong id="emailDisplay">
+                    your email
+                </strong>
+
+            </div>
+
+
+
+            <!-- OTP FORM -->
+
+            <form id="otpForm">
+
+
+                <div class="otp-inputs">
+
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="otp-input"
+                        inputmode="numeric"
+                        autocomplete="one-time-code">
+
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="otp-input"
+                        inputmode="numeric">
+
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="otp-input"
+                        inputmode="numeric">
+
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="otp-input"
+                        inputmode="numeric">
+
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="otp-input"
+                        inputmode="numeric">
+
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="otp-input"
+                        inputmode="numeric">
+
+                </div>
+
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="otpMessage"
+                    class="otp-message">
+                </div>
+
+
+
+                <!-- TIMER -->
+
+                <div class="timer-section">
+
+                    <span>
+                        Code expires in
+                    </span>
+
+                    <strong id="timer">
+                        05:00
+                    </strong>
+
+                </div>
+
+
+
+                <!-- VERIFY -->
+
+                <button
+                    type="submit"
+                    class="verify-button"
+                    id="verifyButton">
+
+                    <span>
+                        Verify Email
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- RESEND -->
+
+            <div class="resend-section">
+
+                <span>
+                    Didn't receive the code?
+                </span>
+
+                <button
+                    id="resendButton"
+                    disabled>
+
+                    Resend OTP
+
+                </button>
+
+            </div>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security-note">
+
+                <div class="security-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Secure verification
+                    </strong>
+
+                    <p>
+                        Never share your verification
+                        code with anyone.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+
+    <footer class="signup-footer">
+
+        <span>
+            © 2026 SkillBridge
+        </span>
+
+        <span>
+            Connect · Learn · Build · Grow
+        </span>
+
+    </footer>
+
+
+
+    <script src="js/otp.js"></script>
+
+</body>
+
+</html>

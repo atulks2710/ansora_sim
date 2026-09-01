@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="Create your SkillBridge account">
+
+    <title>Sign Up | SkillBridge</title>
+
+    <link
+        rel="stylesheet"
+        href="css/signup.css">
+
+</head>
+
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <div class="page-background">
+
+        <div class="grid-background"></div>
+
+        <div class="background-glow glow-top"></div>
+
+        <div class="background-glow glow-bottom"></div>
+
+    </div>
+
+
+    <!-- HEADER -->
+
+    <header class="signup-header">
+
+        <a href="index.html"
+           class="brand">
+
+            <div class="brand-mark">
+                SB
+            </div>
+
+            <div class="brand-name">
+                SKILL<span>BRIDGE</span>
+            </div>
+
+        </a>
+
+
+        <div class="header-login">
+
+            <span>Already have an account?</span>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="signup-wrapper">
+
+
+        <!-- LEFT SIDE -->
+
+        <section class="signup-intro">
+
+            <div class="intro-label">
+
+                <span></span>
+
+                JOIN THE ECOSYSTEM
+
+            </div>
+
+
+            <h1>
+
+                Build your
+                <strong>future.</strong>
+
+                <br>
+
+                Start your
+                <strong>journey.</strong>
+
+            </h1>
+
+
+            <p>
+
+                Create your SkillBridge account and
+                connect with opportunities, skills,
+                institutions and industry.
+
+            </p>
+
+
+            <div class="benefits">
+
+
+                <div class="benefit">
+
+                    <div class="benefit-number">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Discover
+                        </h3>
+
+                        <p>
+                            Identify skills, opportunities
+                            and career pathways.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-number">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Connect
+                        </h3>
+
+                        <p>
+                            Connect with academia and
+                            industry.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <div class="benefit-number">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Grow
+                        </h3>
+
+                        <p>
+                            Turn your skills into
+                            real opportunities.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SIGNUP CARD -->
+
+        <section class="signup-card">
+
+
+            <!-- STEPS -->
+
+            <div class="card-header">
+
+                <div class="step-indicator">
+
+                    <span class="step active">
+                        01
+                    </span>
+
+                    <span class="step-line"></span>
+
+                    <span class="step">
+                        02
+                    </span>
+
+                    <span class="step-line"></span>
+
+                    <span class="step">
+                        03
+                    </span>
+
+                </div>
+
+
+                <span class="step-text">
+                    ACCOUNT CREATION
+                </span>
+
+            </div>
+
+
+            <!-- HEADING -->
+
+            <div class="form-heading">
+
+                <h2>
+                    Create your account
+                </h2>
+
+                <p>
+                    Tell us a little about yourself.
+                </p>
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <form id="signupForm">
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="fullName">
+                        Full Name
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required>
+
+                    </div>
+
+                    <span
+                        class="input-error"
+                        id="nameError">
+                    </span>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required>
+
+                    </div>
+
+                    <span
+                        class="input-error"
+                        id="emailError">
+                    </span>
+
+                </div>
+
+
+                <!-- ROLE -->
+
+                <div class="form-group">
+
+                    <label for="role">
+                        I am a
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <select
+                            id="role"
+                            name="role"
+                            required>
+
+                            <option
+                                value=""
+                                disabled
+                                selected>
+
+                                Select your role
+
+                            </option>
+
+                            <option value="student">
+                                Student
+                            </option>
+
+                            <option value="academician">
+                                Academician
+                            </option>
+
+                            <option value="industry">
+                                Industry
+                            </option>
+
+                            <option value="institution">
+                                Institution
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <span
+                        class="input-error"
+                        id="roleError">
+                    </span>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <div class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required>
+
+                    <label for="terms">
+
+                        I agree to the
+                        <a href="#">
+                            Terms of Service
+                        </a>
+                        and
+                        <a href="#">
+                            Privacy Policy
+                        </a>.
+
+                    </label>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    type="submit"
+                    class="continue-button"
+                    id="continueButton">
+
+                    <span>
+                        Continue with OTP
+                    </span>
+
+                    <span class="button-arrow">
+                        →
+                    </span>
+
+                </button>
+
+
+                <!-- LOADING -->
+
+                <div
+                    class="loading"
+                    id="loading">
+
+                    <div class="spinner"></div>
+
+                    <span>
+                        Sending verification code...
+                    </span>
+
+                </div>
+
+            </form>
+
+
+            <!-- DIVIDER -->
+
+            <div class="divider">
+
+                <span></span>
+
+                <small>
+                    SECURE VERIFICATION
+                </small>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- SECURITY -->
+
+            <div class="security-note">
+
+                <div class="security-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Your information is protected
+                    </strong>
+
+                    <p>
+                        We'll send a one-time verification
+                        code to your email.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="mobile-login">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="signup-footer">
+
+        <span>
+            © 2026 SkillBridge
+        </span>
+
+        <span>
+            Connect · Learn · Build · Grow
+        </span>
+
+    </footer>
+
+
+    <script
+        src="js/signup.js">
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1261 @@
+/* ==========================================
+   SKILLBRIDGE SIGNUP
+   BLACK / WHITE / GREY / GOLD
+========================================== */
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+:root {
+
+    --black: #090909;
+
+    --black-soft: #111111;
+
+    --dark-grey: #18181B;
+
+    --grey: #71717A;
+
+    --grey-light: #A1A1AA;
+
+    --border: #E4E4E7;
+
+    --white: #FFFFFF;
+
+    --off-white: #F7F7F5;
+
+    --gold: #D4AF37;
+
+    --gold-dark: #A88920;
+
+}
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+
+    margin: 0;
+
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background: var(--black);
+
+    color: var(--white);
+
+}
+
+
+/* ==========================================
+   BACKGROUND
+========================================== */
+
+.page-background {
+
+    position: fixed;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 0;
+
+}
+
+
+.grid-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.12;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,0.06) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,0.06) 1px,
+            transparent 1px
+        );
+
+    background-size: 70px 70px;
+
+}
+
+
+.background-glow {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    opacity: 0.07;
+
+    background: var(--gold);
+
+}
+
+
+.glow-top {
+
+    width: 450px;
+
+    height: 450px;
+
+    top: -250px;
+
+    right: -150px;
+
+}
+
+
+.glow-bottom {
+
+    width: 350px;
+
+    height: 350px;
+
+    bottom: -200px;
+
+    left: -150px;
+
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+.signup-header {
+
+    height: 80px;
+
+    padding:
+        0 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.09);
+
+    position: relative;
+
+    z-index: 10;
+
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.brand-mark {
+
+    width: 38px;
+
+    height: 38px;
+
+    border:
+        1px solid var(--gold);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--gold);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+
+}
+
+
+.brand-name {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+}
+
+
+.brand-name span {
+
+    color: var(--gold);
+
+}
+
+
+.header-login {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #71717A;
+
+    font-size: 12px;
+
+}
+
+
+.header-login a {
+
+    color: var(--white);
+
+    font-weight: 600;
+
+    transition: 0.25s;
+
+}
+
+
+.header-login a:hover {
+
+    color: var(--gold);
+
+}
+
+
+/* ==========================================
+   MAIN WRAPPER
+========================================== */
+
+.signup-wrapper {
+
+    max-width: 1250px;
+
+    min-height:
+        calc(100vh - 140px);
+
+    margin: auto;
+
+    padding:
+        65px 45px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        500px;
+
+    gap: 100px;
+
+    align-items: center;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* ==========================================
+   INTRO
+========================================== */
+
+.signup-intro {
+
+    max-width: 560px;
+
+}
+
+
+.intro-label {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.intro-label span {
+
+    width: 35px;
+
+    height: 1px;
+
+    background: var(--gold);
+
+}
+
+
+.signup-intro h1 {
+
+    font-size:
+        clamp(48px, 5vw, 70px);
+
+    line-height: 1.02;
+
+    letter-spacing: -3px;
+
+    font-weight: 500;
+
+}
+
+
+.signup-intro h1 strong {
+
+    color: var(--gold);
+
+    font-weight: 600;
+
+}
+
+
+.signup-intro > p {
+
+    max-width: 510px;
+
+    margin-top: 28px;
+
+    color: #A1A1AA;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+
+}
+
+
+/* ==========================================
+   BENEFITS
+========================================== */
+
+.benefits {
+
+    margin-top: 50px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.09);
+
+}
+
+
+.benefit {
+
+    display: grid;
+
+    grid-template-columns:
+        45px 1fr;
+
+    gap: 18px;
+
+    padding: 19px 0;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.09);
+
+}
+
+
+.benefit-number {
+
+    color: var(--gold);
+
+    font-size: 10px;
+
+    padding-top: 3px;
+
+}
+
+
+.benefit h3 {
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+.benefit p {
+
+    color: #71717A;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==========================================
+   SIGNUP CARD
+========================================== */
+
+.signup-card {
+
+    background: var(--white);
+
+    color: var(--black);
+
+    padding:
+        38px;
+
+    border-radius: 2px;
+
+    box-shadow:
+        0 30px 80px
+        rgba(0,0,0,0.35);
+
+}
+
+
+/* ==========================================
+   CARD HEADER
+========================================== */
+
+.card-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.step-indicator {
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+.step {
+
+    width: 27px;
+
+    height: 27px;
+
+    border:
+        1px solid #D4D4D8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    color: #A1A1AA;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+}
+
+
+.step.active {
+
+    background: var(--black);
+
+    border-color: var(--black);
+
+    color: var(--gold);
+
+}
+
+
+.step-line {
+
+    width: 22px;
+
+    height: 1px;
+
+    background: #E4E4E7;
+
+}
+
+
+.step-text {
+
+    color: #71717A;
+
+    font-size: 8px;
+
+    letter-spacing: 1.5px;
+
+    font-weight: 700;
+
+}
+
+
+/* ==========================================
+   FORM HEADING
+========================================== */
+
+.form-heading {
+
+    margin-top: 35px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.form-heading h2 {
+
+    font-size: 28px;
+
+    letter-spacing: -1px;
+
+    font-weight: 650;
+
+}
+
+
+.form-heading p {
+
+    margin-top: 6px;
+
+    color: #71717A;
+
+    font-size: 12px;
+
+}
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+.form-group {
+
+    margin-bottom: 21px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    color: #27272A;
+
+}
+
+
+.input-wrapper {
+
+    position: relative;
+
+}
+
+
+.input-wrapper input {
+
+    width: 100%;
+
+    height: 48px;
+
+    border:
+        1px solid #D4D4D8;
+
+    background: #FAFAFA;
+
+    padding:
+        0 14px;
+
+    outline: none;
+
+    color: #18181B;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+
+}
+
+
+.input-wrapper input::placeholder {
+
+    color: #A1A1AA;
+
+}
+
+
+.input-wrapper input:hover {
+
+    border-color: #A1A1AA;
+
+}
+
+
+.input-wrapper input:focus {
+
+    background: var(--white);
+
+    border-color: var(--gold);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,0.12);
+
+}
+
+
+/* ERROR */
+
+.input-error {
+
+    display: block;
+
+    min-height: 15px;
+
+    margin-top: 4px;
+
+    color: #B42318;
+
+    font-size: 10px;
+
+}
+
+
+/* ==========================================
+   TERMS
+========================================== */
+
+.terms {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-top: 3px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.terms input {
+
+    width: 14px;
+
+    height: 14px;
+
+    margin-top: 1px;
+
+    accent-color: var(--gold-dark);
+
+    cursor: pointer;
+
+}
+
+
+.terms label {
+
+    color: #71717A;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    cursor: pointer;
+
+}
+
+
+.terms a {
+
+    color: #27272A;
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+
+}
+
+
+/* ==========================================
+   CONTINUE BUTTON
+========================================== */
+
+.continue-button {
+
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    background: var(--black);
+
+    color: var(--white);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 18px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    transition:
+        background 0.25s,
+        transform 0.2s;
+
+}
+
+
+.continue-button:hover {
+
+    background: #252525;
+
+    transform: translateY(-1px);
+
+}
+
+
+.button-arrow {
+
+    color: var(--gold);
+
+    font-size: 19px;
+
+}
+
+
+.continue-button:disabled {
+
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+/* ==========================================
+   LOADING
+========================================== */
+
+.loading {
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    margin-top: 14px;
+
+    color: #71717A;
+
+    font-size: 10px;
+
+}
+
+
+.loading.show {
+
+    display: flex;
+
+}
+
+
+.spinner {
+
+    width: 14px;
+
+    height: 14px;
+
+    border:
+        2px solid #E4E4E7;
+
+    border-top-color: var(--gold-dark);
+
+    border-radius: 50%;
+
+    animation:
+        spin 0.8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin:
+        27px 0 20px;
+
+}
+
+
+.divider span {
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #E4E4E7;
+
+}
+
+
+.divider small {
+
+    color: #A1A1AA;
+
+    font-size: 7px;
+
+    letter-spacing: 1.5px;
+
+    white-space: nowrap;
+
+}
+
+
+/* ==========================================
+   SECURITY
+========================================== */
+
+.security-note {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 13px;
+
+    background: #F7F7F5;
+
+    border:
+        1px solid #E4E4E7;
+
+}
+
+
+.security-icon {
+
+    width: 23px;
+
+    height: 23px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: var(--black);
+
+    color: var(--gold);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+}
+
+
+.security-note strong {
+
+    display: block;
+
+    font-size: 10px;
+
+    color: #27272A;
+
+}
+
+
+.security-note p {
+
+    margin-top: 2px;
+
+    color: #71717A;
+
+    font-size: 9px;
+
+    line-height: 1.5;
+
+}
+
+
+/* ==========================================
+   MOBILE LOGIN
+========================================== */
+
+.mobile-login {
+
+    display: none;
+
+    text-align: center;
+
+    margin-top: 25px;
+
+    color: #71717A;
+
+    font-size: 11px;
+
+}
+
+
+.mobile-login a {
+
+    color: var(--gold-dark);
+
+    font-weight: 700;
+
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.signup-footer {
+
+    height: 60px;
+
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding:
+        0 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: #52525B;
+
+    font-size: 9px;
+
+    letter-spacing: 0.5px;
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1050px) {
+
+    .signup-wrapper {
+
+        grid-template-columns:
+            1fr 450px;
+
+        gap: 55px;
+
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .signup-header {
+
+        padding: 0 25px;
+
+    }
+
+
+    .signup-wrapper {
+
+        grid-template-columns: 1fr;
+
+        max-width: 550px;
+
+        padding:
+            55px 25px;
+
+    }
+
+
+    .signup-intro {
+
+        text-align: center;
+
+        margin: auto;
+
+    }
+
+
+    .intro-label {
+
+        justify-content: center;
+
+    }
+
+
+    .signup-intro > p {
+
+        margin-left: auto;
+
+        margin-right: auto;
+
+    }
+
+
+    .benefits {
+
+        text-align: left;
+
+    }
+
+
+    .header-login {
+
+        display: none;
+
+    }
+
+
+    .mobile-login {
+
+        display: block;
+
+    }
+
+
+    .signup-footer {
+
+        padding: 0 25px;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .signup-card {
+
+        padding: 25px 20px;
+
+    }
+
+
+    .signup-intro h1 {
+
+        font-size: 43px;
+
+        letter-spacing: -2px;
+
+    }
+
+
+    .signup-intro > p {
+
+        font-size: 13px;
+
+    }
+
+
+    .step-text {
+
+        display: none;
+
+    }
+
+
+    .signup-footer {
+
+        font-size: 8px;
+
+    }
+
+}
+.input-wrapper select {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid #D4D4D8;
+
+    background: #FAFAFA;
+
+    padding: 0 14px;
+
+    outline: none;
+
+    color: #18181B;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+
+    appearance: auto;
+}
+
+
+.input-wrapper select:hover {
+
+    border-color: #A1A1AA;
+
+}
+
+
+.input-wrapper select:focus {
+
+    background: #FFFFFF;
+
+    border-color: #D4AF37;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(212,175,55,0.12);
+
+}
+
+
+.input-wrapper select:invalid {
+
+    color: #A1A1AA;
+
+}
+
+
+.input-wrapper select option {
+
+    color: #18181B;
+
+    background: #FFFFFF;
+
+}
