@@ -1,44 +1,863 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Institution Dashboard</title>
-    <link rel="stylesheet" href="css/dashboard.css" />
-  </head>
-  <body>
-    <aside class="sidebar">
-      <h2>Institution</h2>
-      <nav>
-        <a href="#">Dashboard</a>
-        <a href="#">Programs</a>
-        <a href="#">Students</a>
-        <a href="#">Reports</a>
-      </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SkillBridge Institution & Faculty Dashboard — Industry Engagements, FDPs, Research Collaborations, and Opportunity Management">
+    <title>Institution Dashboard | SkillBridge</title>
+    <link rel="stylesheet" href="css/institution-home.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+    <aside class="sidebar" id="sidebar">
+
+        <!-- BRAND -->
+        <div class="sidebar-brand">
+            <a href="index.html" class="brand">
+                <div class="brand-mark">SB</div>
+                <div class="brand-name">SKILL<span>BRIDGE</span></div>
+            </a>
+            <span class="sidebar-badge">INSTITUTION</span>
+        </div>
+
+        <!-- NAVIGATION -->
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-title">MAIN</div>
+
+            <a href="#" class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+                </span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="opportunities">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                </span>
+                <span>All Opportunities</span>
+                <span class="nav-count" id="navOppCount">8</span>
+            </a>
+
+            <div class="nav-section-title">PROGRAMS & DISCOVERY</div>
+
+            <a href="#" class="nav-item" data-section="fdp">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path></svg>
+                </span>
+                <span>Faculty FDPs</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="internships">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </span>
+                <span>Faculty Internships</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="training">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="9" width="18" height="12" rx="1"></rect><path d="M3 9l9-6 9 6"></path></svg>
+                </span>
+                <span>Industrial Training</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="workshops">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                </span>
+                <span>Workshops & Events</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="consultancy">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </span>
+                <span>Consultancy</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="research">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 3h6v10l4 8H5l4-8V3"></path></svg>
+                </span>
+                <span>Research Collaboration</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="guest">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                </span>
+                <span>Guest Lectures</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="mentorship">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </span>
+                <span>Mentorship</span>
+            </a>
+
+            <div class="nav-section-title">TRACKING & ACADEMIA</div>
+
+            <a href="#" class="nav-item" data-section="applications">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                </span>
+                <span>My Applications</span>
+                <span class="nav-count" id="navAppCount">3</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="profile">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </span>
+                <span>Faculty Profile</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="portfolio">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </span>
+                <span>Digital Portfolio</span>
+            </a>
+
+            <a href="#" class="nav-item" data-section="settings">
+                <span class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </span>
+                <span>Settings</span>
+            </a>
+
+        </nav>
+
+        <!-- SIDEBAR BOTTOM -->
+        <div class="sidebar-bottom">
+            <button class="logout-button" id="logoutButton">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Logout</span>
+            </button>
+        </div>
+
     </aside>
 
-    <main class="dashboard-main">
-      <header class="topbar">
-        <h1>Institution Home</h1>
-        <button class="btn primary" onclick="location.href='index.html'">Logout</button>
-      </header>
+    <!-- =====================================================
+         MAIN VIEW
+    ====================================================== -->
+    <div class="main">
 
-      <section class="card-grid">
-        <div class="card">
-          <h3>Active Programs</h3>
-          <p>14 certified courses</p>
-        </div>
-        <div class="card">
-          <h3>Enrollment</h3>
-          <p>1,250 students</p>
-        </div>
-        <div class="card">
-          <h3>Partnerships</h3>
-          <p>26 industry partners</p>
-        </div>
-      </section>
-    </main>
+        <!-- TOPBAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="menu-button" id="menuButton" aria-label="Toggle Menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="topbar-title">
+                    <span>SKILLBRIDGE</span>
+                    <h2>Institution Portal</h2>
+                </div>
+            </div>
 
-    <script src="js/dashboard.js"></script>
-  </body>
+            <div class="topbar-actions">
+                <button class="btn btn-gold btn-sm" onclick="window.openPostModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    Post Opportunity
+                </button>
+
+                <div class="top-profile" onclick="document.querySelector('[data-section=profile]').click()">
+                    <div class="top-profile-image">
+                        <span id="topInitial">P</span>
+                    </div>
+                    <div class="top-profile-info">
+                        <strong id="topName">Dr. Priya Nair</strong>
+                        <span id="topRole">Associate Professor</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <main class="content">
+
+            <!-- =====================================================
+                 SECTION 1: DASHBOARD
+            ====================================================== -->
+            <section class="dashboard-section active" id="sec-dashboard">
+
+                <!-- WELCOME BANNER -->
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">ACADEMIA – INDUSTRY COLLABORATION</div>
+                        <h1>Welcome, <span id="welcomeName">Dr. Priya Nair</span></h1>
+                        <p id="profileDeptText">Computer Science & Engineering · ABC Institute of Technology</p>
+                    </div>
+                    <div class="welcome-actions">
+                        <button class="btn btn-gold" onclick="window.openPostModal()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Post Opportunity
+                        </button>
+                        <button class="btn btn-outline" onclick="document.querySelector('[data-section=opportunities]').click()">
+                            Browse Opportunities
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STATS GRID -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon gold">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statTotalOpps">8</div>
+                            <div class="stat-label">Active Opportunities</div>
+                            <div class="stat-trend">Live across 6 categories</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statActiveApps">3</div>
+                            <div class="stat-label">Applications Submitted</div>
+                            <div class="stat-trend">2 pending review</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statAccepted">1</div>
+                            <div class="stat-label">Confirmed Engagements</div>
+                            <div class="stat-trend">1 active consultancy</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                        </div>
+                        <div>
+                            <div class="stat-value" id="statPubs">3</div>
+                            <div class="stat-label">Publications & IP</div>
+                            <div class="stat-trend">2 SCI Journals</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- POST CALLOUT BANNER -->
+                <div class="card" style="background:var(--black);color:white;margin-bottom:28px;padding:28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px">
+                    <div>
+                        <span class="badge badge-gold" style="margin-bottom:8px">HOST AN OPPORTUNITY</span>
+                        <h3 style="font-size:20px;font-weight:800;color:white;margin-bottom:4px">Have an FDP, Workshop, or Research Call?</h3>
+                        <p style="font-size:12.5px;color:#A1A1AA;max-width:550px">Publish programs directly for nationwide faculty, industry specialists, and institutional researchers with full applicant management.</p>
+                    </div>
+                    <button class="btn btn-gold btn-lg" onclick="window.openPostModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Publish New Opportunity
+                    </button>
+                </div>
+
+                <!-- RECOMMENDED OPPORTUNITIES -->
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                    <div>
+                        <h3 style="font-size:17px;font-weight:800;color:var(--black)">Featured Opportunities</h3>
+                        <p style="font-size:12px;color:var(--grey-500)">Programs matched with your domain and expertise profile</p>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="document.querySelector('[data-section=opportunities]').click()">View All</button>
+                </div>
+
+                <div class="grid-auto" id="allOppGrid">
+                    <!-- Loaded dynamically -->
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SECTION 2: ALL OPPORTUNITIES HUB
+            ====================================================== -->
+            <section class="dashboard-section" id="sec-opportunities">
+
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">DISCOVERY & COLLABORATION</div>
+                        <h1>Opportunities Directory</h1>
+                        <p>Explore and apply for Faculty FDPs, Internships, Industrial Training, Consultancy, and Research Grants.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal()">+ Post Opportunity</button>
+                </div>
+
+                <!-- CATEGORY SUB TABS -->
+                <div class="tabs" id="oppCategoryTabs">
+                    <button class="tab-btn active" data-type="all">All Programs</button>
+                    <button class="tab-btn" data-type="fdp">FDPs</button>
+                    <button class="tab-btn" data-type="internship">Faculty Internships</button>
+                    <button class="tab-btn" data-type="training">Industrial Training</button>
+                    <button class="tab-btn" data-type="workshops">Workshops</button>
+                    <button class="tab-btn" data-type="consultancy">Consultancy</button>
+                    <button class="tab-btn" data-type="research">Research</button>
+                    <button class="tab-btn" data-type="guest">Guest Lectures</button>
+                    <button class="tab-btn" data-type="mentorship">Mentorship</button>
+                </div>
+
+                <!-- SEARCH & FILTER BAR -->
+                <div class="search-filter-bar">
+                    <div class="search-main">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="globalSearchInput" placeholder="Search by title, organization, topic or skill keyword...">
+                    </div>
+                    <select class="filter-select" id="globalDomainSelect">
+                        <option value="">All Domains</option>
+                        <option value="Artificial Intelligence">Artificial Intelligence</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Cloud Computing">Cloud Computing</option>
+                        <option value="Healthcare AI">Healthcare AI</option>
+                        <option value="Data Analytics">Data Analytics</option>
+                        <option value="Cybersecurity">Cybersecurity</option>
+                        <option value="NLP & Linguistics">NLP & Linguistics</option>
+                    </select>
+                </div>
+
+                <div class="grid-auto" id="allOppGrid"></div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SUB-SECTIONS: DEDICATED OPPORTUNITY CATEGORIES
+            ====================================================== -->
+            <section class="dashboard-section" id="sec-fdp">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">ACADEMIC EXCELLENCE</div>
+                        <h1>Faculty Development Programs (FDPs)</h1>
+                        <p>Enhance pedagogical and technical capabilities through certified, university-accredited FDPs.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('fdp')">+ Post FDP</button>
+                </div>
+                <div class="grid-auto" id="fdpGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-internships">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">INDUSTRY IMMERSION</div>
+                        <h1>Faculty Industry Internships</h1>
+                        <p>Real-world industry exposure, engineering lab residencies, and corporate sabbaticals.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('internship')">+ Post Internship</button>
+                </div>
+                <div class="grid-auto" id="internshipGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-training">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">UPSKILLING & CERTIFICATION</div>
+                        <h1>Industrial Training Programs</h1>
+                        <p>Hands-on corporate technology training programs designed for faculty and academic leaders.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('training')">+ Post Training</button>
+                </div>
+                <div class="grid-auto" id="trainingGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-workshops">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">HANDS-ON SESSIONS</div>
+                        <h1>Workshops & Technical Events</h1>
+                        <p>Specialized workshops, tool masterclasses, and corporate-sponsored technical summits.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('workshops')">+ Post Workshop</button>
+                </div>
+                <div class="grid-auto" id="workshopGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-consultancy">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">COMMERCIAL & ADVISORY</div>
+                        <h1>Faculty Consultancy Opportunities</h1>
+                        <p>Solve high-impact enterprise problems, optimize industry workflows, and lead paid advisory projects.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('consultancy')">+ Post Consultancy</button>
+                </div>
+                <div class="grid-auto" id="consultancyGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-research">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">FUNDED RESEARCH & IP</div>
+                        <h1>Research Collaborations</h1>
+                        <p>Collaborative grant initiatives, joint clinical studies, and inter-institutional patent investigations.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('research')">+ Post Research Call</button>
+                </div>
+                <div class="grid-auto" id="researchGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-guest">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">EXPERT LECTURES</div>
+                        <h1>Guest Lectures & Keynotes</h1>
+                        <p>Deliver invited keynote sessions, symposium lectures, and academic talks with honorariums.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('guest')">+ Post Guest Call</button>
+                </div>
+                <div class="grid-auto" id="guestGrid"></div>
+            </section>
+
+            <section class="dashboard-section" id="sec-mentorship">
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">STARTUP & STUDENT ADVISORY</div>
+                        <h1>Mentorship Programs</h1>
+                        <p>Guide incubation startups, student cohorts, and innovation founders on technology and patent strategy.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openPostModal('mentorship')">+ Post Mentorship</button>
+                </div>
+                <div class="grid-auto" id="mentorshipGrid"></div>
+            </section>
+
+
+            <!-- =====================================================
+                 SECTION 3: MY APPLICATIONS TRACKER
+            ====================================================== -->
+            <section class="dashboard-section" id="sec-applications">
+
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">REAL-TIME APPLICATION PIPELINE</div>
+                        <h1>My Applications</h1>
+                        <p>Track the evaluation status, interview schedules, and onboarding next steps for your applied programs.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="padding:0;overflow:hidden">
+                    <div class="table-wrap">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Program / Opportunity</th>
+                                    <th>Category</th>
+                                    <th>Applied Date</th>
+                                    <th>Current Status</th>
+                                    <th>Next Stage</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="applicationsTableBody">
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SECTION 4: FACULTY PROFILE & DIGITAL PORTFOLIO
+            ====================================================== -->
+            <section class="dashboard-section" id="sec-profile">
+
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">ACADEMIC IDENTITY</div>
+                        <h1>Faculty Profile</h1>
+                        <p>Manage your academic credentials, qualifications, department appointments, and expertise areas.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openEditProfileModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        Edit Profile
+                    </button>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Academic Details</div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:18px;margin-bottom:20px">
+                            <div style="width:64px;height:64px;border-radius:50%;background:var(--black);color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;border:2px solid var(--gold)">PN</div>
+                            <div>
+                                <h3 style="font-size:18px;font-weight:800;color:var(--black)" id="profCardName">Dr. Priya Nair</h3>
+                                <div style="font-size:13px;color:var(--gold-dark);font-weight:600">Associate Professor · Computer Science</div>
+                                <div style="font-size:12px;color:var(--grey-500)">ABC Institute of Technology</div>
+                            </div>
+                        </div>
+                        <p style="font-size:13px;color:var(--grey-700);line-height:1.7;margin-bottom:18px" id="profCardBio">
+                            Associate Professor with 12+ years of research and teaching experience in Artificial Intelligence, Machine Learning, and Data Science.
+                        </p>
+                        <div style="margin-bottom:14px">
+                            <div style="font-size:11px;font-weight:700;color:var(--grey-600);margin-bottom:6px">CORE EXPERTISE</div>
+                            <div class="opp-skills">
+                                <span class="skill-tag">Artificial Intelligence</span>
+                                <span class="skill-tag">Machine Learning</span>
+                                <span class="skill-tag">Natural Language Processing</span>
+                                <span class="skill-tag">Federated Learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Academic Qualifications</div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:10px">
+                            <div style="padding:12px;background:var(--grey-100);border-radius:6px;font-size:12.5px;font-weight:600">
+                                🎓 Ph.D. in Computer Science & Engineering — IISc Bangalore (2018)
+                            </div>
+                            <div style="padding:12px;background:var(--grey-100);border-radius:6px;font-size:12.5px;font-weight:600">
+                                🎓 M.Tech in Artificial Intelligence — NIT Surathkal (2014)
+                            </div>
+                            <div style="padding:12px;background:var(--grey-100);border-radius:6px;font-size:12.5px;font-weight:600">
+                                🎓 B.Tech in Computer Science — VTU (2012)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SECTION 5: DIGITAL PORTFOLIO
+            ====================================================== -->
+            <section class="dashboard-section" id="sec-portfolio">
+
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">RESEARCH & SCHOLARSHIP</div>
+                        <h1>Digital Portfolio & Publications</h1>
+                        <p>Showcase published papers, funded grant projects, and patents for corporate partnership discovery.</p>
+                    </div>
+                    <button class="btn btn-gold" onclick="window.openAddPubModal()">+ Add Publication</button>
+                </div>
+
+                <div class="card mb-6">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Peer-Reviewed Publications</div>
+                            <div class="card-subtitle">Indexed research papers, conferences and SCI journals</div>
+                        </div>
+                        <button class="btn btn-outline btn-sm" onclick="window.openAddPubModal()">Add Paper</button>
+                    </div>
+                    <div id="profilePubsList">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- =====================================================
+                 SECTION 6: SETTINGS
+            ====================================================== -->
+            <section class="dashboard-section" id="sec-settings">
+
+                <div class="welcome-section">
+                    <div>
+                        <div class="eyebrow">PREFERENCES & ACCOUNT</div>
+                        <h1>Institution Settings</h1>
+                        <p>Manage notification channels, institutional profile sync, and security controls.</p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title mb-4" style="margin-bottom:16px">Account Settings</div>
+                        <div class="form-group">
+                            <label class="form-label">Registered Institution</label>
+                            <input class="form-input" value="ABC Institute of Technology" readonly style="background:var(--grey-100)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Official Email</label>
+                            <input class="form-input" value="priya.nair@abcit.edu.in" readonly style="background:var(--grey-100)">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role Category</label>
+                            <input class="form-input" value="Academician / Institution Faculty" readonly style="background:var(--grey-100)">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title mb-4" style="margin-bottom:16px">Notification Preferences</div>
+                        <div style="display:flex;flex-direction:column;gap:14px">
+                            <label style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600">
+                                <input type="checkbox" checked style="accent-color:var(--gold)">
+                                Email alerts for newly posted FDPs and Research Grants
+                            </label>
+                            <label style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600">
+                                <input type="checkbox" checked style="accent-color:var(--gold)">
+                                Application status updates & interview invitations
+                            </label>
+                            <label style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600">
+                                <input type="checkbox" checked style="accent-color:var(--gold)">
+                                Industry consultancy matching alerts
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     MODAL 1: POST OPPORTUNITY MODAL
+====================================================== -->
+<div class="modal-overlay" id="postOpportunityModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">Publish Opportunity / Program</div>
+            <button class="modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <form id="postOpportunityForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Program Category</label>
+                    <select class="form-select" id="oppType" required>
+                        <option value="fdp">Faculty Development Program (FDP)</option>
+                        <option value="internship">Faculty Industry Internship</option>
+                        <option value="training">Industrial Training Program</option>
+                        <option value="workshops">Workshop & Technical Program</option>
+                        <option value="consultancy">Consultancy Call</option>
+                        <option value="research">Research Collaboration / Grant</option>
+                        <option value="guest">Guest Lecture / Keynote</option>
+                        <option value="mentorship">Mentorship Program</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Program Title</label>
+                    <input class="form-input" id="oppTitle" placeholder="e.g. Advanced Workshop on Federated Machine Learning" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Hosting Organization / Institution</label>
+                        <input class="form-input" id="oppOrg" placeholder="e.g. ABC Institute of Technology">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Domain</label>
+                        <input class="form-input" id="oppDomain" placeholder="e.g. Artificial Intelligence" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Mode</label>
+                        <select class="form-select" id="oppMode">
+                            <option value="Online">Online</option>
+                            <option value="On-site">On-site</option>
+                            <option value="Hybrid">Hybrid</option>
+                            <option value="Remote">Remote</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duration</label>
+                        <input class="form-input" id="oppDuration" placeholder="e.g. 5 Days / 1 Month" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Deadline</label>
+                        <input class="form-input" id="oppDeadline" placeholder="e.g. 30 Sep 2026" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Stipend / Funding / Fee</label>
+                        <input class="form-input" id="oppFee" placeholder="e.g. Free / ₹25,000 Stipend">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Brochure / Syllabus / Document (Optional)</label>
+                    <input type="file" class="form-input" id="oppAttachmentFile" accept=".pdf,.doc,.docx,.png,.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Required Skills & Expertise (comma-separated)</label>
+                    <input class="form-input" id="oppSkills" placeholder="e.g. Python, PyTorch, Deep Learning, MLOps">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Program Description</label>
+                    <textarea class="form-textarea" id="oppDesc" rows="3" placeholder="Provide detailed objectives, curriculum, eligibility and expected outcomes..." required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeAllModals()">Cancel</button>
+                <button type="submit" class="btn btn-gold">Publish Opportunity</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     MODAL 2: APPLY / REGISTER MODAL
+====================================================== -->
+<div class="modal-overlay" id="applyModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">Submit Application / Expression of Interest</div>
+            <button class="modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <form id="applyModalForm">
+            <input type="hidden" id="applyOppId">
+            <div class="modal-body">
+                <div style="padding:14px;background:var(--grey-100);border-radius:8px;margin-bottom:18px">
+                    <div style="font-size:14px;font-weight:700;color:var(--black)" id="applyOppTitleText">Program Title</div>
+                    <div style="font-size:12px;color:var(--grey-500)" id="applyOppOrgText">Organization</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Statement of Interest & Relevant Experience</label>
+                    <textarea class="form-textarea" id="applyStatement" rows="4" placeholder="Briefly describe your relevant research, teaching experience, and why you are applying for this opportunity..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload CV / Proposal Document (Optional)</label>
+                    <input type="file" class="form-input" id="applyDocAttachment" accept=".pdf,.doc,.docx">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Digital Portfolio / Profile Link (Optional)</label>
+                    <input class="form-input" id="applyPortfolioLink" placeholder="https://scholar.google.com/your-profile">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeAllModals()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm & Submit Application</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     MODAL 3: OPPORTUNITY DETAILS MODAL
+====================================================== -->
+<div class="modal-overlay" id="opportunityDetailModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title" id="detailModalTitle">Opportunity Details</div>
+            <button class="modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <div class="modal-body" id="detailModalBody"></div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeAllModals()">Close</button>
+            <button class="btn btn-gold" id="detailApplyBtn">Apply Now</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     MODAL 4: EDIT PROFILE MODAL
+====================================================== -->
+<div class="modal-overlay" id="editProfileModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">Edit Faculty Profile</div>
+            <button class="modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <form id="editProfileForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input class="form-input" id="editName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Designation</label>
+                        <input class="form-input" id="editDesig" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Department</label>
+                        <input class="form-input" id="editDept" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Institution Name</label>
+                    <input class="form-input" id="editInst" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Bio / Academic Summary</label>
+                    <textarea class="form-textarea" id="editBio" rows="3" required></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeAllModals()">Cancel</button>
+                <button type="submit" class="btn btn-gold">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- =====================================================
+     MODAL 5: ADD PUBLICATION MODAL
+====================================================== -->
+<div class="modal-overlay" id="addPubModal">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">Add Research Publication</div>
+            <button class="modal-close" onclick="closeAllModals()">&times;</button>
+        </div>
+        <form id="addPubForm">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Paper / Publication Title</label>
+                    <input class="form-input" id="pubTitle" placeholder="e.g. Federated Learning for Multi-Hospital Clinical Trials" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Journal / Conference Name</label>
+                        <input class="form-input" id="pubJournal" placeholder="e.g. IEEE Transactions on Neural Networks" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Publication Year</label>
+                        <input class="form-input" id="pubYear" placeholder="2026" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-select" id="pubType">
+                        <option value="SCI Journal">SCI Journal</option>
+                        <option value="Conference Paper">Conference Paper</option>
+                        <option value="Book Chapter">Book Chapter</option>
+                        <option value="Patent">Patent</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" onclick="closeAllModals()">Cancel</button>
+                <button type="submit" class="btn btn-gold">Add Publication</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="module" src="js/institution-home.js"></script>
+
+</body>
 </html>
