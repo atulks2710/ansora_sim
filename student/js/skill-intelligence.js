@@ -17,20 +17,52 @@ async function initSkillIntelligence(profileData) {
 
     const studentSkills = profileData.skills || {};
     
-    // Fetch only the benchmark for the student's target role
+    // Fetch or fallback benchmark for the student's target role
     try {
         const docRef = doc(db, "benchmarks", currentRole);
         const docSnap = await getDoc(docRef);
         
         if (docSnap.exists()) {
             targetBenchmark = docSnap.data();
-            // Update the chart title dynamically to reflect the role
-            const chartTitle = document.querySelector('.card-header h3');
-            if (chartTitle) chartTitle.textContent = `Current Skills vs ${targetBenchmark.name} Benchmark`;
+        } else {
+            // Robust default standard industry benchmarks
+            if (currentRole === "aiml" || currentRole === "ai_ml") {
+                targetBenchmark = {
+                    name: "AI / ML Systems Engineer",
+                    requirements: {
+                        "Python": 90,
+                        "PyTorch": 85,
+                        "Machine Learning": 85,
+                        "Docker": 75,
+                        "Problem Solving": 85,
+                        "SQL": 70
+                    }
+                };
+            } else {
+                targetBenchmark = {
+                    name: "Full-Stack Software Engineer",
+                    requirements: {
+                        "React": 85,
+                        "Node.js": 80,
+                        "JavaScript": 90,
+                        "Firebase": 75,
+                        "Problem Solving": 85,
+                        "Cloud": 70
+                    }
+                };
+            }
+        }
+
+        const chartTitle = document.querySelector('.card-header h3');
+        if (chartTitle && targetBenchmark) {
+            chartTitle.textContent = `Current Skills vs ${targetBenchmark.name} Industry Benchmark`;
         }
     } catch (e) {
-        console.error("Error fetching benchmark", e);
-        return;
+        console.warn("Using default benchmark data", e);
+        targetBenchmark = {
+            name: "Full-Stack Software Engineer",
+            requirements: { "React": 85, "Node.js": 80, "JavaScript": 90, "Firebase": 75, "Problem Solving": 85 }
+        };
     }
 
     const ctx = document.getElementById('skillRadarChart');

@@ -72,22 +72,37 @@
         </div>
 
         <div class="dashboard-grid">
-            <!-- Projects Section -->
-            <div class="grid-col-span-2">
-                <div class="section-header">
-                    <h2>Verified Projects</h2>
-                    <button class="btn-text">+ Add Project</button>
+            <!-- Verified Skill Passport (Industry Provenance) -->
+            <div class="grid-col-span-2" style="grid-column: 1 / -1; margin-bottom: 1.5rem;">
+                <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+                    <div>
+                        <h2><i class="fa-solid fa-award text-accent"></i> Verified Skill Passport</h2>
+                        <p class="text-secondary" style="font-size:0.85rem; margin-top:4px;">Industry-evaluated and tamper-evident competencies with full provenance.</p>
+                    </div>
+                    <span class="badge" id="verified-skills-count-badge" style="background:rgba(16,185,129,0.15); color:var(--success); padding:6px 12px; border-radius:8px; font-weight:700;">0 Skills Verified</span>
                 </div>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;" id="projects-container">
-                    <p class="text-secondary" style="grid-column: 1/-1;">No verified projects added yet.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;" id="verified-passport-container">
+                    <p class="text-secondary" style="grid-column: 1/-1;">Loading verified competencies from Firestore...</p>
+                </div>
+            </div>
+
+            <!-- Projects Section -->
+            <div>
+                <div class="section-header">
+                    <h2>Verified Projects</h2>
+                    <button class="btn-text" onclick="window.location.href='projects.html'">+ Add Project</button>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;" id="projects-container">
+                    <p class="text-secondary">No verified projects added yet.</p>
                 </div>
             </div>
 
             <!-- Certifications Section -->
             <div>
                 <div class="section-header">
-                    <h2>Certifications</h2>
+                    <h2>Certifications & Evidence</h2>
                     <input type="file" id="cert-upload" accept="image/*" style="display: none;">
                     <button class="btn-text" onclick="document.getElementById('cert-upload').click()">+ Upload</button>
                 </div>

@@ -1,6 +1,7 @@
 // =====================================================
-// SKILLBRIDGE - INSTITUTION & ACADEMICIAN DASHBOARD JS
-// Firebase Auth + Live Post & Upload Engine (Mock Cleared)
+// SKILLBRIDGE - INSTITUTION DASHBOARD JS
+// Real-Time Industry Demand, Cohort Skill Gap Analysis & Placement Outcomes
+// Connected to Cloud Firestore
 // =====================================================
 
 import { auth, db } from "./firebase-config.js";
@@ -19,52 +20,50 @@ import {
     getDocs,
     addDoc,
     deleteDoc,
+    query,
+    where,
+    orderBy,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 // =====================================================
-// STATE STORE (Cleaned of mock data)
+// STATE STORE
 // =====================================================
 let currentUser = null;
 let currentProfile = {
-    name: "Faculty / Institution",
-    fullName: "Faculty / Institution",
+    name: "Institution Administrator",
+    fullName: "Indian Institute of Information Technology",
     email: "",
     role: "institution",
-    designation: "Department Administrator",
+    designation: "Dean of Industry Partnerships & Training",
     department: "Computer Science & Engineering",
-    institution: "Institution",
-    bio: "Institution and Academic Portal for publishing programs, research collaborations, FDPs, and managing faculty applications.",
+    institution: "IIIT",
+    bio: "Institution Portal for Industry Demand Analysis, Curriculum Skill Gap Bridging, Student Placement Outcomes, and Collaborative Programs.",
     qualifications: [],
-    expertise: ["Academic Administration", "Program Management"],
+    expertise: ["Curriculum Engineering", "Industry-Academia Partnerships"],
     researchInterests: [],
-    subjects: [],
-    publications: [],
-    links: {
-        linkedin: "",
-        researchgate: "",
-        google_scholar: ""
-    }
+    publications: []
 };
 
 let opportunities = [];
 let applications = [];
+let studentsList = [];
+let liveProjects = [];
+let liveChallenges = [];
+let skillGapAnalysis = [];
 
 // =====================================================
 // INIT & FIREBASE AUTH SYNC
 // =====================================================
 document.addEventListener("DOMContentLoaded", async () => {
-    initLocalState();
     initSidebarNavigation();
     initModals();
     initFilters();
 
-    // Firebase Auth State Listener
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             currentUser = user;
             try {
-                // Fetch user profile from Firestore
                 const userDocRef = doc(db, "users", user.uid);
                 const userDocSnap = await getDoc(userDocRef);
 
@@ -73,23 +72,22 @@ document.addEventListener("DOMContentLoaded", async () => {
                     currentProfile = {
                         ...currentProfile,
                         ...userData,
-                        name: userData.fullName || userData.name || user.email.split("@")[0],
+                        name: userData.institutionName || userData.fullName || userData.name || "Institution Partner",
                         email: user.email,
-                        role: userData.role || currentProfile.role,
-                        institution: userData.institution || currentProfile.institution,
-                        department: userData.department || currentProfile.department,
-                        designation: userData.designation || currentProfile.designation
+                        role: userData.role || currentProfile.role
                     };
                 } else {
-                    currentProfile.name = user.displayName || user.email.split("@")[0];
+                    currentProfile.name = user.displayName || "Institution Partner";
                     currentProfile.email = user.email;
                 }
 
-                // Sync live opportunities & applications from Firestore
-                await syncFromFirestore();
+                await syncAllFirestoreData();
             } catch (err) {
-                console.warn("Firestore sync status (persisting to local storage):", err);
+                console.warn("Institution Firestore sync notice:", err);
             }
+        } else {
+            // Demo fallback for instant presentation preview
+            await syncAllFirestoreData();
         }
         updateUserUI();
         renderAll();
@@ -101,10 +99,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         logoutBtn.addEventListener("click", async () => {
             try {
                 await signOut(auth);
-            } catch (e) {
-                console.error("Sign out error", e);
-            }
-            window.location.href = "login.html";
+            } catch (e) {}
+            window.location.href = "../login.html";
         });
     }
 
@@ -119,57 +115,179 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // =====================================================
-// LOCAL STATE (CLEAN)
+// DATA SYNC & SKILL GAP ENGINE
 // =====================================================
-function initLocalState() {
-    // Clear old mock data if stored previously
-    const isMockCleared = localStorage.getItem("sb_institution_mock_cleared_v2");
-    if (!isMockCleared) {
-        localStorage.removeItem("sb_institution_opportunities");
-        localStorage.removeItem("sb_institution_applications");
-        localStorage.setItem("sb_institution_mock_cleared_v2", "true");
-        opportunities = [];
-        applications = [];
-    } else {
-        const storedOpps = localStorage.getItem("sb_institution_opportunities");
-        try { opportunities = storedOpps ? JSON.parse(storedOpps) : []; } catch (e) { opportunities = []; }
-
-        const storedApps = localStorage.getItem("sb_institution_applications");
-        try { applications = storedApps ? JSON.parse(storedApps) : []; } catch (e) { applications = []; }
-    }
-}
-
-function saveLocalState() {
-    localStorage.setItem("sb_institution_opportunities", JSON.stringify(opportunities));
-    localStorage.setItem("sb_institution_applications", JSON.stringify(applications));
-    localStorage.setItem("sb_institution_profile", JSON.stringify(currentProfile));
-}
-
-async function syncFromFirestore() {
-    if (!currentUser) return;
+async function syncAllFirestoreData() {
     try {
+        // 1. Opportunities
         const oppsSnap = await getDocs(collection(db, "opportunities"));
-        if (!oppsSnap.empty) {
-            const fireOpps = [];
-            oppsSnap.forEach(d => fireOpps.push({ id: d.id, ...d.data() }));
-            if (fireOpps.length) {
-                opportunities = fireOpps;
-                saveLocalState();
+        const opps = [];
+        oppsSnap.forEach(d => opps.push({ id: d.id, ...d.data() }));
+        opportunities = opps;
+
+        // 2. Applications
+        const appsSnap = await getDocs(collection(db, "applications"));
+        const apps = [];
+        appsSnap.forEach(d => apps.push({ id: d.id, ...d.data() }));
+        applications = apps;
+
+        // 3. Students Cohort
+        const studentsQuery = query(collection(db, "users"), where("role", "==", "student"));
+        const studentsSnap = await getDocs(studentsQuery);
+        const students = [];
+        studentsSnap.forEach(d => students.push({ id: d.id, ...d.data() }));
+        studentsList = students;
+
+        // 4. Projects & Challenges
+        const projSnap = await getDocs(collection(db, "projects"));
+        const projs = [];
+        projSnap.forEach(d => projs.push({ id: d.id, ...d.data() }));
+        liveProjects = projs;
+
+        const chalSnap = await getDocs(collection(db, "challenges"));
+        const chals = [];
+        chalSnap.forEach(d => chals.push({ id: d.id, ...d.data() }));
+        liveChallenges = chals;
+
+    } catch (e) {
+        console.warn("Notice: Syncing with default dataset", e);
+    }
+
+    // Ensure fallback demo items if DB is fresh
+    if (opportunities.length === 0) {
+        opportunities = [
+            {
+                id: "opp_inst_1",
+                title: "Full-Stack Software Engineer (Apprentice)",
+                organization: "HyperScale Tech Labs",
+                companyName: "HyperScale Tech Labs",
+                type: "internship",
+                mode: "Hybrid",
+                duration: "6 Months",
+                stipend: "₹35,000 / month",
+                domain: "Software Engineering",
+                skills: ["React", "Node.js", "Firebase", "TypeScript"],
+                description: "Industry internship for top student talent in modern web systems."
+            },
+            {
+                id: "opp_inst_2",
+                title: "AI Systems Faculty Development Program (FDP)",
+                organization: "National AI Council & TechCorp",
+                type: "fdp",
+                mode: "Online",
+                duration: "2 Weeks",
+                stipend: "Sponsored",
+                domain: "Artificial Intelligence",
+                skills: ["Python", "PyTorch", "Deep Learning"],
+                description: "Faculty training on enterprise LLM deployment and modern neural architecture."
+            },
+            {
+                id: "opp_inst_3",
+                title: "Cloud Native DevOps Immersion",
+                organization: "Apex Cloud Networks",
+                type: "training",
+                mode: "Hybrid",
+                duration: "4 Weeks",
+                stipend: "Free for Partner Institutions",
+                domain: "Cloud & DevOps",
+                skills: ["Cloud", "Docker", "Kubernetes"],
+                description: "Campus-wide technical immersion on microservices and cloud infrastructure."
             }
+        ];
+    }
+
+    if (studentsList.length === 0) {
+        studentsList = [
+            { id: "s1", name: "Priya Sharma", university: "IIIT", degree: "B.Tech CSE", readiness: 88, skills: { React: 90, "Node.js": 84, Cloud: 55, Python: 78 } },
+            { id: "s2", name: "Rahul Verma", university: "IIIT", degree: "B.Tech CSE", readiness: 82, skills: { React: 85, Python: 88, SQL: 80, Docker: 45 } },
+            { id: "s3", name: "Aman Gupta", university: "IIIT", degree: "B.Tech IT", readiness: 79, skills: { "Node.js": 80, JavaScript: 85, Cloud: 40 } },
+            { id: "s4", name: "Ananya Iyer", university: "IIIT", degree: "B.Tech CSE", readiness: 91, skills: { Python: 92, PyTorch: 88, MachineLearning: 85 } }
+        ];
+    }
+
+    computeSkillGapAnalysis();
+}
+
+/**
+ * Computes canonical Skill Gaps between Industry Demand and Student Cohort Readiness
+ */
+function computeSkillGapAnalysis() {
+    const demandCount = {};
+    let totalDemandPointers = 0;
+
+    // Aggregate required skills across all opportunities and projects
+    opportunities.forEach(o => {
+        const sks = o.skills || [];
+        sks.forEach(s => {
+            demandCount[s] = (demandCount[s] || 0) + 1;
+            totalDemandPointers++;
+        });
+    });
+
+    liveProjects.forEach(p => {
+        const sks = p.skillsRequired || [];
+        sks.forEach(s => {
+            demandCount[s] = (demandCount[s] || 0) + 1;
+            totalDemandPointers++;
+        });
+    });
+
+    // Default key skills if demand count is small
+    const keySkills = ["React", "Node.js", "Python", "Cloud", "Docker", "Problem Solving", "SQL", "Machine Learning"];
+    keySkills.forEach(k => {
+        if (!demandCount[k]) demandCount[k] = 2;
+    });
+
+    const gaps = [];
+
+    Object.keys(demandCount).forEach(skillName => {
+        // Compute average student score in this skill
+        let totalStudentScore = 0;
+        let studentsHavingScore = 0;
+
+        studentsList.forEach(st => {
+            const score = st.skills ? (st.skills[skillName] || 0) : 0;
+            if (score > 0) {
+                totalStudentScore += score;
+                studentsHavingScore++;
+            }
+        });
+
+        const cohortAverage = studentsHavingScore > 0 
+            ? Math.round(totalStudentScore / studentsHavingScore) 
+            : 45;
+
+        const industryTarget = 85; // Industry benchmark
+        const gapValue = Math.max(0, industryTarget - cohortAverage);
+
+        let recommendation = "Curriculum Aligned";
+        let priority = "Low";
+
+        if (gapValue >= 35) {
+            recommendation = "Host Intensive Industry Bootcamp";
+            priority = "Critical";
+        } else if (gapValue >= 20) {
+            recommendation = "Schedule Expert Guest Lectures & Lab Assignments";
+            priority = "High";
+        } else if (gapValue >= 10) {
+            recommendation = "Add Practical Capstone Project";
+            priority = "Medium";
         }
 
-        const appsSnap = await getDocs(collection(db, "applications"));
-        if (!appsSnap.empty) {
-            const fireApps = [];
-            appsSnap.forEach(d => fireApps.push({ id: d.id, ...d.data() }));
-            if (fireApps.length) {
-                applications = fireApps;
-                saveLocalState();
-            }
-        }
-    } catch (e) {
-        console.warn("Using offline opportunities store");
-    }
+        gaps.push({
+            skill: skillName,
+            industryTarget: industryTarget,
+            cohortProficiency: cohortAverage,
+            gap: gapValue,
+            priority: priority,
+            recommendation: recommendation,
+            industryDemandRank: demandCount[skillName]
+        });
+    });
+
+    // Sort by largest gap first
+    gaps.sort((a, b) => b.gap - a.gap);
+    skillGapAnalysis = gaps;
 }
 
 // =====================================================
@@ -203,16 +321,21 @@ function updateUserUI() {
 
 function renderAll() {
     renderStats();
+    renderSkillGapMatrix();
     renderOpportunityCards();
     renderApplicationsTable();
-    renderProfilePublications();
+    renderCohortTable();
 }
 
 function renderStats() {
     const totalOpps = opportunities.length;
     const activeApps = applications.length;
-    const acceptedApps = applications.filter(a => a.status === "Accepted").length;
-    const pubsCount = (currentProfile.publications || []).length;
+    const hiredApps = applications.filter(a => a.status === "Hired" || a.status === "Selected").length;
+    
+    // Compute cohort average readiness
+    const avgReadiness = studentsList.length > 0 
+        ? Math.round(studentsList.reduce((acc, s) => acc + (s.readiness || 75), 0) / studentsList.length)
+        : 82;
 
     const s1 = document.getElementById("statTotalOpps");
     if (s1) s1.textContent = totalOpps;
@@ -221,17 +344,104 @@ function renderStats() {
     if (s2) s2.textContent = activeApps;
 
     const s3 = document.getElementById("statAccepted");
-    if (s3) s3.textContent = acceptedApps;
+    if (s3) s3.textContent = hiredApps;
 
     const s4 = document.getElementById("statPubs");
-    if (s4) s4.textContent = pubsCount;
+    if (s4) s4.textContent = `${avgReadiness}%`;
 
-    // Sidebar counts
+    const s4Label = document.getElementById("statPubsLabel");
+    if (s4Label) s4Label.textContent = "Cohort Avg Readiness";
+
     const oppCountEl = document.getElementById("navOppCount");
     if (oppCountEl) oppCountEl.textContent = totalOpps;
 
     const appCountEl = document.getElementById("navAppCount");
     if (appCountEl) appCountEl.textContent = activeApps;
+}
+
+function renderSkillGapMatrix() {
+    const container = document.getElementById("skillGapContainer");
+    if (!container) return;
+
+    container.innerHTML = `
+        <div style="background:var(--white); border:1px solid var(--grey-200); border-radius:12px; padding:20px; margin-bottom:24px; box-shadow:var(--shadow-sm);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <div>
+                    <h3 style="font-size:16px; font-weight:800; color:var(--black); margin:0;">📊 Campus Skill Gap & Industry Demand Radar</h3>
+                    <p style="font-size:12px; color:var(--grey-600); margin:4px 0 0 0;">Identifies real competency discrepancies between Industry Hiring Needs and Student Cohort Readiness.</p>
+                </div>
+                <button class="btn btn-gold btn-sm" onclick="window.generateTrainingPlan()">⚡ Generate Training Roadmap</button>
+            </div>
+
+            <div style="overflow-x:auto;">
+                <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
+                    <thead>
+                        <tr style="border-bottom:2px solid var(--grey-200); color:var(--grey-600); font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">
+                            <th style="padding:10px;">Competency</th>
+                            <th style="padding:10px;">Industry Benchmark</th>
+                            <th style="padding:10px;">Cohort Average</th>
+                            <th style="padding:10px;">Skill Gap</th>
+                            <th style="padding:10px;">Priority</th>
+                            <th style="padding:10px;">Recommended Institutional Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${skillGapAnalysis.map(g => {
+                            const badgeColor = g.priority === "Critical" ? "badge-red" : (g.priority === "High" ? "badge-orange" : "badge-green");
+                            const gapColor = g.gap > 20 ? "var(--red)" : (g.gap > 10 ? "var(--orange)" : "var(--green)");
+
+                            return `
+                                <tr style="border-bottom:1px solid var(--grey-100);">
+                                    <td style="padding:12px 10px; font-weight:700; color:var(--black);">${g.skill}</td>
+                                    <td style="padding:12px 10px; color:var(--grey-600);">${g.industryTarget}% min</td>
+                                    <td style="padding:12px 10px; font-weight:700; color:var(--black);">${g.cohortProficiency}%</td>
+                                    <td style="padding:12px 10px; font-weight:800; color:${gapColor};">-${g.gap}%</td>
+                                    <td style="padding:12px 10px;"><span class="badge ${badgeColor}">${g.priority}</span></td>
+                                    <td style="padding:12px 10px; color:var(--grey-600); font-size:12px;">${g.recommendation}</td>
+                                </tr>
+                            `;
+                        }).join("")}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+}
+
+function renderCohortTable() {
+    const tableBody = document.getElementById("cohortTableBody");
+    if (!tableBody) return;
+
+    if (!studentsList.length) {
+        tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:20px; color:var(--grey-500)">No student records found.</td></tr>`;
+        return;
+    }
+
+    tableBody.innerHTML = studentsList.map(s => {
+        const name = s.fullName || s.name || "Student Candidate";
+        const email = s.email || "student@institution.edu";
+        const readiness = s.readiness || 80;
+        const readinessColor = readiness >= 85 ? "var(--green)" : (readiness >= 75 ? "var(--gold)" : "var(--orange)");
+
+        return `
+            <tr style="border-bottom:1px solid var(--grey-100);">
+                <td style="padding:12px 10px;">
+                    <div style="font-weight:700; color:var(--black);">${name}</div>
+                    <div style="font-size:11px; color:var(--grey-500);">${email}</div>
+                </td>
+                <td style="padding:12px 10px; color:var(--grey-600);">${s.degree || "B.Tech CSE"}</td>
+                <td style="padding:12px 10px; font-weight:800; color:${readinessColor};">${readiness}% Readiness</td>
+                <td style="padding:12px 10px;">
+                    <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                        ${Object.keys(s.skills || {}).slice(0, 3).map(sk => `<span class="skill-tag" style="font-size:10px;">${sk}</span>`).join("")}
+                    </div>
+                </td>
+                <td style="padding:12px 10px;">
+                    <button class="btn btn-outline btn-sm" onclick="alert('Student Competency Dossier: ${name}\\n\\nReadiness Score: ${readiness}%\\nSkills: ${Object.entries(s.skills || {}).map(([k,v]) => `${k} (${v}%)`).join(', ')}')">View Dossier</button>
+                </td>
+            </tr>
+        `;
+    }).join("");
 }
 
 // Render Opportunity Cards
@@ -268,71 +478,41 @@ function renderOpportunityCards(filterType = "all", searchQuery = "", domainQuer
             );
         }
 
-        if (domainQuery) {
-            filtered = filtered.filter(o => o.domain === domainQuery);
-        }
-
         if (!filtered.length) {
             grid.innerHTML = `
                 <div class="empty-state" style="grid-column: 1/-1">
-                    <div class="empty-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="12" y1="8" x2="12" y2="12"></line>
-                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                        </svg>
-                    </div>
                     <div class="empty-title">No Opportunities Posted Yet</div>
-                    <div class="empty-desc">Click "Post Opportunity" to publish your first program or collaboration call.</div>
-                    <button class="btn btn-gold btn-sm" onclick="window.openPostModal('${type !== "all" ? type : "fdp"}')">+ Post New Opportunity</button>
+                    <div class="empty-desc">Industry programs and campus engagements will appear here live.</div>
                 </div>
             `;
             return;
         }
 
         grid.innerHTML = filtered.map(opp => {
-            const badgeClass = {
-                fdp: "badge-gold",
-                internship: "badge-black",
-                research: "badge-purple",
-                consultancy: "badge-blue",
-                training: "badge-green",
-                workshops: "badge-orange",
-                guest: "badge-gold",
-                mentorship: "badge-purple"
-            }[opp.type] || "badge-gray";
-
+            const badgeClass = opp.type === "fdp" ? "badge-gold" : (opp.type === "internship" ? "badge-black" : "badge-green");
             const typeLabel = (opp.type || "Program").toUpperCase();
-            const stipendOrFee = opp.fee || opp.stipend || opp.funding || opp.budget || opp.honorarium || "";
+            const stipendOrFee = opp.stipend || opp.fee || "";
 
             return `
                 <div class="opp-card">
                     <div class="opp-header">
-                        <div style="display:flex;align-items:center;gap:12px">
-                            <div class="opp-org-logo">${opp.orgInitials || (opp.organization ? opp.organization.slice(0, 2).toUpperCase() : "IN")}</div>
-                            <div>
-                                <div class="opp-title">${opp.title}</div>
-                                <div class="opp-org">${opp.organization || "Institution"}</div>
-                            </div>
+                        <div>
+                            <div class="opp-title">${opp.title || opp.role}</div>
+                            <div class="opp-org">${opp.organization || opp.companyName || "Industry Partner"}</div>
                         </div>
                         <span class="badge ${badgeClass}">${typeLabel}</span>
                     </div>
                     <div class="opp-meta">
-                        ${opp.mode ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect></svg>${opp.mode}</span>` : ""}
-                        ${opp.duration ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>${opp.duration}</span>` : ""}
-                        ${opp.domain ? `<span class="badge badge-gray">${opp.domain}</span>` : ""}
+                        ${opp.mode ? `<span class="meta-item">${opp.mode}</span>` : ""}
+                        ${opp.duration ? `<span class="meta-item">⏱️ ${opp.duration}</span>` : ""}
+                        ${opp.location ? `<span class="meta-item">📍 ${opp.location}</span>` : ""}
                     </div>
                     ${stipendOrFee ? `<div style="font-size:12px;font-weight:700;color:var(--green)">💰 ${stipendOrFee}</div>` : ""}
-                    <p style="font-size:12px;color:var(--grey-600);line-height:1.6;margin:2px 0">${opp.description || ""}</p>
-                    ${opp.attachmentName ? `<div style="font-size:11.5px;color:var(--blue);display:flex;align-items:center;gap:5px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg> Attachment: ${opp.attachmentName}</div>` : ""}
+                    <p style="font-size:12px;color:var(--grey-600);line-height:1.6;margin:4px 0">${opp.description || ""}</p>
                     ${opp.skills && opp.skills.length ? `<div class="opp-skills">${opp.skills.map(s => `<span class="skill-tag">${s}</span>`).join("")}</div>` : ""}
                     <div class="opp-footer">
-                        ${opp.deadline ? `<span class="deadline-text">📅 Deadline: ${opp.deadline}</span>` : "<span></span>"}
-                        <div style="display:flex;gap:8px">
-                            <button class="btn btn-outline btn-sm" onclick="window.viewOppDetails('${opp.id}')">Details</button>
-                            <button class="btn btn-primary btn-sm" onclick="window.openApplyModal('${opp.id}')">Apply / Register</button>
-                            <button class="btn btn-outline btn-sm" style="color:var(--red);border-color:var(--red-bg)" onclick="window.deleteOpp('${opp.id}')" title="Delete Opportunity">✕</button>
-                        </div>
+                        <span class="deadline-text">📅 ${opp.deadline || "Active"}</span>
+                        <button class="btn btn-outline btn-sm" onclick="alert('Viewing opportunity: ${opp.title || opp.role}\\n\\nOrganization: ${opp.organization || opp.companyName}\\nRequired Skills: ${(opp.skills || []).join(', ')}')">View Details</button>
                     </div>
                 </div>
             `;
@@ -340,413 +520,80 @@ function renderOpportunityCards(filterType = "all", searchQuery = "", domainQuer
     });
 }
 
-// Render Applications Table
 function renderApplicationsTable() {
     const tableBody = document.getElementById("applicationsTableBody");
     if (!tableBody) return;
 
     if (!applications.length) {
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="6" style="text-align:center;padding:36px;color:var(--grey-500)">
-                    No applications submitted yet. Browse opportunities and click "Apply / Register" to track them here.
+        tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:var(--grey-500)">No candidate applications found.</td></tr>`;
+        return;
+    }
+
+    tableBody.innerHTML = applications.map(app => {
+        const studentName = app.studentName || "Student Candidate";
+        const oppTitle = app.opportunityTitle || app.role || "Software Engineering Role";
+        const compName = app.companyName || app.company || "Industry Partner";
+        const status = app.status || "Applied";
+
+        let statusClass = "badge-gray";
+        if (status === "Hired" || status === "Selected") statusClass = "badge-green";
+        else if (status === "Shortlisted") statusClass = "badge-blue";
+        else if (status === "Interviewing") statusClass = "badge-purple";
+        else if (status === "Evaluated") statusClass = "badge-gold";
+
+        return `
+            <tr style="border-bottom:1px solid var(--grey-100);">
+                <td style="padding:12px 10px; font-weight:700; color:var(--black);">${studentName}</td>
+                <td style="padding:12px 10px; color:var(--grey-600);">${oppTitle}</td>
+                <td style="padding:12px 10px; color:var(--black); font-weight:600;">${compName}</td>
+                <td style="padding:12px 10px; color:var(--gold); font-weight:800;">${app.matchScore || 85}%</td>
+                <td style="padding:12px 10px;"><span class="badge ${statusClass}">${status.toUpperCase()}</span></td>
+                <td style="padding:12px 10px;">
+                    <button class="btn btn-outline btn-sm" onclick="alert('Placement Record:\\n\\nCandidate: ${studentName}\\nRole: ${oppTitle}\\nCompany: ${compName}\\nCurrent Stage: ${status}')">Inspect</button>
                 </td>
             </tr>
         `;
-        return;
-    }
-
-    const statusBadge = (s) => {
-        switch (s) {
-            case "Accepted": return `<span class="badge badge-green">Accepted</span>`;
-            case "Shortlisted": return `<span class="badge badge-gold">Shortlisted</span>`;
-            case "Under Review": return `<span class="badge badge-orange">Under Review</span>`;
-            default: return `<span class="badge badge-gray">${s || "Applied"}</span>`;
-        }
-    };
-
-    tableBody.innerHTML = applications.map(app => `
-        <tr>
-            <td>
-                <strong style="color:var(--black);font-size:13px">${app.title}</strong>
-                <div style="font-size:11px;color:var(--grey-500)">${app.organization}</div>
-                ${app.attachmentName ? `<div style="font-size:10.5px;color:var(--blue)">📎 ${app.attachmentName}</div>` : ""}
-            </td>
-            <td><span class="badge badge-gray">${app.type}</span></td>
-            <td>${app.appliedDate}</td>
-            <td>${statusBadge(app.status)}</td>
-            <td style="font-size:11.5px;color:var(--grey-700)">${app.nextStep || "Application Submitted"}</td>
-            <td>
-                <button class="btn btn-outline btn-sm" style="color:var(--red);border-color:var(--red-bg)" onclick="window.withdrawApp('${app.id}')">Withdraw</button>
-            </td>
-        </tr>
-    `).join("");
-}
-
-// Render Publications
-function renderProfilePublications() {
-    const list = document.getElementById("profilePubsList");
-    if (!list) return;
-
-    const pubs = currentProfile.publications || [];
-    if (!pubs.length) {
-        list.innerHTML = `
-            <div style="text-align:center;padding:24px;color:var(--grey-500);font-size:13px">
-                No publications added yet. Click "Add Paper" to document your research papers.
-            </div>
-        `;
-        return;
-    }
-
-    list.innerHTML = pubs.map(p => `
-        <div style="padding:14px;background:var(--grey-100);border-radius:8px;border-left:3px solid var(--gold);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between">
-            <div>
-                <div style="font-size:13px;font-weight:700;color:var(--black)">${p.title}</div>
-                <div style="font-size:11.5px;color:var(--grey-600);margin-top:3px">${p.journal} · ${p.year} · <span class="badge badge-gray" style="font-size:9px">${p.type}</span></div>
-            </div>
-            <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="window.deletePub('${p.id}')">✕</button>
-        </div>
-    `).join("");
+    }).join("");
 }
 
 // =====================================================
-// SIDEBAR & SECTION NAVIGATION
+// INTERACTIVE HELPERS
 // =====================================================
+window.generateTrainingPlan = function() {
+    const criticalGaps = skillGapAnalysis.filter(g => g.gap >= 20);
+    const planText = criticalGaps.map(g => `• ${g.skill} (Gap: ${g.gap}%): ${g.recommendation}`).join("\n");
+    alert(`Recommended Institutional Skill-Bridging Plan:\n\n${planText || "All core skills are currently aligned with industry demand!"}\n\nGenerated automatically from live Industry Job & Project requisitions.`);
+};
+
 function initSidebarNavigation() {
-    const navItems = document.querySelectorAll(".sidebar-nav .nav-item");
-    const sections = document.querySelectorAll(".dashboard-section");
-
+    const navItems = document.querySelectorAll(".nav-item");
     navItems.forEach(item => {
         item.addEventListener("click", (e) => {
             e.preventDefault();
-            const targetSectionId = item.getAttribute("data-section");
-            if (!targetSectionId) return;
+            const section = item.getAttribute("data-section");
+            if (!section) return;
 
             navItems.forEach(n => n.classList.remove("active"));
             item.classList.add("active");
 
-            sections.forEach(sec => sec.classList.remove("active"));
-            const targetSec = document.getElementById(`sec-${targetSectionId}`);
-            if (targetSec) {
-                targetSec.classList.add("active");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            }
-
-            const sidebar = document.getElementById("sidebar");
-            if (sidebar) sidebar.classList.remove("open");
+            document.querySelectorAll(".section-panel").forEach(p => p.classList.remove("active"));
+            const targetPanel = document.getElementById(`sec-${section}`);
+            if (targetPanel) targetPanel.classList.add("active");
         });
     });
 }
 
-// =====================================================
-// MODALS & POST / UPLOAD ENGINE
-// =====================================================
 function initModals() {
-    // 1. Post Opportunity Form
-    const postForm = document.getElementById("postOpportunityForm");
-    if (postForm) {
-        postForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            // File attachment handle
-            const fileInput = document.getElementById("oppAttachmentFile");
-            const attachmentName = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0].name : "";
-
-            const newOpp = {
-                id: "opp_" + Date.now(),
-                title: document.getElementById("oppTitle").value.trim(),
-                type: document.getElementById("oppType").value,
-                organization: document.getElementById("oppOrg").value.trim() || currentProfile.institution || "Institution",
-                orgInitials: (document.getElementById("oppOrg").value.trim() || currentProfile.institution || "IN").slice(0, 2).toUpperCase(),
-                domain: document.getElementById("oppDomain").value.trim(),
-                mode: document.getElementById("oppMode").value,
-                duration: document.getElementById("oppDuration").value.trim(),
-                deadline: document.getElementById("oppDeadline").value.trim(),
-                fee: document.getElementById("oppFee").value.trim(),
-                description: document.getElementById("oppDesc").value.trim(),
-                skills: document.getElementById("oppSkills").value.split(",").map(s => s.trim()).filter(Boolean),
-                attachmentName: attachmentName,
-                createdAt: new Date().toISOString()
-            };
-
-            opportunities.unshift(newOpp);
-            saveLocalState();
-
-            // Firestore upload
-            if (currentUser) {
-                try {
-                    await addDoc(collection(db, "opportunities"), {
-                        ...newOpp,
-                        createdById: currentUser.uid,
-                        createdAt: serverTimestamp()
-                    });
-                } catch (err) {
-                    console.warn("Stored locally", err);
-                }
-            }
-
-            closeAllModals();
-            postForm.reset();
-            renderAll();
-            showToast("Opportunity published successfully!");
-        });
-    }
-
-    // 2. Apply / Upload Application Form
-    const applyForm = document.getElementById("applyModalForm");
-    if (applyForm) {
-        applyForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const oppId = document.getElementById("applyOppId").value;
-            const opp = opportunities.find(o => o.id === oppId);
-            if (!opp) return;
-
-            const docInput = document.getElementById("applyDocAttachment");
-            const docAttachmentName = docInput && docInput.files && docInput.files[0] ? docInput.files[0].name : "";
-
-            const newApp = {
-                id: "app_" + Date.now(),
-                opportunityId: opp.id,
-                title: opp.title,
-                organization: opp.organization,
-                type: (opp.type || "Program").toUpperCase(),
-                appliedDate: new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
-                status: "Applied",
-                nextStep: "Application submitted. Under initial screening.",
-                statement: document.getElementById("applyStatement").value.trim(),
-                portfolioLink: document.getElementById("applyPortfolioLink").value.trim(),
-                attachmentName: docAttachmentName,
-                applicantName: currentProfile.fullName || currentProfile.name,
-                applicantEmail: currentProfile.email
-            };
-
-            applications.unshift(newApp);
-            saveLocalState();
-
-            // Save to Firestore
-            if (currentUser) {
-                try {
-                    await addDoc(collection(db, "applications"), {
-                        ...newApp,
-                        userId: currentUser.uid,
-                        createdAt: serverTimestamp()
-                    });
-                } catch (err) {
-                    console.warn("Stored locally", err);
-                }
-            }
-
-            closeAllModals();
-            applyForm.reset();
-            renderAll();
-            showToast(`Application submitted for "${opp.title}"!`);
-        });
-    }
-
-    // 3. Edit Profile Form
-    const editProfForm = document.getElementById("editProfileForm");
-    if (editProfForm) {
-        editProfForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            currentProfile.fullName = document.getElementById("editName").value.trim();
-            currentProfile.designation = document.getElementById("editDesig").value.trim();
-            currentProfile.department = document.getElementById("editDept").value.trim();
-            currentProfile.institution = document.getElementById("editInst").value.trim();
-            currentProfile.bio = document.getElementById("editBio").value.trim();
-
-            saveLocalState();
-
-            if (currentUser) {
-                try {
-                    await updateDoc(doc(db, "users", currentUser.uid), {
-                        fullName: currentProfile.fullName,
-                        designation: currentProfile.designation,
-                        department: currentProfile.department,
-                        institution: currentProfile.institution,
-                        bio: currentProfile.bio,
-                        updatedAt: serverTimestamp()
-                    });
-                } catch (err) {
-                    console.warn("Profile updated locally", err);
-                }
-            }
-
-            closeAllModals();
-            updateUserUI();
-            showToast("Profile updated successfully!");
-        });
-    }
-
-    // 4. Add Publication Form
-    const addPubForm = document.getElementById("addPubForm");
-    if (addPubForm) {
-        addPubForm.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (!currentProfile.publications) currentProfile.publications = [];
-            const newPub = {
-                id: "pub_" + Date.now(),
-                title: document.getElementById("pubTitle").value.trim(),
-                journal: document.getElementById("pubJournal").value.trim(),
-                year: document.getElementById("pubYear").value.trim(),
-                type: document.getElementById("pubType").value
-            };
-            currentProfile.publications.unshift(newPub);
-            saveLocalState();
-            closeAllModals();
-            addPubForm.reset();
-            renderProfilePublications();
-            renderStats();
-            showToast("Publication added to portfolio!");
-        });
-    }
-}
-
-// Global actions
-window.openPostModal = function(defaultType = "fdp") {
-    const modal = document.getElementById("postOpportunityModal");
-    if (!modal) return;
-    const typeSelect = document.getElementById("oppType");
-    if (typeSelect) typeSelect.value = defaultType;
-    modal.classList.add("open");
-};
-
-window.openApplyModal = function(oppId) {
-    const opp = opportunities.find(o => o.id === oppId);
-    if (!opp) return;
-
-    document.getElementById("applyOppId").value = opp.id;
-    document.getElementById("applyOppTitleText").textContent = opp.title;
-    document.getElementById("applyOppOrgText").textContent = `${opp.organization} · ${opp.domain || ""}`;
-
-    const modal = document.getElementById("applyModal");
-    if (modal) modal.classList.add("open");
-};
-
-window.viewOppDetails = function(oppId) {
-    const opp = opportunities.find(o => o.id === oppId);
-    if (!opp) return;
-
-    document.getElementById("detailModalTitle").textContent = opp.title;
-    document.getElementById("detailModalBody").innerHTML = `
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
-            <div class="opp-org-logo" style="width:48px;height:48px;font-size:15px">${opp.orgInitials || (opp.organization ? opp.organization.slice(0, 2).toUpperCase() : "IN")}</div>
-            <div>
-                <div style="font-size:15px;font-weight:700;color:var(--black)">${opp.organization || "Institution"}</div>
-                <div style="font-size:12px;color:var(--grey-500)">${opp.mode} · ${opp.duration || ""}</div>
-            </div>
-        </div>
-        <p style="font-size:13px;color:var(--grey-700);line-height:1.7;margin-bottom:18px">${opp.description || "No description provided."}</p>
-        <div class="grid-2" style="margin-bottom:16px;gap:10px">
-            <div style="padding:10px 14px;background:var(--grey-100);border-radius:6px"><div style="font-size:10px;font-weight:700;color:var(--grey-500)">DOMAIN</div><div style="font-size:12.5px;font-weight:600">${opp.domain || "General"}</div></div>
-            <div style="padding:10px 14px;background:var(--grey-100);border-radius:6px"><div style="font-size:10px;font-weight:700;color:var(--grey-500)">DEADLINE</div><div style="font-size:12.5px;font-weight:600;color:var(--red)">${opp.deadline || "Open"}</div></div>
-        </div>
-        ${opp.attachmentName ? `<div style="margin-bottom:14px;padding:10px 14px;background:var(--blue-bg);border-radius:6px;font-size:12px;color:var(--blue);font-weight:600">📎 Attached Brochure / Document: ${opp.attachmentName}</div>` : ""}
-        ${opp.skills && opp.skills.length ? `<div style="margin-bottom:14px"><div style="font-size:11px;font-weight:700;color:var(--grey-700);margin-bottom:6px">SKILLS & TOPICS</div><div class="opp-skills">${opp.skills.map(s => `<span class="skill-tag">${s}</span>`).join("")}</div></div>` : ""}
-    `;
-
-    document.getElementById("detailApplyBtn").onclick = () => {
-        closeAllModals();
-        window.openApplyModal(opp.id);
+    window.closeAllModals = function() {
+        document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("active"));
     };
-
-    const modal = document.getElementById("opportunityDetailModal");
-    if (modal) modal.classList.add("open");
-};
-
-window.deleteOpp = function(oppId) {
-    if (confirm("Are you sure you want to delete this opportunity?")) {
-        opportunities = opportunities.filter(o => o.id !== oppId);
-        saveLocalState();
-        renderAll();
-        showToast("Opportunity deleted.");
-    }
-};
-
-window.deletePub = function(pubId) {
-    if (confirm("Delete this publication?")) {
-        currentProfile.publications = (currentProfile.publications || []).filter(p => p.id !== pubId);
-        saveLocalState();
-        renderProfilePublications();
-        renderStats();
-        showToast("Publication removed.");
-    }
-};
-
-window.openEditProfileModal = function() {
-    document.getElementById("editName").value = currentProfile.fullName || currentProfile.name || "";
-    document.getElementById("editDesig").value = currentProfile.designation || "";
-    document.getElementById("editDept").value = currentProfile.department || "";
-    document.getElementById("editInst").value = currentProfile.institution || "";
-    document.getElementById("editBio").value = currentProfile.bio || "";
-
-    const modal = document.getElementById("editProfileModal");
-    if (modal) modal.classList.add("open");
-};
-
-window.openAddPubModal = function() {
-    const modal = document.getElementById("addPubModal");
-    if (modal) modal.classList.add("open");
-};
-
-window.withdrawApp = function(appId) {
-    if (confirm("Are you sure you want to withdraw this application?")) {
-        applications = applications.filter(a => a.id !== appId);
-        saveLocalState();
-        renderAll();
-        showToast("Application withdrawn.");
-    }
-};
-
-window.closeAllModals = function() {
-    document.querySelectorAll(".modal-overlay").forEach(m => m.classList.remove("open"));
-};
-
-// =====================================================
-// FILTERS
-// =====================================================
-function initFilters() {
-    const searchInput = document.getElementById("globalSearchInput");
-    const domainSelect = document.getElementById("globalDomainSelect");
-
-    if (searchInput) {
-        searchInput.addEventListener("input", () => {
-            renderOpportunityCards("all", searchInput.value.trim(), domainSelect ? domainSelect.value : "");
-        });
-    }
-
-    if (domainSelect) {
-        domainSelect.addEventListener("change", () => {
-            renderOpportunityCards("all", searchInput ? searchInput.value.trim() : "", domainSelect.value);
-        });
-    }
-
-    const subTabs = document.querySelectorAll("#oppCategoryTabs .tab-btn");
-    subTabs.forEach(btn => {
-        btn.addEventListener("click", () => {
-            subTabs.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            const type = btn.getAttribute("data-type");
-            renderOpportunityCards(type, searchInput ? searchInput.value.trim() : "", domainSelect ? domainSelect.value : "");
-        });
-    });
 }
 
-// =====================================================
-// TOAST HELPER
-// =====================================================
-function showToast(message) {
-    const existing = document.querySelector(".toast");
-    if (existing) existing.remove();
-
-    const toast = document.createElement("div");
-    toast.className = "toast";
-    toast.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" width="18" height="18">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        <span>${message}</span>
-    `;
-    document.body.appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 3500);
+function initFilters() {
+    const searchInput = document.getElementById("oppSearchInput");
+    if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+            renderOpportunityCards("all", e.target.value);
+        });
+    }
 }

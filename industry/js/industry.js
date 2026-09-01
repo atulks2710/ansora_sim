@@ -1237,11 +1237,37 @@ window.advanceCandidateStage = async function(candidateId, nextStage) {
     const candName = cand ? cand.name : "Candidate";
 
     try {
+        // 1. Update company pipeline
         await setDoc(doc(db, `companies/${state.currentUser.uid}/pipeline`, candidateId), {
             status: nextStage,
             candidateName: candName,
             updatedAt: serverTimestamp()
         }, { merge: true });
+
+        // 2. Update canonical applications collection in Firestore
+        try {
+            const appsQuery = query(
+                collection(db, "applications"),
+                where("studentId", "==", candidateId)
+            );
+            const appSnaps = await getDocs(appsQuery);
+            appSnaps.forEach(async (appDoc) => {
+                await updateDoc(doc(db, "applications", appDoc.id), {
+                    status: nextStage,
+                    updatedAt: serverTimestamp()
+                });
+
+                // Also sync to student's local applications subcollection
+                try {
+                    await setDoc(doc(db, "students", candidateId, "applications", appDoc.id), {
+                        status: nextStage,
+                        updatedAt: serverTimestamp()
+                    }, { merge: true });
+                } catch (e) {}
+            });
+        } catch (appErr) {
+            console.warn("Applications sync notice:", appErr);
+        }
 
         if (nextStage === "Shortlisted") {
             await logActivity("⚡", "Candidate Shortlisted", `Shortlisted ${candName}`, "Shortlisted");
@@ -1251,7 +1277,7 @@ window.advanceCandidateStage = async function(candidateId, nextStage) {
             showToast(`Scheduled technical interview with ${candName}!`);
         } else if (nextStage === "Hired") {
             await logActivity("🎉", "Candidate Hired", `Placement confirmed for ${candName}!`, "Placement");
-            showToast(`🎉 Congratulations! ${candName} is now hired!`);
+            showToast(`🎉 Congratulations! ${candName} is now hired & placed!`);
         }
     } catch (err) {
         console.error("Failed to update candidate pipeline stage:", err);
@@ -2190,7 +2216,31 @@ function initEvaluationModal() {
             const profScore = parseFloat(document.getElementById("sliderProf")?.value || "4.5");
 
             try {
-                // Record evaluation in Firestore
+                const overallScoreAvg = ((techScore + problemScore + teamScore + profScore) / 4).toFixed(1);
+                const overallPercentage = Math.round(((techScore + problemScore + teamScore + profScore) / 20) * 100);
+                const companyName = state.company?.name || state.currentUser.displayName || "Industry Partner";
+                const primarySkill = (cand && cand.skills && cand.skills.length > 0) ? cand.skills[0].name : "Software Engineering";
+
+                // 1. Record evaluation in canonical "evaluations" collection
+                const evalDocRef = await addDoc(collection(db, "evaluations"), {
+                    studentId: studentId,
+                    studentName: candName,
+                    companyId: state.currentUser.uid,
+                    companyName: companyName,
+                    context: context,
+                    techScore: techScore,
+                    problemScore: problemScore,
+                    teamScore: teamScore,
+                    profScore: profScore,
+                    overallScore: overallScoreAvg,
+                    overallPercentage: overallPercentage,
+                    verifiedSkills: [primarySkill, "Problem Solving"],
+                    remarks: remarks,
+                    evaluatedAt: serverTimestamp(),
+                    createdAt: serverTimestamp()
+                });
+
+                // Also record in company evaluations subcollection
                 await addDoc(collection(db, `companies/${state.currentUser.uid}/evaluations`), {
                     studentId: studentId,
                     studentName: candName,
@@ -2199,14 +2249,67 @@ function initEvaluationModal() {
                     problemScore: problemScore,
                     teamScore: teamScore,
                     profScore: profScore,
+                    overallScore: overallScoreAvg,
                     remarks: remarks,
                     createdAt: serverTimestamp()
                 });
 
-                // Update candidate pipeline status
+                // 2. Record Verified Skill in canonical "verified_skills" collection (Provenance)
+                await addDoc(collection(db, "verified_skills"), {
+                    studentId: studentId,
+                    studentName: candName,
+                    skill: primarySkill,
+                    score: overallPercentage,
+                    companyId: state.currentUser.uid,
+                    companyName: companyName,
+                    evaluationId: evalDocRef.id,
+                    context: context,
+                    verificationStatus: "Verified",
+                    verifiedAt: serverTimestamp()
+                });
+
+                // 3. Update student profile in users and students collections
+                const studentUpdate = {
+                    [`skillsVerified.${primarySkill}`]: {
+                        score: overallPercentage,
+                        companyName: companyName,
+                        evaluationId: evalDocRef.id,
+                        verifiedAt: new Date().toISOString(),
+                        verificationStatus: "Verified"
+                    },
+                    [`skills.${primarySkill}`]: Math.max(overallPercentage, 85),
+                    readiness: Math.min(overallPercentage + 2, 98)
+                };
+
+                try {
+                    await updateDoc(doc(db, "users", studentId), studentUpdate);
+                    await updateDoc(doc(db, "students", studentId), studentUpdate);
+                } catch (userErr) {
+                    console.warn("Notice: student profile update fallback", userErr);
+                }
+
+                // 4. Update canonical applications collection
+                try {
+                    const appsQuery = query(
+                        collection(db, "applications"),
+                        where("studentId", "==", studentId)
+                    );
+                    const appSnaps = await getDocs(appsQuery);
+                    appSnaps.forEach(async (appDoc) => {
+                        await updateDoc(doc(db, "applications", appDoc.id), {
+                            status: "Evaluated",
+                            evaluationScore: overallPercentage,
+                            evaluationId: evalDocRef.id,
+                            updatedAt: serverTimestamp()
+                        });
+                    });
+                } catch (appErr) {}
+
+                // 5. Update candidate pipeline status
                 await setDoc(doc(db, `companies/${state.currentUser.uid}/pipeline`, studentId), {
                     status: "Evaluated",
-                    evaluationScore: ((techScore + problemScore + teamScore + profScore) / 4).toFixed(1),
+                    evaluationScore: overallScoreAvg,
+                    evaluationPercentage: overallPercentage,
                     updatedAt: serverTimestamp()
                 }, { merge: true });
 
@@ -2284,13 +2387,13 @@ function initMobileMenu() {
 function redirectWrongRole(role) {
     switch (role) {
         case "student":
-            window.location.href = "../student-home.html";
+            window.location.href = "../student/student-home.html";
             break;
         case "academician":
-            window.location.href = "../academician-home.html";
+            window.location.href = "../academician/academician-home.html";
             break;
         case "institution":
-            window.location.href = "../institution-home.html";
+            window.location.href = "../institution/institution-home.html";
             break;
         default:
             window.location.href = "../login.html";

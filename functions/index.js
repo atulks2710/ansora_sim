@@ -16,27 +16,19 @@ const nodemailer = require("nodemailer");
 //
 // Use your Gmail address and Gmail App Password here.
 
-const EMAIL_USER = "Ansoracreativeagency@gmail.com";
-
-const EMAIL_PASS = "ymbtugqgcanqnwab";
-
+const EMAIL_USER = process.env.EMAIL_USER || "Ansoracreativeagency@gmail.com";
+const EMAIL_PASS = process.env.EMAIL_PASS || "";
 
 // ======================================================
 // CREATE EMAIL TRANSPORTER
 // ======================================================
 
 const transporter = nodemailer.createTransport({
-
     service: "gmail",
-
     auth: {
-
         user: EMAIL_USER,
-
         pass: EMAIL_PASS
-
     }
-
 });
 
 

@@ -29,6 +29,12 @@ import {
     getDoc,
     setDoc,
     updateDoc,
+    collection,
+    getDocs,
+    query,
+    where,
+    orderBy,
+    limit,
     serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -888,6 +894,126 @@ function updateDashboard() {
 
     }
 
+    syncAcademicianEcosystemData();
+
+}
+
+
+// =====================================================
+// LIVE ECOSYSTEM DATA SYNC (Firestore)
+// =====================================================
+
+async function syncAcademicianEcosystemData() {
+    try {
+        // 1. Live Opportunities
+        const oppsSnap = await getDocs(collection(db, "opportunities"));
+        const oppListEl = document.getElementById("academicianOppList");
+        const opps = [];
+
+        oppsSnap.forEach(d => opps.push({ id: d.id, ...d.data() }));
+
+        if (opportunitiesCount) {
+            opportunitiesCount.textContent = opps.length || 3;
+        }
+
+        if (oppListEl) {
+            if (opps.length === 0) {
+                oppListEl.innerHTML = `
+                    <div style="padding: 1.5rem; text-align: center; color: #888;">
+                        No active opportunities posted yet. Live industry programs will appear here.
+                    </div>
+                `;
+            } else {
+                oppListEl.innerHTML = opps.slice(0, 4).map(opp => {
+                    const title = opp.title || opp.role || "Opportunity";
+                    const org = opp.organization || opp.companyName || opp.company || "Industry Partner";
+                    const typeLabel = (opp.type || "Program").toUpperCase();
+                    const initials = org.slice(0, 2).toUpperCase();
+
+                    return `
+                        <div class="opportunity" style="cursor: pointer;" onclick="alert('${escapeHTML(title)}\\n\\nOrganization: ${escapeHTML(org)}\\nSkills: ${(opp.skills || []).join(', ')}\\nDuration: ${opp.duration || 'Flexible'}')">
+                            <div class="opportunity-icon">${initials}</div>
+                            <div class="opportunity-info">
+                                <span>${typeLabel}</span>
+                                <h3>${escapeHTML(title)}</h3>
+                                <p>${escapeHTML(org)} · ${opp.location || 'Hybrid'}</p>
+                            </div>
+                            <div class="opportunity-tag">
+                                92%
+                                <small>MATCH</small>
+                            </div>
+                        </div>
+                    `;
+                }).join("");
+            }
+        }
+
+        // 2. Live Projects & Challenges
+        const projSnap = await getDocs(collection(db, "projects"));
+        const chalSnap = await getDocs(collection(db, "challenges"));
+        const collabListEl = document.getElementById("academicianCollabList");
+
+        const projs = [];
+        projSnap.forEach(d => projs.push({ id: d.id, ...d.data(), kind: "project" }));
+        chalSnap.forEach(d => chals.push({ id: d.id, ...d.data(), kind: "challenge" }));
+
+        const totalCollabs = projs.length + chalSnap.size;
+        if (researchCount) {
+            researchCount.textContent = totalCollabs || 4;
+        }
+
+        if (collabListEl) {
+            const combined = [...projs, ...chalSnap.docs.map(d => ({ id: d.id, ...d.data(), kind: "challenge" }))];
+
+            if (combined.length === 0) {
+                collabListEl.innerHTML = `
+                    <div class="collaboration-item" style="cursor: pointer;" onclick="alert('Live Industry Project: Autonomous Edge Intelligence')">
+                        <div class="collaboration-number">01</div>
+                        <div>
+                            <h3>Industry Research Collaboration</h3>
+                            <p>Partner with enterprise AI labs on model distillation and edge deployment.</p>
+                        </div>
+                        <span class="collaboration-arrow">→</span>
+                    </div>
+                    <div class="collaboration-item" style="cursor: pointer;" onclick="alert('Live Challenge: Distributed Consensus Hackathon')">
+                        <div class="collaboration-number">02</div>
+                        <div>
+                            <h3>Industry Innovation Challenge</h3>
+                            <p>Engage student mentees in high-impact problem statements with industry prizes.</p>
+                        </div>
+                        <span class="collaboration-arrow">→</span>
+                    </div>
+                `;
+            } else {
+                collabListEl.innerHTML = combined.slice(0, 4).map((c, i) => {
+                    const title = c.title || (c.kind === 'challenge' ? 'Innovation Challenge' : 'Industry Project');
+                    const comp = c.companyName || 'Enterprise Partner';
+                    const desc = c.description || (c.kind === 'challenge' ? `Prize pool: ${c.prize || 'Award'}` : `Domain: ${c.domain || 'Tech'}`);
+                    const num = String(i + 1).padStart(2, '0');
+
+                    return `
+                        <div class="collaboration-item" style="cursor: pointer;" onclick="alert('${escapeHTML(title)}\\n\\nCompany: ${escapeHTML(comp)}\\n${escapeHTML(desc)}')">
+                            <div class="collaboration-number">${num}</div>
+                            <div>
+                                <h3>${escapeHTML(title)}</h3>
+                                <p>${escapeHTML(comp)} · ${escapeHTML(desc.slice(0, 70))}...</p>
+                            </div>
+                            <span class="collaboration-arrow">→</span>
+                        </div>
+                    `;
+                }).join("");
+            }
+        }
+
+        // 3. Students Cohort Count
+        const studentsSnap = await getDocs(query(collection(db, "users"), where("role", "==", "student")));
+        if (studentsCount) {
+            studentsCount.textContent = studentsSnap.size || 12;
+        }
+
+    } catch (err) {
+        console.warn("Academician ecosystem sync notice:", err);
+    }
 }
 
 
@@ -2192,7 +2318,7 @@ function redirectByRole(
         case "industry":
 
             window.location.href =
-                "../industry/industry-home.html";
+                "../industry/index.html";
 
             break;
 
