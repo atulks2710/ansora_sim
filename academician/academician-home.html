@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Dashboard">
+
+    <title>
+        Academician Dashboard | SkillBridge
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="academician-home.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+
+    <div class="app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="sidebar"
+            id="sidebar">
+
+
+            <!-- BRAND -->
+
+            <div class="sidebar-brand">
+
+                <a
+                    href="../index.html"
+                    class="brand">
+
+                    <div class="brand-mark">
+                        SB
+                    </div>
+
+                    <div class="brand-name">
+                        SKILL<span>BRIDGE</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- NAVIGATION -->
+
+            <nav class="sidebar-nav">
+
+
+                <div class="nav-section-title">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="#dashboard"
+                    class="nav-item active">
+
+                    <span class="nav-icon">⌂</span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#profile"
+                    class="nav-item">
+
+                    <span class="nav-icon">◯</span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#skills"
+                    class="nav-item">
+
+                    <span class="nav-icon">✦</span>
+
+                    <span>
+                        My Skills
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#students"
+                    class="nav-item">
+
+                    <span class="nav-icon">♙</span>
+
+                    <span>
+                        Students
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#assessments"
+                    class="nav-item">
+
+                    <span class="nav-icon">✓</span>
+
+                    <span>
+                        Assessments
+                    </span>
+
+                </a>
+
+
+                <div class="nav-section-title nav-gap">
+                    COLLABORATION
+                </div>
+
+
+                <a
+                    href="#opportunities"
+                    class="nav-item">
+
+                    <span class="nav-icon">◇</span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#applications"
+                    class="nav-item">
+
+                    <span class="nav-icon">▤</span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#research"
+                    class="nav-item">
+
+                    <span class="nav-icon">⌁</span>
+
+                    <span>
+                        Research
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#collaboration"
+                    class="nav-item">
+
+                    <span class="nav-icon">↔</span>
+
+                    <span>
+                        Collaboration
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <!-- SIDEBAR BOTTOM -->
+
+            <div class="sidebar-bottom">
+
+
+                <div class="sidebar-help">
+
+                    <div class="help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logoutBtn"
+                    class="logout-button">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="main">
+
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+
+                <button
+                    id="menuButton"
+                    class="menu-button">
+
+                    ☰
+
+                </button>
+
+
+                <div class="portal-label">
+
+                    ACADEMICIAN PORTAL
+
+                </div>
+
+
+                <div class="topbar-actions">
+
+
+                    <button
+                        class="icon-button">
+
+                        ⌕
+
+                    </button>
+
+
+                    <button
+                        class="icon-button notification">
+
+                        ♢
+
+                        <span>
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="top-profile"
+                        id="topProfileButton">
+
+                        <div
+                            class="top-profile-image"
+                            id="topProfileImage">
+
+                            <span id="topInitial">
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="top-profile-info">
+
+                            <strong
+                                id="topName">
+
+                                Academician
+
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <div class="content">
+
+
+                <!-- =================================================
+                     WELCOME
+                ================================================== -->
+
+                <section
+                    class="welcome"
+                    id="dashboard">
+
+
+                    <div>
+
+                        <span class="eyebrow">
+                            ACADEMIC JOURNEY
+                        </span>
+
+
+                        <h1>
+
+                            Welcome back,
+                            <span id="welcomeName">
+                                Academician
+                            </span>.
+
+                        </h1>
+
+
+                        <p>
+
+                            Connect your academic expertise
+                            with industry, research and
+                            real-world opportunities.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="date-box">
+
+                        <span>
+                            TODAY
+                        </span>
+
+                        <strong id="currentDate">
+                            —
+                        </strong>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     PROFILE COMPLETION
+                ================================================== -->
+
+                <section class="completion-card">
+
+
+                    <div class="completion-left">
+
+
+                        <div
+                            class="completion-avatar"
+                            id="completionAvatar">
+
+                            <span id="completionInitial">
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="small-label">
+                                ACADEMIC PROFILE
+                            </span>
+
+                            <h2>
+                                Complete your faculty profile
+                            </h2>
+
+                            <p>
+
+                                A complete profile helps institutions
+                                and industry discover your expertise.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="completion-right">
+
+
+                        <div class="progress-header">
+
+                            <span>
+                                Profile completion
+                            </span>
+
+                            <strong
+                                id="completionPercent">
+
+                                25%
+
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-fill"
+                                id="profileProgress"
+                                style="width:25%">
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            id="completeProfileBtn"
+                            class="completion-button">
+
+                            Complete Profile
+                            <span>→</span>
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     STATS
+                ================================================== -->
+
+                <section class="stats-grid">
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-label">
+                            STUDENTS
+                        </span>
+
+                        <strong id="studentsCount">
+                            0
+                        </strong>
+
+                        <p>
+                            Students connected
+                        </p>
+
+                        <span class="stat-mark">
+                            ♙
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-label">
+                            OPPORTUNITIES
+                        </span>
+
+                        <strong id="opportunitiesCount">
+                            0
+                        </strong>
+
+                        <p>
+                            Relevant opportunities
+                        </p>
+
+                        <span class="stat-mark">
+                            ◇
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <span class="stat-label">
+                            RESEARCH
+                        </span>
+
+                        <strong id="researchCount">
+                            0
+                        </strong>
+
+                        <p>
+                            Active collaborations
+                        </p>
+
+                        <span class="stat-mark">
+                            ⌁
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card highlighted">
+
+                        <span class="stat-label">
+                            PROFILE SCORE
+                        </span>
+
+                        <strong id="profileScore">
+                            25%
+                        </strong>
+
+                        <p>
+                            Faculty profile strength
+                        </p>
+
+                        <span class="stat-mark">
+                            ✦
+                        </span>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     MAIN GRID
+                ================================================== -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- =============================================
+                         PROFILE
+                    ============================================== -->
+
+                    <section
+                        class="card profile-card"
+                        id="profile">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    ACADEMIC PROFILE
+                                </span>
+
+                                <h2>
+                                    My Profile
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                id="editProfileButton"
+                                class="edit-button">
+
+                                Edit
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="profile-main">
+
+
+                            <!-- PHOTO -->
+
+                            <div class="profile-picture-wrapper">
+
+                                <div
+                                    class="profile-picture"
+                                    id="profileImage">
+
+                                    <span
+                                        id="profileInitial">
+
+                                        A
+
+                                    </span>
+
+                                </div>
+
+
+                                <label
+                                    for="profilePhotoInput"
+                                    class="photo-button">
+
+                                    📷
+
+                                </label>
+
+
+                                <input
+                                    type="file"
+                                    id="profilePhotoInput"
+                                    accept="image/jpeg,image/png,image/webp"
+                                    hidden>
+
+                            </div>
+
+
+                            <!-- BASIC INFO -->
+
+                            <div class="profile-basic">
+
+                                <h3
+                                    id="profileName">
+
+                                    Academician
+
+                                </h3>
+
+
+                                <span
+                                    class="role-badge">
+
+                                    ACADEMICIAN
+
+                                </span>
+
+
+                                <p
+                                    id="profileEmail">
+
+                                    email@example.com
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PROFILE DETAILS -->
+
+                        <div class="profile-details">
+
+
+                            <div class="detail">
+
+                                <span>
+                                    INSTITUTION
+                                </span>
+
+                                <strong
+                                    id="institutionValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    DEPARTMENT
+                                </span>
+
+                                <strong
+                                    id="departmentValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    DESIGNATION
+                                </span>
+
+                                <strong
+                                    id="designationValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    QUALIFICATION
+                                </span>
+
+                                <strong
+                                    id="qualificationValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    EXPERIENCE
+                                </span>
+
+                                <strong
+                                    id="experienceValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    SPECIALIZATION
+                                </span>
+
+                                <strong
+                                    id="specializationValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span>
+                                    LOCATION
+                                </span>
+
+                                <strong
+                                    id="locationValue">
+
+                                    Not added
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         SKILLS
+                    ============================================== -->
+
+                    <section
+                        class="card skills-card"
+                        id="skills">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    EXPERTISE
+                                </span>
+
+                                <h2>
+                                    My Skills
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                class="outline-button"
+                                id="addSkillButton">
+
+                                Add Skill
+                                <span>+</span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="skills-list"
+                            id="skillsList">
+
+                            <div class="empty-state">
+
+                                <div>
+                                    ✦
+                                </div>
+
+                                <p>
+                                    No skills added yet.
+                                </p>
+
+                                <span>
+                                    Add your academic and
+                                    professional expertise.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         OPPORTUNITIES
+                    ============================================== -->
+
+                    <section
+                        class="card opportunities-card"
+                        id="opportunities">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    INDUSTRY CONNECTION
+                                </span>
+
+                                <h2>
+                                    Opportunities
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                class="outline-button">
+
+                                Explore
+                                <span>→</span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="opportunity-list">
+
+
+                            <div
+                                class="opportunity">
+
+
+                                <div
+                                    class="opportunity-icon">
+
+                                    FT
+
+                                </div>
+
+
+                                <div
+                                    class="opportunity-info">
+
+                                    <span>
+                                        FACULTY INTERNSHIP
+                                    </span>
+
+                                    <h3>
+                                        Industry Immersion Program
+                                    </h3>
+
+                                    <p>
+                                        Technology Partner · Hybrid
+                                    </p>
+
+                                </div>
+
+
+                                <div
+                                    class="opportunity-tag">
+
+                                    94%
+
+                                    <small>
+                                        MATCH
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="opportunity">
+
+
+                                <div
+                                    class="opportunity-icon">
+
+                                    FD
+
+                                </div>
+
+
+                                <div
+                                    class="opportunity-info">
+
+                                    <span>
+                                        FDP
+                                    </span>
+
+                                    <h3>
+                                        Emerging AI & Industry Trends
+                                    </h3>
+
+                                    <p>
+                                        National Training Network · Online
+                                    </p>
+
+                                </div>
+
+
+                                <div
+                                    class="opportunity-tag">
+
+                                    87%
+
+                                    <small>
+                                        MATCH
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="opportunity">
+
+
+                                <div
+                                    class="opportunity-icon">
+
+                                    R
+
+                                </div>
+
+
+                                <div
+                                    class="opportunity-info">
+
+                                    <span>
+                                        RESEARCH
+                                    </span>
+
+                                    <h3>
+                                        AI Research Collaboration
+                                    </h3>
+
+                                    <p>
+                                        Industry Research Lab · Remote
+                                    </p>
+
+                                </div>
+
+
+                                <div
+                                    class="opportunity-tag">
+
+                                    81%
+
+                                    <small>
+                                        MATCH
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         COLLABORATION
+                    ============================================== -->
+
+                    <section
+                        class="card collaboration-card"
+                        id="collaboration">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    ACADEMIA × INDUSTRY
+                                </span>
+
+                                <h2>
+                                    Collaboration
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                class="outline-button">
+
+                                View all
+                                <span>→</span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="collaboration-list">
+
+
+                            <div class="collaboration-item">
+
+                                <div
+                                    class="collaboration-number">
+
+                                    01
+
+                                </div>
+
+
+                                <div>
+
+                                    <h3>
+                                        Industry Guest Lecture
+                                    </h3>
+
+                                    <p>
+                                        Coordinate a technical
+                                        session with an industry expert.
+                                    </p>
+
+                                </div>
+
+
+                                <span class="collaboration-arrow">
+                                    →
+                                </span>
+
+                            </div>
+
+
+                            <div class="collaboration-item">
+
+                                <div
+                                    class="collaboration-number">
+
+                                    02
+
+                                </div>
+
+
+                                <div>
+
+                                    <h3>
+                                        Live Industry Project
+                                    </h3>
+
+                                    <p>
+                                        Connect students with
+                                        real-world industry projects.
+                                    </p>
+
+                                </div>
+
+
+                                <span class="collaboration-arrow">
+                                    →
+                                </span>
+
+                            </div>
+
+
+                            <div class="collaboration-item">
+
+                                <div
+                                    class="collaboration-number">
+
+                                    03
+
+                                </div>
+
+
+                                <div>
+
+                                    <h3>
+                                        Mentorship Program
+                                    </h3>
+
+                                    <p>
+                                        Build long-term mentorship
+                                        between industry and academia.
+                                    </p>
+
+                                </div>
+
+
+                                <span class="collaboration-arrow">
+                                    →
+                                </span>
+
+                            </div>
+
+
+                            <div class="collaboration-item">
+
+                                <div
+                                    class="collaboration-number">
+
+                                    04
+
+                                </div>
+
+
+                                <div>
+
+                                    <h3>
+                                        Innovation Challenge
+                                    </h3>
+
+                                    <p>
+                                        Engage students through
+                                        industry problem statements.
+                                    </p>
+
+                                </div>
+
+
+                                <span class="collaboration-arrow">
+                                    →
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         STUDENTS
+                    ============================================== -->
+
+                    <section
+                        class="card students-card"
+                        id="students">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    MENTORING
+                                </span>
+
+                                <h2>
+                                    Students
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                class="outline-button">
+
+                                View Students
+                                <span>→</span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="student-preview">
+
+
+                            <div class="student-row">
+
+                                <div class="student-avatar">
+                                    R
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Rahul Kumar
+                                    </strong>
+
+                                    <span>
+                                        B.Tech CSE · 3rd Year
+                                    </span>
+
+                                </div>
+
+                                <div class="student-score">
+                                    82%
+                                </div>
+
+                            </div>
+
+
+                            <div class="student-row">
+
+                                <div class="student-avatar">
+                                    A
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Anjali Nair
+                                    </strong>
+
+                                    <span>
+                                        B.Tech AI · Final Year
+                                    </span>
+
+                                </div>
+
+                                <div class="student-score">
+                                    76%
+                                </div>
+
+                            </div>
+
+
+                            <div class="student-row">
+
+                                <div class="student-avatar">
+                                    V
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Vishnu Raj
+                                    </strong>
+
+                                    <span>
+                                        B.Tech CSE · 2nd Year
+                                    </span>
+
+                                </div>
+
+                                <div class="student-score">
+                                    69%
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         RESEARCH
+                    ============================================== -->
+
+                    <section
+                        class="card research-card"
+                        id="research">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    RESEARCH
+                                </span>
+
+                                <h2>
+                                    Research Activity
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                class="outline-button">
+
+                                Manage
+                                <span>→</span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="research-grid">
+
+
+                            <div class="research-stat">
+
+                                <strong id="researchProjects">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Active Projects
+                                </span>
+
+                            </div>
+
+
+                            <div class="research-stat">
+
+                                <strong id="researchPartners">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Partners
+                                </span>
+
+                            </div>
+
+
+                            <div class="research-stat">
+
+                                <strong id="researchStudents">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Student Researchers
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="research-note">
+
+                            <span>
+                                ⌁
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Research collaboration
+                                </strong>
+
+                                <p>
+                                    Connect with industry partners
+                                    for collaborative research,
+                                    consultancy and live projects.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         ASSESSMENTS / APPLICATIONS
+                    ============================================== -->
+
+                    <section
+                        class="card activity-card"
+                        id="assessments">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    ACTIVITY
+                                </span>
+
+                                <h2>
+                                    Recent Activity
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="activity-list">
+
+
+                            <div class="activity">
+
+                                <div class="activity-mark">
+                                    A
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Student assessment completed
+                                    </strong>
+
+                                    <span>
+                                        2 hours ago
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity">
+
+                                <div class="activity-mark">
+                                    I
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        New industry invitation
+                                    </strong>
+
+                                    <span>
+                                        Yesterday
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="activity">
+
+                                <div class="activity-mark">
+                                    R
+                                </div>
+
+                                <div>
+
+                                    <strong>
+                                        Research collaboration updated
+                                    </strong>
+
+                                    <span>
+                                        2 days ago
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                         APPLICATIONS
+                    ============================================== -->
+
+                    <section
+                        class="card applications-card"
+                        id="applications">
+
+
+                        <div class="card-heading">
+
+                            <div>
+
+                                <span class="card-eyebrow">
+                                    OPPORTUNITY TRACKING
+                                </span>
+
+                                <h2>
+                                    Applications
+                                </h2>
+
+                            </div>
+
+
+                            <button
+                                class="outline-button">
+
+                                View all
+                                <span>→</span>
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="application-list">
+
+
+                            <div class="application">
+
+                                <div>
+
+                                    <strong>
+                                        Faculty Industry Internship
+                                    </strong>
+
+                                    <span>
+                                        Tech Solutions
+                                    </span>
+
+                                </div>
+
+                                <span class="status review">
+                                    Under Review
+                                </span>
+
+                            </div>
+
+
+                            <div class="application">
+
+                                <div>
+
+                                    <strong>
+                                        Industry Research Project
+                                    </strong>
+
+                                    <span>
+                                        Innovation Labs
+                                    </span>
+
+                                </div>
+
+                                <span class="status selected">
+                                    Shortlisted
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROFILE EDIT MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="profileModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="card-eyebrow">
+                        ACADEMIC PROFILE
+                    </span>
+
+                    <h2>
+                        Edit Profile
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeModal"
+                    class="close-modal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form
+                id="profileForm">
+
+
+                <div class="modal-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="modal-field">
+
+                        <label for="editName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editName"
+                            required>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="modal-field">
+
+                        <label for="editEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="editEmail"
+                            disabled>
+
+                    </div>
+
+
+                    <!-- INSTITUTION -->
+
+                    <div class="modal-field">
+
+                        <label for="editInstitution">
+                            Institution
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editInstitution"
+                            placeholder="Your college / university">
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+
+                    <div class="modal-field">
+
+                        <label for="editDepartment">
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editDepartment"
+                            placeholder="Computer Science">
+
+                    </div>
+
+
+                    <!-- DESIGNATION -->
+
+                    <div class="modal-field">
+
+                        <label for="editDesignation">
+                            Designation
+                        </label>
+
+                        <select
+                            id="editDesignation">
+
+                            <option value="">
+                                Select designation
+                            </option>
+
+                            <option value="Professor">
+                                Professor
+                            </option>
+
+                            <option value="Associate Professor">
+                                Associate Professor
+                            </option>
+
+                            <option value="Assistant Professor">
+                                Assistant Professor
+                            </option>
+
+                            <option value="Lecturer">
+                                Lecturer
+                            </option>
+
+                            <option value="Research Scholar">
+                                Research Scholar
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- QUALIFICATION -->
+
+                    <div class="modal-field">
+
+                        <label for="editQualification">
+                            Highest Qualification
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editQualification"
+                            placeholder="PhD / M.Tech / MBA">
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="modal-field">
+
+                        <label for="editExperience">
+                            Experience
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editExperience"
+                            min="0"
+                            max="60"
+                            placeholder="Years">
+
+                    </div>
+
+
+                    <!-- SPECIALIZATION -->
+
+                    <div class="modal-field">
+
+                        <label for="editSpecialization">
+                            Specialization
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editSpecialization"
+                            placeholder="Artificial Intelligence">
+
+                    </div>
+
+
+                    <!-- LOCATION -->
+
+                    <div class="modal-field">
+
+                        <label for="editLocation">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editLocation"
+                            placeholder="City, State">
+
+                    </div>
+
+
+                    <!-- BIO -->
+
+                    <div class="modal-field full">
+
+                        <label for="editBio">
+                            Professional Bio
+                        </label>
+
+                        <textarea
+                            id="editBio"
+                            rows="4"
+                            placeholder="Tell students and industry partners about your expertise...">
+                        </textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="profileSaveMessage"
+                    class="form-message">
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="cancelModal"
+                        class="cancel-button">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="saveProfileButton"
+                        class="save-button">
+
+                        Save Profile
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script
+        type="module"
+        src="academician-home.js">
+    </script>
+
+</body>
+
+</html>

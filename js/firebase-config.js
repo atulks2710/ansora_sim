@@ -13,7 +13,7 @@ import {
 
 
 const firebaseConfig = {
-
+    
     apiKey: "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
 
     authDomain: "ansora-27fe4.firebaseapp.com",
@@ -38,7 +38,5 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 
-
 // Firestore
-
 export const db = getFirestore(app);

@@ -310,8 +310,7 @@ loginForm.addEventListener(
 
                         case "academician":
 
-                            window.location.href =
-                                "academician-home.html";
+                            window.location.href = "academician/academician-home.html";
 
                             break;
 
