@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ANSORA SkillBridge — Industry Collaboration & Talent Intelligence Workspace">
+    <title>Industry Portal | Talent Intelligence & Collaboration</title>
+    <link rel="stylesheet" href="css/industry.css">
+</head>
+<body>
+
+    <div class="app">
+
+        <!-- =================================================
+             SIDEBAR (25% Deep Black Architectural Shell)
+        ================================================== -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+                <a href="../index.html" class="brand">
+                    <div class="brand-mark">SB</div>
+                    <div class="brand-name">SKILL<span>BRIDGE</span></div>
+                </a>
+                <span class="sidebar-badge">Industry</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">INTELLIGENCE & TALENT</div>
+
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </span>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="#opportunities" class="nav-item" data-section="opportunities">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="2" y="7" width="20" height="14" rx="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </span>
+                    <span>Opportunities</span>
+                </a>
+
+                <a href="#talent" class="nav-item" data-section="talent">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </span>
+                    <span>Talent Discovery</span>
+                </a>
+
+                <a href="#intelligence" class="nav-item" data-section="intelligence">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </span>
+                    <span>Skill Intelligence</span>
+                </a>
+
+                <div class="nav-section-title">COLLABORATION & PROJECTS</div>
+
+                <a href="#projects" class="nav-item" data-section="projects">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polyline points="16 18 22 12 16 6"></polyline>
+                            <polyline points="8 6 2 12 8 18"></polyline>
+                        </svg>
+                    </span>
+                    <span>Live Projects & Challenges</span>
+                </a>
+
+                <a href="#collaboration" class="nav-item" data-section="collaboration">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </span>
+                    <span>Academic Partners</span>
+                </a>
+
+                <div class="nav-section-title">ORGANIZATION</div>
+
+                <a href="#profile" class="nav-item" data-section="profile">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </span>
+                    <span>Company Profile (Skill DNA)</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="company-dna-chip">
+                    <div class="company-avatar" id="sidebarCompanyAvatar">--</div>
+                    <div class="company-info">
+                        <strong id="sidebarCompanyName">Organization</strong>
+                        <small>Industry Skill DNA: Active</small>
+                    </div>
+                </div>
+                <button class="logout-button" id="logoutBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Sign Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- =================================================
+             MAIN VIEWPORT
+        ================================================== -->
+        <main class="main">
+
+            <!-- Sticky Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Sidebar">☰</button>
+                    <div class="topbar-title">
+                        <span>TALENT INTELLIGENCE + COLLABORATION WORKSPACE</span>
+                        <h1 id="pageHeading">Collaboration Dashboard</h1>
+                    </div>
+                </div>
+
+                <div class="topbar-actions">
+                    <div class="search-input-wrap" style="position:relative;width:240px;">
+                        <input type="text" id="globalSearchInput" placeholder="Quick search talent, skills..." style="width:100%;height:38px;padding:0 12px 0 32px;border:1px solid var(--border);border-radius:4px;font-size:12px;outline:none;background:var(--pure-white);color:var(--deep-black);">
+                        <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:12px;pointer-events:none;">🔍</span>
+                    </div>
+                    <button class="btn-secondary-action" id="openEvaluateModalBtn">
+                        <span>⭐ Evaluate Competency</span>
+                    </button>
+                    <button class="btn-primary-action" id="openCreateOpportunityBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>Define Business Need</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dynamic Section Content -->
+            <div class="content">
+
+                <!-- =============================================
+                     MODULE 1: DASHBOARD (Command Center)
+                ============================================== -->
+                <section class="dashboard-section active" id="section-dashboard">
+
+                    <!-- Command Banner ("What do I need to know today?") -->
+                    <div class="command-banner">
+                        <div class="command-welcome">
+                            <small>Command Center</small>
+                            <h2>Good morning, <span id="bannerCompanyName">Organization</span></h2>
+                            <p>Here is your real-time academic collaboration pulse, recommended student competencies, and active talent pipeline.</p>
+                        </div>
+                        <div class="command-kpi-row">
+                            <div class="kpi-box">
+                                <span>Active Opportunities</span>
+                                <strong id="kpiOpportunities">0</strong>
+                            </div>
+                            <div class="kpi-box">
+                                <span>Applications Received</span>
+                                <strong id="kpiApplications">0</strong>
+                            </div>
+                            <div class="kpi-box">
+                                <span>Talent Matches</span>
+                                <strong id="kpiMatches">0</strong>
+                            </div>
+                            <div class="kpi-box">
+                                <span>Active Projects</span>
+                                <strong id="kpiProjects">0</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- =============================================
+                         INDUSTRY WORKFLOW ENGINE (End-to-End Journey)
+                    ============================================== -->
+                    <div class="journey-engine-panel">
+                        <div class="journey-header">
+                            <div class="journey-title">
+                                <span>⚡ Industry Value Engine</span>
+                                <span class="badge badge-gold">Interactive Flow</span>
+                            </div>
+                            <span class="journey-subtitle">Click any stage to execute in workspace</span>
+                        </div>
+                        <div class="journey-steps-track">
+                            <div class="journey-step-node active" id="flowStep1" onclick="window.navigateFlowStep('opportunities', 'openModal')">
+                                <div class="journey-step-number">1</div>
+                                <div class="journey-step-name">Define Need</div>
+                                <div class="journey-step-sub">Job / Intern / Project</div>
+                            </div>
+                            <div class="journey-step-node" id="flowStep2" onclick="window.navigateFlowStep('opportunities', 'extractor')">
+                                <div class="journey-step-number">2</div>
+                                <div class="journey-step-name">Skill Engine</div>
+                                <div class="journey-step-sub">AI Extraction & Rules</div>
+                            </div>
+                            <div class="journey-step-node" id="flowStep3" onclick="window.navigateFlowStep('talent')">
+                                <div class="journey-step-number">3</div>
+                                <div class="journey-step-name">Find Talent</div>
+                                <div class="journey-step-sub">Explainable Match %</div>
+                            </div>
+                            <div class="journey-step-node" id="flowStep4" onclick="window.navigateFlowStep('projects')">
+                                <div class="journey-step-number">4</div>
+                                <div class="journey-step-name">Collaborate</div>
+                                <div class="journey-step-sub">Projects & Challenges</div>
+                            </div>
+                            <div class="journey-step-node" id="flowStep5" onclick="window.navigateFlowStep('dashboard', 'evaluate')">
+                                <div class="journey-step-number">5</div>
+                                <div class="journey-step-name">Evaluate</div>
+                                <div class="journey-step-sub">Demonstrated Rubric</div>
+                            </div>
+                            <div class="journey-step-node" id="flowStep6" onclick="window.navigateFlowStep('talent')">
+                                <div class="journey-step-number">6</div>
+                                <div class="journey-step-name">Verified Skill</div>
+                                <div class="journey-step-sub">Skill Passport Feed</div>
+                            </div>
+                            <div class="journey-step-node" id="flowStep7" onclick="window.navigateFlowStep('talent', 'shortlisted')">
+                                <div class="journey-step-number">7</div>
+                                <div class="journey-step-name">Hire / Engage</div>
+                                <div class="journey-step-sub">Offer & Placement</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Daily Feed / Intelligence Strip -->
+                    <div class="intel-grid">
+                        <div class="intel-card">
+                            <div class="intel-header">
+                                <span class="intel-title">🔥 Recommended Talent</span>
+                                <span class="badge badge-gold">High Fit</span>
+                            </div>
+                            <div class="intel-body">
+                                <h3>24 Candidates</h3>
+                                <p>Strictly match your current React & Python competencies.</p>
+                                <button class="btn-secondary-action" style="margin-top:auto;width:100%;justify-content:center;" onclick="window.switchSection('talent')">
+                                    Explore Recommended Talent →
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="intel-card">
+                            <div class="intel-header">
+                                <span class="intel-title">📈 Emerging Skills Radar</span>
+                                <span class="badge badge-black">Demand Trend</span>
+                            </div>
+                            <div class="intel-body">
+                                <div class="skill-radar-pills">
+                                    <div class="skill-pill-trending">AI/ML <span>↑ 28%</span></div>
+                                    <div class="skill-pill-trending">Cloud Computing <span>↑ 21%</span></div>
+                                    <div class="skill-pill-trending">Cybersecurity <span>↑ 17%</span></div>
+                                    <div class="skill-pill-trending">Generative AI <span>↑ 42%</span></div>
+                                </div>
+                                <p style="margin-top:12px;">Skill shortages identified in Cloud & AI pipelines.</p>
+                            </div>
+                        </div>
+
+                        <div class="intel-card">
+                            <div class="intel-header">
+                                <span class="intel-title">🤝 Academic Collaboration</span>
+                                <span class="badge badge-success">5 Aligned</span>
+                            </div>
+                            <div class="intel-body">
+                                <h3>5 Institutions</h3>
+                                <p>Actively aligned for internships, capstones & guest lectures.</p>
+                                <button class="btn-secondary-action" style="margin-top:auto;width:100%;justify-content:center;" onclick="window.switchSection('collaboration')">
+                                    View Partner Colleges →
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommended Talent Highlight & Active Opportunities Row -->
+                    <div class="panel-row">
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2>🔥 Top Verified Talent Matches</h2>
+                                <button class="panel-header-action" onclick="window.switchSection('talent')">All Talent Discovery →</button>
+                            </div>
+                            <div class="talent-cards-grid" id="dashboardTalentGrid"></div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2>Active Opportunities</h2>
+                                <button class="panel-header-action" onclick="window.switchSection('opportunities')">Manage →</button>
+                            </div>
+                            <div id="dashboardOpportunitiesList"></div>
+                        </div>
+                    </div>
+
+                    <!-- Live Activity & Engagement Pulse -->
+                    <div class="panel" style="margin-top:20px;">
+                        <div class="panel-header">
+                            <h2>⚡ Real-Time Collaboration & Pipeline Activity</h2>
+                            <span class="badge badge-gold">Live Feed</span>
+                        </div>
+                        <div id="dashboardActivityFeed" style="display:flex;flex-direction:column;gap:8px;"></div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     MODULE 2: OPPORTUNITIES (Define Business Need)
+                ============================================== -->
+                <section class="dashboard-section" id="section-opportunities">
+
+                    <!-- AI Requirement Extractor -->
+                    <div class="ai-extractor-box" id="aiExtractorBox">
+                        <div class="ai-extractor-header">
+                            <span class="ai-sparkle">✨</span>
+                            <span>AI-Assisted Requirement & Competency Extraction</span>
+                        </div>
+                        <p style="font-size:12px;color:var(--graphite);margin-bottom:10px;">
+                            Type or paste your business need naturally (or select a quick preset below):
+                        </p>
+                        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+                            <button type="button" class="badge badge-soft" style="cursor:pointer;" onclick="window.setAiSamplePrompt('react')">⚡ React & Node.js Developer</button>
+                            <button type="button" class="badge badge-soft" style="cursor:pointer;" onclick="window.setAiSamplePrompt('aiml')">⚡ PyTorch & AI/ML Engineer</button>
+                            <button type="button" class="badge badge-soft" style="cursor:pointer;" onclick="window.setAiSamplePrompt('cloud')">⚡ AWS & Cloud DevOps</button>
+                        </div>
+                        <textarea id="aiPromptInput" rows="2" placeholder="e.g. Looking for a React developer who can work with Node.js, Git and REST APIs for a cloud dashboard project..."></textarea>
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                            <button type="button" class="btn-primary-action" id="extractSkillsBtn">⚡ Extract Competencies & Configure Need</button>
+                            <button type="button" class="btn-secondary-action" id="manualCreateOppBtn">+ Manual Entry</button>
+                        </div>
+
+                        <div class="ai-extracted-results" id="aiExtractedResults">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                                <strong style="font-size:12px;color:var(--deep-black);">Detected Competency Profile:</strong>
+                                <span class="badge badge-gold" id="suggestedRoleTag">Frontend / Full Stack Developer</span>
+                            </div>
+                            <div id="extractedSkillsTags" style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;"></div>
+                            <button type="button" class="btn-primary-action" style="margin-top:10px;" id="applyExtractedToModalBtn">Proceed to Publish Opportunity →</button>
+                        </div>
+                    </div>
+
+                    <!-- Opportunities Type Filter Tabs -->
+                    <div class="opp-type-tabs">
+                        <button class="opp-type-tab active" data-filter="all">All Opportunities</button>
+                        <button class="opp-type-tab" data-filter="Internship">Internships</button>
+                        <button class="opp-type-tab" data-filter="Job">Jobs</button>
+                        <button class="opp-type-tab" data-filter="Apprenticeship">Apprenticeships</button>
+                        <button class="opp-type-tab" data-filter="Live Project">Live Projects</button>
+                        <button class="opp-type-tab" data-filter="Industry Challenge">Industry Challenges</button>
+                    </div>
+
+                    <div class="job-cards-grid" id="allOpportunitiesGrid"></div>
+                </section>
+
+                <!-- =============================================
+                     MODULE 3: TALENT DISCOVERY (Passport & Matching)
+                ============================================== -->
+                <section class="dashboard-section" id="section-talent">
+
+                    <!-- Talent Filter Toolbar -->
+                    <div class="panel" style="margin-bottom: 24px; padding: 20px 24px;">
+                        <div class="filter-bar" style="margin-bottom: 0;">
+                            <div class="filter-group">
+                                <select class="filter-select" id="talentSkillFilter">
+                                    <option value="all">All Skills (React, Python, Cloud...)</option>
+                                    <option value="React">React</option>
+                                    <option value="Python">Python</option>
+                                    <option value="JavaScript">JavaScript</option>
+                                    <option value="Node.js">Node.js</option>
+                                    <option value="AI/ML">AI/ML</option>
+                                    <option value="Docker">Docker</option>
+                                    <option value="AWS">AWS</option>
+                                </select>
+
+                                <select class="filter-select" id="talentMatchFilter">
+                                    <option value="all">All Match Scores</option>
+                                    <option value="90">90%+ Match Rate</option>
+                                    <option value="80">80%+ Match Rate</option>
+                                    <option value="70">70%+ Match Rate</option>
+                                </select>
+
+                                <select class="filter-select" id="talentStatusFilter">
+                                    <option value="all">All Pipeline Stages</option>
+                                    <option value="Recommended">Recommended</option>
+                                    <option value="Shortlisted">Shortlisted</option>
+                                    <option value="Interviewing">Interviewing</option>
+                                    <option value="Hired">Hired</option>
+                                </select>
+                            </div>
+
+                            <span style="font-size:12px;color:var(--text-muted);font-weight:700;" id="talentMatchCountLabel">Showing verified student talent</span>
+                        </div>
+                    </div>
+
+                    <div class="talent-cards-grid" id="mainTalentGrid"></div>
+                </section>
+
+                <!-- =============================================
+                     MODULE 4: SKILL INTELLIGENCE & DEMAND/SUPPLY
+                ============================================== -->
+                <section class="dashboard-section" id="section-intelligence">
+
+                    <div class="panel-row-equal">
+                        <!-- Industry Skill Demand -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2>📈 Industry Skill Demand Radar</h2>
+                                <span class="badge badge-gold">Q3 Benchmark</span>
+                            </div>
+                            <p style="font-size:12px;color:var(--graphite);margin-bottom:16px;">
+                                Macro-level skill demand velocity across tech & creative engineering sectors.
+                            </p>
+                            <div id="skillDemandTrendsList"></div>
+                        </div>
+
+                        <!-- Skill Demand -> Talent Availability Gap Analyzer -->
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2>🧠 Talent Availability & Shortage Detector</h2>
+                            </div>
+                            <div style="margin-bottom:16px;">
+                                <label style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--deep-black);display:block;margin-bottom:6px;">Select Core Skill to Analyze</label>
+                                <select class="filter-select" id="intelligenceSkillSelect" style="width:100%;">
+                                    <option value="Python">Python</option>
+                                    <option value="React">React</option>
+                                    <option value="Cloud Computing">Cloud Computing</option>
+                                    <option value="Cybersecurity">Cybersecurity</option>
+                                    <option value="AI/ML">AI/ML</option>
+                                </select>
+                            </div>
+
+                            <div id="demandSupplyGapResult"></div>
+                        </div>
+                    </div>
+
+                    <!-- Academic Talent Alignment by Institution -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>🎓 Institutions with Relevant Talent Pool</h2>
+                            <span class="panel-subtitle">Direct collaboration & campus drive opportunities</span>
+                        </div>
+                        <div class="data-table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Academic Institution</th>
+                                        <th>Matching Verified Students</th>
+                                        <th>Average Skill Proficiency</th>
+                                        <th>Primary Strengths</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="institutionTalentTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     MODULE 5: LIVE PROJECTS & INDUSTRY CHALLENGES
+                ============================================== -->
+                <section class="dashboard-section" id="section-projects">
+                    <div class="panel-row">
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2>🔬 Real-World Industry Projects</h2>
+                                <button class="btn-primary-action" id="openCreateProjectBtn">+ Post Industry Project</button>
+                            </div>
+                            <p style="font-size:12px;color:var(--graphite);margin-bottom:18px;">
+                                Sponsor student teams to work on real engineering problems and generate proven competency evidence.
+                            </p>
+                            <div id="liveProjectsList"></div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-header">
+                                <h2>🏆 Industry Challenges & Hackathons</h2>
+                                <button class="btn-secondary-action" id="openCreateChallengeBtn">+ New Challenge</button>
+                            </div>
+                            <div id="industryChallengesList"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     MODULE 6: ACADEMIC PARTNERS CRM
+                ============================================== -->
+                <section class="dashboard-section" id="section-collaboration">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <h2>🤝 My Academic Partners (Collaboration CRM)</h2>
+                            <button class="btn-primary-action" id="openAddPartnerBtn">+ Connect New College</button>
+                        </div>
+                        <p style="font-size:12px;color:var(--graphite);margin-bottom:20px;">
+                            Manage institutional relationships, guest lectures, curriculum alignment, and campus recruitment drives.
+                        </p>
+                        <div class="partner-cards-grid" id="academicPartnersGrid"></div>
+                    </div>
+                </section>
+
+                <!-- =============================================
+                     MODULE 7: COMPANY PROFILE (Skill DNA)
+                ============================================== -->
+                <section class="dashboard-section" id="section-profile">
+                    <div class="panel" style="max-width: 860px;">
+                        <div class="panel-header">
+                            <h2>🏢 Company Skill DNA & Academic Collaboration Profile</h2>
+                        </div>
+                        <p style="font-size:12px;color:var(--graphite);margin-bottom:20px;">
+                            Define your organization's core expertise and academic interests to drive intelligent matching with students and universities.
+                        </p>
+                        <form id="companyDnaForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Company Name</label>
+                                    <input type="text" id="dnaCompanyName" placeholder="e.g. Acme Technologies" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Industry Sector</label>
+                                    <input type="text" id="dnaSector" placeholder="e.g. Software & IT Solutions" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Core Expertise Domains (Comma separated)</label>
+                                <input type="text" id="dnaExpertise" placeholder="e.g. AI/ML, Cloud Computing, Data Engineering">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Primary Technologies (Comma separated)</label>
+                                <input type="text" id="dnaTech" placeholder="e.g. Python, React, AWS, Docker">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Academic Collaboration Interests</label>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:10px;margin-top:8px;">
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Internships"> Internships
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Jobs"> Full-Time Jobs
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Live Projects"> Live Projects
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Mentorship"> Mentorship
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Workshops"> Workshops
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Guest Lectures"> Guest Lectures
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Faculty Training"> Faculty Training
+                                    </label>
+                                    <label style="display:flex;align-items:center;gap:8px;font-size:12px;text-transform:none;">
+                                        <input type="checkbox" checked name="interest" value="Research"> Joint Research
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-primary-action" style="margin-top:16px;">Save Industry Skill DNA</button>
+                        </form>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- =================================================
+         MODAL: DEFINE BUSINESS NEED / CREATE OPPORTUNITY
+    ================================================== -->
+    <div class="modal-overlay" id="opportunityModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Define Business Need</h3>
+                <button class="modal-close" id="closeOppModalBtn">×</button>
+            </div>
+            <form id="opportunityForm">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Opportunity Type *</label>
+                            <select id="oppTypeSelect" required>
+                                <option value="Internship">Internship</option>
+                                <option value="Job">Full-Time Job</option>
+                                <option value="Apprenticeship">Apprenticeship</option>
+                                <option value="Live Project">Live Project</option>
+                                <option value="Industry Challenge">Industry Challenge</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Role / Need Title *</label>
+                            <input type="text" id="oppTitleInput" placeholder="e.g. Software Development Intern" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration / Commitment</label>
+                            <input type="text" id="oppDurationInput" placeholder="e.g. 8 weeks" value="8 weeks">
+                        </div>
+                        <div class="form-group">
+                            <label>Work Mode & Location</label>
+                            <input type="text" id="oppLocationInput" placeholder="e.g. Hybrid, Kochi" value="Hybrid, Kochi">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Required Competencies & Skills (Comma separated) *</label>
+                        <input type="text" id="oppSkillsInput" placeholder="e.g. React, JavaScript, Node.js, Git, REST APIs" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Compensation / Stipend / Grant</label>
+                        <input type="text" id="oppCompensationInput" placeholder="e.g. ₹25,000 / month">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description & Expected Outcome</label>
+                        <textarea id="oppDescInput" rows="3" placeholder="Describe the problem to solve or project responsibilities..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" id="cancelOppModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary-action">Publish Opportunity & Find Matching Talent</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================
+         DRAWER: EXPLAINABLE TALENT MATCH ("Why this candidate?")
+    ================================================== -->
+    <div class="explain-side-modal" id="explainMatchDrawer">
+        <div class="explain-modal-header">
+            <div>
+                <small>Talent Intelligence Match Engine</small>
+                <h3 id="drawerCandidateName">Candidate Match Explanation</h3>
+            </div>
+            <button class="modal-close" style="color:white;" id="closeDrawerBtn">×</button>
+        </div>
+
+        <div class="explain-modal-body" id="drawerContent"></div>
+
+        <div style="padding:20px 28px;background:var(--soft-grey);border-top:1px solid var(--border);display:flex;gap:10px;">
+            <button class="btn-secondary-action" style="flex:1;justify-content:center;" id="drawerCloseActionBtn">Close</button>
+            <button class="btn-primary-action" style="flex:1;justify-content:center;" id="drawerShortlistBtn">Shortlist Candidate →</button>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: CANDIDATE SKILL PASSPORT VIEW
+    ================================================== -->
+    <div class="modal-overlay" id="skillPassportModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>🎖️ Verified Candidate Skill Passport</h3>
+                <button class="modal-close" id="closePassportModalBtn">×</button>
+            </div>
+            <div class="modal-body" id="passportModalContent"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary-action" id="closePassportActionBtn">Close</button>
+                <button type="button" class="btn-primary-action" id="passportShortlistBtn">Shortlist for Interview →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: INDUSTRY COMPETENCY EVALUATION
+    ================================================== -->
+    <div class="modal-overlay" id="evaluateModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>⭐ Industry Competency Evaluation</h3>
+                <button class="modal-close" id="closeEvaluateModalBtn">×</button>
+            </div>
+            <form id="evaluationForm">
+                <div class="modal-body">
+                    <p style="font-size:12px;color:var(--graphite);margin-bottom:16px;">
+                        Evaluate demonstrated student competencies post-internship/project. Ratings feed directly into the student's <strong>Verified Skill Passport</strong>.
+                    </p>
+
+                    <div class="form-group">
+                        <label>Select Student Candidate</label>
+                        <select id="evalStudentSelect" required></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Project / Internship Context</label>
+                        <input type="text" id="evalContext" placeholder="e.g. Predictive Maintenance Prototype" value="Software Engineering Internship">
+                    </div>
+
+                    <div class="evaluation-rubric">
+                        <div class="rubric-item">
+                            <div class="rubric-header">
+                                <span>Technical Skills (Core Stack)</span>
+                                <span id="valTechScore">4.5 / 5.0</span>
+                            </div>
+                            <input type="range" class="rubric-slider" min="1" max="5" step="0.5" value="4.5" id="sliderTech">
+                        </div>
+
+                        <div class="rubric-item">
+                            <div class="rubric-header">
+                                <span>Problem Solving & Architectural Thinking</span>
+                                <span id="valProblemScore">4.0 / 5.0</span>
+                            </div>
+                            <input type="range" class="rubric-slider" min="1" max="5" step="0.5" value="4.0" id="sliderProblem">
+                        </div>
+
+                        <div class="rubric-item">
+                            <div class="rubric-header">
+                                <span>Teamwork & Collaboration</span>
+                                <span id="valTeamScore">4.5 / 5.0</span>
+                            </div>
+                            <input type="range" class="rubric-slider" min="1" max="5" step="0.5" value="4.5" id="sliderTeam">
+                        </div>
+
+                        <div class="rubric-item">
+                            <div class="rubric-header">
+                                <span>Professionalism & Execution</span>
+                                <span id="valProfScore">4.5 / 5.0</span>
+                            </div>
+                            <input type="range" class="rubric-slider" min="1" max="5" step="0.5" value="4.5" id="sliderProf">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Industry Feedback & Verification Remarks</label>
+                        <textarea id="evalRemarks" rows="3" placeholder="Demonstrated strong code structure and proactive problem solving in production settings..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" id="cancelEvaluateModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary-action">Submit Verified Competency Rating</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: POST REAL-WORLD INDUSTRY PROJECT
+    ================================================== -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>🔬 Post Industry Project</h3>
+                <button class="modal-close" id="closeProjModalBtn">×</button>
+            </div>
+            <form id="projectForm">
+                <div class="modal-body">
+                    <p style="font-size:12px;color:var(--graphite);margin-bottom:16px;">
+                        Sponsor a capstone or live project for student engineering teams to build production-grade prototypes.
+                    </p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Project Title *</label>
+                            <input type="text" id="projTitleInput" placeholder="e.g. Distributed Telemetry Pipeline" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Assigned Academic Partner / Scope *</label>
+                            <select id="projCollegeSelect" required>
+                                <option value="National Institute of Technology">National Institute of Technology</option>
+                                <option value="College of Engineering XYZ">College of Engineering XYZ</option>
+                                <option value="Apex Institute of Technology">Apex Institute of Technology</option>
+                                <option value="Open to All Partner Institutions">Open to All Partner Institutions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Duration / Timeline *</label>
+                            <input type="text" id="projDurationInput" placeholder="e.g. 8 weeks" value="8 weeks" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Team Size</label>
+                            <input type="text" id="projTeamSizeInput" placeholder="e.g. 3-4 Students" value="3-4 Students">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Required Competencies & Tech Stack (Comma separated) *</label>
+                        <input type="text" id="projSkillsInput" placeholder="e.g. Python, Docker, PyTorch, SQL" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expected Outcome & Deliverable *</label>
+                        <input type="text" id="projOutcomeInput" placeholder="e.g. Deployable microservice prototype with test suite" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Project Scope & Problem Statement</label>
+                        <textarea id="projDescInput" rows="3" placeholder="Detail the business problem, architectural requirements, and milestone expectations..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" id="cancelProjModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary-action">Publish Industry Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: CREATE INDUSTRY CHALLENGE / HACKATHON
+    ================================================== -->
+    <div class="modal-overlay" id="challengeModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>🏆 Launch Industry Challenge</h3>
+                <button class="modal-close" id="closeChalModalBtn">×</button>
+            </div>
+            <form id="challengeForm">
+                <div class="modal-body">
+                    <p style="font-size:12px;color:var(--graphite);margin-bottom:16px;">
+                        Open an algorithmic or engineering problem statement with automated submission and verified competency scoring.
+                    </p>
+
+                    <div class="form-group">
+                        <label>Challenge Title *</label>
+                        <input type="text" id="chalTitleInput" placeholder="e.g. Real-Time Fraud Detection Latency Optimizer" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Target Competencies (Comma separated) *</label>
+                            <input type="text" id="chalSkillsInput" placeholder="e.g. Python, Algorithms, FastAPI, Redis" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Submission Deadline *</label>
+                            <input type="text" id="chalDeadlineInput" placeholder="e.g. Oct 31, 2026" value="Oct 31, 2026" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Problem Statement & Benchmark Criteria *</label>
+                        <textarea id="chalProblemInput" rows="4" placeholder="Specify technical constraints, benchmark dataset, throughput expectations, and test suites..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" id="cancelChalModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary-action">Launch Challenge across Campus Network</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: CONNECT NEW ACADEMIC PARTNER (COLLEGE CRM)
+    ================================================== -->
+    <div class="modal-overlay" id="partnerModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>🤝 Connect Academic Partner</h3>
+                <button class="modal-close" id="closePartnerModalBtn">×</button>
+            </div>
+            <form id="partnerForm">
+                <div class="modal-body">
+                    <p style="font-size:12px;color:var(--graphite);margin-bottom:16px;">
+                        Add a university or engineering institution to your collaboration CRM to streamline student hiring, capstone projects, and campus drives.
+                    </p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Academic Institution Name *</label>
+                            <input type="text" id="partnerNameInput" placeholder="e.g. Indian Institute of Information Technology" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Campus Location *</label>
+                            <input type="text" id="partnerLocationInput" placeholder="e.g. Kottayam, Kerala" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Collaboration / MoU Status *</label>
+                            <select id="partnerRelationshipSelect" required>
+                                <option value="Active Partner">Active Partner</option>
+                                <option value="Preferred MoU Partner">Preferred MoU Partner</option>
+                                <option value="Prospective MoU">Prospective MoU</option>
+                                <option value="Research & Capstone Partner">Research & Capstone Partner</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Student Batch / Depth</label>
+                            <input type="number" id="partnerEstStudentsInput" placeholder="e.g. 50" value="45" min="5" max="5000">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Primary Skill Strengths & Departments (Comma separated) *</label>
+                        <input type="text" id="partnerStrengthsInput" placeholder="e.g. AI/ML, Distributed Systems, Full-Stack Development, IoT" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Initial Collaboration Focus</label>
+                        <input type="text" id="partnerFocusInput" placeholder="e.g. Semester Internships, Capstone Sponsorship, Hackathons" value="Internships & Live Projects">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" id="cancelPartnerModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary-action">Connect Academic Partner</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: PROJECT PROGRESS & STUDENT TEAM COLLABORATION
+    ================================================== -->
+    <div class="modal-overlay" id="projectProgressModal">
+        <div class="modal-container" style="max-width: 680px;">
+            <div class="modal-header">
+                <div>
+                    <small style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;">Active Capstone / Industry Project</small>
+                    <h3 id="progressProjectTitle" style="margin-top:2px;">Project Progress & Team Execution</h3>
+                </div>
+                <button class="modal-close" id="closeProgressModalBtn">×</button>
+            </div>
+            <div class="modal-body" id="projectProgressModalContent">
+                <!-- Injected dynamically via JS -->
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button type="button" class="btn-secondary-action" id="closeProgressActionBtn">Close</button>
+                <div style="display:flex;gap:10px;">
+                    <button type="button" class="btn-secondary-action" id="progressEvaluateTeamBtn">⭐ Evaluate Team Rubric</button>
+                    <button type="button" class="btn-primary-action" id="progressApproveMilestoneBtn">✓ Approve Current Milestone</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: CHALLENGE LEADERBOARD & SUBMISSION EVALUATION
+    ================================================== -->
+    <div class="modal-overlay" id="challengeLeaderboardModal">
+        <div class="modal-container" style="max-width: 720px;">
+            <div class="modal-header">
+                <div>
+                    <small style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;">Engineering Hackathon & Challenge</small>
+                    <h3 id="leaderboardChallengeTitle" style="margin-top:2px;">Challenge Leaderboard & Submissions</h3>
+                </div>
+                <button class="modal-close" id="closeLeaderboardModalBtn">×</button>
+            </div>
+            <div class="modal-body" id="challengeLeaderboardContent">
+                <!-- Injected dynamically via JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary-action" id="closeLeaderboardActionBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================
+         MODAL: SCHEDULE CAMPUS DRIVE / WORKSHOP
+    ================================================== -->
+    <div class="modal-overlay" id="campusDriveModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <div>
+                    <small style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;">Academic Partnership Action</small>
+                    <h3 id="campusDriveModalTitle" style="margin-top:2px;">Schedule Campus Engagement</h3>
+                </div>
+                <button class="modal-close" id="closeCampusDriveModalBtn">×</button>
+            </div>
+            <form id="campusDriveForm">
+                <div class="modal-body">
+                    <p style="font-size:12px;color:var(--graphite);margin-bottom:16px;">
+                        Initiate a direct campus engagement, recruitment drive, or technical workshop with your aligned academic partner.
+                    </p>
+
+                    <input type="hidden" id="driveInstId">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Engagement Type *</label>
+                            <select id="driveTypeSelect" required>
+                                <option value="Campus Recruitment Drive">Campus Recruitment Drive</option>
+                                <option value="Technical Workshop / Boot camp">Technical Workshop / Boot camp</option>
+                                <option value="Executive Guest Lecture">Executive Guest Lecture</option>
+                                <option value="Capstone Project Sponsorship">Capstone Project Sponsorship</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Date *</label>
+                            <input type="text" id="driveDateInput" placeholder="e.g. Oct 15, 2026" value="Oct 15, 2026" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Target Role / Focus Competency *</label>
+                        <input type="text" id="driveRoleInput" placeholder="e.g. Software Development Intern (React, Node.js)" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expected Student Cohort Size</label>
+                        <input type="number" id="driveCohortInput" placeholder="e.g. 60" value="50" min="10" max="1000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Agenda & Collaboration Notes</label>
+                        <textarea id="driveNotesInput" rows="3" placeholder="Specify interview stages, hands-on lab requirements, or faculty coordination details..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary-action" id="cancelCampusDriveModalBtn">Cancel</button>
+                    <button type="submit" class="btn-primary-action">Confirm & Notify Placement Cell</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script type="module" src="js/industry.js"></script>
+</body>
+</html>
