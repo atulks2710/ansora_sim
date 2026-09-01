@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Industrial Training | EduBridge Faculty</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">  
+    
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-6">
+        <div>
+          <div class="section-title">Industrial Training Programs</div>
+          <div class="section-subtitle">Corporate, technology, and hands-on training programs for faculty upskilling</div>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <div class="search-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search training programs..." aria-label="Search">
+        </div>
+        <select class="filter-select" id="modeFilter" aria-label="Mode filter">
+          <option value="">All Modes</option>
+          <option>Online</option>
+          <option>On-site</option>
+          <option>Hybrid</option>
+        </select>
+        <select class="filter-select" id="domainFilter" aria-label="Domain filter">
+          <option value="">All Domains</option>
+          <option>Artificial Intelligence</option>
+          <option>Cloud Computing</option>
+          <option>Data Engineering</option>
+          <option>Cybersecurity</option>
+        </select>
+      </div>
+
+      <div class="grid-auto" id="trainingCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Training Details</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalContent"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="applyBtn">Apply Now</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import { getIndustrialTrainings } from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("industrial-training");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Industrial Training");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("opportunities");
+initSidebarToggle();
+
+let trainings = [];
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+  trainings = await getIndustrialTrainings();
+  render(trainings);
+
+  document.getElementById("searchInput").addEventListener("input", filter);
+  document.getElementById("modeFilter").addEventListener("change", filter);
+  document.getElementById("domainFilter").addEventListener("change", filter);
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function filter() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const mode = document.getElementById("modeFilter").value;
+  const domain = document.getElementById("domainFilter").value;
+  let items = trainings;
+  if (q) items = items.filter(i => i.title.toLowerCase().includes(q) || i.organization.toLowerCase().includes(q));
+  if (mode) items = items.filter(i => i.mode === mode);
+  if (domain) items = items.filter(i => i.domain === domain);
+  render(items);
+}
+
+function render(items) {
+  const c = document.getElementById("trainingCards");
+  if (!items.length) {
+    c.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><rect x="3" y="9" width="18" height="12" rx="1"/><path d="M3 9l9-6 9 6"/></svg></div>
+      <div class="empty-title">No training programs found</div>
+      <div class="empty-desc">Try adjusting your search filters.</div>
+    </div>`;
+    return;
+  }
+
+  c.innerHTML = items.map(item => `
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="flex items-center gap-3">
+          <div class="opp-org-logo">${item.orgInitials}</div>
+          <div>
+            <div class="opp-title">${item.title}</div>
+            <div class="opp-org">${item.organization}</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+          ${item.certificate ? '<span class="badge badge-success">Certificate</span>' : ''}
+          <span class="badge badge-navy" style="font-size:10px">${item.domain}</span>
+        </div>
+      </div>
+      <div class="opp-meta">
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>${item.mode}</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${item.duration}</span>
+      </div>
+      <div style="margin:4px 0;font-size:12px;color:var(--gray-500)"><strong>Eligibility:</strong> ${item.eligibility}</div>
+      <div class="opp-skills">${item.skills.map(s=>`<span class="skill-tag">${s}</span>`).join("")}</div>
+      <div class="opp-footer">
+        <span class="deadline-text">📅 ${item.deadline}</span>
+        <button class="btn btn-primary btn-sm" onclick="openDetail('${item.id}')">View Details</button>
+      </div>
+    </div>`).join("");
+}
+
+window.openDetail = function(id) {
+  const item = trainings.find(t => t.id === id);
+  if (!item) return;
+  document.getElementById("modalTitle").textContent = item.title;
+  document.getElementById("modalContent").innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <div style="width:50px;height:50px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff">${item.orgInitials}</div>
+      <div>
+        <div style="font-size:16px;font-weight:700">${item.organization}</div>
+        <div style="font-size:12px;color:var(--gray-500)">${item.mode} · ${item.duration}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.7">${item.description}</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DOMAIN</div><div style="font-size:13px;font-weight:600;color:var(--navy)">${item.domain}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DURATION</div><div style="font-size:13px;font-weight:600">${item.duration}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">MODE</div><div style="font-size:13px;font-weight:600">${item.mode}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">CERTIFICATE</div><div style="font-size:13px;font-weight:600;color:var(--success)">${item.certificate ? "Yes" : "No"}</div></div>
+    </div>
+    <div style="margin-bottom:14px"><div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">ELIGIBILITY</div><p style="font-size:13px;color:var(--gray-600)">${item.eligibility}</p></div>
+    <div><div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">SKILLS COVERED</div><div class="opp-skills">${item.skills.map(s=>`<span class="skill-tag">${s}</span>`).join("")}</div></div>
+    <div style="margin-top:14px;padding:12px;background:#f0fdf4;border-radius:8px;border:1px solid #bbf7d0">
+      <div style="font-size:12px;font-weight:700;color:var(--success);margin-bottom:2px">Registration Deadline</div>
+      <div style="font-size:14px;font-weight:700;color:var(--gray-800)">${item.deadline}</div>
+    </div>`;
+
+  document.getElementById("applyBtn").onclick = () => {
+    showToast("Application submitted for " + item.title, "success");
+    closeModal();
+  };
+  document.getElementById("detailModal").classList.add("open");
+};
+
+window.closeModal = () => document.getElementById("detailModal").classList.remove("open");
+
+init().catch(console.error);
+</script>
+</body>
+</html>

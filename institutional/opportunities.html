@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Opportunities | EduBridge Faculty</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-4">
+        <div>
+          <div class="section-title">Faculty Opportunities</div>
+          <div class="section-subtitle">Discover programs, trainings, and collaborations tailored to your expertise</div>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs" id="oppTabs">
+        <button class="tab-btn active" data-tab="all">All</button>
+        <button class="tab-btn" data-tab="internships">Internships</button>
+        <button class="tab-btn" data-tab="training">Industrial Training</button>
+        <button class="tab-btn" data-tab="fdp">FDPs</button>
+        <button class="tab-btn" data-tab="workshops">Workshops</button>
+        <button class="tab-btn" data-tab="consultancy">Consultancy</button>
+        <button class="tab-btn" data-tab="research">Research</button>
+        <button class="tab-btn" data-tab="guest">Guest Lectures</button>
+        <button class="tab-btn" data-tab="mentorship">Mentorship</button>
+      </div>
+
+      <!-- SEARCH & FILTER -->
+      <div class="search-filter-bar">
+        <div class="search-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search opportunities by title, domain, or organization..." aria-label="Search">
+        </div>
+        <select class="filter-select" id="modeFilter" aria-label="Mode filter">
+          <option value="">All Modes</option>
+          <option>Online</option>
+          <option>On-site</option>
+          <option>Hybrid</option>
+          <option>Remote</option>
+        </select>
+        <select class="filter-select" id="domainFilter" aria-label="Domain filter">
+          <option value="">All Domains</option>
+          <option>Artificial Intelligence</option>
+          <option>Machine Learning</option>
+          <option>Data Science</option>
+          <option>Cloud Computing</option>
+          <option>NLP</option>
+          <option>Research Skills</option>
+        </select>
+      </div>
+
+      <!-- CARDS AREA -->
+      <div class="grid-auto" id="oppCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import {
+  getFacultyInternships, getIndustrialTrainings, getFDPs,
+  getWorkshops, getConsultancyOpportunities, getResearchOpportunities,
+  getGuestLectureOpportunities, getMentorshipPrograms
+} from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("opportunities");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Faculty Opportunities");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("opportunities");
+initSidebarToggle();
+
+let allData = {};
+let currentTab = "all";
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+
+  const [internships, trainings, fdps, workshops, consultancy, research, guestLectures, mentorship] = await Promise.all([
+    getFacultyInternships(), getIndustrialTrainings(), getFDPs(),
+    getWorkshops(), getConsultancyOpportunities(), getResearchOpportunities(),
+    getGuestLectureOpportunities(), getMentorshipPrograms()
+  ]);
+
+  allData = {
+    internships: internships.map(i => ({...i, _type:"internship", _href:"internships.html"})),
+    training: trainings.map(i => ({...i, _type:"training", _href:"industrial-training.html"})),
+    fdp: fdps.map(i => ({...i, _type:"fdp", _href:"fdp.html", organization: i.organizer})),
+    workshops: workshops.map(i => ({...i, _type:"workshop", _href:"workshops.html", organization: i.organizer})),
+    consultancy: consultancy.map(i => ({...i, _type:"consultancy", _href:"consultancy.html"})),
+    research: research.map(i => ({...i, _type:"research", _href:"research.html"})),
+    guest: guestLectures.map(i => ({...i, _type:"guest", _href:"guest-lectures.html"})),
+    mentorship: mentorship.map(i => ({...i, _type:"mentorship", _href:"mentorship.html"}))
+  };
+
+  renderCards();
+
+  document.querySelectorAll("#oppTabs .tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#oppTabs .tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentTab = btn.dataset.tab;
+      renderCards();
+    });
+  });
+
+  document.getElementById("searchInput").addEventListener("input", renderCards);
+  document.getElementById("modeFilter").addEventListener("change", renderCards);
+  document.getElementById("domainFilter").addEventListener("change", renderCards);
+
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function renderCards() {
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  const mode = document.getElementById("modeFilter").value;
+  const domain = document.getElementById("domainFilter").value;
+
+  let items = currentTab === "all"
+    ? Object.values(allData).flat()
+    : (allData[currentTab] || []);
+
+  if (search) items = items.filter(i =>
+    (i.title||"").toLowerCase().includes(search) ||
+    (i.domain||"").toLowerCase().includes(search) ||
+    (i.organization||i.organizer||"").toLowerCase().includes(search));
+
+  if (mode) items = items.filter(i => (i.mode||"").includes(mode));
+  if (domain) items = items.filter(i => (i.domain||"").includes(domain));
+
+  const container = document.getElementById("oppCards");
+
+  if (!items.length) {
+    container.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="empty-title">No opportunities found</div>
+        <div class="empty-desc">Try adjusting your search or filters to discover more opportunities.</div>
+        <button class="btn btn-primary" onclick="document.getElementById('searchInput').value='';document.getElementById('modeFilter').value='';document.getElementById('domainFilter').value='';renderCards()">Clear Filters</button>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = items.map(item => {
+    const org = item.organizer || item.organization || "";
+    const orgInit = (item.orgInitials || org.slice(0,2)).toUpperCase();
+    const skills = item.skills || item.expertise || item.requiredExpertise || item.targetExpertise || [];
+    const typeLabel = { internship:"Faculty Internship", training:"Industrial Training", fdp:"FDP", workshop:"Workshop", consultancy:"Consultancy", research:"Research", guest:"Guest Lecture", mentorship:"Mentorship" }[item._type] || "";
+
+    return `
+      <div class="opp-card">
+        <div class="opp-header">
+          <div class="flex items-center gap-3">
+            <div class="opp-org-logo">${orgInit}</div>
+            <div>
+              <div class="opp-title">${item.title}</div>
+              <div class="opp-org">${org}</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+            ${item.match ? `<span class="badge badge-teal">${item.match}% Match</span>` : ""}
+            <span class="badge badge-gray">${typeLabel}</span>
+          </div>
+        </div>
+        <div class="opp-meta">
+          ${item.location ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${item.location}</span>` : ""}
+          ${item.mode ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>${item.mode}</span>` : ""}
+          ${item.duration ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${item.duration}</span>` : ""}
+          ${item.domain ? `<span class="badge badge-navy" style="font-size:10px">${item.domain}</span>` : ""}
+          ${item.certificate ? `<span class="badge badge-success" style="font-size:10px">Certificate</span>` : ""}
+        </div>
+        ${skills.length ? `<div class="opp-skills">${skills.map(s=>`<span class="skill-tag">${s}</span>`).join("")}</div>` : ""}
+        <div class="opp-footer">
+          ${item.deadline ? `<span class="deadline-text">📅 ${item.deadline}</span>` : item.date ? `<span class="deadline-text">📅 ${item.date}</span>` : ""}
+          <a href="${item._href}" class="btn btn-primary btn-sm">View Details</a>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+window.renderCards = renderCards;
+init().catch(console.error);
+</script>
+</body>
+</html>

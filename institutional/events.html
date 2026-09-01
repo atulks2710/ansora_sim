@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events | EduBridge Faculty</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-6">
+        <div>
+          <div class="section-title">Workshops &amp; Events</div>
+          <div class="section-subtitle">Conferences, workshops, guest lectures, hackathons, and industry talks</div>
+        </div>
+      </div>
+
+      <!-- CATEGORY CHIPS -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px" id="catChips">
+        <button class="btn btn-primary btn-sm" data-cat="all">All Events</button>
+        <button class="btn btn-outline btn-sm" data-cat="Conference">Conferences</button>
+        <button class="btn btn-outline btn-sm" data-cat="Workshop">Workshops</button>
+        <button class="btn btn-outline btn-sm" data-cat="Summit">Summits</button>
+        <button class="btn btn-outline btn-sm" data-cat="FDP">FDPs</button>
+        <button class="btn btn-outline btn-sm" data-cat="Webinar">Webinars</button>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="search-filter-bar" style="margin-bottom:20px">
+        <div class="search-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search events by title, speaker, or organization..." aria-label="Search events">
+        </div>
+        <select class="filter-select" id="modeFilter" aria-label="Mode filter">
+          <option value="">All Modes</option>
+          <option>Online</option>
+          <option>On-site</option>
+          <option>Hybrid</option>
+        </select>
+      </div>
+
+      <!-- REGISTERED BANNER -->
+      <div style="background:var(--success-bg);border:1px solid #bbf7d0;border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" width="20" height="20"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--success)">You are registered for 1 upcoming event</div>
+            <div style="font-size:12px;color:var(--gray-600)">Workshop on Responsible AI in Healthcare — 28 Sep 2026</div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-outline" style="color:var(--success);border-color:var(--success)">View My Events</button>
+      </div>
+
+      <!-- EVENT CARDS -->
+      <div class="grid-auto" id="eventCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<!-- EVENT DETAIL MODAL -->
+<div class="modal-overlay" id="evModal">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <div class="modal-title" id="evModalTitle">Event Details</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="evModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="evRegBtn">Register Now</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import { getEvents, registerForEvent } from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("events");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Events");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("dashboard");
+initSidebarToggle();
+
+let events = [];
+let currentCat = "all";
+let currentEvent = null;
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+  events = await getEvents();
+  render();
+
+  document.querySelectorAll("#catChips button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#catChips button").forEach(b => { b.classList.remove("btn-primary"); b.classList.add("btn-outline"); });
+      btn.classList.add("btn-primary"); btn.classList.remove("btn-outline");
+      currentCat = btn.dataset.cat;
+      render();
+    });
+  });
+
+  document.getElementById("searchInput").addEventListener("input", render);
+  document.getElementById("modeFilter").addEventListener("change", render);
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function render() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const mode = document.getElementById("modeFilter").value;
+  let items = events;
+  if (currentCat !== "all") items = items.filter(e => e.category === currentCat);
+  if (q) items = items.filter(e => e.title.toLowerCase().includes(q) || e.speaker.toLowerCase().includes(q) || e.organization.toLowerCase().includes(q));
+  if (mode) items = items.filter(e => e.mode === mode);
+
+  const c = document.getElementById("eventCards");
+  if (!items.length) {
+    c.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="empty-title">No events found</div><div class="empty-desc">Try a different category or search term.</div></div>`;
+    return;
+  }
+
+  const catColors = { Conference:"navy", Workshop:"teal", Summit:"purple", FDP:"success", Webinar:"amber" };
+
+  c.innerHTML = items.map(ev => `
+    <div class="opp-card">
+      <div class="opp-header">
+        <div style="flex:1">
+          <div class="opp-title">${ev.title}</div>
+          <div class="opp-org">${ev.organization}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+          <span class="badge badge-${catColors[ev.category] || "gray"}">${ev.category}</span>
+          ${ev.registered ? '<span class="badge badge-success">Registered ✓</span>' : ""}
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--gray-600);margin:4px 0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" style="display:inline;margin-right:4px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        ${ev.speaker}
+      </div>
+      <div class="opp-meta">
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${ev.date}</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${ev.time}</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>${ev.mode}</span>
+        ${ev.location !== "Online" ? `<span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${ev.location}</span>` : ""}
+      </div>
+      <div class="opp-footer">
+        <span></span>
+        ${ev.registered
+          ? `<button class="btn btn-outline btn-sm" style="color:var(--success);border-color:var(--success)" disabled>Registered ✓</button>`
+          : `<button class="btn btn-primary btn-sm" onclick="openEventDetail('${ev.id}')">Register</button>`}
+      </div>
+    </div>`).join("");
+}
+
+window.openEventDetail = function(id) {
+  currentEvent = events.find(e => e.id === id);
+  if (!currentEvent) return;
+  document.getElementById("evModalTitle").textContent = currentEvent.title;
+  document.getElementById("evModalBody").innerHTML = `
+    <div style="margin-bottom:16px">
+      <span class="badge badge-navy">${currentEvent.category}</span>
+      <span class="badge badge-teal" style="margin-left:6px">${currentEvent.mode}</span>
+    </div>
+    <div style="font-size:13px;color:var(--gray-600);margin-bottom:16px">
+      <strong>Speaker:</strong> ${currentEvent.speaker}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DATE</div><div style="font-size:13px;font-weight:600">${currentEvent.date}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">TIME</div><div style="font-size:13px;font-weight:600">${currentEvent.time}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">MODE</div><div style="font-size:13px;font-weight:600">${currentEvent.mode}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">LOCATION</div><div style="font-size:13px;font-weight:600">${currentEvent.location}</div></div>
+    </div>
+    <div style="padding:12px;background:var(--teal-pale);border-radius:8px;border:1px solid var(--teal-light)">
+      <div style="font-size:12px;font-weight:700;color:var(--teal)">ORGANIZED BY</div>
+      <div style="font-size:13px;font-weight:700;color:var(--gray-800);margin-top:2px">${currentEvent.organization}</div>
+    </div>`;
+
+  document.getElementById("evRegBtn").onclick = async () => {
+    await registerForEvent("user_001", currentEvent.id);
+    currentEvent.registered = true;
+    showToast("Successfully registered for " + currentEvent.title, "success");
+    closeModal();
+    render();
+  };
+  document.getElementById("evModal").classList.add("open");
+};
+
+window.closeModal = () => document.getElementById("evModal").classList.remove("open");
+init().catch(console.error);
+</script>
+</body>
+</html>
