@@ -2,14 +2,16 @@
 // SKILLBRIDGE SIGNUP
 // ==========================================
 
+const API_URL =
+    "https://ansora-sim.onrender.com";
 
-// FORM
+
+// ==========================================
+// ELEMENTS
+// ==========================================
 
 const signupForm =
     document.getElementById("signupForm");
-
-
-// INPUTS
 
 const nameInput =
     document.getElementById("fullName");
@@ -20,22 +22,11 @@ const emailInput =
 const roleInput =
     document.getElementById("role");
 
-
-// BUTTON
-
 const continueButton =
-    document.getElementById(
-        "continueButton"
-    );
-
-
-// LOADING
+    document.getElementById("continueButton");
 
 const loading =
     document.getElementById("loading");
-
-
-// ERRORS
 
 const nameError =
     document.getElementById("nameError");
@@ -45,6 +36,59 @@ const emailError =
 
 const roleError =
     document.getElementById("roleError");
+
+
+// ==========================================
+// EMAIL VALIDATION
+// ==========================================
+
+function isValidEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email);
+
+}
+
+
+// ==========================================
+// LOADING STATE
+// ==========================================
+
+function setLoading(isLoading) {
+
+    continueButton.disabled =
+        isLoading;
+
+
+    const buttonText =
+        continueButton.querySelector("span");
+
+
+    if (buttonText) {
+
+        buttonText.textContent =
+            isLoading
+                ? "Sending OTP..."
+                : "Continue with OTP";
+
+    }
+
+
+    if (loading) {
+
+        if (isLoading) {
+
+            loading.classList.add("show");
+
+        } else {
+
+            loading.classList.remove("show");
+
+        }
+
+    }
+
+}
 
 
 // ==========================================
@@ -58,30 +102,36 @@ signupForm.addEventListener(
         event.preventDefault();
 
 
-        // Clear errors
+        // ======================================
+        // CLEAR ERRORS
+        // ======================================
 
         nameError.textContent = "";
-
         emailError.textContent = "";
-
         roleError.textContent = "";
 
 
-        // Get values
+        // ======================================
+        // GET VALUES
+        // ======================================
 
         const name =
             nameInput.value.trim();
 
         const email =
-            emailInput.value.trim();
+            emailInput.value
+                .trim()
+                .toLowerCase();
 
         const role =
-            roleInput.value;
+            roleInput.value
+                .trim()
+                .toLowerCase();
 
 
-        // ==================================
+        // ======================================
         // NAME VALIDATION
-        // ==================================
+        // ======================================
 
         if (!name) {
 
@@ -95,9 +145,9 @@ signupForm.addEventListener(
         }
 
 
-        // ==================================
+        // ======================================
         // EMAIL VALIDATION
-        // ==================================
+        // ======================================
 
         if (!email) {
 
@@ -111,11 +161,7 @@ signupForm.addEventListener(
         }
 
 
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-        if (!emailPattern.test(email)) {
+        if (!isValidEmail(email)) {
 
             emailError.textContent =
                 "Please enter a valid email address.";
@@ -127,9 +173,9 @@ signupForm.addEventListener(
         }
 
 
-        // ==================================
+        // ======================================
         // ROLE VALIDATION
-        // ==================================
+        // ======================================
 
         if (!role) {
 
@@ -143,61 +189,73 @@ signupForm.addEventListener(
         }
 
 
+        // ======================================
+        // LOADING
+        // ======================================
+
+        setLoading(true);
+
+
         try {
 
-            // =================================
-            // LOADING
-            // =================================
-
-            continueButton.disabled =
-                true;
-
-            continueButton.querySelector(
-                "span"
-            ).textContent =
-                "Sending OTP...";
-
-
-            loading.classList.add(
-                "show"
+            console.log(
+                "Requesting OTP from Render..."
             );
 
 
-            // =================================
+            // ======================================
             // SEND OTP
-            // =================================
+            // ======================================
 
             const response =
                 await fetch(
-                    "http://localhost:5000/send-otp",
+                    `${API_URL}/send-otp`,
                     {
 
                         method: "POST",
 
                         headers: {
-
                             "Content-Type":
                                 "application/json"
-
                         },
 
-                        body: JSON.stringify({
-
-                            email: email
-
-                        })
+                        body:
+                            JSON.stringify({
+                                email: email
+                            })
 
                     }
                 );
 
 
-            const data =
-                await response.json();
+            // ======================================
+            // READ RESPONSE
+            // ======================================
+
+            const text =
+                await response.text();
 
 
-            // =================================
-            // CHECK SERVER RESPONSE
-            // =================================
+            let data = null;
+
+
+            try {
+
+                data =
+                    JSON.parse(text);
+
+            } catch {
+
+                throw new Error(
+                    "The OTP server returned an invalid response."
+                );
+
+            }
+
+
+            // ======================================
+            // CHECK RESPONSE
+            // ======================================
 
             if (
                 !response.ok ||
@@ -212,30 +270,45 @@ signupForm.addEventListener(
             }
 
 
-            // =================================
+            console.log(
+                "OTP sent successfully."
+            );
+
+
+            // ======================================
             // SAVE SIGNUP DATA
-            // =================================
+            // ======================================
 
             sessionStorage.setItem(
-
                 "signupData",
 
                 JSON.stringify({
 
-                    name: name,
+                    name:
+                        name,
 
-                    email: email,
+                    email:
+                        email,
 
-                    role: role
+                    role:
+                        role
 
                 })
-
             );
 
 
-            // =================================
-            // GO TO OTP
-            // =================================
+            // ======================================
+            // CLEAR OLD VERIFICATION STATE
+            // ======================================
+
+            sessionStorage.removeItem(
+                "emailVerified"
+            );
+
+
+            // ======================================
+            // GO TO OTP PAGE
+            // ======================================
 
             window.location.href =
                 "otp.html";
@@ -246,28 +319,35 @@ signupForm.addEventListener(
         catch (error) {
 
             console.error(
-                "Signup error:",
+                "Signup/OTP error:",
                 error
             );
 
 
-            emailError.textContent =
+            let errorMessage =
                 error.message ||
-                "Unable to send OTP. Please try again.";
-
-            continueButton.disabled =
-                false;
+                "Unable to send OTP.";
 
 
-            continueButton.querySelector(
-                "span"
-            ).textContent =
-                "Continue with OTP";
+            // ======================================
+            // NETWORK ERROR
+            // ======================================
+
+            if (
+                error instanceof TypeError
+            ) {
+
+                errorMessage =
+                    "Unable to connect to the OTP server. Please try again.";
+
+            }
 
 
-            loading.classList.remove(
-                "show"
-            );
+            emailError.textContent =
+                errorMessage;
+
+
+            setLoading(false);
 
         }
 
