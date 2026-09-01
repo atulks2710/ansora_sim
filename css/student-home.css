@@ -10,30 +10,39 @@
 
 :root {
 
-    --black: #090909;
-    --black-2: #111111;
-    --black-3: #171717;
+    /* ANSORA Brand Palette */
+    --rich-white: #FAFAF8;
+    --deep-black: #0B0B0D;
+    --graphite: #1E1E22;
+    --soft-grey: #F3F4F6;
+    --strategic-gold: #C9A227;
+    --gold-hover: #B89320;
+    --pure-white: #FFFFFF;
+
+    --black: #0B0B0D;
+    --black-2: #141418;
+    --black-3: #1E1E22;
 
     --white: #FFFFFF;
-    --off-white: #F7F7F5;
+    --off-white: #FAFAF8;
 
-    --grey-100: #F4F4F5;
-    --grey-200: #E4E4E7;
-    --grey-400: #A1A1AA;
-    --grey-500: #71717A;
-    --grey-600: #52525B;
-    --grey-700: #3F3F46;
-    --grey-800: #27272A;
+    --grey-100: #F3F4F6;
+    --grey-200: #E5E7EB;
+    --grey-400: #9CA3AF;
+    --grey-500: #6B7280;
+    --grey-600: #4B5563;
+    --grey-700: #374151;
+    --grey-800: #1E1E22;
 
-    --gold: #D4AF37;
-    --gold-light: #F0D878;
+    --gold: #C9A227;
+    --gold-light: rgba(201, 162, 39, 0.15);
     --gold-dark: #A88920;
 
     --green: #26734D;
     --orange: #9A6700;
     --red: #B42318;
 
-    --border: #E4E4E7;
+    --border: #E5E7EB;
 
 }
 
