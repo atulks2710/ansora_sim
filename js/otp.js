@@ -2,22 +2,51 @@
 // SKILLBRIDGE OTP VERIFICATION
 // ==========================================
 
+const API_URL = "http://localhost:5000";
+
 
 // ==========================================
 // GET SIGNUP DATA
 // ==========================================
 
-const signupData =
-    JSON.parse(
-        sessionStorage.getItem("signupData")
+let signupData = null;
+
+try {
+
+    signupData =
+        JSON.parse(
+            sessionStorage.getItem("signupData")
+        );
+
+} catch (error) {
+
+    console.error(
+        "Unable to read signup data:",
+        error
     );
 
+}
 
-// If user directly opens OTP page
-if (!signupData || !signupData.email) {
+
+// ==========================================
+// CHECK SIGNUP DATA
+// ==========================================
+
+if (
+    !signupData ||
+    !signupData.email
+) {
+
+    alert(
+        "Signup information is missing. Please start again."
+    );
 
     window.location.href =
         "signup.html";
+
+    throw new Error(
+        "Missing signup data."
+    );
 
 }
 
@@ -48,10 +77,16 @@ const resendButton =
     document.getElementById("resendButton");
 
 
-// Show email
+// ==========================================
+// SHOW EMAIL
+// ==========================================
 
-emailDisplay.textContent =
-    signupData.email;
+if (emailDisplay) {
+
+    emailDisplay.textContent =
+        signupData.email;
+
+}
 
 
 // ==========================================
@@ -62,29 +97,29 @@ otpInputs.forEach(
     (input, index) => {
 
 
+        // ======================================
+        // INPUT
+        // ======================================
+
         input.addEventListener(
             "input",
             () => {
 
-                // Only numbers
-
                 input.value =
-                    input.value.replace(
-                        /\D/g,
-                        ""
-                    );
+                    input.value
+                        .replace(/\D/g, "")
+                        .slice(0, 1);
 
-
-                // Move to next box
 
                 if (
                     input.value &&
                     index <
-                    otpInputs.length - 1
+                        otpInputs.length - 1
                 ) {
 
-                    otpInputs[index + 1]
-                        .focus();
+                    otpInputs[
+                        index + 1
+                    ].focus();
 
                 }
 
@@ -92,59 +127,60 @@ otpInputs.forEach(
         );
 
 
-        // BACKSPACE
+        // ======================================
+        // KEYBOARD NAVIGATION
+        // ======================================
 
         input.addEventListener(
             "keydown",
             (event) => {
 
+
+                // BACKSPACE
+
                 if (
-                    event.key ===
-                    "Backspace" &&
+                    event.key === "Backspace" &&
                     !input.value &&
                     index > 0
                 ) {
 
-                    otpInputs[index - 1]
-                        .focus();
+                    otpInputs[
+                        index - 1
+                    ].focus();
 
                 }
 
-            }
-        );
 
-
-        // LEFT / RIGHT
-
-        input.addEventListener(
-            "keydown",
-            (event) => {
+                // LEFT ARROW
 
                 if (
                     event.key === "ArrowLeft" &&
                     index > 0
                 ) {
 
-                    otpInputs[index - 1]
-                        .focus();
+                    otpInputs[
+                        index - 1
+                    ].focus();
 
                 }
 
 
+                // RIGHT ARROW
+
                 if (
                     event.key === "ArrowRight" &&
                     index <
-                    otpInputs.length - 1
+                        otpInputs.length - 1
                 ) {
 
-                    otpInputs[index + 1]
-                        .focus();
+                    otpInputs[
+                        index + 1
+                    ].focus();
 
                 }
 
             }
         );
-
 
     }
 );
@@ -154,47 +190,68 @@ otpInputs.forEach(
 // PASTE OTP
 // ==========================================
 
-otpInputs[0].addEventListener(
-    "paste",
-    (event) => {
+if (otpInputs.length > 0) {
 
-        event.preventDefault();
+    otpInputs[0].addEventListener(
+        "paste",
+        (event) => {
 
-
-        const pasted =
-            (
-                event.clipboardData ||
-                window.clipboardData
-            )
-            .getData("text")
-            .replace(/\D/g, "")
-            .slice(0, 6);
+            event.preventDefault();
 
 
-        pasted
-            .split("")
-            .forEach(
-                (digit, index) => {
+            const clipboardData =
+                event.clipboardData;
 
-                    if (otpInputs[index]) {
 
-                        otpInputs[index]
-                            .value = digit;
+            if (!clipboardData) {
+                return;
+            }
+
+
+            const pasted =
+                clipboardData
+                    .getData("text")
+                    .replace(/\D/g, "")
+                    .slice(
+                        0,
+                        otpInputs.length
+                    );
+
+
+            pasted
+                .split("")
+                .forEach(
+                    (digit, index) => {
+
+                        if (
+                            otpInputs[index]
+                        ) {
+
+                            otpInputs[index]
+                                .value =
+                                digit;
+
+                        }
 
                     }
-
-                }
-            );
+                );
 
 
-        if (pasted.length === 6) {
+            if (
+                pasted.length ===
+                otpInputs.length
+            ) {
 
-            otpInputs[5].focus();
+                otpInputs[
+                    otpInputs.length - 1
+                ].focus();
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 // ==========================================
@@ -205,13 +262,16 @@ function getOTP() {
 
     let otp = "";
 
+
     otpInputs.forEach(
         input => {
 
-            otp += input.value;
+            otp +=
+                input.value;
 
         }
     );
+
 
     return otp;
 
@@ -224,56 +284,94 @@ function getOTP() {
 
 let timeLeft = 300;
 
-let timerInterval;
+let timerInterval = null;
+
+
+function updateTimer() {
+
+    const minutes =
+        Math.floor(
+            timeLeft / 60
+        );
+
+    const seconds =
+        timeLeft % 60;
+
+
+    if (timerElement) {
+
+        timerElement.textContent =
+            `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    }
+
+}
 
 
 function startTimer() {
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
+
 
     timeLeft = 300;
 
-    resendButton.disabled = true;
+
+    updateTimer();
+
+
+    if (resendButton) {
+
+        resendButton.disabled =
+            true;
+
+    }
 
 
     timerInterval =
         setInterval(
             () => {
 
-                const minutes =
-                    Math.floor(
-                        timeLeft / 60
-                    );
-
-                const seconds =
-                    timeLeft % 60;
+                timeLeft--;
 
 
-                timerElement.textContent =
-
-                    `${String(minutes).padStart(2, "0")}:` +
-                    `${String(seconds).padStart(2, "0")}`;
-
-
-                if (timeLeft <= 0) {
+                if (
+                    timeLeft <= 0
+                ) {
 
                     clearInterval(
                         timerInterval
                     );
 
-                    timerElement.textContent =
-                        "Expired";
 
-                    resendButton.disabled =
-                        false;
+                    timeLeft = 0;
+
+
+                    if (timerElement) {
+
+                        timerElement.textContent =
+                            "Expired";
+
+                    }
+
+
+                    if (resendButton) {
+
+                        resendButton.disabled =
+                            false;
+
+                    }
+
+
+                    return;
 
                 }
 
 
-                timeLeft--;
+                updateTimer();
 
             },
-
             1000
         );
 
@@ -281,6 +379,41 @@ function startTimer() {
 
 
 startTimer();
+
+
+// ==========================================
+// VERIFY BUTTON LOADING
+// ==========================================
+
+function setVerifyLoading(
+    loading
+) {
+
+    if (!verifyButton) {
+        return;
+    }
+
+
+    verifyButton.disabled =
+        loading;
+
+
+    const buttonText =
+        verifyButton.querySelector(
+            "span"
+        );
+
+
+    if (buttonText) {
+
+        buttonText.textContent =
+            loading
+                ? "Verifying..."
+                : "Verify Email";
+
+    }
+
+}
 
 
 // ==========================================
@@ -298,9 +431,14 @@ otpForm.addEventListener(
             getOTP();
 
 
-        // Validate
+        // ======================================
+        // VALIDATE OTP
+        // ======================================
 
-        if (otp.length !== 6) {
+        if (
+            otp.length !==
+            otpInputs.length
+        ) {
 
             otpMessage.textContent =
                 "Please enter the complete 6-digit OTP.";
@@ -313,24 +451,34 @@ otpForm.addEventListener(
         }
 
 
-        // Loading
+        // ======================================
+        // LOADING
+        // ======================================
 
-        verifyButton.disabled = true;
-
-        verifyButton.querySelector(
-            "span"
-        ).textContent =
-            "Verifying...";
+        setVerifyLoading(true);
 
 
-        otpMessage.textContent = "";
+        otpMessage.textContent =
+            "";
+
+        otpMessage.className =
+            "otp-message";
 
 
         try {
 
+            console.log(
+                "Verifying OTP..."
+            );
+
+
+            // ======================================
+            // VERIFY OTP
+            // ======================================
+
             const response =
                 await fetch(
-                    "http://localhost:5000/verify-otp",
+                    `${API_URL}/verify-otp`,
                     {
 
                         method: "POST",
@@ -342,15 +490,16 @@ otpForm.addEventListener(
 
                         },
 
-                        body: JSON.stringify({
+                        body:
+                            JSON.stringify({
 
-                            email:
-                                signupData.email,
+                                email:
+                                    signupData.email,
 
-                            otp:
-                                otp
+                                otp:
+                                    otp
 
-                        })
+                            })
 
                     }
                 );
@@ -359,6 +508,10 @@ otpForm.addEventListener(
             const data =
                 await response.json();
 
+
+            // ======================================
+            // CHECK RESPONSE
+            // ======================================
 
             if (
                 !response.ok ||
@@ -373,7 +526,14 @@ otpForm.addEventListener(
             }
 
 
+            // ======================================
             // SUCCESS
+            // ======================================
+
+            console.log(
+                "OTP verified successfully."
+            );
+
 
             otpMessage.textContent =
                 "Email verified successfully.";
@@ -382,12 +542,28 @@ otpForm.addEventListener(
                 "otp-message success";
 
 
+            // ======================================
+            // SAVE VERIFICATION STATUS
+            // ======================================
+
+            sessionStorage.setItem(
+                "emailVerified",
+                "true"
+            );
+
+
+            // ======================================
+            // STOP TIMER
+            // ======================================
+
             clearInterval(
                 timerInterval
             );
 
 
-            // Move to password
+            // ======================================
+            // MOVE TO PASSWORD PAGE
+            // ======================================
 
             setTimeout(
                 () => {
@@ -396,7 +572,6 @@ otpForm.addEventListener(
                         "password.html";
 
                 },
-
                 500
             );
 
@@ -419,13 +594,7 @@ otpForm.addEventListener(
                 "otp-message error";
 
 
-            verifyButton.disabled =
-                false;
-
-            verifyButton.querySelector(
-                "span"
-            ).textContent =
-                "Verify Email";
+            setVerifyLoading(false);
 
         }
 
@@ -441,17 +610,34 @@ resendButton.addEventListener(
     "click",
     async () => {
 
-        resendButton.disabled = true;
+        resendButton.disabled =
+            true;
 
         resendButton.textContent =
             "Sending...";
 
 
+        otpMessage.textContent =
+            "";
+
+        otpMessage.className =
+            "otp-message";
+
+
         try {
+
+            console.log(
+                "Requesting new OTP..."
+            );
+
+
+            // ======================================
+            // SEND NEW OTP
+            // ======================================
 
             const response =
                 await fetch(
-                    "http://localhost:5000/send-otp",
+                    `${API_URL}/send-otp`,
                     {
 
                         method: "POST",
@@ -463,12 +649,13 @@ resendButton.addEventListener(
 
                         },
 
-                        body: JSON.stringify({
+                        body:
+                            JSON.stringify({
 
-                            email:
-                                signupData.email
+                                email:
+                                    signupData.email
 
-                        })
+                            })
 
                     }
                 );
@@ -477,6 +664,10 @@ resendButton.addEventListener(
             const data =
                 await response.json();
 
+
+            // ======================================
+            // CHECK RESPONSE
+            // ======================================
 
             if (
                 !response.ok ||
@@ -491,6 +682,10 @@ resendButton.addEventListener(
             }
 
 
+            // ======================================
+            // CLEAR OLD OTP
+            // ======================================
+
             otpInputs.forEach(
                 input => {
 
@@ -500,6 +695,10 @@ resendButton.addEventListener(
             );
 
 
+            // ======================================
+            // SUCCESS
+            // ======================================
+
             otpMessage.textContent =
                 "A new OTP has been sent to your email.";
 
@@ -507,19 +706,39 @@ resendButton.addEventListener(
                 "otp-message success";
 
 
-            resendButton.textContent =
-                "Resend OTP";
-
+            // ======================================
+            // RESET TIMER
+            // ======================================
 
             startTimer();
 
 
-            otpInputs[0].focus();
+            // ======================================
+            // FOCUS FIRST INPUT
+            // ======================================
+
+            if (
+                otpInputs.length > 0
+            ) {
+
+                otpInputs[0].focus();
+
+            }
+
+
+            resendButton.textContent =
+                "Resend OTP";
 
         }
 
 
         catch (error) {
+
+            console.error(
+                "Resend OTP error:",
+                error
+            );
+
 
             otpMessage.textContent =
                 error.message ||

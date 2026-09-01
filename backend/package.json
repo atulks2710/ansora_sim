@@ -1,15 +1,19 @@
 {
-  "name": "skillbridge-otp-backend",
+  "name": "academia-industry-backend",
   "version": "1.0.0",
-  "description": "SkillBridge OTP backend",
+  "description": "Backend for Academia Industry project",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0",
-    "nodemailer": "^7.0.6"
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "nodemailer": "^9.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
   }
 }

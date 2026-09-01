@@ -2,14 +2,15 @@
 // SKILLBRIDGE SIGNUP
 // ==========================================
 
+const API_URL = "http://localhost:5000";
 
-// FORM
+
+// ==========================================
+// ELEMENTS
+// ==========================================
 
 const signupForm =
     document.getElementById("signupForm");
-
-
-// INPUTS
 
 const nameInput =
     document.getElementById("fullName");
@@ -20,22 +21,11 @@ const emailInput =
 const roleInput =
     document.getElementById("role");
 
-
-// BUTTON
-
 const continueButton =
-    document.getElementById(
-        "continueButton"
-    );
-
-
-// LOADING
+    document.getElementById("continueButton");
 
 const loading =
     document.getElementById("loading");
-
-
-// ERRORS
 
 const nameError =
     document.getElementById("nameError");
@@ -48,7 +38,111 @@ const roleError =
 
 
 // ==========================================
-// SUBMIT
+// CHECK ELEMENTS
+// ==========================================
+
+if (!signupForm) {
+    console.error("signupForm not found.");
+}
+
+if (!nameInput) {
+    console.error("fullName input not found.");
+}
+
+if (!emailInput) {
+    console.error("email input not found.");
+}
+
+if (!roleInput) {
+    console.error("role input not found.");
+}
+
+if (!continueButton) {
+    console.error("continueButton not found.");
+}
+
+
+// ==========================================
+// EMAIL VALIDATION
+// ==========================================
+
+function isValidEmail(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+}
+
+
+// ==========================================
+// SHOW ERROR
+// ==========================================
+
+function showError(element, message) {
+
+    if (element) {
+        element.textContent = message;
+    }
+
+}
+
+
+// ==========================================
+// CLEAR ERRORS
+// ==========================================
+
+function clearErrors() {
+
+    showError(nameError, "");
+    showError(emailError, "");
+    showError(roleError, "");
+
+}
+
+
+// ==========================================
+// LOADING STATE
+// ==========================================
+
+function setLoading(isLoading) {
+
+    if (continueButton) {
+
+        continueButton.disabled = isLoading;
+
+        const buttonText =
+            continueButton.querySelector("span");
+
+        if (buttonText) {
+
+            buttonText.textContent =
+                isLoading
+                    ? "Sending OTP..."
+                    : "Continue with OTP";
+
+        }
+
+    }
+
+
+    if (loading) {
+
+        if (isLoading) {
+
+            loading.classList.add("show");
+
+        } else {
+
+            loading.classList.remove("show");
+
+        }
+
+    }
+
+}
+
+
+// ==========================================
+// SIGNUP FORM
 // ==========================================
 
 signupForm.addEventListener(
@@ -58,35 +152,37 @@ signupForm.addEventListener(
         event.preventDefault();
 
 
-        // Clear errors
-
-        nameError.textContent = "";
-
-        emailError.textContent = "";
-
-        roleError.textContent = "";
+        clearErrors();
 
 
-        // Get values
+        // ======================================
+        // GET VALUES
+        // ======================================
 
         const name =
             nameInput.value.trim();
 
         const email =
-            emailInput.value.trim();
+            emailInput.value
+                .trim()
+                .toLowerCase();
 
         const role =
-            roleInput.value;
+            roleInput.value
+                .trim()
+                .toLowerCase();
 
 
-        // ==================================
-        // NAME VALIDATION
-        // ==================================
+        // ======================================
+        // NAME
+        // ======================================
 
         if (!name) {
 
-            nameError.textContent =
-                "Please enter your full name.";
+            showError(
+                nameError,
+                "Please enter your full name."
+            );
 
             nameInput.focus();
 
@@ -95,14 +191,16 @@ signupForm.addEventListener(
         }
 
 
-        // ==================================
-        // EMAIL VALIDATION
-        // ==================================
+        // ======================================
+        // EMAIL
+        // ======================================
 
         if (!email) {
 
-            emailError.textContent =
-                "Please enter your email address.";
+            showError(
+                emailError,
+                "Please enter your email address."
+            );
 
             emailInput.focus();
 
@@ -111,14 +209,12 @@ signupForm.addEventListener(
         }
 
 
-        const emailPattern =
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!isValidEmail(email)) {
 
-
-        if (!emailPattern.test(email)) {
-
-            emailError.textContent =
-                "Please enter a valid email address.";
+            showError(
+                emailError,
+                "Please enter a valid email address."
+            );
 
             emailInput.focus();
 
@@ -127,14 +223,16 @@ signupForm.addEventListener(
         }
 
 
-        // ==================================
-        // ROLE VALIDATION
-        // ==================================
+        // ======================================
+        // ROLE
+        // ======================================
 
         if (!role) {
 
-            roleError.textContent =
-                "Please select your role.";
+            showError(
+                roleError,
+                "Please select your role."
+            );
 
             roleInput.focus();
 
@@ -143,61 +241,59 @@ signupForm.addEventListener(
         }
 
 
+        // ======================================
+        // START LOADING
+        // ======================================
+
+        setLoading(true);
+
+
         try {
 
-            // =================================
-            // LOADING
-            // =================================
+            console.log(
+                "Sending OTP request..."
+            );
 
-            continueButton.disabled =
-                true;
-
-            continueButton.querySelector(
-                "span"
-            ).textContent =
-                "Sending OTP...";
-
-
-            loading.classList.add(
-                "show"
+            console.log(
+                "API:",
+                `${API_URL}/send-otp`
             );
 
 
-            // =================================
+            // ======================================
             // SEND OTP
-            // =================================
+            // ======================================
 
             const response =
                 await fetch(
-                    "http://localhost:5000/send-otp",
+                    `${API_URL}/send-otp`,
                     {
-
                         method: "POST",
 
                         headers: {
-
                             "Content-Type":
                                 "application/json"
-
                         },
 
-                        body: JSON.stringify({
-
-                            email: email
-
-                        })
-
+                        body:
+                            JSON.stringify({
+                                email: email
+                            })
                     }
                 );
 
+
+            // ======================================
+            // READ RESPONSE
+            // ======================================
 
             const data =
                 await response.json();
 
 
-            // =================================
-            // CHECK SERVER RESPONSE
-            // =================================
+            // ======================================
+            // CHECK RESPONSE
+            // ======================================
 
             if (
                 !response.ok ||
@@ -212,30 +308,45 @@ signupForm.addEventListener(
             }
 
 
-            // =================================
+            console.log(
+                "OTP sent successfully."
+            );
+
+
+            // ======================================
             // SAVE SIGNUP DATA
-            // =================================
+            // ======================================
 
             sessionStorage.setItem(
-
                 "signupData",
 
                 JSON.stringify({
 
-                    name: name,
+                    name:
+                        name,
 
-                    email: email,
+                    email:
+                        email,
 
-                    role: role
+                    role:
+                        role
 
                 })
-
             );
 
 
-            // =================================
-            // GO TO OTP
-            // =================================
+            // ======================================
+            // CLEAR PREVIOUS VERIFICATION
+            // ======================================
+
+            sessionStorage.removeItem(
+                "emailVerified"
+            );
+
+
+            // ======================================
+            // MOVE TO OTP PAGE
+            // ======================================
 
             window.location.href =
                 "otp.html";
@@ -251,23 +362,32 @@ signupForm.addEventListener(
             );
 
 
-            emailError.textContent =
+            let message =
                 error.message ||
-                "Unable to send OTP. Please try again.";
-
-            continueButton.disabled =
-                false;
+                "Unable to send OTP.";
 
 
-            continueButton.querySelector(
-                "span"
-            ).textContent =
-                "Continue with OTP";
+            // ======================================
+            // NETWORK ERROR
+            // ======================================
+
+            if (
+                error instanceof TypeError
+            ) {
+
+                message =
+                    "Unable to connect to the OTP server. Make sure server.js is running.";
+
+            }
 
 
-            loading.classList.remove(
-                "show"
+            showError(
+                emailError,
+                message
             );
+
+
+            setLoading(false);
 
         }
 
