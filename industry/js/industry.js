@@ -46,6 +46,7 @@ const state = {
     opportunities: [],
     rawStudents: [],
     candidates: [],
+    companyApplications: [],
     pipelineStatuses: {},
     institutions: [],
     liveProjects: [],
@@ -119,10 +120,10 @@ function initRealtimeData(user) {
     // 2. Opportunities Real-Time Listener
     const oppsRef = collection(db, "opportunities");
     const unsubOpps = onSnapshot(oppsRef, (snap) => {
-        state.opportunities = snap.docs.map(d => ({
-            id: d.id,
-            ...d.data()
-        })).sort((a, b) => {
+        state.opportunities = snap.docs
+            .map(d => ({ id: d.id, ...d.data() }))
+            .filter(opp => opp.companyId === user.uid)
+            .sort((a, b) => {
             const timeA = a.createdAt?.toMillis ? a.createdAt.toMillis() : (new Date(a.createdAt || 0).getTime());
             const timeB = b.createdAt?.toMillis ? b.createdAt.toMillis() : (new Date(b.createdAt || 0).getTime());
             return timeB - timeA;
@@ -138,19 +139,28 @@ function initRealtimeData(user) {
     });
     state.unsubscribers.push(unsubOpps);
 
-    // 3. Talent Pipeline Statuses Listener (Candidate Stage Progression)
-    const pipelineRef = collection(db, `companies/${user.uid}/pipeline`);
-    const unsubPipeline = onSnapshot(pipelineRef, (snap) => {
+    // 3. Canonical application listener for this industry company.
+    // Applications are the bridge between Student and Industry.
+    const companyAppsQuery = query(
+        collection(db, "applications"),
+        where("companyId", "==", user.uid)
+    );
+    const unsubCompanyApps = onSnapshot(companyAppsQuery, (snap) => {
+        state.companyApplications = snap.docs.map(d => ({
+            id: d.id,
+            ...d.data()
+        }));
+
         const statuses = {};
-        snap.docs.forEach(d => {
-            statuses[d.id] = d.data().status;
+        state.companyApplications.forEach(app => {
+            statuses[app.id] = app.status || "Applied";
         });
         state.pipelineStatuses = statuses;
         recalculateTalentMatches();
     }, (error) => {
-        console.error("Pipeline subscription error:", error);
+        console.error("Company applications subscription error:", error);
     });
-    state.unsubscribers.push(unsubPipeline);
+    state.unsubscribers.push(unsubCompanyApps);
 
     // 4. Students Real-Time Listener (Firestore "users" where role == "student")
     const studentsQuery = query(collection(db, "users"), where("role", "==", "student"));
@@ -283,50 +293,55 @@ function recalculateTalentMatches() {
     const companyTech = (state.company.tech || []).map(t => t.toLowerCase());
     const companyExpertise = (state.company.expertise || []).map(e => e.toLowerCase());
 
-    // Gather all skills required by current active opportunities
     const opportunitySkills = new Set();
-    state.opportunities.forEach(opp => {
-        (opp.skills || []).forEach(s => opportunitySkills.add(s.toLowerCase()));
-    });
+    state.opportunities
+        .filter(opp => opp.companyId === state.currentUser?.uid)
+        .forEach(opp => {
+            (opp.skills || []).forEach(s => opportunitySkills.add(String(s).toLowerCase()));
+        });
 
     const targetSkillSet = new Set([...companyTech, ...companyExpertise, ...opportunitySkills]);
     if (targetSkillSet.size === 0) {
         ["javascript", "python", "react", "node.js", "git"].forEach(s => targetSkillSet.add(s));
     }
 
-    state.candidates = state.rawStudents.map(student => {
-        // Extract student skills from Firestore
+    const studentsById = new Map(state.rawStudents.map(student => [student.id, student]));
+
+    // Only applicants to this company's opportunities are actionable candidates.
+    state.candidates = state.companyApplications.map(application => {
+        const student = studentsById.get(application.studentId) || {};
         let studentSkills = [];
-        if (Array.isArray(student.skills)) {
-            studentSkills = student.skills.map(s => {
-                if (typeof s === "string") {
-                    return { name: s, score: 85 };
-                }
-                return { name: s.name || s.skill || "Skill", score: s.score || s.proficiency || 80 };
-            });
+
+        const rawSkills = student.skills ?? application.studentSkills ?? {};
+        if (Array.isArray(rawSkills)) {
+            studentSkills = rawSkills.map(s => typeof s === "string"
+                ? { name: s, score: 85 }
+                : { name: s.name || s.skill || "Skill", score: s.score || s.proficiency || 80 });
+        } else if (rawSkills && typeof rawSkills === "object") {
+            studentSkills = Object.entries(rawSkills).map(([name, score]) => ({
+                name,
+                score: Number(score) || 0
+            }));
         }
 
         const studentSkillNames = studentSkills.map(s => s.name.toLowerCase());
         let matches = 0;
         const totalTarget = Math.max(1, targetSkillSet.size);
-
         targetSkillSet.forEach(target => {
-            if (studentSkillNames.some(sn => sn.includes(target) || target.includes(sn))) {
-                matches++;
-            }
+            if (studentSkillNames.some(sn => sn.includes(target) || target.includes(sn))) matches++;
         });
 
-        // Calculate dynamic match rate
-        let matchRate = Math.min(99, Math.max(65, Math.round((matches / Math.min(5, totalTarget)) * 100)));
+        let matchRate = Number(application.matchScore) ||
+            Math.min(99, Math.max(65, Math.round((matches / Math.min(5, totalTarget)) * 100)));
+
         if (studentSkills.length === 0) {
-            matchRate = 60;
             studentSkills = [
                 { name: "Problem Solving", score: 80 },
                 { name: "Computer Science", score: 75 }
             ];
+            matchRate = Number(application.matchScore) || 60;
         }
 
-        // Build skill breakdown
         const skillsBreakdown = studentSkills.map(s => {
             const isAligned = targetSkillSet.has(s.name.toLowerCase()) || s.score >= 80;
             return {
@@ -337,39 +352,38 @@ function recalculateTalentMatches() {
             };
         });
 
-        const strongest = studentSkills
-            .slice()
-            .sort((a, b) => b.score - a.score)
-            .slice(0, 3)
-            .map(s => s.name);
-
+        const strongest = studentSkills.slice().sort((a, b) => b.score - a.score).slice(0, 3).map(s => s.name);
         const gaps = skillsBreakdown.filter(s => s.status === "gap").map(s => s.name);
         const primaryGap = gaps.length > 0
             ? `${gaps[0]} (Develop proficiency for enterprise benchmarks)`
             : "None (Exceeds baseline competency benchmarks)";
 
-        const initials = getInitials(student.name || "Student");
-        const status = state.pipelineStatuses[student.id] || "Recommended";
+        const displayName = application.studentName || student.name || student.fullName || "Student Candidate";
+        const initials = getInitials(displayName);
+        const status = application.status || "Applied";
 
         return {
-            id: student.id,
-            name: student.name || "Student Candidate",
-            initials: initials,
-            university: student.college || student.university || "Academic Institute",
-            degree: `${student.course || "B.Tech Computer Science"} ${student.year ? `(Year ${student.year})` : ""}`.trim(),
-            targetRole: student.targetRole || "Software Engineering Specialist",
-            matchRate: matchRate,
-            status: status,
+            id: application.studentId,
+            applicationId: application.id,
+            opportunityId: application.opportunityId || "",
+            opportunityTitle: application.opportunityTitle || "Industry Opportunity",
+            companyId: application.companyId || state.currentUser?.uid,
+            companyName: application.companyName || state.company.name,
+            name: displayName,
+            initials,
+            university: application.university || student.college || student.university || "Academic Institute",
+            degree: application.degree || `${student.course || "B.Tech Computer Science"} ${student.year ? `(Year ${student.year})` : ""}`.trim(),
+            targetRole: student.targetRole || application.opportunityTitle || "Software Engineering Specialist",
+            matchRate,
+            status,
             verifiedSkillsCount: studentSkills.length,
-            projectsCount: Array.isArray(student.projects) ? student.projects.length : 2,
+            projectsCount: Array.isArray(student.projects) ? student.projects.length : 0,
             internshipsCount: student.internshipsCount || 0,
             skills: skillsBreakdown,
             strongest: strongest.length > 0 ? strongest : ["Core Stack", "Problem Solving"],
-            primaryGap: primaryGap,
-            summary: student.bio || `Student specializing in ${student.course || "Computer Science"} at ${student.college || "University"}. Verified competency across key frameworks.`,
-            projects: Array.isArray(student.projects) && student.projects.length > 0 ? student.projects : [
-                { title: "Academic Capstone Project", tech: studentSkills.map(s => s.name).slice(0, 3).join(", ") || "Full-Stack" }
-            ]
+            primaryGap,
+            summary: student.bio || `Applied for ${application.opportunityTitle || "an industry opportunity"}.`,
+            projects: Array.isArray(student.projects) ? student.projects : []
         };
     }).sort((a, b) => b.matchRate - a.matchRate);
 
@@ -810,7 +824,8 @@ function renderAllOpportunities(filter) {
     if (!grid) return;
     grid.innerHTML = "";
 
-    const list = filter === "all" ? state.opportunities : state.opportunities.filter(o => o.type === filter);
+    const owned = state.opportunities.filter(o => o.companyId === state.currentUser?.uid);
+    const list = filter === "all" ? owned : owned.filter(o => o.type === filter);
 
     if (list.length === 0) {
         grid.innerHTML = `
@@ -1043,13 +1058,16 @@ function getTalentActionButtons(cand) {
     if (cand.status === "Hired") {
         return `<span class="badge badge-success" style="padding: 6px 10px; font-size:11px; font-weight:700;">✓ Hired & Placed</span>`;
     }
+    if (cand.status === "Evaluated") {
+        return `<button class="btn-primary-action" style="padding: 6px 10px; font-size: 11px;" onclick="window.advanceCandidateStage('${cand.applicationId}', 'Hired')">💼 Offer & Hire</button>`;
+    }
     if (cand.status === "Interviewing") {
-        return `<button class="btn-primary-action" style="padding: 6px 10px; font-size: 11px;" onclick="window.advanceCandidateStage('${cand.id}', 'Hired')">💼 Offer & Hire</button>`;
+        return `<button class="btn-primary-action" style="padding: 6px 10px; font-size: 11px;" onclick="window.advanceCandidateStage('${cand.applicationId}', 'Hired')">💼 Offer & Hire</button>`;
     }
     if (cand.status === "Shortlisted") {
-        return `<button class="btn-secondary-action" style="padding: 6px 10px; font-size: 11px;" onclick="window.advanceCandidateStage('${cand.id}', 'Interviewing')">📅 Schedule Interview</button>`;
+        return `<button class="btn-secondary-action" style="padding: 6px 10px; font-size: 11px;" onclick="window.advanceCandidateStage('${cand.applicationId}', 'Interviewing')">📅 Schedule Interview</button>`;
     }
-    return `<button class="btn-shortlist-action" onclick="window.advanceCandidateStage('${cand.id}', 'Shortlisted')">Shortlist</button>`;
+    return `<button class="btn-shortlist-action" onclick="window.advanceCandidateStage('${cand.applicationId}', 'Shortlisted')">Shortlist</button>`;
 }
 
 function createTalentCard(cand) {
@@ -1158,7 +1176,7 @@ window.explainCandidateMatch = function(candidateId) {
 
     if (shortlistBtn) {
         shortlistBtn.onclick = () => {
-            window.advanceCandidateStage(cand.id, "Shortlisted");
+            window.advanceCandidateStage(cand.applicationId, "Shortlisted");
             drawer.classList.remove("open");
         };
     }
@@ -1213,7 +1231,7 @@ window.viewSkillPassport = function(candidateId) {
 
     if (shortlistBtn) {
         shortlistBtn.onclick = () => {
-            window.advanceCandidateStage(cand.id, "Shortlisted");
+            window.advanceCandidateStage(cand.applicationId, "Shortlisted");
             if (modal) modal.classList.remove("active");
         };
     }
@@ -1231,62 +1249,68 @@ function initSkillPassportModal() {
     if (actionCloseBtn) actionCloseBtn.addEventListener("click", closeModal);
 }
 
-window.advanceCandidateStage = async function(candidateId, nextStage) {
+window.advanceCandidateStage = async function(applicationId, nextStage) {
     if (!state.currentUser) return;
-    const cand = state.candidates.find(c => c.id === candidateId);
-    const candName = cand ? cand.name : "Candidate";
+
+    const application = state.companyApplications.find(a => a.id === applicationId);
+    if (!application) {
+        showToast("Application not found. Please refresh the page.");
+        return;
+    }
+
+    const cand = state.candidates.find(c => c.applicationId === applicationId);
+    const candName = cand ? cand.name : (application.studentName || "Candidate");
 
     try {
-        // 1. Update company pipeline
-        await setDoc(doc(db, `companies/${state.currentUser.uid}/pipeline`, candidateId), {
+        const applicationRef = doc(db, "applications", applicationId);
+        const nextUpdate = {
             status: nextStage,
-            candidateName: candName,
             updatedAt: serverTimestamp()
-        }, { merge: true });
+        };
 
-        // 2. Update canonical applications collection in Firestore
+        await updateDoc(applicationRef, nextUpdate);
+
         try {
-            const appsQuery = query(
-                collection(db, "applications"),
-                where("studentId", "==", candidateId)
+            await setDoc(
+                doc(db, "students", application.studentId, "applications", applicationId),
+                nextUpdate,
+                { merge: true }
             );
-            const appSnaps = await getDocs(appsQuery);
-            appSnaps.forEach(async (appDoc) => {
-                await updateDoc(doc(db, "applications", appDoc.id), {
-                    status: nextStage,
-                    updatedAt: serverTimestamp()
-                });
-
-                // Also sync to student's local applications subcollection
-                try {
-                    await setDoc(doc(db, "students", candidateId, "applications", appDoc.id), {
-                        status: nextStage,
-                        updatedAt: serverTimestamp()
-                    }, { merge: true });
-                } catch (e) {}
-            });
-        } catch (appErr) {
-            console.warn("Applications sync notice:", appErr);
+        } catch (syncErr) {
+            console.warn("Student application mirror update failed:", syncErr);
         }
+
+        await setDoc(
+            doc(db, `companies/${state.currentUser.uid}/pipeline`, applicationId),
+            {
+                applicationId,
+                studentId: application.studentId,
+                opportunityId: application.opportunityId || "",
+                candidateName: candName,
+                status: nextStage,
+                updatedAt: serverTimestamp()
+            },
+            { merge: true }
+        );
 
         if (nextStage === "Shortlisted") {
-            await logActivity("⚡", "Candidate Shortlisted", `Shortlisted ${candName}`, "Shortlisted");
-            showToast(`Shortlisted ${candName} for hiring pipeline!`);
+            await logActivity("⚡", "Candidate Shortlisted", `Shortlisted ${candName} for ${application.opportunityTitle || "an opportunity"}`, "Shortlisted");
+            showToast(`Shortlisted ${candName}!`);
         } else if (nextStage === "Interviewing") {
             await logActivity("📅", "Interview Scheduled", `Interview invitation queued for ${candName}`, "Interviewing");
-            showToast(`Scheduled technical interview with ${candName}!`);
+            showToast(`Scheduled interview with ${candName}!`);
         } else if (nextStage === "Hired") {
             await logActivity("🎉", "Candidate Hired", `Placement confirmed for ${candName}!`, "Placement");
-            showToast(`🎉 Congratulations! ${candName} is now hired & placed!`);
+            showToast(`🎉 ${candName} marked as hired!`);
         }
     } catch (err) {
-        console.error("Failed to update candidate pipeline stage:", err);
-        showToast("Pipeline update error: " + err.message);
+        console.error("Failed to update application stage:", err);
+        showToast("Failed to update application: " + err.message);
     }
 };
 
-window.shortlistCandidate = function(candidateId) {
-    window.advanceCandidateStage(candidateId, "Shortlisted");
+window.shortlistCandidate = function(applicationId) {
+    window.advanceCandidateStage(applicationId, "Shortlisted");
 };
 
 // ==========================================================================
@@ -1591,6 +1615,8 @@ function initLiveProjects() {
                 progress: 15,
                 companyId: state.currentUser.uid,
                 companyName: state.company.name,
+                institutionId: college || "",
+                studentIds: [],
                 team: [],
                 milestones: [
                     { id: "m1", title: "M1: Architecture Review & Technical Spec", status: "In Review", date: "Phase 1" },
@@ -1649,6 +1675,38 @@ function initLiveProjects() {
         });
     }
 }
+
+window.assignStudentToProject = async function(projectId, studentId) {
+    if (!state.currentUser || !projectId || !studentId) return;
+    try {
+        const projectRef = doc(db, "projects", projectId);
+        const projectSnap = await getDoc(projectRef);
+        if (!projectSnap.exists()) throw new Error("Project not found.");
+        const project = projectSnap.data();
+        if (project.companyId !== state.currentUser.uid) throw new Error("You can only modify your own projects.");
+        const ids = Array.isArray(project.studentIds) ? [...project.studentIds] : [];
+        if (!ids.includes(studentId)) ids.push(studentId);
+        const member = state.rawStudents.find(s => s.id === studentId);
+        const team = Array.isArray(project.team) ? [...project.team] : [];
+        if (!team.some(m => m.id === studentId)) {
+            team.push({
+                id: studentId,
+                name: member?.name || member?.fullName || "Student",
+                role: member?.targetRole || "Student Engineer",
+                initials: getInitials(member?.name || member?.fullName || "Student")
+            });
+        }
+        await updateDoc(projectRef, {
+            studentIds: ids,
+            team,
+            updatedAt: serverTimestamp()
+        });
+        showToast("Student assigned to project.");
+    } catch (err) {
+        console.error("Project assignment error:", err);
+        showToast("Could not assign student: " + err.message);
+    }
+};
 
 function renderLiveProjects() {
     const projContainer = document.getElementById("liveProjectsList");
@@ -1802,7 +1860,7 @@ window.viewChallengeLeaderboard = function(challengeId) {
 window.shortlistChallengeWinner = function(studentName) {
     const cand = state.candidates.find(c => c.name.toLowerCase() === studentName.toLowerCase());
     if (cand) {
-        window.advanceCandidateStage(cand.id, "Shortlisted");
+        window.advanceCandidateStage(cand.applicationId, "Shortlisted");
     } else {
         logActivity("🏆", "Challenge Winner Shortlisted", `Shortlisted ${studentName} from challenge leaderboard`, "Shortlisted");
         showToast(`Shortlisted ${studentName} for hiring pipeline!`);
@@ -2165,7 +2223,7 @@ function initEvaluationModal() {
             if (state.candidates.length === 0) {
                 studentSelect.innerHTML = `<option value="">No registered students found</option>`;
             } else {
-                studentSelect.innerHTML = state.candidates.map(c => `<option value="${c.id}">${c.name} (${c.university})</option>`).join("");
+                studentSelect.innerHTML = state.candidates.map(c => `<option value="${c.applicationId}">${c.name} — ${c.opportunityTitle || "Opportunity"} (${c.university})</option>`).join("");
             }
         }
         if (modal) modal.classList.add("active");
@@ -2199,13 +2257,18 @@ function initEvaluationModal() {
             e.preventDefault();
             if (!state.currentUser) return;
 
-            const studentId = studentSelect?.value;
-            if (!studentId) {
+            const applicationId = studentSelect?.value;
+            if (!applicationId) {
                 alert("Please select a student to evaluate.");
                 return;
             }
 
-            const cand = state.candidates.find(c => c.id === studentId);
+            const cand = state.candidates.find(c => c.applicationId === applicationId);
+            const studentId = cand?.id;
+            if (!studentId) {
+                alert("Selected application has no student profile.");
+                return;
+            }
             const candName = cand ? cand.name : "Student";
             const context = document.getElementById("evalContext")?.value || "Internship / Project";
             const remarks = document.getElementById("evalRemarks")?.value || "";
@@ -2223,6 +2286,7 @@ function initEvaluationModal() {
 
                 // 1. Record evaluation in canonical "evaluations" collection
                 const evalDocRef = await addDoc(collection(db, "evaluations"), {
+                    applicationId: applicationId,
                     studentId: studentId,
                     studentName: candName,
                     companyId: state.currentUser.uid,
@@ -2242,6 +2306,7 @@ function initEvaluationModal() {
 
                 // Also record in company evaluations subcollection
                 await addDoc(collection(db, `companies/${state.currentUser.uid}/evaluations`), {
+                    applicationId: applicationId,
                     studentId: studentId,
                     studentName: candName,
                     context: context,
@@ -2256,6 +2321,7 @@ function initEvaluationModal() {
 
                 // 2. Record Verified Skill in canonical "verified_skills" collection (Provenance)
                 await addDoc(collection(db, "verified_skills"), {
+                    applicationId: applicationId,
                     studentId: studentId,
                     studentName: candName,
                     skill: primarySkill,
@@ -2288,25 +2354,34 @@ function initEvaluationModal() {
                     console.warn("Notice: student profile update fallback", userErr);
                 }
 
-                // 4. Update canonical applications collection
+                // 4. Update the exact application being evaluated
                 try {
-                    const appsQuery = query(
-                        collection(db, "applications"),
-                        where("studentId", "==", studentId)
-                    );
-                    const appSnaps = await getDocs(appsQuery);
-                    appSnaps.forEach(async (appDoc) => {
-                        await updateDoc(doc(db, "applications", appDoc.id), {
+                    await updateDoc(doc(db, "applications", applicationId), {
+                        status: "Evaluated",
+                        evaluationScore: overallPercentage,
+                        evaluationId: evalDocRef.id,
+                        updatedAt: serverTimestamp()
+                    });
+
+                    await setDoc(
+                        doc(db, "students", studentId, "applications", applicationId),
+                        {
                             status: "Evaluated",
                             evaluationScore: overallPercentage,
                             evaluationId: evalDocRef.id,
                             updatedAt: serverTimestamp()
-                        });
-                    });
-                } catch (appErr) {}
+                        },
+                        { merge: true }
+                    );
+                } catch (appErr) {
+                    console.warn("Application evaluation sync failed:", appErr);
+                }
 
-                // 5. Update candidate pipeline status
-                await setDoc(doc(db, `companies/${state.currentUser.uid}/pipeline`, studentId), {
+                // 5. Update candidate pipeline status using applicationId
+                await setDoc(doc(db, `companies/${state.currentUser.uid}/pipeline`, applicationId), {
+                    applicationId: applicationId,
+                    studentId: studentId,
+                    opportunityId: cand?.opportunityId || "",
                     status: "Evaluated",
                     evaluationScore: overallScoreAvg,
                     evaluationPercentage: overallPercentage,

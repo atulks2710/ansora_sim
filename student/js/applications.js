@@ -5,6 +5,25 @@ import { requireAuth } from './auth-guard.js';
 let currentUser = null;
 let unsubscribeApps = null;
 
+function normalizeApplicationStatus(status) {
+    const value = String(status || "Applied").trim().toLowerCase();
+    const map = {
+        "applied": "Applied",
+        "in review": "In Review",
+        "under review": "In Review",
+        "shortlisted": "Shortlisted",
+        "interview": "Interviewing",
+        "interviewing": "Interviewing",
+        "interview scheduled": "Interviewing",
+        "evaluated": "Evaluated",
+        "hired": "Hired",
+        "offered": "Hired",
+        "selected": "Hired",
+        "rejected": "Rejected"
+    };
+    return map[value] || status || "Applied";
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     requireAuth(async (user, profileData) => {
         currentUser = user;
@@ -84,7 +103,7 @@ function renderApplications(grid, appsList) {
 
         // Stage status styling
         let statusBadgeHtml = '';
-        const status = app.status || 'Applied';
+        const status = normalizeApplicationStatus(app.status);
 
         if (status === 'Applied' || status === 'In Review') {
             statusBadgeHtml = `<div class="match-badge" style="background: #eab308; color: #000;"><i class="fa-regular fa-clock"></i> APPLIED</div>`;
@@ -140,17 +159,18 @@ window.showApplicationTimeline = function(appId, role, company, currentStatus) {
     const unescapedCompany = unescape(company);
 
     const stages = ["Applied", "Shortlisted", "Interviewing", "Evaluated", "Hired"];
-    const currentIndex = stages.indexOf(currentStatus) !== -1 ? stages.indexOf(currentStatus) : 0;
+    const normalizedStatus = normalizeApplicationStatus(currentStatus);
+    const currentIndex = stages.indexOf(normalizedStatus) !== -1 ? stages.indexOf(normalizedStatus) : 0;
 
-    let timelineText = `Application Pipeline for: ${unescapedRole} at ${unescapedCompany}\n\nCurrent Stage: ${currentStatus.toUpperCase()}\n\n`;
+    let timelineText = `Application Pipeline for: ${unescapedRole} at ${unescapedCompany}\n\nCurrent Stage: ${normalizedStatus.toUpperCase()}\n\n`;
     stages.forEach((stg, i) => {
         const mark = i <= currentIndex ? "✓ [COMPLETED/ACTIVE]" : "○ [PENDING]";
         timelineText += `${mark} Stage ${i + 1}: ${stg}\n`;
     });
 
-    if (currentStatus === "Hired") {
+    if (normalizedStatus === "Hired") {
         timelineText += "\n🎉 Congratulations! You have received a formal offer & placement from the industry partner.";
-    } else if (currentStatus === "Evaluated") {
+    } else if (normalizedStatus === "Evaluated") {
         timelineText += "\n🎖️ The industry team has completed your Competency Evaluation and verified your skills in your Skill Passport!";
     }
 

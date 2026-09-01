@@ -1,209 +1,212 @@
 // ==========================================
-// EDUBRIDGE — SERVICE LAYER (Faculty Module)
-// API-ready: swap mock data for fetch() calls
+// SKILLBRIDGE INSTITUTION SERVICE LAYER
+// Firestore-backed version of the institution module
 // ==========================================
+
+import { auth, db } from "../../../js/firebase-config.js";
 
 import {
-  FACULTY,
-  FACULTY_INTERNSHIPS,
-  INDUSTRIAL_TRAININGS,
-  FDPS,
-  WORKSHOPS,
-  CONSULTANCY,
-  RESEARCH,
-  GUEST_LECTURES,
-  MENTORSHIP_PROGRAMS,
-  FACULTY_APPLICATIONS,
-  EVENTS,
-  NOTIFICATIONS
-} from "./mock-data.js";
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  addDoc,
+  setDoc,
+  updateDoc,
+  query,
+  where,
+  orderBy,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-const API_BASE = "/api"; // Replace with actual API base URL when backend is ready
-const USE_MOCK = true;   // Set to false to use real API
+const opportunityCollections = {
+  internships: "opportunities",
+  industrialTrainings: "institutional_trainings",
+  fdps: "fdps",
+  workshops: "workshops",
+  consultancy: "consultancy",
+  research: "research",
+  guestLectures: "guest_lectures",
+  mentorship: "mentorship_programs"
+};
 
-// ---- UTILITY ----
-async function apiGet(endpoint) {
-  if (USE_MOCK) return null;
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-  });
-  if (!res.ok) throw new Error(`API error: ${res.status}`);
-  return res.json();
+function requireCurrentUid(uid) {
+  const currentUid = auth.currentUser?.uid;
+  if (!currentUid) throw new Error("You must be logged in.");
+  if (uid && uid !== currentUid) throw new Error("Unauthorized user.");
+  return currentUid;
 }
 
-async function apiPost(endpoint, data) {
-  if (USE_MOCK) return { success: true, id: Date.now() };
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    },
-    body: JSON.stringify(data)
+async function getById(path) {
+  const snap = await getDoc(doc(db, ...path));
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+}
+
+async function getCollection(name, filters = []) {
+  const constraints = filters.map(([field, op, value]) => where(field, op, value));
+  const q = query(collection(db, name), ...constraints);
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+async function addInstitutionalRecord(uid, collectionName, data) {
+  const ownerId = requireCurrentUid(uid);
+  const ref = await addDoc(collection(db, collectionName), {
+    ...data,
+    institutionId: ownerId,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
   });
-  if (!res.ok) throw new Error(`API error: ${res.status}`);
-  return res.json();
+  return { success: true, id: ref.id };
 }
 
 // ==========================================
-// FACULTY PROFILE SERVICES
+// FACULTY PROFILE
 // ==========================================
 export async function getFacultyProfile(uid) {
-  try {
-    const data = await apiGet(`/faculty/${uid}/profile`);
-    return data || FACULTY;
-  } catch (e) {
-    console.warn("Using mock data:", e.message);
-    return FACULTY;
-  }
+  const ownerId = requireCurrentUid(uid);
+  const profile = await getById(["users", ownerId]);
+  if (!profile) return null;
+  return profile;
 }
 
 export async function updateFacultyProfile(uid, profileData) {
-  return apiPost(`/faculty/${uid}/profile`, profileData);
+  const ownerId = requireCurrentUid(uid);
+  await setDoc(doc(db, "users", ownerId), {
+    ...profileData,
+    uid: ownerId,
+    role: "institution",
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+  return { success: true };
 }
 
 export async function getFacultyEngagementScore(uid) {
   const profile = await getFacultyProfile(uid);
   return {
-    overall: profile.engagementScore,
-    breakdown: profile.engagementBreakdown
+    overall: profile?.engagementScore || 0,
+    breakdown: profile?.engagementBreakdown || {}
   };
 }
 
 // ==========================================
-// OPPORTUNITY SERVICES
+// OPPORTUNITY DISCOVERY
 // ==========================================
-export async function getFacultyInternships(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/internships");
-    return data || FACULTY_INTERNSHIPS;
-  } catch {
-    return FACULTY_INTERNSHIPS;
-  }
+export async function getFacultyInternships() {
+  return getCollection(opportunityCollections.internships, [["status", "==", "Active"]]);
 }
 
-export async function getIndustrialTrainings(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/industrial-trainings");
-    return data || INDUSTRIAL_TRAININGS;
-  } catch {
-    return INDUSTRIAL_TRAININGS;
-  }
+export async function getIndustrialTrainings() {
+  return getCollection(opportunityCollections.industrialTrainings, [["status", "==", "Active"]]);
 }
 
-export async function getFDPs(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/fdps");
-    return data || FDPS;
-  } catch {
-    return FDPS;
-  }
+export async function getFDPs() {
+  return getCollection(opportunityCollections.fdps, [["status", "==", "Active"]]);
 }
 
-export async function getWorkshops(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/workshops");
-    return data || WORKSHOPS;
-  } catch {
-    return WORKSHOPS;
-  }
+export async function getWorkshops() {
+  return getCollection(opportunityCollections.workshops, [["status", "==", "Active"]]);
 }
 
-export async function getConsultancyOpportunities(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/consultancy");
-    return data || CONSULTANCY;
-  } catch {
-    return CONSULTANCY;
-  }
+export async function getConsultancyOpportunities() {
+  return getCollection(opportunityCollections.consultancy, [["status", "==", "Active"]]);
 }
 
-export async function getResearchOpportunities(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/research");
-    return data || RESEARCH;
-  } catch {
-    return RESEARCH;
-  }
+export async function getResearchOpportunities() {
+  return getCollection(opportunityCollections.research, [["status", "==", "Active"]]);
 }
 
-export async function getGuestLectureOpportunities(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/guest-lectures");
-    return data || GUEST_LECTURES;
-  } catch {
-    return GUEST_LECTURES;
-  }
+export async function getGuestLectureOpportunities() {
+  return getCollection(opportunityCollections.guestLectures, [["status", "==", "Active"]]);
 }
 
-export async function getMentorshipPrograms(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/mentorship");
-    return data || MENTORSHIP_PROGRAMS;
-  } catch {
-    return MENTORSHIP_PROGRAMS;
-  }
+export async function getMentorshipPrograms() {
+  return getCollection(opportunityCollections.mentorship, [["status", "==", "Active"]]);
 }
 
 // ==========================================
-// APPLICATION SERVICES
+// FACULTY APPLICATIONS
 // ==========================================
 export async function getFacultyApplications(uid) {
-  try {
-    const data = await apiGet(`/faculty/${uid}/applications`);
-    return data || FACULTY_APPLICATIONS;
-  } catch {
-    return FACULTY_APPLICATIONS;
-  }
+  const ownerId = requireCurrentUid(uid);
+  return getCollection("institution_applications", [["facultyId", "==", ownerId]]);
 }
 
-export async function applyForFacultyOpportunity(uid, opportunityId, type, data) {
-  return apiPost(`/faculty/${uid}/applications`, { opportunityId, type, ...data });
+export async function applyForFacultyOpportunity(uid, opportunityId, type, data = {}) {
+  const ownerId = requireCurrentUid(uid);
+
+  // Applications are linked to a canonical opportunity.
+  const ref = await addDoc(collection(db, "institution_applications"), {
+    facultyId: ownerId,
+    opportunityId,
+    type,
+    ...data,
+    status: "Applied",
+    appliedAt: serverTimestamp(),
+    updatedAt: serverTimestamp()
+  });
+
+  return { success: true, id: ref.id };
 }
 
 export async function withdrawApplication(uid, appId) {
-  return apiPost(`/faculty/${uid}/applications/${appId}/withdraw`, {});
+  const ownerId = requireCurrentUid(uid);
+  await updateDoc(doc(db, "institution_applications", appId), {
+    status: "Withdrawn",
+    updatedAt: serverTimestamp()
+  });
+  return { success: true, facultyId: ownerId, id: appId };
 }
 
 // ==========================================
-// EVENTS SERVICES
+// EVENTS / LEARNING
 // ==========================================
-export async function getEvents(filters = {}) {
-  try {
-    const data = await apiGet("/faculty/events");
-    return data || EVENTS;
-  } catch {
-    return EVENTS;
-  }
+export async function getEvents() {
+  return getCollection("events", [["status", "==", "Active"]]);
 }
 
 export async function registerForEvent(uid, eventId) {
-  return apiPost(`/faculty/${uid}/events/${eventId}/register`, {});
+  const ownerId = requireCurrentUid(uid);
+  return addInstitutionalRecord(ownerId, "event_registrations", { eventId, facultyId: ownerId, status: "Registered" });
 }
 
 // ==========================================
-// NOTIFICATIONS SERVICES
+// NOTIFICATIONS
 // ==========================================
 export async function getNotifications(uid) {
-  try {
-    const data = await apiGet(`/faculty/${uid}/notifications`);
-    return data || NOTIFICATIONS;
-  } catch {
-    return NOTIFICATIONS;
-  }
+  const ownerId = requireCurrentUid(uid);
+  return getCollection("notifications", [["userId", "==", ownerId]]);
 }
 
 export async function markNotificationRead(uid, notifId) {
-  return apiPost(`/faculty/${uid}/notifications/${notifId}/read`, {});
+  const ownerId = requireCurrentUid(uid);
+  await updateDoc(doc(db, "notifications", notifId), { read: true, readAt: serverTimestamp() });
+  return { success: true, userId: ownerId, id: notifId };
 }
 
 // ==========================================
-// PORTFOLIO SERVICES
+// PORTFOLIO
 // ==========================================
 export async function getFacultyPortfolio(uid) {
   return getFacultyProfile(uid);
 }
 
 export async function updatePortfolioSection(uid, section, data) {
-  return apiPost(`/faculty/${uid}/portfolio/${section}`, data);
+  const ownerId = requireCurrentUid(uid);
+  await setDoc(doc(db, "institution_profiles", ownerId, "portfolio", section), {
+    ...data,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+  return { success: true };
+}
+
+// ==========================================
+// INDUSTRY COLLABORATION BRIDGE
+// ==========================================
+export async function createIndustryOpportunity(uid, data) {
+  const ownerId = requireCurrentUid(uid);
+  return addInstitutionalRecord(ownerId, "institution_industry_opportunities", {
+    ...data,
+    institutionId: ownerId
+  });
 }

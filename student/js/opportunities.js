@@ -130,50 +130,8 @@ async function initOpportunities() {
         console.error("Error fetching opportunities from Firebase:", e);
     }
 
-    // Default Seed/Demo Opportunities if Firestore collection is totally empty
-    if (opportunities.length === 0) {
-        opportunities = [
-            {
-                id: "opp_canonical_1",
-                role: "Full-Stack Software Engineer (Apprentice)",
-                company: "HyperScale Tech Labs",
-                companyId: "comp_hyperscale",
-                location: "Bengaluru, India (Hybrid)",
-                duration: "6 Months",
-                stipend: "₹35,000 / month",
-                type: "Internship",
-                deadline: "7 days",
-                deadlineStatus: "urgent",
-                skills: ["React", "Node.js", "Firebase", "TypeScript"]
-            },
-            {
-                id: "opp_canonical_2",
-                role: "AI / ML Systems Engineering Intern",
-                company: "Cognitive Matrix AI",
-                companyId: "comp_cognitive",
-                location: "Hyderabad, India (Remote)",
-                duration: "6 Months",
-                stipend: "₹45,000 / month",
-                type: "Internship",
-                deadline: "14 days",
-                deadlineStatus: "soon",
-                skills: ["Python", "PyTorch", "Machine Learning", "Docker"]
-            },
-            {
-                id: "opp_canonical_3",
-                role: "Cloud Infrastructure Specialist",
-                company: "Apex Cloud Networks",
-                companyId: "comp_apex",
-                location: "Pune, India (Hybrid)",
-                duration: "3 Months",
-                stipend: "₹30,000 / month",
-                type: "Project",
-                deadline: "20 days",
-                deadlineStatus: "soon",
-                skills: ["Cloud", "Docker", "Problem Solving", "SQL"]
-            }
-        ];
-    }
+    // Only real Firestore opportunities are shown. Demo opportunities are disabled
+    // so student applications always reference a real industry opportunity.
 
     oppGrid.innerHTML = '';
     
@@ -226,7 +184,7 @@ async function initOpportunities() {
                 <button class="btn-full ${isAlreadyApplied ? 'btn-done' : 'btn-primary-small btn-apply'}" 
                     data-opp-id="${opp.id}" 
                     data-opp-title="${opp.role}" 
-                    data-comp-id="${opp.companyId || 'comp_general'}" 
+                    data-comp-id="${opp.companyId || ''}" 
                     data-comp-name="${opp.company}"
                     data-match="${matchResult.matchScore}"
                     data-matched="${encodeURIComponent(JSON.stringify(matchResult.matchedSkills))}"
@@ -250,6 +208,12 @@ async function initOpportunities() {
             const oppTitle = btnEl.getAttribute('data-opp-title');
             const compId = btnEl.getAttribute('data-comp-id');
             const compName = btnEl.getAttribute('data-comp-name');
+
+            if (!compId) {
+                alert('This opportunity is missing its industry owner. It cannot be applied to yet.');
+                btnEl.disabled = false;
+                return;
+            }
             const matchScore = parseInt(btnEl.getAttribute('data-match'), 10) || 85;
             const matchedSkills = JSON.parse(decodeURIComponent(btnEl.getAttribute('data-matched') || '[]'));
             const skillGaps = JSON.parse(decodeURIComponent(btnEl.getAttribute('data-gaps') || '[]'));
