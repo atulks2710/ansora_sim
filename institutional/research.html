@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Collaboration | EduBridge Faculty</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-6">
+        <div>
+          <div class="section-title">Research Collaboration</div>
+          <div class="section-subtitle">Partner with industry and premier institutions on impactful research projects</div>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <div class="search-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search research opportunities..." aria-label="Search research">
+        </div>
+        <select class="filter-select" id="domainFilter" aria-label="Domain filter">
+          <option value="">All Domains</option>
+          <option>Federated Learning / Healthcare AI</option>
+          <option>Explainable AI / Fintech</option>
+          <option>AI in Education</option>
+        </select>
+        <select class="filter-select" id="fundFilter" aria-label="Funding filter">
+          <option value="">All Funding</option>
+          <option value="funded">Funded</option>
+        </select>
+      </div>
+
+      <div class="grid-auto" id="researchCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="resModal">
+  <div class="modal" style="max-width:660px">
+    <div class="modal-header">
+      <div class="modal-title" id="resModalTitle">Research Opportunity</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="resModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="resApplyBtn">Apply for Collaboration</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import { getResearchOpportunities } from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("research");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Research Collaboration");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("opportunities");
+initSidebarToggle();
+
+let research = [];
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+  research = await getResearchOpportunities();
+  render(research);
+  document.getElementById("searchInput").addEventListener("input", filter);
+  document.getElementById("domainFilter").addEventListener("change", filter);
+  document.getElementById("fundFilter").addEventListener("change", filter);
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function filter() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const domain = document.getElementById("domainFilter").value;
+  const fund = document.getElementById("fundFilter").value;
+  let items = research;
+  if (q) items = items.filter(i => i.title.toLowerCase().includes(q) || i.organization.toLowerCase().includes(q));
+  if (domain) items = items.filter(i => i.domain === domain);
+  if (fund === "funded") items = items.filter(i => i.funding);
+  render(items);
+}
+
+function render(items) {
+  const c = document.getElementById("researchCards");
+  if (!items.length) {
+    c.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M9 3h6v10l4 8H5l4-8V3"/><line x1="9" y1="3" x2="9" y2="10"/><line x1="15" y1="3" x2="15" y2="10"/></svg></div>
+        <div class="empty-title">No research projects found</div>
+        <div class="empty-desc">Try adjusting your search or filters.</div>
+      </div>`;
+    return;
+  }
+
+  c.innerHTML = items.map(item => `
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="flex items-center gap-3">
+          <div class="opp-org-logo" style="background:#4f46e5">${item.orgInitials}</div>
+          <div>
+            <div class="opp-title">${item.title}</div>
+            <div class="opp-org">${item.organization}</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+          ${item.funding ? '<span class="badge badge-success">Funded</span>' : ''}
+          <span class="badge badge-purple" style="font-size:10px">${item.domain}</span>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--gray-600);line-height:1.6;margin:6px 0">${item.description}</p>
+      <div class="opp-meta">
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${item.duration}</span>
+        ${item.funding ? `<span class="meta-item" style="color:var(--success);font-weight:600">💰 ${item.funding}</span>` : ""}
+      </div>
+      <div style="margin:8px 0">
+        <div style="font-size:11px;font-weight:600;color:var(--gray-500);margin-bottom:6px">REQUIRED EXPERTISE</div>
+        <div class="opp-skills">${item.requiredExpertise.map(s => `<span class="skill-tag">${s}</span>`).join("")}</div>
+      </div>
+      <div style="margin-bottom:8px">
+        <div style="font-size:11px;font-weight:600;color:var(--gray-500);margin-bottom:6px">EXPECTED OUTCOMES</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">${item.outcomes.map(o => `<span class="skill-tag" style="background:#f3e8ff;color:#9333ea">${o}</span>`).join("")}</div>
+      </div>
+      <div class="opp-footer">
+        <span class="deadline-text">📅 Apply by: ${item.deadline}</span>
+        <button class="btn btn-primary btn-sm" onclick="openDetail('${item.id}')">View &amp; Apply</button>
+      </div>
+    </div>`).join("");
+}
+
+window.openDetail = function(id) {
+  const item = research.find(r => r.id === id);
+  if (!item) return;
+  document.getElementById("resModalTitle").textContent = item.title;
+  document.getElementById("resModalBody").innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <div style="width:50px;height:50px;border-radius:10px;background:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">${item.orgInitials}</div>
+      <div>
+        <div style="font-size:15px;font-weight:700">${item.organization}</div>
+        <div style="font-size:12px;color:var(--gray-500)">${item.domain} · ${item.duration}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.7">${item.description}</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DOMAIN</div><div style="font-size:13px;font-weight:600;color:#4f46e5">${item.domain}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DURATION</div><div style="font-size:13px;font-weight:600">${item.duration}</div></div>
+      <div style="padding:12px;background:${item.funding ? "var(--success-bg)" : "var(--gray-50)"};border-radius:8px;grid-column:1/-1"><div style="font-size:11px;color:var(--gray-400);font-weight:600">FUNDING</div><div style="font-size:14px;font-weight:700;color:${item.funding ? "var(--success)" : "var(--gray-500)"}">${item.funding || "Not specified"}</div></div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">REQUIRED EXPERTISE</div>
+      <div class="opp-skills">${item.requiredExpertise.map(s => `<span class="skill-tag">${s}</span>`).join("")}</div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">EXPECTED OUTCOMES</div>
+      ${item.outcomes.map(o => `<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px"><span style="color:#9333ea;font-size:16px">◈</span><span style="font-size:13px;color:var(--gray-600)">${o}</span></div>`).join("")}
+    </div>
+    <div style="margin-top:16px;padding:12px;background:#fef3c7;border-radius:8px;border:1px solid #fcd34d">
+      <div style="font-size:12px;font-weight:700;color:var(--warning)">Application Deadline</div>
+      <div style="font-size:14px;font-weight:700;color:var(--gray-800)">${item.deadline}</div>
+    </div>`;
+
+  document.getElementById("resApplyBtn").onclick = () => {
+    showToast("Application submitted for: " + item.title, "success");
+    closeModal();
+  };
+  document.getElementById("resModal").classList.add("open");
+};
+
+window.closeModal = () => document.getElementById("resModal").classList.remove("open");
+init().catch(console.error);
+</script>
+</body>
+</html>

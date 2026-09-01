@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guest Lectures | EduBridge Faculty</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-6">
+        <div>
+          <div class="section-title">Guest Lecture Opportunities</div>
+          <div class="section-subtitle">Share your expertise through guest lectures, workshops, and industry-academia sessions</div>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <div class="search-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search by topic, organization, or domain..." aria-label="Search">
+        </div>
+        <select class="filter-select" id="modeFilter" aria-label="Mode filter">
+          <option value="">All Modes</option>
+          <option>On-site</option>
+          <option>Online (Webinar)</option>
+          <option>Hybrid</option>
+        </select>
+      </div>
+
+      <div class="grid-auto" id="guestCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="glModal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-header">
+      <div class="modal-title" id="glModalTitle">Guest Lecture Details</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="glModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="glApplyBtn">Accept &amp; Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import { getGuestLectureOpportunities } from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("guest-lectures");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Guest Lectures");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("opportunities");
+initSidebarToggle();
+
+let guestLectures = [];
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+  guestLectures = await getGuestLectureOpportunities();
+  render(guestLectures);
+  document.getElementById("searchInput").addEventListener("input", filter);
+  document.getElementById("modeFilter").addEventListener("change", filter);
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function filter() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const mode = document.getElementById("modeFilter").value;
+  let items = guestLectures;
+  if (q) items = items.filter(i => i.title.toLowerCase().includes(q) || i.organization.toLowerCase().includes(q) || i.domain.toLowerCase().includes(q));
+  if (mode) items = items.filter(i => i.mode === mode);
+  render(items);
+}
+
+function render(items) {
+  const c = document.getElementById("guestCards");
+  if (!items.length) {
+    c.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+        <div class="empty-title">No guest lecture opportunities</div>
+        <div class="empty-desc">No opportunities match your current filters.</div>
+      </div>`;
+    return;
+  }
+
+  c.innerHTML = items.map(item => `
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="flex items-center gap-3">
+          <div class="opp-org-logo" style="background:var(--teal)">${item.orgInitials}</div>
+          <div>
+            <div class="opp-title">${item.title}</div>
+            <div class="opp-org">${item.organization}</div>
+          </div>
+        </div>
+        <span class="badge badge-teal">${item.domain}</span>
+      </div>
+      <p style="font-size:13px;color:var(--gray-600);line-height:1.6;margin:6px 0">${item.description}</p>
+      <div class="opp-meta">
+        <span class="meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          ${item.date}
+        </span>
+        <span class="meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+          ${item.mode}
+        </span>
+        <span class="meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ${item.duration}
+        </span>
+        ${item.honorarium ? `<span class="meta-item" style="color:var(--success);font-weight:600">💰 ${item.honorarium}</span>` : ""}
+      </div>
+      <div style="font-size:12px;color:var(--gray-500);margin:4px 0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13" style="display:inline;margin-right:4px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        <strong>Audience:</strong> ${item.audience}
+      </div>
+      <div class="opp-footer">
+        <span style="font-size:12px;color:var(--gray-400)"></span>
+        <button class="btn btn-primary btn-sm" onclick="openDetail('${item.id}')">View Opportunity</button>
+      </div>
+    </div>`).join("");
+}
+
+window.openDetail = function(id) {
+  const item = guestLectures.find(g => g.id === id);
+  if (!item) return;
+  document.getElementById("glModalTitle").textContent = item.title;
+  document.getElementById("glModalBody").innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <div style="width:50px;height:50px;border-radius:10px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">${item.orgInitials}</div>
+      <div>
+        <div style="font-size:15px;font-weight:700">${item.organization}</div>
+        <div style="font-size:12px;color:var(--gray-500)">${item.mode} · ${item.duration}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.7">${item.description}</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DATE</div><div style="font-size:13px;font-weight:600">${item.date}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">MODE</div><div style="font-size:13px;font-weight:600">${item.mode}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DURATION</div><div style="font-size:13px;font-weight:600">${item.duration}</div></div>
+      <div style="padding:12px;background:var(--success-bg);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">HONORARIUM</div><div style="font-size:13px;font-weight:700;color:var(--success)">${item.honorarium || "Voluntary"}</div></div>
+    </div>
+    <div style="padding:12px;background:var(--teal-pale);border-radius:8px;margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--teal);margin-bottom:4px">TARGET AUDIENCE</div>
+      <div style="font-size:13px;font-weight:600;color:var(--gray-800)">${item.audience}</div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:4px">DOMAIN</div>
+      <span class="badge badge-teal">${item.domain}</span>
+    </div>`;
+
+  document.getElementById("glApplyBtn").onclick = () => {
+    showToast("Confirmed participation for: " + item.title, "success");
+    closeModal();
+  };
+  document.getElementById("glModal").classList.add("open");
+};
+
+window.closeModal = () => document.getElementById("glModal").classList.remove("open");
+init().catch(console.error);
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentorship | EduBridge Faculty</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-6">
+        <div>
+          <div class="section-title">Industry Mentorship Programs</div>
+          <div class="section-subtitle">Guide startups, students, and professionals by sharing your academic and industry expertise</div>
+        </div>
+      </div>
+
+      <div class="grid-auto" id="mentorCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="mentorModal">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <div class="modal-title" id="mentorModalTitle">Mentorship Program</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="mentorModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" id="mentorJoinBtn">Join Program</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import { getMentorshipPrograms } from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("mentorship");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Mentorship");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("opportunities");
+initSidebarToggle();
+
+let programs = [];
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+  programs = await getMentorshipPrograms();
+  render();
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function render() {
+  const c = document.getElementById("mentorCards");
+  if (!programs.length) {
+    c.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="empty-title">No mentorship programs</div><div class="empty-desc">No programs are available at this time.</div></div>`;
+    return;
+  }
+
+  c.innerHTML = programs.map(item => `
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="flex items-center gap-3">
+          <div class="opp-org-logo" style="background:#7c3aed">${item.orgInitials}</div>
+          <div>
+            <div class="opp-title">${item.title}</div>
+            <div class="opp-org">${item.organization}</div>
+          </div>
+        </div>
+        <span class="badge badge-purple">Mentorship</span>
+      </div>
+      <p style="font-size:13px;color:var(--gray-600);line-height:1.6;margin:6px 0">${item.description}</p>
+      <div class="opp-meta">
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>${item.mode}</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${item.duration}</span>
+        <span class="meta-item">⏱ ${item.commitment}</span>
+      </div>
+      <div style="margin:8px 0">
+        <div style="font-size:11px;font-weight:600;color:var(--gray-500);margin-bottom:6px">EXPERTISE NEEDED</div>
+        <div class="opp-skills">${item.targetExpertise.map(s => `<span class="skill-tag">${s}</span>`).join("")}</div>
+      </div>
+      <div class="opp-footer">
+        <span></span>
+        <button class="btn btn-primary btn-sm" onclick="openDetail('${item.id}')">Join Program</button>
+      </div>
+    </div>`).join("");
+}
+
+window.openDetail = function(id) {
+  const item = programs.find(p => p.id === id);
+  if (!item) return;
+  document.getElementById("mentorModalTitle").textContent = item.title;
+  document.getElementById("mentorModalBody").innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <div style="width:50px;height:50px;border-radius:10px;background:#7c3aed;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">${item.orgInitials}</div>
+      <div>
+        <div style="font-size:15px;font-weight:700">${item.organization}</div>
+        <div style="font-size:12px;color:var(--gray-500)">${item.mode} · ${item.duration}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.7">${item.description}</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">MODE</div><div style="font-size:13px;font-weight:600">${item.mode}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DURATION</div><div style="font-size:13px;font-weight:600">${item.duration}</div></div>
+      <div style="padding:12px;background:#f3e8ff;border-radius:8px;grid-column:1/-1"><div style="font-size:11px;color:var(--gray-400);font-weight:600">TIME COMMITMENT</div><div style="font-size:13px;font-weight:700;color:#7c3aed">${item.commitment}</div></div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">EXPERTISE REQUIRED</div>
+      <div class="opp-skills">${item.targetExpertise.map(s => `<span class="skill-tag">${s}</span>`).join("")}</div>
+    </div>`;
+
+  document.getElementById("mentorJoinBtn").onclick = () => {
+    showToast("Joined mentorship program: " + item.title, "success");
+    closeModal();
+  };
+  document.getElementById("mentorModal").classList.add("open");
+};
+
+window.closeModal = () => document.getElementById("mentorModal").classList.remove("open");
+init().catch(console.error);
+</script>
+</body>
+</html>

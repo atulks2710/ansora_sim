@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Development Programs | EduBridge</title>
+  <link rel="stylesheet" href="css/edubridge.css">
+</head>
+<body>
+<div class="app">
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="main">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="page-content">
+
+      <div class="section-head mb-6">
+        <div>
+          <div class="section-title">Faculty Development Programs</div>
+          <div class="section-subtitle">Enhance your teaching, research, and professional skills through curated FDPs</div>
+        </div>
+      </div>
+
+      <div class="search-filter-bar">
+        <div class="search-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search FDPs by title, organizer, or domain..." aria-label="Search FDPs">
+        </div>
+        <select class="filter-select" id="modeFilter" aria-label="Mode filter">
+          <option value="">All Modes</option>
+          <option>Online</option>
+          <option>On-site</option>
+          <option>Hybrid</option>
+        </select>
+        <select class="filter-select" id="domainFilter" aria-label="Domain filter">
+          <option value="">All Domains</option>
+          <option>Artificial Intelligence</option>
+          <option>Research Skills</option>
+          <option>Emerging Technologies</option>
+          <option>Data Science</option>
+        </select>
+      </div>
+
+      <div class="grid-auto" id="fdpCards">
+        <!-- Rendered by JS -->
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav"><div class="mobile-nav-inner" id="mobileNav"></div></nav>
+
+<!-- FDP DETAIL MODAL -->
+<div class="modal-overlay" id="fdpModal">
+  <div class="modal" style="max-width:660px">
+    <div class="modal-header">
+      <div class="modal-title" id="fdpModalTitle">FDP Details</div>
+      <button class="modal-close" onclick="closeModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="fdpModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">Close</button>
+      <button class="btn btn-primary" id="registerBtn">Register Now</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { getSidebarHTML, getTopbarHTML, getMobileNavHTML, initSidebarToggle, showToast } from "./js/ui.js";
+import { getFDPs } from "./js/services.js";
+import { requireFacultyAuth, logoutFaculty } from "./js/auth-guard.js";
+
+document.getElementById("sidebar").innerHTML = getSidebarHTML("fdp");
+document.getElementById("topbar").innerHTML = getTopbarHTML("Faculty Development Programs");
+document.getElementById("mobileNav").innerHTML = getMobileNavHTML("opportunities");
+initSidebarToggle();
+
+let fdps = [];
+
+async function init() {
+  try { await requireFacultyAuth(); } catch(e) {}
+  fdps = await getFDPs();
+  render(fdps);
+
+  document.getElementById("searchInput").addEventListener("input", filter);
+  document.getElementById("modeFilter").addEventListener("change", filter);
+  document.getElementById("domainFilter").addEventListener("change", filter);
+  document.getElementById("logoutBtn").addEventListener("click", async () => await logoutFaculty());
+}
+
+function filter() {
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const mode = document.getElementById("modeFilter").value;
+  const domain = document.getElementById("domainFilter").value;
+  let items = fdps;
+  if (q) items = items.filter(i => i.title.toLowerCase().includes(q) || i.organizer.toLowerCase().includes(q));
+  if (mode) items = items.filter(i => i.mode === mode);
+  if (domain) items = items.filter(i => i.domain === domain);
+  render(items);
+}
+
+function render(items) {
+  const c = document.getElementById("fdpCards");
+  if (!items.length) {
+    c.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+      <div class="empty-title">No FDPs found</div>
+      <div class="empty-desc">Try adjusting your search or filters.</div>
+    </div>`;
+    return;
+  }
+
+  c.innerHTML = items.map(item => `
+    <div class="opp-card">
+      <div class="opp-header">
+        <div class="flex items-center gap-3">
+          <div class="opp-org-logo">${item.orgInitials}</div>
+          <div>
+            <div class="opp-title">${item.title}</div>
+            <div class="opp-org">${item.organizer}</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+          ${item.certificate ? '<span class="badge badge-success">Certificate</span>' : ''}
+          <span class="badge badge-navy" style="font-size:10px">${item.domain}</span>
+        </div>
+      </div>
+      <div class="opp-meta">
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>${item.mode}</span>
+        <span class="meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${item.duration}</span>
+        <span class="meta-item" style="color:var(--success);font-weight:600">💰 ${item.fee}</span>
+      </div>
+      <div style="font-size:12px;color:var(--gray-500);margin:4px 0"><strong>Starts:</strong> ${item.startDate}</div>
+      <div class="opp-footer">
+        <span class="deadline-text">📅 Registration: ${item.deadline}</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline btn-sm" onclick="openDetail('${item.id}')">Details</button>
+          <button class="btn btn-primary btn-sm" onclick="openDetail('${item.id}')">Register</button>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+window.openDetail = function(id) {
+  const item = fdps.find(f => f.id === id);
+  if (!item) return;
+  document.getElementById("fdpModalTitle").textContent = item.title;
+  document.getElementById("fdpModalBody").innerHTML = `
+    <div class="flex items-center gap-3 mb-4">
+      <div style="width:50px;height:50px;border-radius:10px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff">${item.orgInitials}</div>
+      <div>
+        <div style="font-size:15px;font-weight:700">${item.organizer}</div>
+        <div style="font-size:12px;color:var(--gray-500)">${item.mode} · ${item.duration} · ${item.fee}</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--gray-600);margin-bottom:16px;line-height:1.7">${item.description}</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px">
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DOMAIN</div><div style="font-size:13px;font-weight:600;color:var(--navy)">${item.domain}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">START DATE</div><div style="font-size:13px;font-weight:600">${item.startDate}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">DURATION</div><div style="font-size:13px;font-weight:600">${item.duration}</div></div>
+      <div style="padding:12px;background:var(--gray-50);border-radius:8px"><div style="font-size:11px;color:var(--gray-400);font-weight:600">FEE</div><div style="font-size:13px;font-weight:600;color:var(--success)">${item.fee}</div></div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">OBJECTIVES</div>
+      ${item.objectives.map(o=>`<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px"><span style="color:var(--teal)">→</span><span style="font-size:13px;color:var(--gray-600)">${o}</span></div>`).join("")}
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:8px">TOPICS COVERED</div>
+      <div class="opp-skills">${item.topics.map(t=>`<span class="skill-tag">${t}</span>`).join("")}</div>
+    </div>
+    <div style="margin-bottom:14px">
+      <div style="font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:4px">ELIGIBILITY</div>
+      <p style="font-size:13px;color:var(--gray-600)">${item.eligibility}</p>
+    </div>
+    <div style="padding:12px;background:#fef3c7;border-radius:8px;border:1px solid #fcd34d">
+      <div style="font-size:12px;font-weight:700;color:var(--warning)">Registration Deadline</div>
+      <div style="font-size:14px;font-weight:700;color:var(--gray-800)">${item.deadline}</div>
+    </div>`;
+
+  document.getElementById("registerBtn").onclick = () => {
+    showToast("Registered for " + item.title, "success");
+    closeModal();
+  };
+  document.getElementById("fdpModal").classList.add("open");
+};
+
+window.closeModal = () => document.getElementById("fdpModal").classList.remove("open");
+
+init().catch(console.error);
+</script>
+</body>
+</html>
