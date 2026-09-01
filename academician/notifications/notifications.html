@@ -1,0 +1,4828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Notifications">
+
+    <title>
+        Notifications | SkillBridge
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           SKILLBRIDGE ACADEMICIAN
+           NOTIFICATIONS
+           SINGLE FILE MODULE
+        ===================================================== */
+
+        :root {
+
+            --black: #090909;
+            --black-soft: #111111;
+            --black-light: #1A1A1A;
+
+            --white: #FFFFFF;
+            --off-white: #F7F7F5;
+
+            --grey-100: #F4F4F5;
+            --grey-200: #E4E4E7;
+            --grey-300: #D4D4D8;
+            --grey-400: #A1A1AA;
+            --grey-500: #71717A;
+            --grey-600: #52525B;
+            --grey-700: #3F3F46;
+            --grey-800: #27272A;
+
+            --gold: #D4AF37;
+            --gold-dark: #A88920;
+            --gold-soft: #FBF8ED;
+
+            --green: #26734D;
+            --green-soft: #EDF7F1;
+
+            --red: #B42318;
+            --red-soft: #FFF1F0;
+
+            --blue: #315C91;
+            --blue-soft: #EEF4FB;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        button,
+        input,
+        select {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .notification-app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .notification-sidebar {
+
+            width: 250px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .notification-brand-wrap {
+
+            height: 82px;
+
+            padding: 0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .notification-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+        }
+
+
+        .notification-brand-mark {
+
+            width: 36px;
+
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .notification-brand-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+
+        }
+
+
+        .notification-brand-name span {
+
+            color:
+                var(--gold);
+
+        }
+
+
+        .notification-sidebar-nav {
+
+            padding:
+                25px 14px;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .notification-nav-section {
+
+            padding:
+                0 13px;
+
+            margin-bottom:
+                10px;
+
+            color:
+                #52525B;
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.7px;
+
+        }
+
+
+        .notification-nav-gap {
+
+            margin-top:
+                28px;
+
+        }
+
+
+        .notification-nav-item {
+
+            height:
+                43px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                0 13px;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+            border-left:
+                2px solid transparent;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .notification-nav-item:hover {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+        }
+
+
+        .notification-nav-item.active {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+            border-left-color:
+                var(--gold);
+
+        }
+
+
+        .notification-nav-icon {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            color:
+                var(--gold);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .notification-sidebar-bottom {
+
+            margin-top:
+                auto;
+
+            padding:
+                17px 14px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .notification-help {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            padding:
+                5px 8px 16px;
+
+        }
+
+
+        .notification-help-icon {
+
+            width:
+                24px;
+
+            height:
+                24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid #3F3F46;
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+        }
+
+
+        .notification-help strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .notification-help span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                #71717A;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .notification-logout {
+
+            width:
+                100%;
+
+            height:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid #27272A;
+
+            background:
+                transparent;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+        }
+
+
+        .notification-logout:hover {
+
+            color:
+                white;
+
+            border-color:
+                #52525B;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .notification-main {
+
+            width:
+                calc(100% - 250px);
+
+            margin-left:
+                250px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .notification-topbar {
+
+            height:
+                75px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                50;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 35px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .notification-menu {
+
+            display:
+                none;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .notification-portal-label {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .notification-top-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+        }
+
+
+        .notification-top-button {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            position:
+                relative;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+        }
+
+
+        .notification-top-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .notification-dot {
+
+            position:
+                absolute;
+
+            top:
+                6px;
+
+            right:
+                6px;
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .notification-count {
+
+            position:
+                absolute;
+
+            top:
+                -5px;
+
+            right:
+                -5px;
+
+            min-width:
+                17px;
+
+            height:
+                17px;
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 4px;
+
+            border-radius:
+                20px;
+
+            background:
+                var(--red);
+
+            color:
+                white;
+
+            border:
+                2px solid white;
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .notification-top-profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+        }
+
+
+        .notification-top-image {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .notification-top-image img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+        }
+
+
+        .notification-top-info {
+
+            text-align:
+                left;
+
+        }
+
+
+        .notification-top-info strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .notification-top-info span {
+
+            display:
+                block;
+
+            margin-top:
+                2px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .notification-content {
+
+            max-width:
+                1200px;
+
+            margin:
+                auto;
+
+            padding:
+                35px 36px 65px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .notification-page-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            gap:
+                25px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .notification-eyebrow {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .notification-page-header h1 {
+
+            margin-top:
+                7px;
+
+            font-size:
+                34px;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                -1.3px;
+
+        }
+
+
+        .notification-page-header p {
+
+            max-width:
+                760px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .notification-header-actions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .header-button {
+
+            min-height:
+                38px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .header-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .header-button.primary {
+
+            border-color:
+                var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .header-button.primary:hover {
+
+            background:
+                var(--black-light);
+
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .summary-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap:
+                10px;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .summary-card {
+
+            min-height:
+                100px;
+
+            padding:
+                17px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .summary-card.highlight {
+
+            background:
+                var(--gold-soft);
+
+            border-color:
+                rgba(212,175,55,.35);
+
+        }
+
+
+        .summary-card span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .summary-card strong {
+
+            display:
+                block;
+
+            margin-top:
+                9px;
+
+            font-size:
+                25px;
+
+            font-weight:
+                500;
+
+        }
+
+
+        .summary-card small {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .notification-toolbar {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            padding:
+                15px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .notification-search {
+
+            flex:
+                1;
+
+            max-width:
+                520px;
+
+            height:
+                39px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .notification-search span {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .notification-search input {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .notification-filters {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .notification-select {
+
+            min-width:
+                145px;
+
+            height:
+                39px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            outline:
+                none;
+
+        }
+
+
+        /* =====================================================
+           NOTIFICATION LIST
+        ===================================================== */
+
+        .notification-list {
+
+            margin-top:
+                12px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .notification-item {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            gap:
+                13px;
+
+            padding:
+                17px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+            transition:
+                .2s;
+
+        }
+
+
+        .notification-item:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .notification-item:hover {
+
+            background:
+                #FCFCFB;
+
+        }
+
+
+        .notification-item.unread {
+
+            background:
+                #FFFCF1;
+
+        }
+
+
+        .notification-item-icon {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            flex:
+                0 0 auto;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .notification-item-content {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+        }
+
+
+        .notification-item-top {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+        }
+
+
+        .notification-item-title {
+
+            font-size:
+                10px;
+
+            font-weight:
+                650;
+
+            line-height:
+                1.45;
+
+        }
+
+
+        .notification-item-time {
+
+            flex:
+                0 0 auto;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .notification-item-message {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.65;
+
+        }
+
+
+        .notification-item-bottom {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                6px;
+
+            margin-top:
+                9px;
+
+        }
+
+
+        .notification-type {
+
+            padding:
+                5px 7px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .notification-unread-dot {
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .notification-item-actions {
+
+            display:
+                flex;
+
+            gap:
+                6px;
+
+            margin-top:
+                11px;
+
+        }
+
+
+        .notification-action {
+
+            min-height:
+                30px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                6px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .notification-action:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .notification-action.primary {
+
+            border-color:
+                var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .notification-empty {
+
+            padding:
+                60px 25px;
+
+            text-align:
+                center;
+
+        }
+
+
+        .notification-empty-icon {
+
+            width:
+                52px;
+
+            height:
+                52px;
+
+            margin:
+                auto;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                20px;
+
+        }
+
+
+        .notification-empty h3 {
+
+            margin-top:
+                12px;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .notification-empty p {
+
+            max-width:
+                500px;
+
+            margin:
+                6px auto 0;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading-overlay {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                1000;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                rgba(255,255,255,.92);
+
+            transition:
+                .2s;
+
+        }
+
+
+        .loading-overlay.hidden {
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .loading-box {
+
+            text-align:
+                center;
+
+        }
+
+
+        .loading-spinner {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            margin:
+                auto;
+
+            border:
+                2px solid var(--grey-200);
+
+            border-top-color:
+                var(--gold);
+
+            border-radius:
+                50%;
+
+            animation:
+                spin .8s linear infinite;
+
+        }
+
+
+        .loading-box p {
+
+            margin-top:
+                10px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        @keyframes spin {
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            right:
+                24px;
+
+            bottom:
+                24px;
+
+            z-index:
+                1200;
+
+            max-width:
+                380px;
+
+            padding:
+                13px 16px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.12);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .toast.success {
+
+            border-left:
+                3px solid var(--green);
+
+        }
+
+
+        .toast.error {
+
+            border-left:
+                3px solid var(--red);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .notification-sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .25s ease;
+
+            }
+
+
+            .notification-sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .notification-main {
+
+                width:
+                    100%;
+
+                margin-left:
+                    0;
+
+            }
+
+
+            .notification-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .notification-topbar {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .notification-content {
+
+                padding:
+                    28px 20px 50px;
+
+            }
+
+
+            .notification-page-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .notification-header-actions {
+
+                width:
+                    100%;
+
+            }
+
+
+            .header-button {
+
+                flex:
+                    1;
+
+            }
+
+
+            .notification-toolbar {
+
+                align-items:
+                    stretch;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .notification-search {
+
+                max-width:
+                    none;
+
+            }
+
+
+            .notification-filters {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .notification-select {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .notification-portal-label,
+            .notification-top-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .notification-item {
+
+                padding:
+                    14px;
+
+            }
+
+
+            .notification-item-top {
+
+                flex-direction:
+                    column;
+
+                gap:
+                    4px;
+
+            }
+
+
+            .notification-item-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .notification-action {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .notification-content {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+
+            .notification-page-header h1 {
+
+                font-size:
+                    28px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+
+
+
+    <div class="notification-app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="notification-sidebar"
+            id="notificationSidebar">
+
+
+            <div class="notification-brand-wrap">
+
+                <a
+                    href="../academician-home.html"
+                    class="notification-brand">
+
+                    <div class="notification-brand-mark">
+                        SB
+                    </div>
+
+                    <div class="notification-brand-name">
+                        SKILL<span>BRIDGE</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <nav class="notification-sidebar-nav">
+
+
+                <div class="notification-nav-section">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="../academician-home.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ◯
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../skills/skills.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        My Expertise
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../opportunities/opportunities.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ◇
+                    </span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../applications/applications.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="notification-nav-section notification-nav-gap">
+
+                    COLLABORATION
+
+                </div>
+
+
+                <a
+                    href="../collaborations/collaborations.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ↔
+                    </span>
+
+                    <span>
+                        Collaborations
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../mentorship/mentorship.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ♧
+                    </span>
+
+                    <span>
+                        Mentorship
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../learning/learning.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Learning &amp; Development
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../credentials/credentials.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ★
+                    </span>
+
+                    <span>
+                        Credentials
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../portfolio/portfolio.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ◈
+                    </span>
+
+                    <span>
+                        Professional Portfolio
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../analytics/analytics.html"
+                    class="notification-nav-item">
+
+                    <span class="notification-nav-icon">
+                        ◒
+                    </span>
+
+                    <span>
+                        Analytics &amp; Insights
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="notification-sidebar-bottom">
+
+
+                <div class="notification-help">
+
+                    <div class="notification-help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logoutBtn"
+                    class="notification-logout">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="notification-main">
+
+
+            <header class="notification-topbar">
+
+
+                <button
+                    id="menuButton"
+                    class="notification-menu">
+
+                    ☰
+
+                </button>
+
+
+                <div class="notification-portal-label">
+                    ACADEMICIAN PORTAL
+                </div>
+
+
+                <div class="notification-top-actions">
+
+
+                    <!-- SEARCH -->
+
+                    <button
+                        type="button"
+                        class="notification-top-button"
+                        id="topSearchButton">
+
+                        ⌕
+
+                    </button>
+
+
+                    <!-- NOTIFICATION -->
+
+                    <button
+                        type="button"
+                        class="notification-top-button"
+                        id="notificationButton"
+                        aria-label="Notifications">
+
+                        🔔
+
+                        <span
+                            class="notification-dot"
+                            id="notificationDot">
+                        </span>
+
+                        <span
+                            class="notification-count"
+                            id="notificationCount">
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <!-- PROFILE -->
+
+                    <button
+                        type="button"
+                        class="notification-top-profile">
+
+                        <div
+                            class="notification-top-image"
+                            id="topProfileImage">
+
+                            <span>
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div class="notification-top-info">
+
+                            <strong id="topName">
+                                Academician
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <div
+                class="notification-content">
+
+
+                <!-- =================================================
+                     HEADER
+                ================================================== -->
+
+                <section
+                    class="notification-page-header">
+
+
+                    <div>
+
+                        <span class="notification-eyebrow">
+                            ACADEMICIAN ACTIVITY
+                        </span>
+
+                        <h1>
+                            Notifications
+                        </h1>
+
+                        <p>
+                            Stay informed about opportunity matches,
+                            application updates, collaborations,
+                            mentorship requests, deadlines,
+                            verification activity and professional
+                            development.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="notification-header-actions">
+
+
+                        <button
+                            type="button"
+                            class="header-button"
+                            id="refreshButton">
+
+                            ↻ Refresh
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="header-button primary"
+                            id="markAllReadButton">
+
+                            Mark All as Read
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     SUMMARY
+                ================================================== -->
+
+                <section
+                    class="summary-grid">
+
+
+                    <article
+                        class="summary-card highlight">
+
+                        <span>
+                            UNREAD
+                        </span>
+
+                        <strong
+                            id="unreadSummary">
+                            0
+                        </strong>
+
+                        <small>
+                            Require your attention
+                        </small>
+
+                    </article>
+
+
+                    <article
+                        class="summary-card">
+
+                        <span>
+                            TOTAL
+                        </span>
+
+                        <strong
+                            id="totalSummary">
+                            0
+                        </strong>
+
+                        <small>
+                            Notification history
+                        </small>
+
+                    </article>
+
+
+                    <article
+                        class="summary-card">
+
+                        <span>
+                            RECENT
+                        </span>
+
+                        <strong
+                            id="recentSummary">
+                            0
+                        </strong>
+
+                        <small>
+                            Notifications in last 7 days
+                        </small>
+
+                    </article>
+
+
+                    <article
+                        class="summary-card">
+
+                        <span>
+                            IMPORTANT
+                        </span>
+
+                        <strong
+                            id="importantSummary">
+                            0
+                        </strong>
+
+                        <small>
+                            Applications and deadlines
+                        </small>
+
+                    </article>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     TOOLBAR
+                ================================================== -->
+
+                <section
+                    class="notification-toolbar">
+
+
+                    <div
+                        class="notification-search">
+
+                        <span>
+                            ⌕
+                        </span>
+
+                        <input
+                            type="search"
+                            id="notificationSearch"
+                            placeholder="Search notifications...">
+
+                    </div>
+
+
+                    <div
+                        class="notification-filters">
+
+
+                        <select
+                            class="notification-select"
+                            id="notificationTypeFilter">
+
+                            <option value="all">
+                                All Notifications
+                            </option>
+
+                            <option value="opportunity">
+                                Opportunities
+                            </option>
+
+                            <option value="application">
+                                Applications
+                            </option>
+
+                            <option value="collaboration">
+                                Collaborations
+                            </option>
+
+                            <option value="mentorship">
+                                Mentorship
+                            </option>
+
+                            <option value="fdp">
+                                FDP / Learning
+                            </option>
+
+                            <option value="deadline">
+                                Deadlines
+                            </option>
+
+                            <option value="document">
+                                Documents
+                            </option>
+
+                            <option value="project">
+                                Project Milestones
+                            </option>
+
+                            <option value="workshop">
+                                Workshops
+                            </option>
+
+                            <option value="research">
+                                Research
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            class="notification-select"
+                            id="readFilter">
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="unread">
+                                Unread
+                            </option>
+
+                            <option value="read">
+                                Read
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     LIST
+                ================================================== -->
+
+                <section
+                    class="notification-list"
+                    id="notificationList">
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <script type="module">
+
+
+        // =====================================================
+        // FIREBASE IMPORTS
+        // =====================================================
+
+        import {
+            initializeApp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            updateDoc,
+            collection,
+            getDocs
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        // =====================================================
+        // FIREBASE CONFIG
+        // =====================================================
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
+
+            authDomain:
+                "ansora-27fe4.firebaseapp.com",
+
+            projectId:
+                "ansora-27fe4",
+
+            storageBucket:
+                "ansora-27fe4.firebasestorage.app",
+
+            messagingSenderId:
+                "230795678686",
+
+            appId:
+                "1:230795678686:web:06f0ccd7b8717ac13ac34f"
+
+        };
+
+
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const auth =
+            getAuth(
+                app
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
+
+
+        // =====================================================
+        // STATE
+        // =====================================================
+
+        let currentUser =
+            null;
+
+        let userData =
+            {};
+
+        let notifications =
+            [];
+
+
+        // =====================================================
+        // AUTH
+        // =====================================================
+
+        onAuthStateChanged(
+            auth,
+            async user => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "../../login.html";
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    user;
+
+
+                try {
+
+                    await loadUserData();
+
+                    await loadNotifications();
+
+                    updateProfile();
+
+                    updateSummary();
+
+                    renderNotifications();
+
+                    hideLoading();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    hideLoading();
+
+                    showToast(
+                        "Unable to load notifications.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // USER DATA
+        // =====================================================
+
+        async function loadUserData() {
+
+            const snapshot =
+                await getDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    )
+
+                );
+
+
+            if (
+                snapshot.exists()
+            ) {
+
+                userData =
+                    snapshot.data();
+
+            }
+
+            else {
+
+                userData = {
+
+                    name:
+                        currentUser.displayName ||
+                        "Academician",
+
+                    email:
+                        currentUser.email ||
+                        "",
+
+                    role:
+                        "academician",
+
+                    photoURL:
+                        ""
+
+                };
+
+
+                await setDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    ),
+
+                    userData
+
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // LOAD NOTIFICATIONS
+        // =====================================================
+
+        async function loadNotifications() {
+
+            notifications =
+                [];
+
+
+            try {
+
+                const snapshot =
+                    await getDocs(
+
+                        collection(
+                            db,
+                            "notifications"
+                        )
+
+                    );
+
+
+                snapshot.forEach(
+                    documentSnapshot => {
+
+                        const data =
+                            documentSnapshot.data();
+
+
+                        const owner =
+                            data.academicianId ||
+                            data.userId ||
+                            data.uid ||
+                            data.recipientId ||
+                            data.receiverId;
+
+
+                        if (
+                            owner ===
+                            currentUser.uid
+                        ) {
+
+                            notifications.push({
+
+                                id:
+                                    documentSnapshot.id,
+
+                                ...data
+
+                            });
+
+                        }
+
+                    }
+                );
+
+
+                notifications.sort(
+                    (
+                        a,
+                        b
+                    ) =>
+                        getTimestamp(b) -
+                        getTimestamp(a)
+                );
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    "Notifications collection unavailable:",
+                    error
+                );
+
+
+                notifications =
+                    [];
+
+            }
+
+        }
+
+
+        // =====================================================
+        // PROFILE
+        // =====================================================
+
+        function updateProfile() {
+
+            const name =
+                userData.name ||
+                currentUser.displayName ||
+                "Academician";
+
+
+            setText(
+                "topName",
+                name
+            );
+
+
+            const container =
+                document.getElementById(
+                    "topProfileImage"
+                );
+
+
+            const image =
+                userData.photoURL ||
+                userData.profilePhoto ||
+                userData.profileImage ||
+                "";
+
+
+            if (
+                image
+            ) {
+
+                container.innerHTML =
+                    "";
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    image;
+
+
+                img.alt =
+                    "Academician profile";
+
+
+                img.onerror =
+                    () => {
+
+                        container.innerHTML =
+                            `<span>${escapeHTML(
+                                getInitial(
+                                    name
+                                )
+                            )}</span>`;
+
+                    };
+
+
+                container.appendChild(
+                    img
+                );
+
+            }
+
+            else {
+
+                container.innerHTML =
+                    `<span>${escapeHTML(
+                        getInitial(
+                            name
+                        )
+                    )}</span>`;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // SUMMARY
+        // =====================================================
+
+        function updateSummary() {
+
+            const unread =
+                notifications.filter(
+                    notification =>
+                        !isRead(
+                            notification
+                        )
+                ).length;
+
+
+            const recent =
+                notifications.filter(
+                    notification => {
+
+                        const date =
+                            getDateValue(
+                                notification.createdAt ||
+                                notification.date
+                            );
+
+
+                        if (
+                            !date
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        const sevenDaysAgo =
+                            Date.now() -
+                            (
+                                7 *
+                                24 *
+                                60 *
+                                60 *
+                                1000
+                            );
+
+
+                        return (
+                            date.getTime() >=
+                            sevenDaysAgo
+                        );
+
+                    }
+                ).length;
+
+
+            const important =
+                notifications.filter(
+                    notification => {
+
+                        const type =
+                            normalizeType(
+                                notification.type
+                            );
+
+
+                        return [
+
+                            "application",
+
+                            "deadline"
+
+                        ].includes(
+                            type
+                        );
+
+                    }
+                ).length;
+
+
+            setText(
+                "unreadSummary",
+                unread
+            );
+
+
+            setText(
+                "totalSummary",
+                notifications.length
+            );
+
+
+            setText(
+                "recentSummary",
+                recent
+            );
+
+
+            setText(
+                "importantSummary",
+                important
+            );
+
+
+            const badge =
+                document.getElementById(
+                    "notificationCount"
+                );
+
+
+            const dot =
+                document.getElementById(
+                    "notificationDot"
+                );
+
+
+            if (
+                unread >
+                0
+            ) {
+
+                badge.style.display =
+                    "flex";
+
+
+                badge.textContent =
+                    unread >
+                    99
+                        ? "99+"
+                        : unread;
+
+
+                dot.style.display =
+                    "none";
+
+            }
+
+            else {
+
+                badge.style.display =
+                    "none";
+
+
+                dot.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        // =====================================================
+        // FILTER EVENTS
+        // =====================================================
+
+        document
+            .getElementById(
+                "notificationSearch"
+            )
+            .addEventListener(
+                "input",
+                renderNotifications
+            );
+
+
+        document
+            .getElementById(
+                "notificationTypeFilter"
+            )
+            .addEventListener(
+                "change",
+                renderNotifications
+            );
+
+
+        document
+            .getElementById(
+                "readFilter"
+            )
+            .addEventListener(
+                "change",
+                renderNotifications
+            );
+
+
+        // =====================================================
+        // RENDER
+        // =====================================================
+
+        function renderNotifications() {
+
+            const search =
+                document
+                    .getElementById(
+                        "notificationSearch"
+                    )
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const typeFilter =
+                document.getElementById(
+                    "notificationTypeFilter"
+                ).value;
+
+
+            const readFilter =
+                document.getElementById(
+                    "readFilter"
+                ).value;
+
+
+            const filtered =
+                notifications.filter(
+                    notification => {
+
+                        const searchable =
+                            [
+
+                                notification.title,
+
+                                notification.message,
+
+                                notification.description,
+
+                                notification.type
+
+                            ]
+                                .filter(Boolean)
+                                .join(" ")
+                                .toLowerCase();
+
+
+                        const type =
+                            normalizeType(
+                                notification.type
+                            );
+
+
+                        const searchMatch =
+                            !search ||
+                            searchable.includes(
+                                search
+                            );
+
+
+                        const typeMatch =
+                            typeFilter ===
+                                "all" ||
+                            type ===
+                                typeFilter;
+
+
+                        const read =
+                            isRead(
+                                notification
+                            );
+
+
+                        const readMatch =
+                            readFilter ===
+                                "all" ||
+                            (
+                                readFilter ===
+                                "read" &&
+                                read
+                            ) ||
+                            (
+                                readFilter ===
+                                "unread" &&
+                                !read
+                            );
+
+
+                        return (
+
+                            searchMatch &&
+
+                            typeMatch &&
+
+                            readMatch
+
+                        );
+
+                    }
+                );
+
+
+            const container =
+                document.getElementById(
+                    "notificationList"
+                );
+
+
+            if (
+                filtered.length ===
+                0
+            ) {
+
+                container.innerHTML =
+
+                    `
+
+                    <div
+                        class="notification-empty">
+
+                        <div
+                            class="notification-empty-icon">
+
+                            ♢
+
+                        </div>
+
+                        <h3>
+
+                            ${
+                                notifications.length
+                                    ? "No matching notifications"
+                                    : "No notifications yet"
+                            }
+
+                        </h3>
+
+                        <p>
+
+                            ${
+                                notifications.length
+                                    ? "Try changing the search or filters."
+                                    : "New opportunity matches, application updates and collaboration activity will appear here."
+                            }
+
+                        </p>
+
+                    </div>
+
+                    `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                filtered
+                    .map(
+                        createNotificationHTML
+                    )
+                    .join("");
+
+
+            attachNotificationEvents();
+
+        }
+
+
+        // =====================================================
+        // NOTIFICATION HTML
+        // =====================================================
+
+        function createNotificationHTML(
+            notification
+        ) {
+
+            const type =
+                normalizeType(
+                    notification.type
+                );
+
+
+            const read =
+                isRead(
+                    notification
+                );
+
+
+            const title =
+                notification.title ||
+                getDefaultTitle(
+                    type
+                );
+
+
+            const message =
+                notification.message ||
+                notification.description ||
+                "";
+
+
+            const link =
+                notification.link ||
+                notification.url ||
+                "";
+
+
+            return `
+
+                <article
+                    class="notification-item ${
+                        read
+                            ? ""
+                            : "unread"
+                    }"
+                    data-notification-id="${escapeAttribute(
+                        notification.id
+                    )}">
+
+
+                    <div
+                        class="notification-item-icon">
+
+                        ${getNotificationIcon(
+                            type
+                        )}
+
+                    </div>
+
+
+                    <div
+                        class="notification-item-content">
+
+
+                        <div
+                            class="notification-item-top">
+
+
+                            <div
+                                class="notification-item-title">
+
+                                ${
+                                    !read
+                                        ? `
+                                            <span
+                                                class="notification-unread-dot">
+                                            </span>
+                                          `
+                                        : ""
+                                }
+
+                                ${escapeHTML(
+                                    title
+                                )}
+
+                            </div>
+
+
+                            <span
+                                class="notification-item-time">
+
+                                ${formatRelativeTime(
+                                    notification.createdAt ||
+                                    notification.date
+                                )}
+
+                            </span>
+
+                        </div>
+
+
+                        <p
+                            class="notification-item-message">
+
+                            ${escapeHTML(
+                                message ||
+                                "You have a new notification."
+                            )}
+
+                        </p>
+
+
+                        <div
+                            class="notification-item-bottom">
+
+
+                            <span
+                                class="notification-type">
+
+                                ${escapeHTML(
+                                    displayType(
+                                        type
+                                    )
+                                )}
+
+                            </span>
+
+
+                            ${
+                                notification.important
+                                    ? `
+
+                                        <span
+                                            class="notification-type"
+                                            style="
+                                                background:var(--red-soft);
+                                                border-color:rgba(180,35,24,.15);
+                                                color:var(--red);
+                                            ">
+
+                                            IMPORTANT
+
+                                        </span>
+
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <div
+                            class="notification-item-actions">
+
+
+                            ${
+                                link
+                                    ? `
+
+                                        <a
+                                            href="${escapeAttribute(
+                                                link
+                                            )}"
+                                            class="notification-action primary"
+                                            data-action-link>
+
+                                            View Details
+
+                                        </a>
+
+                                      `
+                                    : ""
+                            }
+
+
+                            ${
+                                !read
+                                    ? `
+
+                                        <button
+                                            type="button"
+                                            class="notification-action"
+                                            data-mark-read="${escapeAttribute(
+                                                notification.id
+                                            )}">
+
+                                            Mark as Read
+
+                                        </button>
+
+                                      `
+                                    : `
+
+                                        <button
+                                            type="button"
+                                            class="notification-action"
+                                            data-mark-unread="${escapeAttribute(
+                                                notification.id
+                                            )}">
+
+                                            Mark as Unread
+
+                                        </button>
+
+                                      `
+                            }
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // EVENTS
+        // =====================================================
+
+        function attachNotificationEvents() {
+
+            document
+                .querySelectorAll(
+                    "[data-mark-read]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                markAsRead(
+                                    button.dataset.markRead
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-mark-unread]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                markAsUnread(
+                                    button.dataset.markUnread
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // MARK READ
+        // =====================================================
+
+        async function markAsRead(
+            id
+        ) {
+
+            const notification =
+                notifications.find(
+                    item =>
+                        item.id ===
+                        id
+                );
+
+
+            if (
+                !notification
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "notifications",
+                        id
+                    ),
+
+                    {
+
+                        read:
+                            true,
+
+                        readAt:
+                            new Date()
+
+                    }
+
+                );
+
+
+                notification.read =
+                    true;
+
+
+                updateSummary();
+
+                renderNotifications();
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to mark notification as read.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // MARK UNREAD
+        // =====================================================
+
+        async function markAsUnread(
+            id
+        ) {
+
+            const notification =
+                notifications.find(
+                    item =>
+                        item.id ===
+                        id
+                );
+
+
+            if (
+                !notification
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "notifications",
+                        id
+                    ),
+
+                    {
+
+                        read:
+                            false
+
+                    }
+
+                );
+
+
+                notification.read =
+                    false;
+
+
+                updateSummary();
+
+                renderNotifications();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to mark notification as unread.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // MARK ALL
+        // =====================================================
+
+        document
+            .getElementById(
+                "markAllReadButton"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const unread =
+                        notifications.filter(
+                            item =>
+                                !isRead(
+                                    item
+                                )
+                        );
+
+
+                    if (
+                        unread.length ===
+                        0
+                    ) {
+
+                        showToast(
+                            "All notifications are already read.",
+                            "success"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const button =
+                        document.getElementById(
+                            "markAllReadButton"
+                        );
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.textContent =
+                        "Marking...";
+
+
+                    try {
+
+                        for (
+                            const notification
+                            of
+                            unread
+                        ) {
+
+                            await updateDoc(
+
+                                doc(
+                                    db,
+                                    "notifications",
+                                    notification.id
+                                ),
+
+                                {
+
+                                    read:
+                                        true,
+
+                                    readAt:
+                                        new Date()
+
+                                }
+
+                            );
+
+
+                            notification.read =
+                                true;
+
+                        }
+
+
+                        updateSummary();
+
+                        renderNotifications();
+
+
+                        showToast(
+                            "All notifications marked as read.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showToast(
+                            "Some notifications could not be updated.",
+                            "error"
+                        );
+
+                    }
+
+                    finally {
+
+                        button.disabled =
+                            false;
+
+
+                        button.textContent =
+                            "Mark All as Read";
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // REFRESH
+        // =====================================================
+
+        document
+            .getElementById(
+                "refreshButton"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const button =
+                        document.getElementById(
+                            "refreshButton"
+                        );
+
+
+                    const original =
+                        button.textContent;
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.textContent =
+                        "Refreshing...";
+
+
+                    try {
+
+                        await loadNotifications();
+
+                        updateSummary();
+
+                        renderNotifications();
+
+
+                        showToast(
+                            "Notifications refreshed.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showToast(
+                            "Unable to refresh notifications.",
+                            "error"
+                        );
+
+                    }
+
+                    finally {
+
+                        button.disabled =
+                            false;
+
+
+                        button.textContent =
+                            original;
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // TOP NOTIFICATION ICON
+        // =====================================================
+
+        document
+            .getElementById(
+                "notificationButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    /*
+                        Already on notification page.
+                        Clicking the icon simply refreshes
+                        the notification list.
+                    */
+
+                    loadNotifications()
+                        .then(
+                            () => {
+
+                                updateSummary();
+
+                                renderNotifications();
+
+                            }
+                        );
+
+                }
+            );
+
+
+        // =====================================================
+        // TOP SEARCH
+        // =====================================================
+
+        document
+            .getElementById(
+                "topSearchButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "notificationSearch"
+                        )
+                        .focus();
+
+                }
+            );
+
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
+
+        document
+            .getElementById(
+                "menuButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "notificationSidebar"
+                        )
+                        .classList.toggle(
+                            "open"
+                        );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".notification-nav-item"
+            )
+            .forEach(
+                item => {
+
+                    item.addEventListener(
+                        "click",
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "notificationSidebar"
+                                )
+                                .classList.remove(
+                                    "open"
+                                );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        document
+            .getElementById(
+                "logoutBtn"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const button =
+                        document.getElementById(
+                            "logoutBtn"
+                        );
+
+
+                    try {
+
+                        button.disabled =
+                            true;
+
+
+                        button.textContent =
+                            "Logging out...";
+
+
+                        await signOut(
+                            auth
+                        );
+
+
+                        window.location.href =
+                            "../../index.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        button.disabled =
+                            false;
+
+
+                        button.innerHTML =
+                            `
+                                <span>↪</span>
+                                Logout
+                            `;
+
+
+                        showToast(
+                            "Unable to logout.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // HELPERS
+        // =====================================================
+
+        function isRead(
+            notification
+        ) {
+
+            return (
+                notification.read ===
+                    true ||
+                notification.isRead ===
+                    true
+            );
+
+        }
+
+
+        function normalizeType(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    "general"
+                )
+                    .toLowerCase()
+                    .replace(
+                        /[-_\s]+/g,
+                        ""
+                    );
+
+
+            if (
+                raw.includes(
+                    "opportun"
+                )
+            ) {
+
+                return "opportunity";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "application"
+                )
+            ) {
+
+                return "application";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "collab"
+                )
+            ) {
+
+                return "collaboration";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "mentor"
+                )
+            ) {
+
+                return "mentorship";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "fdp"
+                ) ||
+                raw.includes(
+                    "learning"
+                )
+            ) {
+
+                return "fdp";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "deadline"
+                )
+            ) {
+
+                return "deadline";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "document"
+                ) ||
+                raw.includes(
+                    "verification"
+                )
+            ) {
+
+                return "document";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "project"
+                ) ||
+                raw.includes(
+                    "milestone"
+                )
+            ) {
+
+                return "project";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "workshop"
+                )
+            ) {
+
+                return "workshop";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "research"
+                ) ||
+                raw.includes(
+                    "publication"
+                )
+            ) {
+
+                return "research";
+
+            }
+
+
+            return "general";
+
+        }
+
+
+        function displayType(
+            type
+        ) {
+
+            const labels = {
+
+                opportunity:
+                    "Opportunity",
+
+                application:
+                    "Application",
+
+                collaboration:
+                    "Collaboration",
+
+                mentorship:
+                    "Mentorship",
+
+                fdp:
+                    "FDP / Learning",
+
+                deadline:
+                    "Deadline",
+
+                document:
+                    "Document",
+
+                project:
+                    "Project Milestone",
+
+                workshop:
+                    "Workshop",
+
+                research:
+                    "Research",
+
+                general:
+                    "Notification"
+
+            };
+
+
+            return (
+                labels[
+                    type
+                ] ||
+                "Notification"
+            );
+
+        }
+
+
+        function getDefaultTitle(
+            type
+        ) {
+
+            const titles = {
+
+                opportunity:
+                    "New opportunity matched",
+
+                application:
+                    "Application update",
+
+                collaboration:
+                    "New collaboration activity",
+
+                mentorship:
+                    "Mentorship update",
+
+                fdp:
+                    "Professional development update",
+
+                deadline:
+                    "Upcoming deadline",
+
+                document:
+                    "Document update",
+
+                project:
+                    "Project milestone update",
+
+                workshop:
+                    "Workshop update",
+
+                research:
+                    "Research update",
+
+                general:
+                    "New notification"
+
+            };
+
+
+            return (
+                titles[
+                    type
+                ] ||
+                titles.general
+            );
+
+        }
+
+
+        function getNotificationIcon(
+            type
+        ) {
+
+            const icons = {
+
+                opportunity:
+                    "◇",
+
+                application:
+                    "▤",
+
+                collaboration:
+                    "↔",
+
+                mentorship:
+                    "♧",
+
+                fdp:
+                    "◫",
+
+                deadline:
+                    "◷",
+
+                document:
+                    "□",
+
+                project:
+                    "◆",
+
+                workshop:
+                    "◇",
+
+                research:
+                    "◎",
+
+                general:
+                    "♢"
+
+            };
+
+
+            return (
+                icons[
+                    type
+                ] ||
+                "♢"
+            );
+
+        }
+
+
+        function getTimestamp(
+            notification
+        ) {
+
+            const value =
+                notification.createdAt ||
+                notification.date ||
+                notification.timestamp;
+
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            return (
+                date?.getTime() ||
+                0
+            );
+
+        }
+
+
+        function getDateValue(
+            value
+        ) {
+
+            if (
+                !value
+            ) {
+
+                return null;
+
+            }
+
+
+            if (
+                value?.toDate
+            ) {
+
+                try {
+
+                    return value.toDate();
+
+                }
+
+                catch {
+
+                    return null;
+
+                }
+
+            }
+
+
+            if (
+                value instanceof Date
+            ) {
+
+                return value;
+
+            }
+
+
+            const date =
+                new Date(
+                    value
+                );
+
+
+            return Number.isNaN(
+                date.getTime()
+            )
+                ? null
+                : date;
+
+        }
+
+
+        function formatRelativeTime(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "Recently";
+
+            }
+
+
+            const diff =
+                Date.now() -
+                date.getTime();
+
+
+            const seconds =
+                Math.floor(
+                    diff /
+                    1000
+                );
+
+
+            if (
+                seconds <
+                60
+            ) {
+
+                return "Just now";
+
+            }
+
+
+            const minutes =
+                Math.floor(
+                    seconds /
+                    60
+                );
+
+
+            if (
+                minutes <
+                60
+            ) {
+
+                return `${minutes}m ago`;
+
+            }
+
+
+            const hours =
+                Math.floor(
+                    minutes /
+                    60
+                );
+
+
+            if (
+                hours <
+                24
+            ) {
+
+                return `${hours}h ago`;
+
+            }
+
+
+            const days =
+                Math.floor(
+                    hours /
+                    24
+                );
+
+
+            if (
+                days <
+                7
+            ) {
+
+                return `${days}d ago`;
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+
+                    day:
+                        "2-digit",
+
+                    month:
+                        "short",
+
+                    year:
+                        "numeric"
+
+                }
+            );
+
+        }
+
+
+        function getInitial(
+            value
+        ) {
+
+            return (
+
+                String(
+                    value ||
+                    "A"
+                )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase()
+
+                ||
+
+                "A"
+
+            );
+
+        }
+
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.textContent =
+                    value;
+
+            }
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ??
+                ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        function escapeAttribute(
+            value
+        ) {
+
+            return escapeHTML(
+                value
+            );
+
+        }
+
+
+        function hideLoading() {
+
+            document
+                .getElementById(
+                    "loadingOverlay"
+                )
+                .classList.add(
+                    "hidden"
+                );
+
+        }
+
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const previous =
+                document.querySelector(
+                    ".toast"
+                );
+
+
+            if (
+                previous
+            ) {
+
+                previous.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.className =
+                `toast ${type || ""}`;
+
+
+            toast.textContent =
+                message;
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        toast.parentNode
+                    ) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                4000
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

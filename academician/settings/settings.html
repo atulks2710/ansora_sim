@@ -1,0 +1,6589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Settings and Privacy">
+
+    <title>
+        Settings & Privacy | SkillBridge
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           SKILLBRIDGE ACADEMICIAN
+           SETTINGS + PRIVACY
+           SINGLE FILE MODULE
+        ===================================================== */
+
+        :root {
+
+            --black: #090909;
+            --black-soft: #111111;
+            --black-light: #1A1A1A;
+
+            --white: #FFFFFF;
+            --off-white: #F7F7F5;
+
+            --grey-100: #F4F4F5;
+            --grey-200: #E4E4E7;
+            --grey-300: #D4D4D8;
+            --grey-400: #A1A1AA;
+            --grey-500: #71717A;
+            --grey-600: #52525B;
+            --grey-700: #3F3F46;
+            --grey-800: #27272A;
+
+            --gold: #D4AF37;
+            --gold-dark: #A88920;
+            --gold-soft: #FBF8ED;
+
+            --green: #26734D;
+            --green-soft: #EDF7F1;
+
+            --red: #B42318;
+            --red-soft: #FFF1F0;
+
+            --blue: #315C91;
+            --blue-soft: #EEF4FB;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        button,
+        input,
+        select {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .settings-app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .settings-sidebar {
+
+            width: 250px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: var(--black);
+
+            color: white;
+
+        }
+
+
+        .settings-brand-wrap {
+
+            height: 82px;
+
+            padding: 0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .settings-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+        }
+
+
+        .settings-brand-mark {
+
+            width: 36px;
+
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .settings-brand-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+
+        }
+
+
+        .settings-brand-name span {
+
+            color:
+                var(--gold);
+
+        }
+
+
+        .settings-sidebar-nav {
+
+            padding:
+                25px 14px;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .settings-nav-section {
+
+            padding:
+                0 13px;
+
+            margin-bottom:
+                10px;
+
+            color:
+                #52525B;
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.7px;
+
+        }
+
+
+        .settings-nav-gap {
+
+            margin-top:
+                28px;
+
+        }
+
+
+        .settings-nav-item {
+
+            height:
+                43px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                0 13px;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+            border-left:
+                2px solid transparent;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .settings-nav-item:hover {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+        }
+
+
+        .settings-nav-item.active {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+            border-left-color:
+                var(--gold);
+
+        }
+
+
+        .settings-nav-icon {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            color:
+                var(--gold);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .settings-sidebar-bottom {
+
+            margin-top:
+                auto;
+
+            padding:
+                17px 14px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .settings-help {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            padding:
+                5px 8px 16px;
+
+        }
+
+
+        .settings-help-icon {
+
+            width:
+                24px;
+
+            height:
+                24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid #3F3F46;
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+        }
+
+
+        .settings-help strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .settings-help span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                #71717A;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .settings-logout {
+
+            width:
+                100%;
+
+            height:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid #27272A;
+
+            background:
+                transparent;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+        }
+
+
+        .settings-logout:hover {
+
+            color:
+                white;
+
+            border-color:
+                #52525B;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .settings-main {
+
+            width:
+                calc(100% - 250px);
+
+            margin-left:
+                250px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .settings-topbar {
+
+            height:
+                75px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                50;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 35px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .settings-menu {
+
+            display:
+                none;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .settings-portal-label {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .settings-top-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+        }
+
+
+        .settings-top-button {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            position:
+                relative;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+        }
+
+
+        .settings-top-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .settings-notification-dot {
+
+            position:
+                absolute;
+
+            top:
+                6px;
+
+            right:
+                6px;
+
+            width:
+                6px;
+
+            height:
+                6px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .settings-top-profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+        }
+
+
+        .settings-top-image {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .settings-top-image img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+        }
+
+
+        .settings-top-info {
+
+            text-align:
+                left;
+
+        }
+
+
+        .settings-top-info strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .settings-top-info span {
+
+            display:
+                block;
+
+            margin-top:
+                2px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .settings-content {
+
+            max-width:
+                1300px;
+
+            margin:
+                auto;
+
+            padding:
+                35px 36px 65px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .settings-page-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            gap:
+                25px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .settings-eyebrow {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .settings-page-header h1 {
+
+            margin-top:
+                7px;
+
+            font-size:
+                34px;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                -1.3px;
+
+        }
+
+
+        .settings-page-header p {
+
+            max-width:
+                820px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .settings-header-actions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .header-button {
+
+            min-height:
+                38px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .header-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .header-button.primary {
+
+            border-color:
+                var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .header-button.primary:hover {
+
+            background:
+                var(--black-light);
+
+        }
+
+
+        .header-button.danger {
+
+            color:
+                var(--red);
+
+        }
+
+
+        .header-button.danger:hover {
+
+            border-color:
+                var(--red);
+
+        }
+
+
+        /* =====================================================
+           SETTINGS LAYOUT
+        ===================================================== */
+
+        .settings-layout {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                240px minmax(0,1fr);
+
+            gap:
+                13px;
+
+        }
+
+
+        /* =====================================================
+           SETTINGS NAV
+        ===================================================== */
+
+        .settings-section-nav {
+
+            align-self:
+                start;
+
+            position:
+                sticky;
+
+            top:
+                95px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .settings-section-nav-header {
+
+            padding:
+                16px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .settings-section-nav-header span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .settings-section-nav-header h3 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                13px;
+
+        }
+
+
+        .settings-section-link {
+
+            width:
+                100%;
+
+            min-height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            padding:
+                0 14px;
+
+            border:
+                none;
+
+            border-left:
+                2px solid transparent;
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+            text-align:
+                left;
+
+            font-size:
+                7px;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .settings-section-link:hover {
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        .settings-section-link.active {
+
+            background:
+                var(--gold-soft);
+
+            color:
+                var(--black);
+
+            border-left-color:
+                var(--gold);
+
+        }
+
+
+        .settings-section-link-icon {
+
+            width:
+                16px;
+
+            text-align:
+                center;
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        /* =====================================================
+           PANELS
+        ===================================================== */
+
+        .settings-panel {
+
+            margin-bottom:
+                12px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .settings-panel:last-child {
+
+            margin-bottom:
+                0;
+
+        }
+
+
+        .settings-panel-header {
+
+            padding:
+                18px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .settings-panel-header span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.3px;
+
+        }
+
+
+        .settings-panel-header h2 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                15px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .settings-panel-header p {
+
+            max-width:
+                650px;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .settings-panel-body {
+
+            padding:
+                18px;
+
+        }
+
+
+        /* =====================================================
+           ACCOUNT
+        ===================================================== */
+
+        .account-card {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                auto minmax(0,1fr);
+
+            gap:
+                16px;
+
+            align-items:
+                center;
+
+            padding:
+                15px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .account-avatar {
+
+            width:
+                58px;
+
+            height:
+                58px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-size:
+                18px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .account-avatar img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+        }
+
+
+        .account-name {
+
+            font-size:
+                13px;
+
+            font-weight:
+                650;
+
+        }
+
+
+        .account-email {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .account-role {
+
+            display:
+                inline-block;
+
+            margin-top:
+                7px;
+
+            padding:
+                5px 7px;
+
+            background:
+                var(--gold-soft);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        /* =====================================================
+           SETTING ROW
+        ===================================================== */
+
+        .setting-group {
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .setting-row {
+
+            min-height:
+                66px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                12px 14px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .setting-row:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .setting-row-text {
+
+            min-width:
+                0;
+
+            flex:
+                1;
+
+        }
+
+
+        .setting-row-text strong {
+
+            display:
+                block;
+
+            font-size:
+                8px;
+
+            font-weight:
+                650;
+
+        }
+
+
+        .setting-row-text span {
+
+            display:
+                block;
+
+            max-width:
+                630px;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            line-height:
+                1.55;
+
+        }
+
+
+        /* =====================================================
+           SWITCH
+        ===================================================== */
+
+        .switch {
+
+            position:
+                relative;
+
+            width:
+                44px;
+
+            height:
+                24px;
+
+            flex:
+                0 0 auto;
+
+        }
+
+
+        .switch input {
+
+            display:
+                none;
+
+        }
+
+
+        .switch-slider {
+
+            position:
+                absolute;
+
+            inset:
+                0;
+
+            background:
+                var(--grey-300);
+
+            border-radius:
+                20px;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .switch-slider::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            left:
+                3px;
+
+            top:
+                3px;
+
+            background:
+                white;
+
+            border-radius:
+                50%;
+
+            transition:
+                .2s;
+
+            box-shadow:
+                0 1px 3px rgba(0,0,0,.15);
+
+        }
+
+
+        .switch input:checked +
+        .switch-slider {
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .switch input:checked +
+        .switch-slider::before {
+
+            transform:
+                translateX(20px);
+
+        }
+
+
+        .switch input:disabled +
+        .switch-slider {
+
+            opacity:
+                .5;
+
+        }
+
+
+        /* =====================================================
+           SELECT
+        ===================================================== */
+
+        .settings-select {
+
+            width:
+                220px;
+
+            height:
+                37px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            outline:
+                none;
+
+        }
+
+
+        .settings-select:focus {
+
+            border-color:
+                var(--gold);
+
+        }
+
+
+        /* =====================================================
+           NOTIFICATION MATRIX
+        ===================================================== */
+
+        .notification-setting-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                10px;
+
+        }
+
+
+        .notification-channel-card {
+
+            padding:
+                14px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .notification-channel-top {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                12px;
+
+        }
+
+
+        .notification-channel-icon {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                13px;
+
+        }
+
+
+        .notification-channel-name {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+        }
+
+
+        .notification-channel-name strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .notification-channel-name span {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .notification-channel-mode {
+
+            margin-top:
+                12px;
+
+            padding-top:
+                11px;
+
+            border-top:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .notification-channel-mode label {
+
+            display:
+                block;
+
+            margin-bottom:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        /* =====================================================
+           PRIVACY SUMMARY
+        ===================================================== */
+
+        .privacy-banner {
+
+            padding:
+                14px;
+
+            margin-bottom:
+                12px;
+
+            background:
+                var(--gold-soft);
+
+            border:
+                1px solid rgba(212,175,55,.25);
+
+        }
+
+
+        .privacy-banner strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .privacy-banner p {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .privacy-status {
+
+            display:
+                inline-block;
+
+            margin-top:
+                7px;
+
+            padding:
+                5px 7px;
+
+            background:
+                white;
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        /* =====================================================
+           SAVE BAR
+        ===================================================== */
+
+        .save-bar {
+
+            position:
+                sticky;
+
+            bottom:
+                15px;
+
+            z-index:
+                20;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                12px 14px;
+
+            background:
+                rgba(255,255,255,.96);
+
+            border:
+                1px solid var(--grey-300);
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,.08);
+
+        }
+
+
+        .save-status {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .save-status strong {
+
+            color:
+                var(--green);
+
+        }
+
+
+        .save-actions {
+
+            display:
+                flex;
+
+            gap:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                500;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+
+            background:
+                rgba(0,0,0,.62);
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            pointer-events:
+                none;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .modal.show {
+
+            opacity:
+                1;
+
+            visibility:
+                visible;
+
+            pointer-events:
+                auto;
+
+        }
+
+
+        .modal-content {
+
+            width:
+                100%;
+
+            max-width:
+                480px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            padding:
+                19px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-header span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .modal-header h3 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .modal-close {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .modal-body {
+
+            padding:
+                20px;
+
+        }
+
+
+        .modal-body p {
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .modal-footer {
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                7px;
+
+            padding:
+                15px 19px;
+
+            border-top:
+                1px solid var(--grey-200);
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            right:
+                24px;
+
+            bottom:
+                24px;
+
+            z-index:
+                1500;
+
+            max-width:
+                380px;
+
+            padding:
+                13px 16px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.12);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .toast.success {
+
+            border-left:
+                3px solid var(--green);
+
+        }
+
+
+        .toast.error {
+
+            border-left:
+                3px solid var(--red);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1050px) {
+
+            .settings-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .settings-section-nav {
+
+                position:
+                    static;
+
+                display:
+                    flex;
+
+                overflow-x:
+                    auto;
+
+            }
+
+
+            .settings-section-nav-header {
+
+                display:
+                    none;
+
+            }
+
+
+            .settings-section-link {
+
+                flex:
+                    0 0 auto;
+
+                min-width:
+                    145px;
+
+            }
+
+
+            .notification-setting-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .settings-sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .25s ease;
+
+            }
+
+
+            .settings-sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .settings-main {
+
+                width:
+                    100%;
+
+                margin-left:
+                    0;
+
+            }
+
+
+            .settings-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .settings-topbar {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .settings-content {
+
+                padding:
+                    28px 20px 50px;
+
+            }
+
+
+            .settings-page-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .settings-header-actions {
+
+                width:
+                    100%;
+
+            }
+
+
+            .header-button {
+
+                flex:
+                    1;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .settings-portal-label,
+            .settings-top-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .account-card {
+
+                grid-template-columns:
+                    1fr;
+
+                text-align:
+                    center;
+
+            }
+
+
+            .account-avatar {
+
+                margin:
+                    auto;
+
+            }
+
+
+            .setting-row {
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .settings-select {
+
+                width:
+                    170px;
+
+            }
+
+
+            .save-bar {
+
+                align-items:
+                    stretch;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .save-actions {
+
+                width:
+                    100%;
+
+            }
+
+
+            .save-actions .header-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .settings-content {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+
+            .settings-page-header h1 {
+
+                font-size:
+                    28px;
+
+            }
+
+
+            .settings-section-link {
+
+                min-width:
+                    125px;
+
+            }
+
+
+            .setting-row {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .settings-select {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+
+    <div class="settings-app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="settings-sidebar"
+            id="settingsSidebar">
+
+
+            <div class="settings-brand-wrap">
+
+                <a
+                    href="../academician-home.html"
+                    class="settings-brand">
+
+                    <div class="settings-brand-mark">
+                        SB
+                    </div>
+
+                    <div class="settings-brand-name">
+
+                        SKILL<span>BRIDGE</span>
+
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <nav class="settings-sidebar-nav">
+
+
+                <div class="settings-nav-section">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="../academician-home.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ◯
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../skills/skills.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        My Expertise
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../opportunities/opportunities.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ◇
+                    </span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../applications/applications.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="settings-nav-section settings-nav-gap">
+
+                    COLLABORATION
+
+                </div>
+
+
+                <a
+                    href="../collaborations/collaborations.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ↔
+                    </span>
+
+                    <span>
+                        Collaborations
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../mentorship/mentorship.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ♧
+                    </span>
+
+                    <span>
+                        Mentorship
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../learning/learning.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Learning &amp; Development
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../credentials/credentials.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ★
+                    </span>
+
+                    <span>
+                        Credentials
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../portfolio/portfolio.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ◈
+                    </span>
+
+                    <span>
+                        Professional Portfolio
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../analytics/analytics.html"
+                    class="settings-nav-item">
+
+                    <span class="settings-nav-icon">
+                        ◒
+                    </span>
+
+                    <span>
+                        Analytics &amp; Insights
+                    </span>
+
+                </a>
+
+
+            </nav>
+
+
+            <div class="settings-sidebar-bottom">
+
+
+                <div class="settings-help">
+
+                    <div class="settings-help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="logoutBtn"
+                    class="settings-logout">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="settings-main">
+
+
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header
+                class="settings-topbar">
+
+
+                <button
+                    type="button"
+                    id="menuButton"
+                    class="settings-menu">
+
+                    ☰
+
+                </button>
+
+
+                <div
+                    class="settings-portal-label">
+
+                    ACADEMICIAN PORTAL
+
+                </div>
+
+
+                <div
+                    class="settings-top-actions">
+
+
+                    <button
+                        type="button"
+                        class="settings-top-button"
+                        id="topSearchButton">
+
+                        ⌕
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="settings-top-button"
+                        id="notificationButton">
+
+                        ♢
+
+                        <span
+                            class="settings-notification-dot">
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="settings-top-profile">
+
+
+                        <div
+                            class="settings-top-image"
+                            id="topProfileImage">
+
+                            <span>
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="settings-top-info">
+
+                            <strong id="topName">
+                                Academician
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <div class="settings-content">
+
+
+                <!-- =================================================
+                     HEADER
+                ================================================== -->
+
+                <section
+                    class="settings-page-header">
+
+
+                    <div>
+
+                        <span
+                            class="settings-eyebrow">
+
+                            ACCOUNT CONTROL CENTER
+
+                        </span>
+
+
+                        <h1>
+
+                            Settings &amp; Privacy
+
+                        </h1>
+
+
+                        <p>
+
+                            Control how your Academician profile
+                            is displayed, how you receive platform
+                            notifications and which information is
+                            visible to industry and collaboration
+                            partners.
+
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="settings-header-actions">
+
+
+                        <button
+                            type="button"
+                            class="header-button"
+                            id="resetSettingsButton">
+
+                            Reset Changes
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="header-button primary"
+                            id="saveSettingsTopButton">
+
+                            Save Settings
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     SETTINGS LAYOUT
+                ================================================== -->
+
+                <div
+                    class="settings-layout">
+
+
+                    <!-- =============================================
+                         SECTION NAV
+                    ============================================== -->
+
+                    <aside
+                        class="settings-section-nav">
+
+
+                        <div
+                            class="settings-section-nav-header">
+
+                            <span>
+                                SETTINGS
+                            </span>
+
+                            <h3>
+                                Preferences
+                            </h3>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="settings-section-link active"
+                            data-settings-section="account">
+
+                            <span class="settings-section-link-icon">
+                                ◯
+                            </span>
+
+                            Account
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="settings-section-link"
+                            data-settings-section="visibility">
+
+                            <span class="settings-section-link-icon">
+                                ◉
+                            </span>
+
+                            Visibility
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="settings-section-link"
+                            data-settings-section="notifications">
+
+                            <span class="settings-section-link-icon">
+                                ♢
+                            </span>
+
+                            Notifications
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="settings-section-link"
+                            data-settings-section="privacy">
+
+                            <span class="settings-section-link-icon">
+                                □
+                            </span>
+
+                            Privacy
+
+                        </button>
+
+
+                    </aside>
+
+
+
+                    <!-- =============================================
+                         SETTINGS CONTENT
+                    ============================================== -->
+
+                    <div>
+
+
+                        <!-- =========================================
+                             ACCOUNT
+                        ========================================== -->
+
+                        <section
+                            class="settings-panel"
+                            id="accountSection">
+
+
+                            <div
+                                class="settings-panel-header">
+
+                                <span>
+                                    ACCOUNT PREFERENCES
+                                </span>
+
+                                <h2>
+                                    Your Account
+                                </h2>
+
+                                <p>
+                                    Basic account information is taken
+                                    from your existing Academician
+                                    profile and authentication record.
+                                </p>
+
+                            </div>
+
+
+                            <div
+                                class="settings-panel-body">
+
+
+                                <div
+                                    class="account-card">
+
+
+                                    <div
+                                        class="account-avatar"
+                                        id="accountAvatar">
+
+                                        A
+
+                                    </div>
+
+
+                                    <div>
+
+                                        <div
+                                            class="account-name"
+                                            id="accountName">
+
+                                            Academician
+
+                                        </div>
+
+
+                                        <div
+                                            class="account-email"
+                                            id="accountEmail">
+
+                                            —
+
+                                        </div>
+
+
+                                        <span
+                                            class="account-role">
+
+                                            ACADEMICIAN
+
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    style="
+                                        margin-top:12px;
+                                    "
+                                    class="setting-group">
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Account role
+                                            </strong>
+
+                                            <span>
+                                                Your role is controlled
+                                                by the existing platform
+                                                role system.
+                                            </span>
+
+                                        </div>
+
+
+                                        <input
+                                            class="settings-select"
+                                            value="Academician"
+                                            disabled>
+
+                                    </div>
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Account email
+                                            </strong>
+
+                                            <span>
+                                                The email associated with
+                                                your authenticated account.
+                                            </span>
+
+                                        </div>
+
+
+                                        <input
+                                            class="settings-select"
+                                            id="accountEmailField"
+                                            type="email"
+                                            disabled>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =========================================
+                             VISIBILITY
+                        ========================================== -->
+
+                        <section
+                            class="settings-panel"
+                            id="visibilitySection">
+
+
+                            <div
+                                class="settings-panel-header">
+
+                                <span>
+                                    PROFILE VISIBILITY
+                                </span>
+
+                                <h2>
+                                    Control What Others Can See
+                                </h2>
+
+                                <p>
+                                    These controls determine which parts
+                                    of your Academician profile are
+                                    exposed through the industry-facing
+                                    platform.
+                                </p>
+
+                            </div>
+
+
+                            <div
+                                class="settings-panel-body">
+
+
+                                <div
+                                    class="privacy-banner">
+
+                                    <strong>
+                                        Recommended visibility
+                                    </strong>
+
+                                    <p>
+                                        Keep your professional profile
+                                        and portfolio visible when you
+                                        are actively seeking industry
+                                        collaboration. Contact details
+                                        can remain private until needed.
+                                    </p>
+
+                                    <span
+                                        class="privacy-status"
+                                        id="visibilityStatusText">
+
+                                        PROFILE SETTINGS
+
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="setting-group">
+
+
+                                    <!-- INDUSTRY PROFILE -->
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Industry Profile
+                                            </strong>
+
+                                            <span>
+                                                Allow industry users to
+                                                discover your professional
+                                                Academician profile.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="industryProfileVisible">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <!-- PORTFOLIO -->
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Professional Portfolio
+                                            </strong>
+
+                                            <span>
+                                                Allow your shareable
+                                                portfolio to be viewed
+                                                by permitted users.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="portfolioVisible">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <!-- INSTITUTION -->
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Institution
+                                            </strong>
+
+                                            <span>
+                                                Display your institution
+                                                and academic affiliation
+                                                on your industry-facing
+                                                profile.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="institutionVisible">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <!-- CONTACT -->
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Contact Information
+                                            </strong>
+
+                                            <span>
+                                                Display contact details
+                                                publicly on your professional
+                                                profile.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="contactVisible">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <!-- CREDENTIALS -->
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Credentials
+                                            </strong>
+
+                                            <span>
+                                                Show certifications,
+                                                achievements and verified
+                                                professional credentials.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="credentialsVisible">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =========================================
+                             NOTIFICATIONS
+                        ========================================== -->
+
+                        <section
+                            class="settings-panel"
+                            id="notificationsSection">
+
+
+                            <div
+                                class="settings-panel-header">
+
+                                <span>
+                                    NOTIFICATION PREFERENCES
+                                </span>
+
+                                <h2>
+                                    Stay Informed
+                                </h2>
+
+                                <p>
+                                    Choose which categories of
+                                    Academician activity should trigger
+                                    notifications.
+                                </p>
+
+                            </div>
+
+
+                            <div
+                                class="settings-panel-body">
+
+
+                                <div
+                                    class="notification-setting-grid">
+
+
+                                    <!-- OPPORTUNITIES -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ◇
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Opportunities
+                                                </strong>
+
+                                                <span>
+                                                    New matched opportunities
+                                                    and recommendations.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyOpportunities">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="opportunityDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- APPLICATIONS -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ▤
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Applications
+                                                </strong>
+
+                                                <span>
+                                                    Application status,
+                                                    shortlisting and
+                                                    discussion updates.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyApplications">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="applicationDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- COLLABORATIONS -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ↔
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Collaborations
+                                                </strong>
+
+                                                <span>
+                                                    Collaboration requests,
+                                                    updates and milestones.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyCollaborations">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="collaborationDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- MENTORSHIP -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ♧
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Mentorship
+                                                </strong>
+
+                                                <span>
+                                                    Mentor and mentee
+                                                    requests and updates.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyMentorship">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="mentorshipDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- FDP / LEARNING -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ◫
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    FDP / Learning
+                                                </strong>
+
+                                                <span>
+                                                    FDPs, courses, training
+                                                    and learning initiatives.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyLearning">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="learningDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- DEADLINES -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ◷
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Deadlines
+                                                </strong>
+
+                                                <span>
+                                                    Upcoming opportunity,
+                                                    application and program
+                                                    deadlines.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyDeadlines">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="deadlineDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- DOCUMENTS -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                □
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Documents
+                                                </strong>
+
+                                                <span>
+                                                    Document upload and
+                                                    verification changes.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyDocuments">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="documentDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+
+
+                                    <!-- RESEARCH -->
+
+                                    <article
+                                        class="notification-channel-card">
+
+
+                                        <div
+                                            class="notification-channel-top">
+
+
+                                            <div
+                                                class="notification-channel-icon">
+
+                                                ◎
+
+                                            </div>
+
+
+                                            <div
+                                                class="notification-channel-name">
+
+                                                <strong>
+                                                    Research
+                                                </strong>
+
+                                                <span>
+                                                    Research invitations,
+                                                    publications and
+                                                    related activity.
+                                                </span>
+
+                                            </div>
+
+
+                                            <label
+                                                class="switch">
+
+                                                <input
+                                                    type="checkbox"
+                                                    id="notifyResearch">
+
+                                                <span
+                                                    class="switch-slider">
+                                                </span>
+
+                                            </label>
+
+                                        </div>
+
+
+                                        <div
+                                            class="notification-channel-mode">
+
+                                            <label>
+                                                DELIVERY
+                                            </label>
+
+                                            <select
+                                                class="settings-select"
+                                                id="researchDelivery">
+
+                                                <option value="immediate">
+                                                    Immediate
+                                                </option>
+
+                                                <option value="daily">
+                                                    Daily summary
+                                                </option>
+
+                                                <option value="off">
+                                                    Off
+                                                </option>
+
+                                            </select>
+
+                                        </div>
+
+                                    </article>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =========================================
+                             PRIVACY
+                        ========================================== -->
+
+                        <section
+                            class="settings-panel"
+                            id="privacySection">
+
+
+                            <div
+                                class="settings-panel-header">
+
+                                <span>
+                                    PRIVACY
+                                </span>
+
+                                <h2>
+                                    Privacy Preferences
+                                </h2>
+
+                                <p>
+                                    These controls determine what
+                                    information is included when your
+                                    profile is discovered or shared.
+                                </p>
+
+                            </div>
+
+
+                            <div
+                                class="settings-panel-body">
+
+
+                                <div
+                                    class="setting-group">
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Show professional headline
+                                            </strong>
+
+                                            <span>
+                                                Display your professional
+                                                headline on your public
+                                                industry-facing profile.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="privacyHeadline">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Show research interests
+                                            </strong>
+
+                                            <span>
+                                                Allow industry users to
+                                                see your research areas,
+                                                domains and keywords.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="privacyResearch">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Show project history
+                                            </strong>
+
+                                            <span>
+                                                Include academic, research,
+                                                industry and consultancy
+                                                project information.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="privacyProjects">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Show industry experience
+                                            </strong>
+
+                                            <span>
+                                                Include professional
+                                                industry experience on
+                                                the profile.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="privacyExperience">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+
+                                    <div
+                                        class="setting-row">
+
+
+                                        <div
+                                            class="setting-row-text">
+
+                                            <strong>
+                                                Show online profiles
+                                            </strong>
+
+                                            <span>
+                                                Display LinkedIn, Google
+                                                Scholar, ORCID,
+                                                ResearchGate and website
+                                                links when available.
+                                            </span>
+
+                                        </div>
+
+
+                                        <label
+                                            class="switch">
+
+                                            <input
+                                                type="checkbox"
+                                                id="privacyOnlineProfiles">
+
+                                            <span
+                                                class="switch-slider">
+                                            </span>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- =========================================
+                             SAVE BAR
+                        ========================================== -->
+
+                        <div
+                            class="save-bar">
+
+
+                            <div
+                                class="save-status"
+                                id="saveStatus">
+
+                                No unsaved changes
+
+                            </div>
+
+
+                            <div
+                                class="save-actions">
+
+
+                                <button
+                                    type="button"
+                                    class="header-button"
+                                    id="saveSettingsButton">
+
+                                    Save Changes
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="header-button primary"
+                                    id="continueButton">
+
+                                    Done
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         RESET MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="resetModal">
+
+
+        <div
+            class="modal-content">
+
+
+            <div
+                class="modal-header">
+
+
+                <div>
+
+                    <span>
+                        RESET SETTINGS
+                    </span>
+
+                    <h3>
+                        Restore default preferences?
+                    </h3>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-close="resetModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="modal-body">
+
+
+                <p>
+
+                    This will reset the changes currently made on this
+                    page back to the last saved values. Your Firebase
+                    records will not be deleted.
+
+                </p>
+
+            </div>
+
+
+            <div
+                class="modal-footer">
+
+
+                <button
+                    type="button"
+                    class="header-button"
+                    data-close="resetModal">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="header-button primary"
+                    id="confirmResetButton">
+
+                    Reset Changes
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script type="module">
+
+
+        // =====================================================
+        // FIREBASE IMPORTS
+        // =====================================================
+
+        import {
+            initializeApp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            updateDoc,
+            serverTimestamp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        // =====================================================
+        // FIREBASE CONFIG
+        // =====================================================
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
+
+            authDomain:
+                "ansora-27fe4.firebaseapp.com",
+
+            projectId:
+                "ansora-27fe4",
+
+            storageBucket:
+                "ansora-27fe4.firebasestorage.app",
+
+            messagingSenderId:
+                "230795678686",
+
+            appId:
+                "1:230795678686:web:06f0ccd7b8717ac13ac34f"
+
+        };
+
+
+        // =====================================================
+        // INITIALIZE
+        // =====================================================
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const auth =
+            getAuth(
+                app
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
+
+
+        // =====================================================
+        // STATE
+        // =====================================================
+
+        let currentUser =
+            null;
+
+        let userData =
+            {};
+
+        let academicianData =
+            {};
+
+        let savedSettings =
+            null;
+
+
+        // =====================================================
+        // DEFAULT SETTINGS
+        // =====================================================
+
+        const defaultSettings = {
+
+            industryProfileVisible:
+                true,
+
+            portfolioVisible:
+                true,
+
+            institutionVisible:
+                true,
+
+            contactVisible:
+                false,
+
+            credentialsVisible:
+                true,
+
+
+            notifications: {
+
+                opportunities: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "immediate"
+
+                },
+
+                applications: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "immediate"
+
+                },
+
+                collaborations: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "immediate"
+
+                },
+
+                mentorship: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "immediate"
+
+                },
+
+                learning: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "daily"
+
+                },
+
+                deadlines: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "immediate"
+
+                },
+
+                documents: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "immediate"
+
+                },
+
+                research: {
+
+                    enabled:
+                        true,
+
+                    delivery:
+                        "daily"
+
+                }
+
+            },
+
+
+            privacy: {
+
+                headline:
+                    true,
+
+                research:
+                    true,
+
+                projects:
+                    true,
+
+                experience:
+                    true,
+
+                onlineProfiles:
+                    true
+
+            }
+
+        };
+
+
+        // =====================================================
+        // AUTH
+        // =====================================================
+
+        onAuthStateChanged(
+            auth,
+            async user => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "../../login.html";
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    user;
+
+
+                try {
+
+                    await loadData();
+
+                    populateProfile();
+
+                    populateSettings();
+
+                    updateSaveStatus(
+                        false
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    showToast(
+                        "Unable to load settings.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // LOAD DATA
+        // =====================================================
+
+        async function loadData() {
+
+            const userSnapshot =
+                await getDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    )
+
+                );
+
+
+            userData =
+                userSnapshot.exists()
+                    ? userSnapshot.data()
+                    : {};
+
+
+            const academicianSnapshot =
+                await getDoc(
+
+                    doc(
+                        db,
+                        "academicians",
+                        currentUser.uid
+                    )
+
+                );
+
+
+            academicianData =
+                academicianSnapshot.exists()
+                    ? academicianSnapshot.data()
+                    : {};
+
+
+            savedSettings =
+                deepMerge(
+
+                    defaultSettings,
+
+                    academicianData.settings ||
+                    {}
+
+                );
+
+        }
+
+
+        // =====================================================
+        // PROFILE
+        // =====================================================
+
+        function populateProfile() {
+
+            const name =
+                getName();
+
+
+            const email =
+                currentUser.email ||
+                userData.email ||
+                "";
+
+
+            setText(
+                "topName",
+                name
+            );
+
+
+            setText(
+                "accountName",
+                name
+            );
+
+
+            setText(
+                "accountEmail",
+                email ||
+                "Email not available"
+            );
+
+
+            document.getElementById(
+                "accountEmailField"
+            ).value =
+                email;
+
+
+            setAvatar(
+                "topProfileImage",
+                getProfileImage(),
+                name
+            );
+
+
+            setAvatar(
+                "accountAvatar",
+                getProfileImage(),
+                name
+            );
+
+        }
+
+
+        function getName() {
+
+            return (
+
+                academicianData.name ||
+
+                academicianData.fullName ||
+
+                academicianData.displayName ||
+
+                userData.name ||
+
+                userData.fullName ||
+
+                currentUser.displayName ||
+
+                "Academician"
+
+            );
+
+        }
+
+
+        function getProfileImage() {
+
+            return (
+
+                academicianData.photoURL ||
+
+                academicianData.profilePhoto ||
+
+                academicianData.profileImage ||
+
+                userData.photoURL ||
+
+                userData.profilePhoto ||
+
+                ""
+
+            );
+
+        }
+
+
+        function setAvatar(
+            id,
+            image,
+            name
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (!element) {
+
+                return;
+
+            }
+
+
+            if (
+                image
+            ) {
+
+                element.innerHTML =
+                    "";
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    image;
+
+
+                img.alt =
+                    "Profile photo";
+
+
+                img.onerror =
+                    () => {
+
+                        element.innerHTML =
+                            `<span>${escapeHTML(
+                                getInitial(
+                                    name
+                                )
+                            )}</span>`;
+
+                    };
+
+
+                element.appendChild(
+                    img
+                );
+
+            }
+
+            else {
+
+                element.innerHTML =
+                    `<span>${escapeHTML(
+                        getInitial(
+                            name
+                        )
+                    )}</span>`;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // POPULATE SETTINGS
+        // =====================================================
+
+        function populateSettings() {
+
+            if (
+                !savedSettings
+            ) {
+
+                savedSettings =
+                    deepClone(
+                        defaultSettings
+                    );
+
+            }
+
+
+            /*
+                VISIBILITY
+            */
+
+            setChecked(
+                "industryProfileVisible",
+                savedSettings.industryProfileVisible
+            );
+
+
+            setChecked(
+                "portfolioVisible",
+                savedSettings.portfolioVisible
+            );
+
+
+            setChecked(
+                "institutionVisible",
+                savedSettings.institutionVisible
+            );
+
+
+            setChecked(
+                "contactVisible",
+                savedSettings.contactVisible
+            );
+
+
+            setChecked(
+                "credentialsVisible",
+                savedSettings.credentialsVisible
+            );
+
+
+            /*
+                NOTIFICATIONS
+            */
+
+            populateNotification(
+                "Opportunities",
+                "notifyOpportunities",
+                "opportunityDelivery",
+                savedSettings.notifications.opportunities
+            );
+
+
+            populateNotification(
+                "Applications",
+                "notifyApplications",
+                "applicationDelivery",
+                savedSettings.notifications.applications
+            );
+
+
+            populateNotification(
+                "Collaborations",
+                "notifyCollaborations",
+                "collaborationDelivery",
+                savedSettings.notifications.collaborations
+            );
+
+
+            populateNotification(
+                "Mentorship",
+                "notifyMentorship",
+                "mentorshipDelivery",
+                savedSettings.notifications.mentorship
+            );
+
+
+            populateNotification(
+                "Learning",
+                "notifyLearning",
+                "learningDelivery",
+                savedSettings.notifications.learning
+            );
+
+
+            populateNotification(
+                "Deadlines",
+                "notifyDeadlines",
+                "deadlineDelivery",
+                savedSettings.notifications.deadlines
+            );
+
+
+            populateNotification(
+                "Documents",
+                "notifyDocuments",
+                "documentDelivery",
+                savedSettings.notifications.documents
+            );
+
+
+            populateNotification(
+                "Research",
+                "notifyResearch",
+                "researchDelivery",
+                savedSettings.notifications.research
+            );
+
+
+            /*
+                PRIVACY
+            */
+
+            setChecked(
+                "privacyHeadline",
+                savedSettings.privacy.headline
+            );
+
+
+            setChecked(
+                "privacyResearch",
+                savedSettings.privacy.research
+            );
+
+
+            setChecked(
+                "privacyProjects",
+                savedSettings.privacy.projects
+            );
+
+
+            setChecked(
+                "privacyExperience",
+                savedSettings.privacy.experience
+            );
+
+
+            setChecked(
+                "privacyOnlineProfiles",
+                savedSettings.privacy.onlineProfiles
+            );
+
+
+            updateVisibilityStatus();
+
+        }
+
+
+        function populateNotification(
+            label,
+            checkboxId,
+            selectId,
+            settings
+        ) {
+
+            const checkbox =
+                document.getElementById(
+                    checkboxId
+                );
+
+
+            const select =
+                document.getElementById(
+                    selectId
+                );
+
+
+            checkbox.checked =
+                settings?.enabled ??
+                true;
+
+
+            select.value =
+                settings?.delivery ||
+                "immediate";
+
+
+            /*
+                If delivery is "off", keep the
+                visual toggle disabled.
+            */
+
+            if (
+                select.value ===
+                "off"
+            ) {
+
+                checkbox.checked =
+                    false;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // SECTION NAVIGATION
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                "[data-settings-section]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            const target =
+                                button.dataset.settingsSection;
+
+
+                            scrollToSection(
+                                target
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function scrollToSection(
+            name
+        ) {
+
+            const element =
+                document.getElementById(
+                    `${name}Section`
+                );
+
+
+            if (!element) {
+
+                return;
+
+            }
+
+
+            const top =
+                element.getBoundingClientRect()
+                    .top
+                +
+                window.scrollY
+                -
+                95;
+
+
+            window.scrollTo({
+
+                top:
+                    top,
+
+                behavior:
+                    "smooth"
+
+            });
+
+
+            document
+                .querySelectorAll(
+                    "[data-settings-section]"
+                )
+                .forEach(
+                    button => {
+
+                        button.classList.toggle(
+                            "active",
+                            button.dataset.settingsSection ===
+                                name
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // ACTIVE SECTION ON SCROLL
+        // =====================================================
+
+        const sectionNames = [
+
+            "account",
+
+            "visibility",
+
+            "notifications",
+
+            "privacy"
+
+        ];
+
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                let active =
+                    sectionNames[0];
+
+
+                sectionNames.forEach(
+                    name => {
+
+                        const section =
+                            document.getElementById(
+                                `${name}Section`
+                            );
+
+
+                        if (!section) {
+
+                            return;
+
+                        }
+
+
+                        const top =
+                            section.getBoundingClientRect()
+                                .top;
+
+
+                        if (
+                            top <=
+                            160
+                        ) {
+
+                            active =
+                                name;
+
+                        }
+
+                    }
+                );
+
+
+                document
+                    .querySelectorAll(
+                        "[data-settings-section]"
+                    )
+                    .forEach(
+                        button => {
+
+                            button.classList.toggle(
+                                "active",
+                                button.dataset.settingsSection ===
+                                    active
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+
+        // =====================================================
+        // CHANGE DETECTION
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                "input, select"
+            )
+            .forEach(
+                element => {
+
+                    element.addEventListener(
+                        "change",
+                        () => {
+
+                            if (
+                                element.id ===
+                                    "opportunityDelivery" ||
+
+                                element.id ===
+                                    "applicationDelivery" ||
+
+                                element.id ===
+                                    "collaborationDelivery" ||
+
+                                element.id ===
+                                    "mentorshipDelivery" ||
+
+                                element.id ===
+                                    "learningDelivery" ||
+
+                                element.id ===
+                                    "deadlineDelivery" ||
+
+                                element.id ===
+                                    "documentDelivery" ||
+
+                                element.id ===
+                                    "researchDelivery"
+                            ) {
+
+                                syncDeliveryCheckbox(
+                                    element.id
+                                );
+
+                            }
+
+
+                            updateVisibilityStatus();
+
+                            updateSaveStatus(
+                                true
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function syncDeliveryCheckbox(
+            selectId
+        ) {
+
+            const mapping = {
+
+                opportunityDelivery:
+                    "notifyOpportunities",
+
+                applicationDelivery:
+                    "notifyApplications",
+
+                collaborationDelivery:
+                    "notifyCollaborations",
+
+                mentorshipDelivery:
+                    "notifyMentorship",
+
+                learningDelivery:
+                    "notifyLearning",
+
+                deadlineDelivery:
+                    "notifyDeadlines",
+
+                documentDelivery:
+                    "notifyDocuments",
+
+                researchDelivery:
+                    "notifyResearch"
+
+            };
+
+
+            const checkboxId =
+                mapping[
+                    selectId
+                ];
+
+
+            if (!checkboxId) {
+
+                return;
+
+            }
+
+
+            const select =
+                document.getElementById(
+                    selectId
+                );
+
+
+            const checkbox =
+                document.getElementById(
+                    checkboxId
+                );
+
+
+            if (
+                select.value ===
+                "off"
+            ) {
+
+                checkbox.checked =
+                    false;
+
+            }
+            else {
+
+                checkbox.checked =
+                    true;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // VISIBILITY STATUS
+        // =====================================================
+
+        [
+            "industryProfileVisible",
+            "portfolioVisible",
+            "institutionVisible",
+            "contactVisible",
+            "credentialsVisible"
+        ]
+            .forEach(
+                id => {
+
+                    document
+                        .getElementById(
+                            id
+                        )
+                        .addEventListener(
+                            "change",
+                            updateVisibilityStatus
+                        );
+
+                }
+            );
+
+
+        function updateVisibilityStatus() {
+
+            const industry =
+                document.getElementById(
+                    "industryProfileVisible"
+                ).checked;
+
+
+            const portfolio =
+                document.getElementById(
+                    "portfolioVisible"
+                ).checked;
+
+
+            const institution =
+                document.getElementById(
+                    "institutionVisible"
+                ).checked;
+
+
+            const contact =
+                document.getElementById(
+                    "contactVisible"
+                ).checked;
+
+
+            const status =
+                document.getElementById(
+                    "visibilityStatusText"
+                );
+
+
+            if (
+                !industry
+            ) {
+
+                status.textContent =
+                    "PROFILE HIDDEN";
+
+                return;
+
+            }
+
+
+            if (
+                industry &&
+                portfolio &&
+                institution &&
+                !contact
+            ) {
+
+                status.textContent =
+                    "RECOMMENDED";
+
+                return;
+
+            }
+
+
+            if (
+                industry
+            ) {
+
+                status.textContent =
+                    "PROFILE ACTIVE";
+
+                return;
+
+            }
+
+
+            status.textContent =
+                "REVIEW SETTINGS";
+
+        }
+
+
+        // =====================================================
+        // COLLECT SETTINGS
+        // =====================================================
+
+        function collectSettings() {
+
+            return {
+
+                industryProfileVisible:
+                    getChecked(
+                        "industryProfileVisible"
+                    ),
+
+                portfolioVisible:
+                    getChecked(
+                        "portfolioVisible"
+                    ),
+
+                institutionVisible:
+                    getChecked(
+                        "institutionVisible"
+                    ),
+
+                contactVisible:
+                    getChecked(
+                        "contactVisible"
+                    ),
+
+                credentialsVisible:
+                    getChecked(
+                        "credentialsVisible"
+                    ),
+
+
+                notifications: {
+
+                    opportunities:
+                        collectNotification(
+                            "notifyOpportunities",
+                            "opportunityDelivery"
+                        ),
+
+                    applications:
+                        collectNotification(
+                            "notifyApplications",
+                            "applicationDelivery"
+                        ),
+
+                    collaborations:
+                        collectNotification(
+                            "notifyCollaborations",
+                            "collaborationDelivery"
+                        ),
+
+                    mentorship:
+                        collectNotification(
+                            "notifyMentorship",
+                            "mentorshipDelivery"
+                        ),
+
+                    learning:
+                        collectNotification(
+                            "notifyLearning",
+                            "learningDelivery"
+                        ),
+
+                    deadlines:
+                        collectNotification(
+                            "notifyDeadlines",
+                            "deadlineDelivery"
+                        ),
+
+                    documents:
+                        collectNotification(
+                            "notifyDocuments",
+                            "documentDelivery"
+                        ),
+
+                    research:
+                        collectNotification(
+                            "notifyResearch",
+                            "researchDelivery"
+                        )
+
+                },
+
+
+                privacy: {
+
+                    headline:
+                        getChecked(
+                            "privacyHeadline"
+                        ),
+
+                    research:
+                        getChecked(
+                            "privacyResearch"
+                        ),
+
+                    projects:
+                        getChecked(
+                            "privacyProjects"
+                        ),
+
+                    experience:
+                        getChecked(
+                            "privacyExperience"
+                        ),
+
+                    onlineProfiles:
+                        getChecked(
+                            "privacyOnlineProfiles"
+                        )
+
+                }
+
+            };
+
+        }
+
+
+        function collectNotification(
+            checkboxId,
+            selectId
+        ) {
+
+            const enabled =
+                getChecked(
+                    checkboxId
+                );
+
+
+            const delivery =
+                document.getElementById(
+                    selectId
+                ).value;
+
+
+            return {
+
+                enabled:
+                    enabled,
+
+                delivery:
+                    enabled
+                        ? delivery
+                        : "off"
+
+            };
+
+        }
+
+
+        // =====================================================
+        // SAVE
+        // =====================================================
+
+        document
+            .getElementById(
+                "saveSettingsButton"
+            )
+            .addEventListener(
+                "click",
+                saveSettings
+            );
+
+
+        document
+            .getElementById(
+                "saveSettingsTopButton"
+            )
+            .addEventListener(
+                "click",
+                saveSettings
+            );
+
+
+        async function saveSettings() {
+
+            if (
+                !currentUser
+            ) {
+
+                return;
+
+            }
+
+
+            const button =
+                document.getElementById(
+                    "saveSettingsButton"
+                );
+
+
+            const topButton =
+                document.getElementById(
+                    "saveSettingsTopButton"
+                );
+
+
+            button.disabled =
+                true;
+
+
+            topButton.disabled =
+                true;
+
+
+            button.textContent =
+                "Saving...";
+
+
+            topButton.textContent =
+                "Saving...";
+
+
+            const settings =
+                collectSettings();
+
+
+            try {
+
+                await updateAcademicianSettings(
+                    settings
+                );
+
+
+                savedSettings =
+                    deepClone(
+                        settings
+                    );
+
+
+                updateSaveStatus(
+                    false
+                );
+
+
+                showToast(
+                    "Settings saved successfully.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to save settings.",
+                    "error"
+                );
+
+            }
+
+            finally {
+
+                button.disabled =
+                    false;
+
+
+                topButton.disabled =
+                    false;
+
+
+                button.textContent =
+                    "Save Changes";
+
+
+                topButton.textContent =
+                    "Save Settings";
+
+            }
+
+        }
+
+
+        async function updateAcademicianSettings(
+            settings
+        ) {
+
+            const reference =
+                doc(
+                    db,
+                    "academicians",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            if (
+                snapshot.exists()
+            ) {
+
+                await updateDoc(
+
+                    reference,
+
+                    {
+
+                        settings:
+                            settings,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+            }
+
+            else {
+
+                await setDoc(
+
+                    reference,
+
+                    {
+
+                        settings:
+                            settings,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    },
+
+                    {
+
+                        merge:
+                            true
+
+                    }
+
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // RESET
+        // =====================================================
+
+        document
+            .getElementById(
+                "resetSettingsButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    openModal(
+                        "resetModal"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "confirmResetButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        savedSettings
+                    ) {
+
+                        populateSettings();
+
+                        updateSaveStatus(
+                            false
+                        );
+
+
+                        closeModal(
+                            "resetModal"
+                        );
+
+
+                        showToast(
+                            "Changes reset.",
+                            "success"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // DONE BUTTON
+        // =====================================================
+
+        document
+            .getElementById(
+                "continueButton"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const changed =
+                        hasUnsavedChanges();
+
+
+                    if (
+                        changed
+                    ) {
+
+                        const shouldSave =
+                            confirm(
+                                "You have unsaved changes. Save them before leaving?"
+                            );
+
+
+                        if (
+                            shouldSave
+                        ) {
+
+                            await saveSettings();
+
+                        }
+                        else {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    window.location.href =
+                        "../academician-home.html";
+
+                }
+            );
+
+
+        function hasUnsavedChanges() {
+
+            if (
+                !savedSettings
+            ) {
+
+                return false;
+
+            }
+
+
+            return (
+                JSON.stringify(
+                    collectSettings()
+                ) !==
+                JSON.stringify(
+                    savedSettings
+                )
+            );
+
+        }
+
+
+        // =====================================================
+        // MODALS
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                "[data-close]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            closeModal(
+                                button.dataset.close
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".modal"
+            )
+            .forEach(
+                modal => {
+
+                    modal.addEventListener(
+                        "click",
+                        event => {
+
+                            if (
+                                event.target ===
+                                modal
+                            ) {
+
+                                modal.classList.remove(
+                                    "show"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function openModal(
+            id
+        ) {
+
+            document
+                .getElementById(
+                    id
+                )
+                .classList.add(
+                    "show"
+                );
+
+        }
+
+
+        function closeModal(
+            id
+        ) {
+
+            document
+                .getElementById(
+                    id
+                )
+                .classList.remove(
+                    "show"
+                );
+
+        }
+
+
+        // =====================================================
+        // TOP NOTIFICATION ICON
+        // =====================================================
+
+        document
+            .getElementById(
+                "notificationButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    window.location.href =
+                        "../notifications/notifications.html";
+
+                }
+            );
+
+
+        // =====================================================
+        // SEARCH ICON
+        // =====================================================
+
+        document
+            .getElementById(
+                "topSearchButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "accountSection"
+                        )
+                        .scrollIntoView({
+                            behavior:
+                                "smooth"
+                        });
+
+                }
+            );
+
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
+
+        document
+            .getElementById(
+                "menuButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "settingsSidebar"
+                        )
+                        .classList.toggle(
+                            "open"
+                        );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".settings-nav-item"
+            )
+            .forEach(
+                item => {
+
+                    item.addEventListener(
+                        "click",
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "settingsSidebar"
+                                )
+                                .classList.remove(
+                                    "open"
+                                );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        document
+            .getElementById(
+                "logoutBtn"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const button =
+                        document.getElementById(
+                            "logoutBtn"
+                        );
+
+
+                    try {
+
+                        button.disabled =
+                            true;
+
+
+                        button.textContent =
+                            "Logging out...";
+
+
+                        await signOut(
+                            auth
+                        );
+
+
+                        window.location.href =
+                            "../../index.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        button.disabled =
+                            false;
+
+
+                        button.innerHTML =
+                            `
+                                <span>↪</span>
+                                Logout
+                            `;
+
+
+                        showToast(
+                            "Unable to logout.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // HELPERS
+        // =====================================================
+
+        function getChecked(
+            id
+        ) {
+
+            return Boolean(
+
+                document
+                    .getElementById(
+                        id
+                    )
+                    ?.checked
+
+            );
+
+        }
+
+
+        function setChecked(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.checked =
+                    Boolean(
+                        value
+                    );
+
+            }
+
+        }
+
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.textContent =
+                    value ??
+                    "";
+
+            }
+
+        }
+
+
+        function getInitial(
+            name
+        ) {
+
+            return (
+
+                String(
+                    name ||
+                    "A"
+                )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase()
+
+                ||
+
+                "A"
+
+            );
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ??
+                ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        // =====================================================
+        // DEEP CLONE
+        // =====================================================
+
+        function deepClone(
+            value
+        ) {
+
+            return JSON.parse(
+                JSON.stringify(
+                    value
+                )
+            );
+
+        }
+
+
+        // =====================================================
+        // DEEP MERGE
+        // =====================================================
+
+        function deepMerge(
+            base,
+            override
+        ) {
+
+            const output =
+                deepClone(
+                    base
+                );
+
+
+            if (
+                !override ||
+                typeof override !==
+                "object"
+            ) {
+
+                return output;
+
+            }
+
+
+            Object.keys(
+                override
+            )
+                .forEach(
+                    key => {
+
+                        if (
+
+                            override[key] &&
+
+                            typeof override[key] ===
+                            "object" &&
+
+                            !Array.isArray(
+                                override[key]
+                            ) &&
+
+                            typeof output[key] ===
+                            "object"
+
+                        ) {
+
+                            output[key] =
+                                deepMerge(
+                                    output[key],
+                                    override[key]
+                                );
+
+                        }
+
+                        else {
+
+                            output[key] =
+                                override[key];
+
+                        }
+
+                    }
+                );
+
+
+            return output;
+
+        }
+
+
+        // =====================================================
+        // SAVE STATUS
+        // =====================================================
+
+        function updateSaveStatus(
+            changed
+        ) {
+
+            const element =
+                document.getElementById(
+                    "saveStatus"
+                );
+
+
+            if (
+                changed
+            ) {
+
+                element.innerHTML =
+                    `
+                        <span style="color:var(--gold-dark);">
+                            ●
+                        </span>
+                        Unsaved changes
+                    `;
+
+            }
+
+            else {
+
+                element.innerHTML =
+                    `
+                        <strong>
+                            ✓ Saved
+                        </strong>
+                        · No unsaved changes
+                    `;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // TOAST
+        // =====================================================
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const existing =
+                document.querySelector(
+                    ".toast"
+                );
+
+
+            if (
+                existing
+            ) {
+
+                existing.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.className =
+                `toast ${type || ""}`;
+
+
+            toast.textContent =
+                message;
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        toast.parentNode
+                    ) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                4000
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

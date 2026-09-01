@@ -1,0 +1,7307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Industry Opportunities">
+
+    <title>
+        Industry Opportunities | SkillBridge
+    </title>
+
+
+    <style>
+
+        :root {
+
+            --black: #090909;
+            --black-soft: #111111;
+            --black-light: #1A1A1A;
+
+            --white: #FFFFFF;
+            --off-white: #F7F7F5;
+
+            --grey-100: #F4F4F5;
+            --grey-200: #E4E4E7;
+            --grey-300: #D4D4D8;
+            --grey-400: #A1A1AA;
+            --grey-500: #71717A;
+            --grey-600: #52525B;
+            --grey-700: #3F3F46;
+            --grey-800: #27272A;
+
+            --gold: #D4AF37;
+            --gold-dark: #A88920;
+            --gold-soft: #FBF8ED;
+
+            --green: #26734D;
+            --green-soft: #EDF7F1;
+
+            --red: #B42318;
+            --red-soft: #FFF1F0;
+
+            --blue: #315C91;
+            --blue-soft: #EEF4FB;
+
+        }
+
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        button,
+        input,
+        select,
+        textarea {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            color: inherit;
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .opportunity-app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .opportunity-sidebar {
+
+            width: 250px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .opportunity-brand-wrap {
+
+            height: 82px;
+
+            padding: 0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .opportunity-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+        }
+
+
+        .opportunity-brand-mark {
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+        }
+
+
+        .opportunity-brand-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+
+        }
+
+
+        .opportunity-brand-name span {
+
+            color:
+                var(--gold);
+
+        }
+
+
+        .opportunity-sidebar-nav {
+
+            padding:
+                25px 14px;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .opportunity-nav-section {
+
+            padding:
+                0 13px;
+
+            margin-bottom:
+                10px;
+
+            color:
+                #52525B;
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.7px;
+
+        }
+
+
+        .opportunity-nav-gap {
+
+            margin-top:
+                28px;
+
+        }
+
+
+        .opportunity-nav-item {
+
+            height:
+                43px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                0 13px;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+            border-left:
+                2px solid transparent;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .opportunity-nav-item:hover {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+        }
+
+
+        .opportunity-nav-item.active {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+            border-left-color:
+                var(--gold);
+
+        }
+
+
+        .opportunity-nav-icon {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            color:
+                var(--gold);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .opportunity-sidebar-bottom {
+
+            margin-top:
+                auto;
+
+            padding:
+                17px 14px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .opportunity-help {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            padding:
+                5px 8px 16px;
+
+        }
+
+
+        .opportunity-help-icon {
+
+            width:
+                24px;
+
+            height:
+                24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid #3F3F46;
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+        }
+
+
+        .opportunity-help strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .opportunity-help span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                #71717A;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .opportunity-logout {
+
+            width:
+                100%;
+
+            height:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid #27272A;
+
+            background:
+                transparent;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+        }
+
+
+        .opportunity-logout:hover {
+
+            color:
+                white;
+
+            border-color:
+                #52525B;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .opportunity-main {
+
+            width:
+                calc(100% - 250px);
+
+            margin-left:
+                250px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .opportunity-topbar {
+
+            height:
+                75px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                50;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 35px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .opportunity-menu {
+
+            display:
+                none;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .opportunity-portal-label {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .opportunity-top-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+        }
+
+
+        .opportunity-top-button {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            position:
+                relative;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+        }
+
+
+        .opportunity-top-button:hover {
+
+            border-color:
+                var(--gold);
+
+        }
+
+
+        .notification-dot {
+
+            position:
+                absolute;
+
+            top:
+                7px;
+
+            right:
+                7px;
+
+            width:
+                5px;
+
+            height:
+                5px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .opportunity-top-profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            margin-left:
+                5px;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+        }
+
+
+        .opportunity-top-image {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .opportunity-top-image img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+        }
+
+
+        .opportunity-top-info {
+
+            text-align:
+                left;
+
+        }
+
+
+        .opportunity-top-info strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .opportunity-top-info span {
+
+            display:
+                block;
+
+            margin-top:
+                2px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .opportunity-content {
+
+            max-width:
+                1500px;
+
+            margin:
+                auto;
+
+            padding:
+                35px 36px 65px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .opportunity-page-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            gap:
+                25px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .opportunity-eyebrow {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .opportunity-page-header h1 {
+
+            margin-top:
+                7px;
+
+            font-size:
+                34px;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                -1.3px;
+
+        }
+
+
+        .opportunity-page-header p {
+
+            max-width:
+                720px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .opportunity-header-actions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .header-button {
+
+            min-height:
+                38px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 15px;
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .header-button.secondary {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-700);
+
+        }
+
+
+        .header-button.secondary:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .opportunity-summary {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap:
+                12px;
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .summary-card {
+
+            min-height:
+                105px;
+
+            padding:
+                18px 20px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .summary-card.highlight {
+
+            border-color:
+                rgba(212,175,55,.5);
+
+            background:
+                var(--gold-soft);
+
+        }
+
+
+        .summary-card > span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.4px;
+
+        }
+
+
+        .summary-card strong {
+
+            display:
+                block;
+
+            margin-top:
+                9px;
+
+            font-size:
+                25px;
+
+            font-weight:
+                500;
+
+        }
+
+
+        .summary-card small {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           TYPE TABS
+        ===================================================== */
+
+        .opportunity-type-tabs {
+
+            display:
+                flex;
+
+            gap:
+                0;
+
+            overflow-x:
+                auto;
+
+            margin-bottom:
+                17px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .type-tab {
+
+            min-height:
+                45px;
+
+            flex:
+                0 0 auto;
+
+            padding:
+                0 16px;
+
+            border:
+                none;
+
+            border-bottom:
+                2px solid transparent;
+
+            background:
+                transparent;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                .8px;
+
+        }
+
+
+        .type-tab:hover {
+
+            color:
+                var(--grey-800);
+
+        }
+
+
+        .type-tab.active {
+
+            color:
+                var(--black);
+
+            border-bottom-color:
+                var(--gold);
+
+        }
+
+
+        .type-tab span {
+
+            margin-left:
+                4px;
+
+            color:
+                var(--grey-400);
+
+        }
+
+
+        /* =====================================================
+           FILTERS
+        ===================================================== */
+
+        .filter-panel {
+
+            padding:
+                17px;
+
+            margin-bottom:
+                17px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .filter-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(240px, 1.7fr)
+                repeat(4, minmax(130px, 1fr))
+                auto;
+
+            gap:
+                8px;
+
+            align-items:
+                center;
+
+        }
+
+
+        .search-box {
+
+            height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                0 11px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+        }
+
+
+        .search-box span {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .search-box input {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .filter-select {
+
+            height:
+                40px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            outline:
+                none;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .clear-filter-button {
+
+            height:
+                40px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .clear-filter-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        /* =====================================================
+           RESULTS
+        ===================================================== */
+
+        .results-header {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                10px;
+
+        }
+
+
+        .results-header span {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .results-header strong {
+
+            color:
+                var(--grey-800);
+
+        }
+
+
+        .sort-control {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+        }
+
+
+        .sort-control label {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .sort-control select {
+
+            height:
+                32px;
+
+            padding:
+                0 8px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           OPPORTUNITY CARDS
+        ===================================================== */
+
+        .opportunity-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap:
+                12px;
+
+        }
+
+
+        .opportunity-card {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            min-width:
+                0;
+
+            padding:
+                18px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            transition:
+                .2s;
+
+        }
+
+
+        .opportunity-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--gold);
+
+            box-shadow:
+                0 12px 28px rgba(0,0,0,.06);
+
+        }
+
+
+        .opportunity-card-top {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+        }
+
+
+        .opportunity-type {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .save-opportunity-button {
+
+            width:
+                29px;
+
+            height:
+                29px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                13px;
+
+        }
+
+
+        .save-opportunity-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .save-opportunity-button.saved {
+
+            background:
+                var(--gold-soft);
+
+            border-color:
+                rgba(212,175,55,.4);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .opportunity-card h3 {
+
+            margin-top:
+                8px;
+
+            min-height:
+                36px;
+
+            font-size:
+                15px;
+
+            font-weight:
+                600;
+
+            line-height:
+                1.3;
+
+        }
+
+
+        .opportunity-organization {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .opportunity-description {
+
+            min-height:
+                48px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .opportunity-chip-list {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                5px;
+
+            margin-top:
+                10px;
+
+        }
+
+
+        .opportunity-chip {
+
+            padding:
+                5px 7px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .opportunity-chip.more {
+
+            background:
+                var(--gold-soft);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .opportunity-metadata {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                9px;
+
+            margin-top:
+                14px;
+
+        }
+
+
+        .metadata-item span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                .7px;
+
+        }
+
+
+        .metadata-item strong {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                500;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        .opportunity-deadline {
+
+            margin-top:
+                13px;
+
+            padding:
+                8px 9px;
+
+            background:
+                var(--gold-soft);
+
+            border:
+                1px solid rgba(212,175,55,.18);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .opportunity-deadline.soon {
+
+            background:
+                var(--gold-soft);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .opportunity-deadline.expired {
+
+            background:
+                var(--red-soft);
+
+            border-color:
+                rgba(180,35,24,.18);
+
+            color:
+                var(--red);
+
+        }
+
+
+        .opportunity-card-actions {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                7px;
+
+            margin-top:
+                14px;
+
+        }
+
+
+        .view-details-button,
+        .apply-opportunity-button {
+
+            min-height:
+                35px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 8px;
+
+            font-size:
+                7px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .view-details-button {
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+        }
+
+
+        .view-details-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .apply-opportunity-button {
+
+            border:
+                1px solid var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .apply-opportunity-button:hover {
+
+            background:
+                var(--black-light);
+
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+
+            grid-column:
+                1 / -1;
+
+            min-height:
+                300px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                35px;
+
+            text-align:
+                center;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .empty-icon {
+
+            width:
+                52px;
+
+            height:
+                52px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                19px;
+
+        }
+
+
+        .empty-state h3 {
+
+            margin-top:
+                12px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .empty-state p {
+
+            max-width:
+                520px;
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        /* =====================================================
+           DETAILS MODAL
+        ===================================================== */
+
+        .details-modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                600;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+
+            background:
+                rgba(0,0,0,.58);
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            pointer-events:
+                none;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .details-modal.show {
+
+            opacity:
+                1;
+
+            visibility:
+                visible;
+
+            pointer-events:
+                auto;
+
+        }
+
+
+        .details-modal-content {
+
+            width:
+                100%;
+
+            max-width:
+                850px;
+
+            max-height:
+                90vh;
+
+            overflow-y:
+                auto;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .details-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-start;
+
+            gap:
+                20px;
+
+            padding:
+                23px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .details-type {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.4px;
+
+        }
+
+
+        .details-header h2 {
+
+            margin-top:
+                6px;
+
+            font-size:
+                23px;
+
+            font-weight:
+                550;
+
+            line-height:
+                1.25;
+
+        }
+
+
+        .details-organization {
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .details-close {
+
+            width:
+                31px;
+
+            height:
+                31px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                17px;
+
+        }
+
+
+        .details-close:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .details-body {
+
+            padding:
+                23px;
+
+        }
+
+
+        .details-summary-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap:
+                9px;
+
+        }
+
+
+        .detail-summary {
+
+            padding:
+                12px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .detail-summary span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                .8px;
+
+        }
+
+
+        .detail-summary strong {
+
+            display:
+                block;
+
+            margin-top:
+                6px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                550;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        .details-section {
+
+            margin-top:
+                22px;
+
+        }
+
+
+        .details-section > span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .details-section h3 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .details-section p {
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+            white-space:
+                pre-line;
+
+        }
+
+
+        .details-chip-list {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                7px;
+
+            margin-top:
+                9px;
+
+        }
+
+
+        .detail-chip {
+
+            padding:
+                6px 8px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .eligibility-list {
+
+            margin-top:
+                8px;
+
+            padding-left:
+                17px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.8;
+
+        }
+
+
+        .benefits-box {
+
+            margin-top:
+                18px;
+
+            padding:
+                15px;
+
+            background:
+                var(--gold-soft);
+
+            border:
+                1px solid rgba(212,175,55,.2);
+
+        }
+
+
+        .benefits-box strong {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .benefits-box p {
+
+            margin-top:
+                6px;
+
+        }
+
+
+        .details-footer {
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                8px;
+
+            padding:
+                18px 23px;
+
+            border-top:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .details-footer button {
+
+            min-height:
+                37px;
+
+            padding:
+                0 14px;
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .details-save-button {
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+        }
+
+
+        .details-save-button.saved {
+
+            background:
+                var(--gold-soft);
+
+            border-color:
+                rgba(212,175,55,.4);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .details-apply-button {
+
+            border:
+                1px solid var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .opportunity-toast {
+
+            position:
+                fixed;
+
+            right:
+                24px;
+
+            bottom:
+                24px;
+
+            z-index:
+                1200;
+
+            max-width:
+                360px;
+
+            padding:
+                13px 16px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.12);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .opportunity-toast.success {
+
+            border-left:
+                3px solid var(--green);
+
+        }
+
+
+        .opportunity-toast.error {
+
+            border-left:
+                3px solid var(--red);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1250px) {
+
+            .filter-grid {
+
+                grid-template-columns:
+                    1.5fr
+                    1fr
+                    1fr
+                    1fr;
+
+            }
+
+
+            .opportunity-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 1100px) {
+
+            .opportunity-summary {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .details-summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .opportunity-sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .25s ease;
+
+            }
+
+
+            .opportunity-sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .opportunity-main {
+
+                width:
+                    100%;
+
+                margin-left:
+                    0;
+
+            }
+
+
+            .opportunity-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .opportunity-topbar {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .opportunity-content {
+
+                padding:
+                    28px 20px 50px;
+
+            }
+
+
+            .opportunity-page-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .opportunity-header-actions {
+
+                width:
+                    100%;
+
+            }
+
+
+            .header-button {
+
+                flex:
+                    1;
+
+            }
+
+
+            .filter-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .opportunity-portal-label,
+            .opportunity-top-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .opportunity-summary {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .filter-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .opportunity-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .details-summary-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .opportunity-card-actions {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .results-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .sort-control {
+
+                width:
+                    100%;
+
+            }
+
+
+            .sort-control select {
+
+                flex:
+                    1;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .opportunity-content {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+
+            .opportunity-page-header h1 {
+
+                font-size:
+                    28px;
+
+            }
+
+
+            .details-summary-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .details-footer {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .details-footer button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="opportunity-app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="opportunity-sidebar"
+            id="opportunitySidebar">
+
+
+            <div class="opportunity-brand-wrap">
+
+                <a
+                    href="../academician-home.html"
+                    class="opportunity-brand">
+
+                    <div class="opportunity-brand-mark">
+                        SB
+                    </div>
+
+                    <div class="opportunity-brand-name">
+                        SKILL<span>BRIDGE</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <nav class="opportunity-sidebar-nav">
+
+
+                <div class="opportunity-nav-section">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="../academician-home.html"
+                    class="opportunity-nav-item">
+
+                    <span class="opportunity-nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="opportunity-nav-item">
+
+                    <span class="opportunity-nav-icon">
+                        ◯
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../skills/skills.html"
+                    class="opportunity-nav-item">
+
+                    <span class="opportunity-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        My Expertise
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="opportunities.html"
+                    class="opportunity-nav-item active">
+
+                    <span class="opportunity-nav-icon">
+                        ◇
+                    </span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../applications/applications.html"
+                    class="opportunity-nav-item">
+
+                    <span class="opportunity-nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="opportunity-nav-section opportunity-nav-gap">
+
+                    COLLABORATION
+
+                </div>
+
+
+                <a
+                    href="../collaborations/collaborations.html"
+                    class="opportunity-nav-item">
+
+                    <span class="opportunity-nav-icon">
+                        ↔
+                    </span>
+
+                    <span>
+                        Collaboration
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="opportunity-sidebar-bottom">
+
+
+                <div class="opportunity-help">
+
+                    <div class="opportunity-help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logoutBtn"
+                    class="opportunity-logout">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="opportunity-main">
+
+
+            <header class="opportunity-topbar">
+
+
+                <button
+                    id="menuButton"
+                    class="opportunity-menu">
+
+                    ☰
+
+                </button>
+
+
+                <div class="opportunity-portal-label">
+                    ACADEMICIAN PORTAL
+                </div>
+
+
+                <div class="opportunity-top-actions">
+
+
+                    <button
+                        class="opportunity-top-button">
+
+                        ⌕
+
+                    </button>
+
+
+                    <button
+                        class="opportunity-top-button">
+
+                        ♢
+
+                        <span class="notification-dot">
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="opportunity-top-profile">
+
+                        <div
+                            class="opportunity-top-image"
+                            id="topProfileImage">
+
+                            <span>
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div class="opportunity-top-info">
+
+                            <strong id="topName">
+                                Academician
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="opportunity-content">
+
+
+                <!-- =================================================
+                     HEADER
+                ================================================== -->
+
+                <section class="opportunity-page-header">
+
+
+                    <div>
+
+                        <span class="opportunity-eyebrow">
+                            INDUSTRY CONNECTION
+                        </span>
+
+                        <h1>
+                            Industry Opportunities
+                        </h1>
+
+                        <p>
+                            Discover faculty internships, industrial
+                            training, FDPs, consultancy, collaborative
+                            research, mentorship, workshops, guest
+                            lectures, innovation challenges and live
+                            industry projects.
+                        </p>
+
+                    </div>
+
+
+                    <div class="opportunity-header-actions">
+
+
+                        <a
+                            href="../skills/skills.html"
+                            class="header-button secondary">
+
+                            ← My Expertise
+
+                        </a>
+
+
+                        <a
+                            href="../applications/applications.html"
+                            class="header-button secondary">
+
+                            Applications
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     SUMMARY
+                ================================================== -->
+
+                <section class="opportunity-summary">
+
+
+                    <div class="summary-card">
+
+                        <span>
+                            AVAILABLE
+                        </span>
+
+                        <strong id="totalOpportunities">
+                            0
+                        </strong>
+
+                        <small>
+                            Opportunities on the platform
+                        </small>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span>
+                            SAVED
+                        </span>
+
+                        <strong id="savedOpportunitiesCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Opportunities you bookmarked
+                        </small>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <span>
+                            CLOSING SOON
+                        </span>
+
+                        <strong id="closingSoonCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Deadlines within 7 days
+                        </small>
+
+                    </div>
+
+
+                    <div class="summary-card highlight">
+
+                        <span>
+                            OPPORTUNITY TYPES
+                        </span>
+
+                        <strong id="opportunityTypesCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Types currently available
+                        </small>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     TYPE TABS
+                ================================================== -->
+
+                <div
+                    class="opportunity-type-tabs"
+                    id="opportunityTypeTabs">
+
+
+                    <button
+                        class="type-tab active"
+                        data-type="all">
+
+                        ALL
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="faculty-internship">
+
+                        FACULTY INTERNSHIP
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="industrial-training">
+
+                        INDUSTRIAL TRAINING
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="fdp">
+
+                        FDP
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="consultancy">
+
+                        CONSULTANCY
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="research">
+
+                        COLLABORATIVE RESEARCH
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="mentorship">
+
+                        MENTORSHIP
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="workshop">
+
+                        WORKSHOPS
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="guest-lecture">
+
+                        GUEST LECTURES
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="innovation">
+
+                        INNOVATION
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="type-tab"
+                        data-type="live-project">
+
+                        LIVE PROJECTS
+
+                        <span>
+                            0
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     FILTERS
+                ================================================== -->
+
+                <section class="filter-panel">
+
+
+                    <div class="filter-grid">
+
+
+                        <div class="search-box">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                type="search"
+                                id="searchInput"
+                                placeholder="Search opportunity, organization, skill or domain...">
+
+                        </div>
+
+
+                        <select
+                            class="filter-select"
+                            id="modeFilter">
+
+                            <option value="all">
+                                All Modes
+                            </option>
+
+                            <option value="on-site">
+                                On-site
+                            </option>
+
+                            <option value="remote">
+                                Remote
+                            </option>
+
+                            <option value="hybrid">
+                                Hybrid
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            class="filter-select"
+                            id="locationFilter">
+
+                            <option value="all">
+                                All Locations
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            class="filter-select"
+                            id="durationFilter">
+
+                            <option value="all">
+                                All Durations
+                            </option>
+
+                            <option value="short">
+                                Up to 1 month
+                            </option>
+
+                            <option value="medium">
+                                1–6 months
+                            </option>
+
+                            <option value="long">
+                                6+ months
+                            </option>
+
+                        </select>
+
+
+                        <select
+                            class="filter-select"
+                            id="savedFilter">
+
+                            <option value="all">
+                                All Opportunities
+                            </option>
+
+                            <option value="saved">
+                                Saved Only
+                            </option>
+
+                            <option value="unsaved">
+                                Not Saved
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            id="clearFilters"
+                            class="clear-filter-button">
+
+                            Clear
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RESULTS HEADER
+                ================================================== -->
+
+                <div class="results-header">
+
+
+                    <span>
+
+                        Showing
+
+                        <strong id="resultsCount">
+                            0
+                        </strong>
+
+                        opportunities
+
+                    </span>
+
+
+                    <div class="sort-control">
+
+                        <label for="sortFilter">
+                            Sort by
+                        </label>
+
+                        <select
+                            id="sortFilter">
+
+                            <option value="newest">
+                                Newest
+                            </option>
+
+                            <option value="deadline">
+                                Deadline
+                            </option>
+
+                            <option value="title">
+                                Title
+                            </option>
+
+                            <option value="organization">
+                                Organization
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     OPPORTUNITY GRID
+                ================================================== -->
+
+                <section
+                    id="opportunityGrid"
+                    class="opportunity-grid">
+
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ◇
+                        </div>
+
+                        <h3>
+                            Loading opportunities
+                        </h3>
+
+                        <p>
+                            Retrieving industry opportunities available
+                            to academicians.
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         DETAILS MODAL
+    ====================================================== -->
+
+    <div
+        class="details-modal"
+        id="detailsModal">
+
+
+        <div class="details-modal-content">
+
+
+            <div class="details-header">
+
+
+                <div>
+
+                    <span
+                        class="details-type"
+                        id="detailsType">
+
+                        OPPORTUNITY
+
+                    </span>
+
+
+                    <h2
+                        id="detailsTitle">
+
+                        Opportunity
+
+                    </h2>
+
+
+                    <p
+                        class="details-organization"
+                        id="detailsOrganization">
+
+                        Organization
+
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="details-close"
+                    id="closeDetails">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+
+            <div class="details-body">
+
+
+                <div class="details-summary-grid">
+
+
+                    <div class="detail-summary">
+
+                        <span>
+                            MODE
+                        </span>
+
+                        <strong id="detailsMode">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-summary">
+
+                        <span>
+                            LOCATION
+                        </span>
+
+                        <strong id="detailsLocation">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-summary">
+
+                        <span>
+                            DURATION
+                        </span>
+
+                        <strong id="detailsDuration">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-summary">
+
+                        <span>
+                            START DATE
+                        </span>
+
+                        <strong id="detailsStartDate">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="details-section">
+
+                    <span>
+                        ABOUT
+                    </span>
+
+                    <h3>
+                        Opportunity Description
+                    </h3>
+
+                    <p id="detailsDescription">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <div class="details-section">
+
+                    <span>
+                        REQUIREMENTS
+                    </span>
+
+                    <h3>
+                        Required Skills
+                    </h3>
+
+                    <div
+                        class="details-chip-list"
+                        id="detailsSkills">
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="details-section">
+
+                    <span>
+                        ELIGIBILITY
+                    </span>
+
+                    <h3>
+                        Who can apply
+                    </h3>
+
+                    <ul
+                        class="eligibility-list"
+                        id="detailsEligibility">
+
+                    </ul>
+
+                </div>
+
+
+
+                <div class="details-section">
+
+                    <span>
+                        DEADLINE
+                    </span>
+
+                    <h3>
+                        Application Deadline
+                    </h3>
+
+                    <p id="detailsDeadline">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <div class="benefits-box">
+
+                    <strong>
+                        BENEFITS
+                    </strong>
+
+                    <p id="detailsBenefits">
+                        —
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="details-footer">
+
+
+                <button
+                    id="detailsSaveButton"
+                    class="details-save-button">
+
+                    ☆ Save Opportunity
+
+                </button>
+
+
+                <button
+                    id="detailsApplyButton"
+                    class="details-apply-button">
+
+                    Apply
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script type="module">
+
+
+        // =====================================================
+        // FIREBASE IMPORTS
+        // =====================================================
+
+        import {
+            initializeApp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            updateDoc,
+            serverTimestamp,
+            collection,
+            getDocs
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        // =====================================================
+        // FIREBASE CONFIG
+        // =====================================================
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
+
+            authDomain:
+                "ansora-27fe4.firebaseapp.com",
+
+            projectId:
+                "ansora-27fe4",
+
+            storageBucket:
+                "ansora-27fe4.firebasestorage.app",
+
+            messagingSenderId:
+                "230795678686",
+
+            appId:
+                "1:230795678686:web:06f0ccd7b8717ac13ac34f"
+
+        };
+
+
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const auth =
+            getAuth(
+                app
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
+
+
+        // =====================================================
+        // STATE
+        // =====================================================
+
+        let currentUser = null;
+
+        let userData = {};
+
+        let academicianData = {};
+
+        let opportunities = [];
+
+        let savedOpportunityIds = [];
+
+        let activeType = "all";
+
+        let selectedOpportunity = null;
+
+
+        // =====================================================
+        // DOM
+        // =====================================================
+
+        const sidebar =
+            document.getElementById(
+                "opportunitySidebar"
+            );
+
+
+        const menuButton =
+            document.getElementById(
+                "menuButton"
+            );
+
+
+        const logoutButton =
+            document.getElementById(
+                "logoutBtn"
+            );
+
+
+        const topName =
+            document.getElementById(
+                "topName"
+            );
+
+
+        const topProfileImage =
+            document.getElementById(
+                "topProfileImage"
+            );
+
+
+        const opportunityGrid =
+            document.getElementById(
+                "opportunityGrid"
+            );
+
+
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+
+        const modeFilter =
+            document.getElementById(
+                "modeFilter"
+            );
+
+
+        const locationFilter =
+            document.getElementById(
+                "locationFilter"
+            );
+
+
+        const durationFilter =
+            document.getElementById(
+                "durationFilter"
+            );
+
+
+        const savedFilter =
+            document.getElementById(
+                "savedFilter"
+            );
+
+
+        const sortFilter =
+            document.getElementById(
+                "sortFilter"
+            );
+
+
+        const clearFilters =
+            document.getElementById(
+                "clearFilters"
+            );
+
+
+        const resultsCount =
+            document.getElementById(
+                "resultsCount"
+            );
+
+
+        const totalOpportunities =
+            document.getElementById(
+                "totalOpportunities"
+            );
+
+
+        const savedOpportunitiesCount =
+            document.getElementById(
+                "savedOpportunitiesCount"
+            );
+
+
+        const closingSoonCount =
+            document.getElementById(
+                "closingSoonCount"
+            );
+
+
+        const opportunityTypesCount =
+            document.getElementById(
+                "opportunityTypesCount"
+            );
+
+
+        const typeTabs =
+            document.querySelectorAll(
+                ".type-tab"
+            );
+
+
+        // =====================================================
+        // AUTH
+        // =====================================================
+
+        onAuthStateChanged(
+            auth,
+            async user => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "../../login.html";
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    user;
+
+
+                try {
+
+                    await loadUserData();
+
+                    await loadAcademicianData();
+
+                    await loadOpportunities();
+
+                    updateTopProfile();
+
+                    populateLocationFilter();
+
+                    renderTypeCounts();
+
+                    updateSummary();
+
+                    renderOpportunities();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Opportunity loading error:",
+                        error
+                    );
+
+
+                    showToast(
+                        "Unable to load opportunities.",
+                        "error"
+                    );
+
+
+                    renderLoadError();
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // USER
+        // =====================================================
+
+        async function loadUserData() {
+
+            const reference =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            if (
+                snapshot.exists()
+            ) {
+
+                userData =
+                    snapshot.data();
+
+            }
+
+            else {
+
+                userData = {
+
+                    name:
+                        currentUser.displayName ||
+                        "Academician",
+
+                    email:
+                        currentUser.email ||
+                        "",
+
+                    role:
+                        "academician",
+
+                    photoURL:
+                        ""
+
+                };
+
+
+                await setDoc(
+                    reference,
+                    userData
+                );
+
+            }
+
+
+            if (
+                userData.role &&
+                userData.role !==
+                    "academician"
+            ) {
+
+                redirectByRole(
+                    userData.role
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ACADEMICIAN
+        // =====================================================
+
+        async function loadAcademicianData() {
+
+            const reference =
+                doc(
+                    db,
+                    "academicians",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            if (
+                snapshot.exists()
+            ) {
+
+                academicianData =
+                    snapshot.data();
+
+            }
+
+            else {
+
+                academicianData = {
+
+                    savedOpportunities:
+                        []
+
+                };
+
+
+                await setDoc(
+                    reference,
+                    academicianData
+                );
+
+            }
+
+
+            savedOpportunityIds =
+                normalizeSavedIds(
+                    academicianData.savedOpportunities
+                );
+
+        }
+
+
+        // =====================================================
+        // OPPORTUNITIES
+        // =====================================================
+
+        async function loadOpportunities() {
+
+            opportunities =
+                [];
+
+
+            const reference =
+                collection(
+                    db,
+                    "opportunities"
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    reference
+                );
+
+
+            snapshot.forEach(
+                opportunityDocument => {
+
+                    opportunities.push({
+
+                        id:
+                            opportunityDocument.id,
+
+                        ...opportunityDocument.data()
+
+                    });
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // TOP PROFILE
+        // =====================================================
+
+        function updateTopProfile() {
+
+            const name =
+                userData.name ||
+                currentUser.displayName ||
+                "Academician";
+
+
+            topName.textContent =
+                name;
+
+
+            const photo =
+                userData.photoURL ||
+                "";
+
+
+            if (
+                photo
+            ) {
+
+                topProfileImage.innerHTML =
+                    "";
+
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                image.src =
+                    photo;
+
+
+                image.alt =
+                    "Academician profile picture";
+
+
+                image.onerror =
+                    () => {
+
+                        showTopInitial(
+                            getInitial(
+                                name
+                            )
+                        );
+
+                    };
+
+
+                topProfileImage.appendChild(
+                    image
+                );
+
+            }
+
+            else {
+
+                showTopInitial(
+                    getInitial(
+                        name
+                    )
+                );
+
+            }
+
+        }
+
+
+        function showTopInitial(
+            initial
+        ) {
+
+            topProfileImage.innerHTML =
+                `
+
+                <span>
+                    ${escapeHTML(initial)}
+                </span>
+
+                `;
+
+        }
+
+
+        // =====================================================
+        // TYPE TABS
+        // =====================================================
+
+        typeTabs.forEach(
+            tab => {
+
+                tab.addEventListener(
+                    "click",
+                    () => {
+
+                        activeType =
+                            tab.dataset.type;
+
+
+                        typeTabs.forEach(
+                            item => {
+
+                                item.classList.toggle(
+                                    "active",
+                                    item ===
+                                        tab
+                                );
+
+                            }
+                        );
+
+
+                        renderOpportunities();
+
+                    }
+                );
+
+            }
+        );
+
+
+        // =====================================================
+        // FILTER EVENTS
+        // =====================================================
+
+        searchInput.addEventListener(
+            "input",
+            renderOpportunities
+        );
+
+
+        modeFilter.addEventListener(
+            "change",
+            renderOpportunities
+        );
+
+
+        locationFilter.addEventListener(
+            "change",
+            renderOpportunities
+        );
+
+
+        durationFilter.addEventListener(
+            "change",
+            renderOpportunities
+        );
+
+
+        savedFilter.addEventListener(
+            "change",
+            renderOpportunities
+        );
+
+
+        sortFilter.addEventListener(
+            "change",
+            renderOpportunities
+        );
+
+
+        clearFilters.addEventListener(
+            "click",
+            clearAllFilters
+        );
+
+
+        // =====================================================
+        // LOCATIONS
+        // =====================================================
+
+        function populateLocationFilter() {
+
+            const locations =
+                new Set();
+
+
+            opportunities.forEach(
+                opportunity => {
+
+                    const location =
+                        getLocation(
+                            opportunity
+                        );
+
+
+                    if (
+                        location &&
+                        location !==
+                            "Not specified"
+                    ) {
+
+                        locations.add(
+                            location
+                        );
+
+                    }
+
+                }
+            );
+
+
+            Array
+                .from(
+                    locations
+                )
+                .sort(
+                    (
+                        a,
+                        b
+                    ) =>
+                        a.localeCompare(
+                            b
+                        )
+                )
+                .forEach(
+                    location => {
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            normalizeText(
+                                location
+                            );
+
+
+                        option.textContent =
+                            location;
+
+
+                        locationFilter.appendChild(
+                            option
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // TYPE COUNTS
+        // =====================================================
+
+        function renderTypeCounts() {
+
+            const typeCounts =
+                new Map();
+
+
+            opportunities.forEach(
+                opportunity => {
+
+                    const type =
+                        normalizeOpportunityType(
+                            opportunity
+                        );
+
+
+                    typeCounts.set(
+                        type,
+                        (
+                            typeCounts.get(
+                                type
+                            ) ||
+                            0
+                        ) + 1
+                    );
+
+                }
+            );
+
+
+            const allSpan =
+                document.querySelector(
+                    '[data-type="all"] span'
+                );
+
+
+            if (
+                allSpan
+            ) {
+
+                allSpan.textContent =
+                    opportunities.length;
+
+            }
+
+
+            typeTabs.forEach(
+                tab => {
+
+                    if (
+                        tab.dataset.type ===
+                            "all"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const span =
+                        tab.querySelector(
+                            "span"
+                        );
+
+
+                    if (
+                        span
+                    ) {
+
+                        span.textContent =
+                            typeCounts.get(
+                                tab.dataset.type
+                            ) ||
+                            0;
+
+                    }
+
+                }
+            );
+
+
+            opportunityTypesCount.textContent =
+                new Set(
+                    opportunities.map(
+                        normalizeOpportunityType
+                    )
+                ).size;
+
+        }
+
+
+        // =====================================================
+        // SUMMARY
+        // =====================================================
+
+        function updateSummary() {
+
+            totalOpportunities.textContent =
+                opportunities.length;
+
+
+            savedOpportunitiesCount.textContent =
+                savedOpportunityIds.length;
+
+
+            const now =
+                new Date();
+
+
+            const closingSoon =
+                opportunities.filter(
+                    opportunity => {
+
+                        const deadline =
+                            getDateValue(
+                                getDeadline(
+                                    opportunity
+                                )
+                            );
+
+
+                        if (
+                            !deadline
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        const days =
+                            (
+                                deadline -
+                                now
+                            )
+                            /
+                            (
+                                1000 *
+                                60 *
+                                60 *
+                                24
+                            );
+
+
+                        return (
+                            days >= 0 &&
+                            days <= 7
+                        );
+
+                    }
+                ).length;
+
+
+            closingSoonCount.textContent =
+                closingSoon;
+
+        }
+
+
+        // =====================================================
+        // FILTER
+        // =====================================================
+
+        function getFilteredOpportunities() {
+
+            const query =
+                normalizeText(
+                    searchInput.value
+                );
+
+
+            const selectedMode =
+                modeFilter.value;
+
+
+            const selectedLocation =
+                locationFilter.value;
+
+
+            const selectedDuration =
+                durationFilter.value;
+
+
+            const selectedSaved =
+                savedFilter.value;
+
+
+            const filtered =
+                opportunities.filter(
+                    opportunity => {
+
+                        const type =
+                            normalizeOpportunityType(
+                                opportunity
+                            );
+
+
+                        const searchable =
+                            [
+
+                                getTitle(
+                                    opportunity
+                                ),
+
+                                getOrganization(
+                                    opportunity
+                                ),
+
+                                getDescription(
+                                    opportunity
+                                ),
+
+                                getDomain(
+                                    opportunity
+                                ),
+
+                                ...extractRequiredSkills(
+                                    opportunity
+                                )
+
+                            ]
+                                .join(" ")
+                                .toLowerCase();
+
+
+                        const searchMatch =
+                            !query ||
+                            searchable.includes(
+                                query
+                            );
+
+
+                        const typeMatch =
+                            activeType ===
+                                "all" ||
+                            type ===
+                                activeType;
+
+
+                        const opportunityMode =
+                            normalizeMode(
+                                getMode(
+                                    opportunity
+                                )
+                            );
+
+
+                        const modeMatch =
+                            selectedMode ===
+                                "all" ||
+                            opportunityMode ===
+                                selectedMode;
+
+
+                        const opportunityLocation =
+                            normalizeText(
+                                getLocation(
+                                    opportunity
+                                )
+                            );
+
+
+                        const locationMatch =
+                            selectedLocation ===
+                                "all" ||
+                            opportunityLocation ===
+                                selectedLocation;
+
+
+                        const durationMatch =
+                            selectedDuration ===
+                                "all" ||
+                            matchDuration(
+                                opportunity,
+                                selectedDuration
+                            );
+
+
+                        const saved =
+                            savedOpportunityIds.includes(
+                                opportunity.id
+                            );
+
+
+                        const savedMatch =
+                            selectedSaved ===
+                                "all" ||
+                            (
+                                selectedSaved ===
+                                    "saved" &&
+                                saved
+                            ) ||
+                            (
+                                selectedSaved ===
+                                    "unsaved" &&
+                                !saved
+                            );
+
+
+                        return (
+
+                            searchMatch &&
+                            typeMatch &&
+                            modeMatch &&
+                            locationMatch &&
+                            durationMatch &&
+                            savedMatch
+
+                        );
+
+                    }
+                );
+
+
+            return sortOpportunities(
+                filtered
+            );
+
+        }
+
+
+        // =====================================================
+        // SORT
+        // =====================================================
+
+        function sortOpportunities(
+            list
+        ) {
+
+            const sorted =
+                [
+                    ...list
+                ];
+
+
+            switch (
+                sortFilter.value
+            ) {
+
+                case "deadline":
+
+                    sorted.sort(
+                        (
+                            a,
+                            b
+                        ) => {
+
+                            const dateA =
+                                getDateValue(
+                                    getDeadline(a)
+                                );
+
+
+                            const dateB =
+                                getDateValue(
+                                    getDeadline(b)
+                                );
+
+
+                            if (!dateA)
+                                return 1;
+
+
+                            if (!dateB)
+                                return -1;
+
+
+                            return (
+                                dateA -
+                                dateB
+                            );
+
+                        }
+                    );
+
+                    break;
+
+
+                case "title":
+
+                    sorted.sort(
+                        (
+                            a,
+                            b
+                        ) =>
+                            getTitle(a)
+                                .localeCompare(
+                                    getTitle(b)
+                                )
+                    );
+
+                    break;
+
+
+                case "organization":
+
+                    sorted.sort(
+                        (
+                            a,
+                            b
+                        ) =>
+                            getOrganization(a)
+                                .localeCompare(
+                                    getOrganization(b)
+                                )
+                    );
+
+                    break;
+
+
+                case "newest":
+
+                default:
+
+                    sorted.sort(
+                        (
+                            a,
+                            b
+                        ) => {
+
+                            const dateA =
+                                getDateValue(
+                                    getCreatedAt(a)
+                                );
+
+
+                            const dateB =
+                                getDateValue(
+                                    getCreatedAt(b)
+                                );
+
+
+                            if (!dateA)
+                                return 1;
+
+
+                            if (!dateB)
+                                return -1;
+
+
+                            return (
+                                dateB -
+                                dateA
+                            );
+
+                        }
+                    );
+
+                    break;
+
+            }
+
+
+            return sorted;
+
+        }
+
+
+        // =====================================================
+        // RENDER
+        // =====================================================
+
+        function renderOpportunities() {
+
+            const filtered =
+                getFilteredOpportunities();
+
+
+            resultsCount.textContent =
+                filtered.length;
+
+
+            if (
+                filtered.length ===
+                    0
+            ) {
+
+                renderEmptyResults();
+
+                return;
+
+            }
+
+
+            opportunityGrid.innerHTML =
+                filtered
+                    .map(
+                        opportunity =>
+                            createOpportunityCard(
+                                opportunity
+                            )
+                    )
+                    .join("");
+
+
+            attachOpportunityEvents();
+
+        }
+
+
+        // =====================================================
+        // CARD
+        // =====================================================
+
+        function createOpportunityCard(
+            opportunity
+        ) {
+
+            const saved =
+                savedOpportunityIds.includes(
+                    opportunity.id
+                );
+
+
+            const skills =
+                extractRequiredSkills(
+                    opportunity
+                );
+
+
+            const visibleSkills =
+                skills.slice(
+                    0,
+                    4
+                );
+
+
+            const extraSkills =
+                Math.max(
+                    0,
+                    skills.length -
+                    visibleSkills.length
+                );
+
+
+            const deadline =
+                getDeadline(
+                    opportunity
+                );
+
+
+            return `
+
+                <article class="opportunity-card">
+
+
+                    <div class="opportunity-card-top">
+
+                        <span class="opportunity-type">
+
+                            ${escapeHTML(
+                                displayType(
+                                    normalizeOpportunityType(
+                                        opportunity
+                                    )
+                                )
+                            )}
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="save-opportunity-button ${
+                                saved
+                                    ? "saved"
+                                    : ""
+                            }"
+                            data-save-id="${escapeAttribute(
+                                opportunity.id
+                            )}"
+                            title="${
+                                saved
+                                    ? "Remove saved opportunity"
+                                    : "Save opportunity"
+                            }">
+
+                            ${
+                                saved
+                                    ? "★"
+                                    : "☆"
+                            }
+
+                        </button>
+
+                    </div>
+
+
+                    <h3>
+
+                        ${escapeHTML(
+                            getTitle(
+                                opportunity
+                            )
+                        )}
+
+                    </h3>
+
+
+                    <p class="opportunity-organization">
+
+                        ${escapeHTML(
+                            getOrganization(
+                                opportunity
+                            )
+                        )}
+
+                    </p>
+
+
+                    <p class="opportunity-description">
+
+                        ${escapeHTML(
+                            getDescription(
+                                opportunity
+                            )
+                        )}
+
+                    </p>
+
+
+                    <div class="opportunity-chip-list">
+
+                        ${
+                            visibleSkills
+                                .map(
+                                    skill => `
+
+                                        <span class="opportunity-chip">
+
+                                            ${escapeHTML(
+                                                skill
+                                            )}
+
+                                        </span>
+
+                                    `
+                                )
+                                .join("")
+                        }
+
+
+                        ${
+                            extraSkills > 0
+                                ? `
+
+                                    <span class="opportunity-chip more">
+
+                                        +${extraSkills}
+                                        more
+
+                                    </span>
+
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="opportunity-metadata">
+
+
+                        <div class="metadata-item">
+
+                            <span>
+                                MODE
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    formatMode(
+                                        getMode(
+                                            opportunity
+                                        )
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metadata-item">
+
+                            <span>
+                                LOCATION
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    getLocation(
+                                        opportunity
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metadata-item">
+
+                            <span>
+                                DURATION
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    getDuration(
+                                        opportunity
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="metadata-item">
+
+                            <span>
+                                START
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    formatDate(
+                                        getStartDate(
+                                            opportunity
+                                        )
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="opportunity-deadline ${getDeadlineClass(
+                            deadline
+                        )}">
+
+                        ${escapeHTML(
+                            getDeadlineLabel(
+                                deadline
+                            )
+                        )}
+
+                    </div>
+
+
+                    <div class="opportunity-card-actions">
+
+
+                        <button
+                            type="button"
+                            class="view-details-button"
+                            data-details-id="${escapeAttribute(
+                                opportunity.id
+                            )}">
+
+                            View Details
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="apply-opportunity-button"
+                            data-apply-id="${escapeAttribute(
+                                opportunity.id
+                            )}">
+
+                            Apply
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // EVENTS
+        // =====================================================
+
+        function attachOpportunityEvents() {
+
+            opportunityGrid
+                .querySelectorAll(
+                    "[data-save-id]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            async () => {
+
+                                await toggleSavedOpportunity(
+                                    button.dataset.saveId
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            opportunityGrid
+                .querySelectorAll(
+                    "[data-details-id]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                openDetails(
+                                    button.dataset.detailsId
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            opportunityGrid
+                .querySelectorAll(
+                    "[data-apply-id]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                handleApplyClick(
+                                    button.dataset.applyId
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // APPLY
+        // =====================================================
+
+        function handleApplyClick(
+            opportunityId
+        ) {
+
+            const opportunity =
+                opportunities.find(
+                    item =>
+                        item.id ===
+                        opportunityId
+                );
+
+
+            if (!opportunity) {
+
+                showToast(
+                    "This opportunity could not be found.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /*
+                IMPORTANT:
+                This is the actual connection between
+                Opportunities and Applications.
+
+                The selected Firestore opportunity ID
+                is passed to applications.html.
+            */
+
+            window.location.href =
+                `../applications/applications.html?opportunityId=${encodeURIComponent(
+                    opportunityId
+                )}`;
+
+        }
+
+
+        // =====================================================
+        // BOOKMARK
+        // =====================================================
+
+        async function toggleSavedOpportunity(
+            opportunityId
+        ) {
+
+            const wasSaved =
+                savedOpportunityIds.includes(
+                    opportunityId
+                );
+
+
+            if (
+                wasSaved
+            ) {
+
+                savedOpportunityIds =
+                    savedOpportunityIds.filter(
+                        id =>
+                            id !==
+                            opportunityId
+                    );
+
+            }
+
+            else {
+
+                savedOpportunityIds =
+                    [
+                        ...savedOpportunityIds,
+                        opportunityId
+                    ];
+
+            }
+
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "academicians",
+                        currentUser.uid
+                    ),
+
+                    {
+
+                        savedOpportunities:
+                            savedOpportunityIds,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                academicianData.savedOpportunities =
+                    savedOpportunityIds;
+
+
+                updateSummary();
+
+                renderOpportunities();
+
+
+                if (
+                    selectedOpportunity
+                ) {
+
+                    updateDetailsSaveButton();
+
+                }
+
+
+                showToast(
+                    wasSaved
+                        ? "Opportunity removed from saved items."
+                        : "Opportunity saved.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                // Rollback
+
+                if (
+                    wasSaved
+                ) {
+
+                    savedOpportunityIds.push(
+                        opportunityId
+                    );
+
+                }
+
+                else {
+
+                    savedOpportunityIds =
+                        savedOpportunityIds.filter(
+                            id =>
+                                id !==
+                                opportunityId
+                        );
+
+                }
+
+
+                renderOpportunities();
+
+
+                showToast(
+                    "Unable to update saved opportunity.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // DETAILS
+        // =====================================================
+
+        function openDetails(
+            opportunityId
+        ) {
+
+            const opportunity =
+                opportunities.find(
+                    item =>
+                        item.id ===
+                        opportunityId
+                );
+
+
+            if (!opportunity) {
+
+                return;
+
+            }
+
+
+            selectedOpportunity =
+                opportunity;
+
+
+            document.getElementById(
+                "detailsType"
+            ).textContent =
+                displayType(
+                    normalizeOpportunityType(
+                        opportunity
+                    )
+                ).toUpperCase();
+
+
+            document.getElementById(
+                "detailsTitle"
+            ).textContent =
+                getTitle(
+                    opportunity
+                );
+
+
+            document.getElementById(
+                "detailsOrganization"
+            ).textContent =
+                getOrganization(
+                    opportunity
+                );
+
+
+            document.getElementById(
+                "detailsMode"
+            ).textContent =
+                formatMode(
+                    getMode(
+                        opportunity
+                    )
+                );
+
+
+            document.getElementById(
+                "detailsLocation"
+            ).textContent =
+                getLocation(
+                    opportunity
+                );
+
+
+            document.getElementById(
+                "detailsDuration"
+            ).textContent =
+                getDuration(
+                    opportunity
+                );
+
+
+            document.getElementById(
+                "detailsStartDate"
+            ).textContent =
+                formatDate(
+                    getStartDate(
+                        opportunity
+                    )
+                );
+
+
+            document.getElementById(
+                "detailsDescription"
+            ).textContent =
+                getDescription(
+                    opportunity
+                );
+
+
+            const skillContainer =
+                document.getElementById(
+                    "detailsSkills"
+                );
+
+
+            const skills =
+                extractRequiredSkills(
+                    opportunity
+                );
+
+
+            skillContainer.innerHTML =
+                skills.length
+                    ? skills
+                        .map(
+                            skill => `
+
+                                <span class="detail-chip">
+
+                                    ${escapeHTML(
+                                        skill
+                                    )}
+
+                                </span>
+
+                            `
+                        )
+                        .join("")
+                    : `
+
+                        <span class="detail-chip">
+
+                            Requirements not specified
+
+                        </span>
+
+                    `;
+
+
+            const eligibilityContainer =
+                document.getElementById(
+                    "detailsEligibility"
+                );
+
+
+            const eligibility =
+                extractEligibility(
+                    opportunity
+                );
+
+
+            eligibilityContainer.innerHTML =
+                eligibility.length
+                    ? eligibility
+                        .map(
+                            item => `
+
+                                <li>
+                                    ${escapeHTML(
+                                        item
+                                    )}
+                                </li>
+
+                            `
+                        )
+                        .join("")
+                    : `
+
+                        <li>
+                            Eligibility has not been specified.
+                        </li>
+
+                    `;
+
+
+            document.getElementById(
+                "detailsDeadline"
+            ).textContent =
+                getDeadline(
+                    opportunity
+                )
+                    ? formatDate(
+                        getDeadline(
+                            opportunity
+                        )
+                    )
+                    : "Not specified";
+
+
+            document.getElementById(
+                "detailsBenefits"
+            ).textContent =
+                getBenefits(
+                    opportunity
+                );
+
+
+            updateDetailsSaveButton();
+
+
+            document
+                .getElementById(
+                    "detailsModal"
+                )
+                .classList.add(
+                    "show"
+                );
+
+        }
+
+
+        function updateDetailsSaveButton() {
+
+            if (
+                !selectedOpportunity
+            ) {
+
+                return;
+
+            }
+
+
+            const saved =
+                savedOpportunityIds.includes(
+                    selectedOpportunity.id
+                );
+
+
+            const button =
+                document.getElementById(
+                    "detailsSaveButton"
+                );
+
+
+            button.textContent =
+                saved
+                    ? "★ Saved"
+                    : "☆ Save Opportunity";
+
+
+            button.classList.toggle(
+                "saved",
+                saved
+            );
+
+        }
+
+
+        // =====================================================
+        // DETAILS SAVE
+        // =====================================================
+
+        document
+            .getElementById(
+                "detailsSaveButton"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    if (
+                        selectedOpportunity
+                    ) {
+
+                        await toggleSavedOpportunity(
+                            selectedOpportunity.id
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // DETAILS APPLY
+        // =====================================================
+
+        document
+            .getElementById(
+                "detailsApplyButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        selectedOpportunity
+                    ) {
+
+                        handleApplyClick(
+                            selectedOpportunity.id
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // CLOSE DETAILS
+        // =====================================================
+
+        document
+            .getElementById(
+                "closeDetails"
+            )
+            .addEventListener(
+                "click",
+                closeDetails
+            );
+
+
+        document
+            .getElementById(
+                "detailsModal"
+            )
+            .addEventListener(
+                "click",
+                event => {
+
+                    if (
+                        event.target.id ===
+                        "detailsModal"
+                    ) {
+
+                        closeDetails();
+
+                    }
+
+                }
+            );
+
+
+        function closeDetails() {
+
+            document
+                .getElementById(
+                    "detailsModal"
+                )
+                .classList.remove(
+                    "show"
+                );
+
+
+            selectedOpportunity =
+                null;
+
+        }
+
+
+        // =====================================================
+        // CLEAR FILTERS
+        // =====================================================
+
+        function clearAllFilters() {
+
+            activeType =
+                "all";
+
+
+            typeTabs.forEach(
+                tab => {
+
+                    tab.classList.toggle(
+                        "active",
+                        tab.dataset.type ===
+                            "all"
+                    );
+
+                }
+            );
+
+
+            searchInput.value =
+                "";
+
+
+            modeFilter.value =
+                "all";
+
+
+            locationFilter.value =
+                "all";
+
+
+            durationFilter.value =
+                "all";
+
+
+            savedFilter.value =
+                "all";
+
+
+            sortFilter.value =
+                "newest";
+
+
+            renderOpportunities();
+
+        }
+
+
+        // =====================================================
+        // EMPTY
+        // =====================================================
+
+        function renderEmptyResults() {
+
+            if (
+                opportunities.length ===
+                    0
+            ) {
+
+                opportunityGrid.innerHTML =
+                    `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ◇
+                        </div>
+
+                        <h3>
+                            No industry opportunities yet
+                        </h3>
+
+                        <p>
+                            Opportunities will appear when
+                            organizations publish faculty internships,
+                            training, FDPs, consultancy and
+                            collaboration opportunities.
+                        </p>
+
+                    </div>
+
+                    `;
+
+                return;
+
+            }
+
+
+            opportunityGrid.innerHTML =
+                `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ⌕
+                    </div>
+
+                    <h3>
+                        No matching opportunities
+                    </h3>
+
+                    <p>
+                        Try changing your search or filters.
+                    </p>
+
+                </div>
+
+                `;
+
+        }
+
+
+        function renderLoadError() {
+
+            opportunityGrid.innerHTML =
+                `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        !
+                    </div>
+
+                    <h3>
+                        Unable to load opportunities
+                    </h3>
+
+                    <p>
+                        Please refresh the page and try again.
+                    </p>
+
+                </div>
+
+                `;
+
+        }
+
+
+        // =====================================================
+        // DATA HELPERS
+        // =====================================================
+
+        function getTitle(
+            opportunity
+        ) {
+
+            return (
+                opportunity.title ||
+                opportunity.name ||
+                opportunity.opportunityTitle ||
+                "Untitled Opportunity"
+            );
+
+        }
+
+
+        function getOrganization(
+            opportunity
+        ) {
+
+            return (
+                opportunity.organization ||
+                opportunity.organisation ||
+                opportunity.company ||
+                opportunity.companyName ||
+                opportunity.partner ||
+                "Industry Organization"
+            );
+
+        }
+
+
+        function getDescription(
+            opportunity
+        ) {
+
+            return (
+                opportunity.description ||
+                opportunity.summary ||
+                opportunity.details ||
+                "No description provided."
+            );
+
+        }
+
+
+        function getDomain(
+            opportunity
+        ) {
+
+            return (
+                opportunity.domain ||
+                opportunity.industry ||
+                opportunity.category ||
+                ""
+            );
+
+        }
+
+
+        function getMode(
+            opportunity
+        ) {
+
+            return (
+                opportunity.mode ||
+                opportunity.workMode ||
+                opportunity.deliveryMode ||
+                "Not specified"
+            );
+
+        }
+
+
+        function getLocation(
+            opportunity
+        ) {
+
+            return (
+                opportunity.location ||
+                opportunity.city ||
+                opportunity.place ||
+                "Not specified"
+            );
+
+        }
+
+
+        function getDuration(
+            opportunity
+        ) {
+
+            if (
+                opportunity.duration
+            ) {
+
+                return String(
+                    opportunity.duration
+                );
+
+            }
+
+
+            if (
+                opportunity.durationMonths
+            ) {
+
+                return `${opportunity.durationMonths} months`;
+
+            }
+
+
+            if (
+                opportunity.durationWeeks
+            ) {
+
+                return `${opportunity.durationWeeks} weeks`;
+
+            }
+
+
+            return "Not specified";
+
+        }
+
+
+        function getStartDate(
+            opportunity
+        ) {
+
+            return (
+                opportunity.startDate ||
+                opportunity.startsAt ||
+                opportunity.start ||
+                null
+            );
+
+        }
+
+
+        function getDeadline(
+            opportunity
+        ) {
+
+            return (
+                opportunity.deadline ||
+                opportunity.applicationDeadline ||
+                opportunity.lastDate ||
+                opportunity.endDate ||
+                null
+            );
+
+        }
+
+
+        function getCreatedAt(
+            opportunity
+        ) {
+
+            return (
+                opportunity.createdAt ||
+                opportunity.publishedAt ||
+                opportunity.created ||
+                null
+            );
+
+        }
+
+
+        function getBenefits(
+            opportunity
+        ) {
+
+            const benefits =
+                opportunity.benefits;
+
+
+            if (
+                Array.isArray(
+                    benefits
+                )
+            ) {
+
+                return benefits.join(
+                    " · "
+                );
+
+            }
+
+
+            return (
+                benefits ||
+                opportunity.benefit ||
+                "Benefits have not been specified."
+            );
+
+        }
+
+
+        function extractRequiredSkills(
+            opportunity
+        ) {
+
+            const fields = [
+
+                opportunity.requiredSkills,
+
+                opportunity.skillsRequired,
+
+                opportunity.skills,
+
+                opportunity.requiredSkill,
+
+                opportunity.skillRequirements,
+
+                opportunity.technologies,
+
+                opportunity.expertiseRequired
+
+            ];
+
+
+            for (
+                const field
+                of
+                fields
+            ) {
+
+                if (
+                    Array.isArray(
+                        field
+                    )
+                ) {
+
+                    const values =
+                        field
+                            .map(
+                                item => {
+
+                                    if (
+                                        typeof item ===
+                                            "string"
+                                    ) {
+
+                                        return item.trim();
+
+                                    }
+
+
+                                    return (
+                                        item?.name ||
+                                        item?.skill ||
+                                        item?.title ||
+                                        ""
+                                    )
+                                        .toString()
+                                        .trim();
+
+                                }
+                            )
+                            .filter(
+                                Boolean
+                            );
+
+
+                    if (
+                        values.length
+                    ) {
+
+                        return values;
+
+                    }
+
+                }
+
+
+                if (
+                    typeof field ===
+                    "string" &&
+                    field.trim()
+                ) {
+
+                    return field
+                        .split(",")
+                        .map(
+                            item =>
+                                item.trim()
+                        )
+                        .filter(
+                            Boolean
+                        );
+
+                }
+
+            }
+
+
+            return [];
+
+        }
+
+
+        function extractEligibility(
+            opportunity
+        ) {
+
+            const fields = [
+
+                opportunity.eligibility,
+
+                opportunity.eligibilityCriteria,
+
+                opportunity.eligibleFor,
+
+                opportunity.requirements
+
+            ];
+
+
+            for (
+                const field
+                of
+                fields
+            ) {
+
+                if (
+                    Array.isArray(
+                        field
+                    )
+                ) {
+
+                    return field
+                        .map(
+                            item =>
+                                String(
+                                    item
+                                ).trim()
+                        )
+                        .filter(
+                            Boolean
+                        );
+
+                }
+
+
+                if (
+                    typeof field ===
+                    "string" &&
+                    field.trim()
+                ) {
+
+                    return field
+                        .split(/\n|•|;/)
+                        .map(
+                            item =>
+                                item.trim()
+                        )
+                        .filter(
+                            Boolean
+                        );
+
+                }
+
+            }
+
+
+            return [];
+
+        }
+
+
+        // =====================================================
+        // TYPE
+        // =====================================================
+
+        function normalizeOpportunityType(
+            opportunity
+        ) {
+
+            const raw =
+                String(
+                    opportunity.type ||
+                    opportunity.opportunityType ||
+                    opportunity.category ||
+                    "other"
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                raw.includes("faculty") &&
+                raw.includes("intern")
+            ) {
+
+                return "faculty-internship";
+
+            }
+
+
+            if (
+                raw.includes("industrial") &&
+                (
+                    raw.includes("training") ||
+                    raw.includes("exposure")
+                )
+            ) {
+
+                return "industrial-training";
+
+            }
+
+
+            if (
+                raw === "fdp" ||
+                raw.includes("faculty development")
+            ) {
+
+                return "fdp";
+
+            }
+
+
+            if (
+                raw.includes("consult")
+            ) {
+
+                return "consultancy";
+
+            }
+
+
+            if (
+                raw.includes("research")
+            ) {
+
+                return "research";
+
+            }
+
+
+            if (
+                raw.includes("mentor")
+            ) {
+
+                return "mentorship";
+
+            }
+
+
+            if (
+                raw.includes("workshop") ||
+                raw.includes("training")
+            ) {
+
+                return "workshop";
+
+            }
+
+
+            if (
+                raw.includes("guest") &&
+                raw.includes("lecture")
+            ) {
+
+                return "guest-lecture";
+
+            }
+
+
+            if (
+                raw.includes("innovation") ||
+                raw.includes("challenge")
+            ) {
+
+                return "innovation";
+
+            }
+
+
+            if (
+                raw.includes("live") &&
+                raw.includes("project")
+            ) {
+
+                return "live-project";
+
+            }
+
+
+            return raw
+                .replace(
+                    /\s+/g,
+                    "-"
+                );
+
+        }
+
+
+        function displayType(
+            type
+        ) {
+
+            const values = {
+
+                "faculty-internship":
+                    "Faculty Internship",
+
+                "industrial-training":
+                    "Industrial Training",
+
+                fdp:
+                    "Faculty Development Program",
+
+                consultancy:
+                    "Consultancy",
+
+                research:
+                    "Collaborative Research",
+
+                mentorship:
+                    "Industry Mentorship",
+
+                workshop:
+                    "Workshop",
+
+                "guest-lecture":
+                    "Guest Lecture",
+
+                innovation:
+                    "Innovation Challenge",
+
+                "live-project":
+                    "Live Industry Project"
+
+            };
+
+
+            return (
+                values[
+                    type
+                ] ||
+                capitalizeWords(
+                    type
+                )
+            );
+
+        }
+
+
+        // =====================================================
+        // MODE
+        // =====================================================
+
+        function normalizeMode(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    ""
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                raw.includes("remote") ||
+                raw.includes("online")
+            ) {
+
+                return "remote";
+
+            }
+
+
+            if (
+                raw.includes("hybrid")
+            ) {
+
+                return "hybrid";
+
+            }
+
+
+            if (
+                raw.includes("on-site") ||
+                raw.includes("onsite") ||
+                raw.includes("in person") ||
+                raw.includes("offline")
+            ) {
+
+                return "on-site";
+
+            }
+
+
+            return raw;
+
+        }
+
+
+        function formatMode(
+            value
+        ) {
+
+            const normalized =
+                normalizeMode(
+                    value
+                );
+
+
+            const values = {
+
+                "on-site":
+                    "On-site",
+
+                remote:
+                    "Remote",
+
+                hybrid:
+                    "Hybrid"
+
+            };
+
+
+            return (
+                values[
+                    normalized
+                ] ||
+                value ||
+                "Not specified"
+            );
+
+        }
+
+
+        // =====================================================
+        // DURATION
+        // =====================================================
+
+        function matchDuration(
+            opportunity,
+            filter
+        ) {
+
+            const duration =
+                getDuration(
+                    opportunity
+                )
+                    .toLowerCase();
+
+
+            const number =
+                parseFloat(
+                    duration
+                );
+
+
+            if (
+                Number.isNaN(
+                    number
+                )
+            ) {
+
+                if (
+                    filter ===
+                        "short"
+                ) {
+
+                    return (
+                        duration.includes("week") ||
+                        duration.includes("day")
+                    );
+
+                }
+
+
+                return false;
+
+            }
+
+
+            if (
+                duration.includes(
+                    "week"
+                )
+            ) {
+
+                const months =
+                    number /
+                    4;
+
+
+                if (
+                    filter ===
+                        "short"
+                ) {
+
+                    return months <= 1;
+
+                }
+
+
+                if (
+                    filter ===
+                        "medium"
+                ) {
+
+                    return (
+                        months > 1 &&
+                        months <= 6
+                    );
+
+                }
+
+
+                if (
+                    filter ===
+                        "long"
+                ) {
+
+                    return months > 6;
+
+                }
+
+            }
+
+
+            if (
+                filter ===
+                    "short"
+            ) {
+
+                return number <= 1;
+
+            }
+
+
+            if (
+                filter ===
+                    "medium"
+            ) {
+
+                return (
+                    number > 1 &&
+                    number <= 6
+                );
+
+            }
+
+
+            if (
+                filter ===
+                    "long"
+            ) {
+
+                return number > 6;
+
+            }
+
+
+            return true;
+
+        }
+
+
+        // =====================================================
+        // DATE
+        // =====================================================
+
+        function getDateValue(
+            value
+        ) {
+
+            if (
+                !value
+            ) {
+
+                return null;
+
+            }
+
+
+            if (
+                value?.toDate
+            ) {
+
+                try {
+
+                    return value.toDate();
+
+                }
+
+                catch {
+
+                    return null;
+
+                }
+
+            }
+
+
+            if (
+                value instanceof Date
+            ) {
+
+                return value;
+
+            }
+
+
+            const date =
+                new Date(
+                    value
+                );
+
+
+            return Number.isNaN(
+                date.getTime()
+            )
+                ? null
+                : date;
+
+        }
+
+
+        function formatDate(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "Not specified";
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+
+                    day:
+                        "2-digit",
+
+                    month:
+                        "short",
+
+                    year:
+                        "numeric"
+
+                }
+            );
+
+        }
+
+
+        function getDeadlineLabel(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "Deadline not specified";
+
+            }
+
+
+            const now =
+                new Date();
+
+
+            const days =
+                Math.ceil(
+                    (
+                        date -
+                        now
+                    )
+                    /
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
+                );
+
+
+            if (
+                days < 0
+            ) {
+
+                return `Deadline passed · ${formatDate(value)}`;
+
+            }
+
+
+            if (
+                days === 0
+            ) {
+
+                return "Deadline today";
+
+            }
+
+
+            if (
+                days === 1
+            ) {
+
+                return "Deadline tomorrow";
+
+            }
+
+
+            if (
+                days <= 7
+            ) {
+
+                return `Deadline in ${days} days · ${formatDate(value)}`;
+
+            }
+
+
+            return `Deadline · ${formatDate(value)}`;
+
+        }
+
+
+        function getDeadlineClass(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "";
+
+            }
+
+
+            const days =
+                (
+                    date -
+                    new Date()
+                )
+                /
+                (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                );
+
+
+            if (
+                days < 0
+            ) {
+
+                return "expired";
+
+            }
+
+
+            if (
+                days <= 7
+            ) {
+
+                return "soon";
+
+            }
+
+
+            return "";
+
+        }
+
+
+        // =====================================================
+        // SAVED
+        // =====================================================
+
+        function normalizeSavedIds(
+            value
+        ) {
+
+            if (
+                !Array.isArray(
+                    value
+                )
+            ) {
+
+                return [];
+
+            }
+
+
+            return value
+                .map(
+                    item => {
+
+                        if (
+                            typeof item ===
+                            "string"
+                        ) {
+
+                            return item;
+
+                        }
+
+
+                        return (
+                            item?.id ||
+                            item?.opportunityId ||
+                            ""
+                        );
+
+                    }
+                )
+                .filter(
+                    Boolean
+                );
+
+        }
+
+
+        // =====================================================
+        // HELPERS
+        // =====================================================
+
+        function normalizeText(
+            value
+        ) {
+
+            return String(
+                value ||
+                ""
+            )
+                .trim()
+                .toLowerCase()
+                .replace(
+                    /\s+/g,
+                    " "
+                );
+
+        }
+
+
+        function capitalizeWords(
+            value
+        ) {
+
+            return String(
+                value ||
+                ""
+            )
+                .replace(
+                    /-/g,
+                    " "
+                )
+                .replace(
+                    /\b\w/g,
+                    char =>
+                        char.toUpperCase()
+                );
+
+        }
+
+
+        function getInitial(
+            name
+        ) {
+
+            return (
+                String(
+                    name ||
+                    "A"
+                )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase() ||
+                "A"
+            );
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ??
+                ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        function escapeAttribute(
+            value
+        ) {
+
+            return escapeHTML(
+                value
+            );
+
+        }
+
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const old =
+                document.querySelector(
+                    ".opportunity-toast"
+                );
+
+
+            if (
+                old
+            ) {
+
+                old.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.className =
+                `opportunity-toast ${type || ""}`;
+
+
+            toast.textContent =
+                message;
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        toast.parentNode
+                    ) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                4000
+            );
+
+        }
+
+
+        function redirectByRole(
+            role
+        ) {
+
+            switch (
+                role
+            ) {
+
+                case "student":
+
+                    window.location.href =
+                        "../../student/student-home.html";
+
+                    break;
+
+
+                case "industry":
+
+                    window.location.href =
+                        "../../industry/industry-home.html";
+
+                    break;
+
+
+                case "institution":
+
+                    window.location.href =
+                        "../../institution/institution-home.html";
+
+                    break;
+
+
+                default:
+
+                    window.location.href =
+                        "../../login.html";
+
+            }
+
+        }
+
+
+        // =====================================================
+        // MOBILE
+        // =====================================================
+
+        menuButton.addEventListener(
+            "click",
+            () => {
+
+                sidebar.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(
+                ".opportunity-nav-item"
+            )
+            .forEach(
+                item => {
+
+                    item.addEventListener(
+                        "click",
+                        () => {
+
+                            sidebar.classList.remove(
+                                "open"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        logoutButton.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    logoutButton.disabled =
+                        true;
+
+
+                    logoutButton.textContent =
+                        "Logging out...";
+
+
+                    await signOut(
+                        auth
+                    );
+
+
+                    window.location.href =
+                        "../../index.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+
+                    logoutButton.innerHTML =
+                        `
+                        <span>↪</span>
+                        Logout
+                        `;
+
+
+                    showToast(
+                        "Unable to logout.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

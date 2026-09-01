@@ -1,0 +1,8267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Mentorship">
+
+    <title>
+        Mentorship | SkillBridge
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           SKILLBRIDGE ACADEMICIAN MENTORSHIP
+           SINGLE FILE MODULE
+           BLACK / WHITE / GOLD / GREY
+        ===================================================== */
+
+        :root {
+
+            --black: #090909;
+            --black-soft: #111111;
+            --black-light: #1A1A1A;
+
+            --white: #FFFFFF;
+            --off-white: #F7F7F5;
+
+            --grey-100: #F4F4F5;
+            --grey-200: #E4E4E7;
+            --grey-300: #D4D4D8;
+            --grey-400: #A1A1AA;
+            --grey-500: #71717A;
+            --grey-600: #52525B;
+            --grey-700: #3F3F46;
+            --grey-800: #27272A;
+
+            --gold: #D4AF37;
+            --gold-dark: #A88920;
+            --gold-soft: #FBF8ED;
+
+            --green: #26734D;
+            --green-soft: #EDF7F1;
+
+            --red: #B42318;
+            --red-soft: #FFF1F0;
+
+            --blue: #315C91;
+            --blue-soft: #EEF4FB;
+
+            --orange: #A75C00;
+            --orange-soft: #FFF4E5;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        button,
+        input,
+        select,
+        textarea {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            color: inherit;
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .mentorship-app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .mentorship-sidebar {
+
+            width: 250px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .mentorship-brand-wrap {
+
+            height: 82px;
+
+            padding:
+                0 24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .mentorship-brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+        }
+
+
+        .mentorship-brand-mark {
+
+            width:
+                36px;
+
+            height:
+                36px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .mentorship-brand-name {
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .mentorship-brand-name span {
+
+            color:
+                var(--gold);
+
+        }
+
+
+        .mentorship-sidebar-nav {
+
+            padding:
+                25px 14px;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .mentorship-nav-section {
+
+            padding:
+                0 13px;
+
+            margin-bottom:
+                10px;
+
+            color:
+                #52525B;
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.7px;
+
+        }
+
+
+        .mentorship-nav-gap {
+
+            margin-top:
+                28px;
+
+        }
+
+
+        .mentorship-nav-item {
+
+            height:
+                43px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                0 13px;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+            border-left:
+                2px solid transparent;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .mentorship-nav-item:hover {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+        }
+
+
+        .mentorship-nav-item.active {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+            border-left-color:
+                var(--gold);
+
+        }
+
+
+        .mentorship-nav-icon {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            color:
+                var(--gold);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .mentorship-sidebar-bottom {
+
+            margin-top:
+                auto;
+
+            padding:
+                17px 14px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .mentorship-help {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            padding:
+                5px 8px 16px;
+
+        }
+
+
+        .mentorship-help-icon {
+
+            width:
+                24px;
+
+            height:
+                24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid #3F3F46;
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+        }
+
+
+        .mentorship-help strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mentorship-help span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                #71717A;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .mentorship-logout {
+
+            width:
+                100%;
+
+            height:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid #27272A;
+
+            background:
+                transparent;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+        }
+
+
+        .mentorship-logout:hover {
+
+            color:
+                white;
+
+            border-color:
+                #52525B;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .mentorship-main {
+
+            width:
+                calc(100% - 250px);
+
+            margin-left:
+                250px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .mentorship-topbar {
+
+            height:
+                75px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                50;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 35px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .mentorship-menu {
+
+            display:
+                none;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .mentorship-portal-label {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .mentorship-top-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+        }
+
+
+        .mentorship-top-button {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            position:
+                relative;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+        }
+
+
+        .mentorship-notification-dot {
+
+            position:
+                absolute;
+
+            top:
+                7px;
+
+            right:
+                7px;
+
+            width:
+                5px;
+
+            height:
+                5px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .mentorship-top-profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+        }
+
+
+        .mentorship-top-image {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .mentorship-top-image img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+        }
+
+
+        .mentorship-top-info {
+
+            text-align:
+                left;
+
+        }
+
+
+        .mentorship-top-info strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mentorship-top-info span {
+
+            display:
+                block;
+
+            margin-top:
+                2px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .mentorship-content {
+
+            max-width:
+                1500px;
+
+            margin:
+                auto;
+
+            padding:
+                35px 36px 65px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .mentorship-page-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            gap:
+                25px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .mentorship-eyebrow {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .mentorship-page-header h1 {
+
+            margin-top:
+                7px;
+
+            font-size:
+                34px;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                -1.3px;
+
+        }
+
+
+        .mentorship-page-header p {
+
+            max-width:
+                750px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .mentorship-header-actions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .header-button {
+
+            min-height:
+                38px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .header-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        /* =====================================================
+           MODULE TABS
+        ===================================================== */
+
+        .module-tabs {
+
+            display:
+                flex;
+
+            overflow-x:
+                auto;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .module-tab {
+
+            min-height:
+                48px;
+
+            flex:
+                0 0 auto;
+
+            padding:
+                0 19px;
+
+            border:
+                none;
+
+            border-bottom:
+                2px solid transparent;
+
+            background:
+                transparent;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .module-tab.active {
+
+            color:
+                var(--black);
+
+            border-bottom-color:
+                var(--gold);
+
+        }
+
+
+        .module-tab span {
+
+            margin-left:
+                4px;
+
+            color:
+                var(--grey-400);
+
+        }
+
+
+        .module-section {
+
+            display:
+                none;
+
+        }
+
+
+        .module-section.active {
+
+            display:
+                block;
+
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .summary-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(5,1fr);
+
+            gap:
+                10px;
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .summary-card {
+
+            min-height:
+                105px;
+
+            padding:
+                17px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .summary-card.highlight {
+
+            background:
+                var(--gold-soft);
+
+            border-color:
+                rgba(212,175,55,.45);
+
+        }
+
+
+        .summary-card span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .summary-card strong {
+
+            display:
+                block;
+
+            margin-top:
+                10px;
+
+            font-size:
+                24px;
+
+            font-weight:
+                500;
+
+        }
+
+
+        .summary-card small {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE PANEL
+        ===================================================== */
+
+        .profile-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.2fr .8fr;
+
+            gap:
+                12px;
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .panel {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .panel-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                18px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .panel-header > div > span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .panel-header h3 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .panel-header p {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .profile-body {
+
+            padding:
+                20px;
+
+        }
+
+
+        .expertise-tags {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                6px;
+
+            margin-top:
+                13px;
+
+        }
+
+
+        .expertise-tag {
+
+            padding:
+                7px 9px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .availability-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                10px;
+
+        }
+
+
+        .info-box {
+
+            padding:
+                13px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .info-box span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                .8px;
+
+        }
+
+
+        .info-box strong {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        /* =====================================================
+           REQUEST FILTERS
+        ===================================================== */
+
+        .request-toolbar {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            padding:
+                15px;
+
+            margin-bottom:
+                12px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .request-search {
+
+            max-width:
+                450px;
+
+            flex:
+                1;
+
+            height:
+                39px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .request-search span {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .request-search input {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .request-filter {
+
+            height:
+                39px;
+
+            min-width:
+                145px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            outline:
+                none;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+        }
+
+
+        /* =====================================================
+           REQUEST CARDS
+        ===================================================== */
+
+        .request-list {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                10px;
+
+        }
+
+
+        .request-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .request-card:hover {
+
+            border-color:
+                var(--gold);
+
+        }
+
+
+        .request-main {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(0,1fr)
+                170px
+                auto;
+
+            gap:
+                20px;
+
+            align-items:
+                center;
+
+            padding:
+                19px;
+
+        }
+
+
+        .request-type {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .request-main h3 {
+
+            margin-top:
+                6px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .request-person {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .request-message {
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .request-status-column {
+
+            text-align:
+                center;
+
+        }
+
+
+        .request-status {
+
+            display:
+                inline-block;
+
+            padding:
+                6px 9px;
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .status-pending {
+
+            background:
+                var(--orange-soft);
+
+            color:
+                var(--orange);
+
+        }
+
+
+        .status-sent {
+
+            background:
+                var(--blue-soft);
+
+            color:
+                var(--blue);
+
+        }
+
+
+        .status-active {
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .status-completed {
+
+            background:
+                var(--blue-soft);
+
+            color:
+                var(--blue);
+
+        }
+
+
+        .status-rejected {
+
+            background:
+                var(--red-soft);
+
+            color:
+                var(--red);
+
+        }
+
+
+        .status-cancelled {
+
+            background:
+                var(--grey-100);
+
+            color:
+                var(--grey-500);
+
+        }
+
+
+        .request-date {
+
+            margin-top:
+                6px;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .request-actions {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                6px;
+
+        }
+
+
+        .small-button {
+
+            min-width:
+                105px;
+
+            min-height:
+                32px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .small-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .small-button.primary {
+
+            border-color:
+                var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .small-button.success {
+
+            border-color:
+                var(--green);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .small-button.danger:hover {
+
+            border-color:
+                var(--red);
+
+            color:
+                var(--red);
+
+        }
+
+
+        /* =====================================================
+           ACTIVE MENTORSHIP
+        ===================================================== */
+
+        .active-layout {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.1fr .9fr;
+
+            gap:
+                12px;
+
+        }
+
+
+        .mentor-card {
+
+            padding:
+                20px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .mentor-card-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-start;
+
+            gap:
+                15px;
+
+        }
+
+
+        .mentor-avatar {
+
+            width:
+                54px;
+
+            height:
+                54px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-weight:
+                700;
+
+        }
+
+
+        .mentor-card h3 {
+
+            margin-top:
+                13px;
+
+            font-size:
+                17px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .mentor-role {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .mentor-expertise {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                6px;
+
+            margin-top:
+                12px;
+
+        }
+
+
+        .active-info {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                10px;
+
+            margin-top:
+                17px;
+
+        }
+
+
+        .progress-section {
+
+            margin-top:
+                20px;
+
+        }
+
+
+        .progress-section-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+        }
+
+
+        .progress-section-top span {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .progress-section-top strong {
+
+            font-size:
+                12px;
+
+        }
+
+
+        .progress-bar {
+
+            height:
+                7px;
+
+            margin-top:
+                7px;
+
+            background:
+                var(--grey-200);
+
+        }
+
+
+        .progress-bar div {
+
+            height:
+                100%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        /* =====================================================
+           SESSION / GOALS
+        ===================================================== */
+
+        .goal-list {
+
+            padding:
+                12px 18px 18px;
+
+        }
+
+
+        .goal-item {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            gap:
+                10px;
+
+            padding:
+                11px 0;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .goal-item:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .goal-check {
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            flex:
+                0 0 auto;
+
+            margin-top:
+                1px;
+
+            border:
+                1px solid var(--grey-300);
+
+            color:
+                var(--green);
+
+            font-size:
+                10px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+        }
+
+
+        .goal-item.completed
+        .goal-check {
+
+            background:
+                var(--green-soft);
+
+            border-color:
+                var(--green);
+
+        }
+
+
+        .goal-title {
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .goal-note {
+
+            margin-top:
+                3px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+        }
+
+
+        /* =====================================================
+           HISTORY
+        ===================================================== */
+
+        .history-list {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                10px;
+
+        }
+
+
+        .history-card {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(0,1fr)
+                150px;
+
+            gap:
+                20px;
+
+            align-items:
+                center;
+
+            padding:
+                19px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .history-card h3 {
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .history-org {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .history-date {
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .history-feedback {
+
+            margin-top:
+                8px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .history-right {
+
+            text-align:
+                right;
+
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                700;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+
+            background:
+                rgba(0,0,0,.6);
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            pointer-events:
+                none;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .modal.show {
+
+            opacity:
+                1;
+
+            visibility:
+                visible;
+
+            pointer-events:
+                auto;
+
+        }
+
+
+        .modal-content {
+
+            width:
+                100%;
+
+            max-width:
+                800px;
+
+            max-height:
+                92vh;
+
+            overflow-y:
+                auto;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                22px 23px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-header span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.3px;
+
+        }
+
+
+        .modal-header h2 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                19px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .close-button {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                17px;
+
+        }
+
+
+        .modal-form {
+
+            padding:
+                22px;
+
+        }
+
+
+        .form-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                13px;
+
+        }
+
+
+        .field {
+
+            min-width:
+                0;
+
+        }
+
+
+        .field.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .field label {
+
+            display:
+                block;
+
+            margin-bottom:
+                6px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .field input,
+        .field select,
+        .field textarea {
+
+            width:
+                100%;
+
+            border:
+                1px solid var(--grey-200);
+
+            outline:
+                none;
+
+            background:
+                white;
+
+            color:
+                var(--grey-800);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .field input,
+        .field select {
+
+            height:
+                40px;
+
+            padding:
+                0 10px;
+
+        }
+
+
+        .field textarea {
+
+            min-height:
+                105px;
+
+            padding:
+                10px;
+
+            resize:
+                vertical;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+
+            border-color:
+                var(--gold);
+
+            box-shadow:
+                0 0 0 3px rgba(212,175,55,.08);
+
+        }
+
+
+        .modal-message {
+
+            min-height:
+                20px;
+
+            margin-top:
+                10px;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .modal-message.error {
+
+            color:
+                var(--red);
+
+        }
+
+
+        .modal-message.success {
+
+            color:
+                var(--green);
+
+        }
+
+
+        .modal-actions {
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                8px;
+
+            margin-top:
+                15px;
+
+            padding-top:
+                15px;
+
+            border-top:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-action {
+
+            min-height:
+                38px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .modal-action.primary {
+
+            border-color:
+                var(--black);
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-state {
+
+            min-height:
+                270px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                30px;
+
+            text-align:
+                center;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .empty-icon {
+
+            width:
+                52px;
+
+            height:
+                52px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                20px;
+
+        }
+
+
+        .empty-state h3 {
+
+            margin-top:
+                12px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .empty-state p {
+
+            max-width:
+                520px;
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            right:
+                24px;
+
+            bottom:
+                24px;
+
+            z-index:
+                1200;
+
+            max-width:
+                360px;
+
+            padding:
+                13px 16px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.12);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .toast.success {
+
+            border-left:
+                3px solid var(--green);
+
+        }
+
+
+        .toast.error {
+
+            border-left:
+                3px solid var(--red);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+            }
+
+
+            .profile-grid,
+            .active-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .request-main {
+
+                grid-template-columns:
+                    minmax(0,1fr)
+                    130px
+                    auto;
+
+            }
+
+        }
+
+
+        @media (max-width: 1000px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+
+            .request-main {
+
+                grid-template-columns:
+                    1fr
+                    auto;
+
+            }
+
+
+            .request-status-column {
+
+                text-align:
+                    left;
+
+            }
+
+
+            .history-card {
+
+                grid-template-columns:
+                    1fr
+                    auto;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .mentorship-sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .25s ease;
+
+            }
+
+
+            .mentorship-sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .mentorship-main {
+
+                width:
+                    100%;
+
+                margin-left:
+                    0;
+
+            }
+
+
+            .mentorship-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .mentorship-topbar {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .mentorship-content {
+
+                padding:
+                    28px 20px 50px;
+
+            }
+
+
+            .mentorship-page-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .mentorship-header-actions {
+
+                width:
+                    100%;
+
+            }
+
+
+            .header-button {
+
+                flex:
+                    1;
+
+            }
+
+
+            .request-toolbar {
+
+                align-items:
+                    stretch;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .request-search {
+
+                max-width:
+                    none;
+
+            }
+
+
+            .request-filter {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .mentorship-portal-label,
+            .mentorship-top-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .request-main {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .request-status-column {
+
+                text-align:
+                    left;
+
+            }
+
+
+            .request-actions {
+
+                flex-direction:
+                    row;
+
+                flex-wrap:
+                    wrap;
+
+            }
+
+
+            .small-button {
+
+                flex:
+                    1;
+
+            }
+
+
+            .availability-grid,
+            .active-info {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .field.full {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .history-card {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .history-right {
+
+                text-align:
+                    left;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .mentorship-content {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+
+            .mentorship-page-header h1 {
+
+                font-size:
+                    28px;
+
+            }
+
+
+            .request-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .small-button {
+
+                width:
+                    100%;
+
+            }
+
+
+            .modal-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .modal-action {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="mentorship-app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="mentorship-sidebar"
+            id="mentorshipSidebar">
+
+
+            <div class="mentorship-brand-wrap">
+
+                <a
+                    href="../academician-home.html"
+                    class="mentorship-brand">
+
+                    <div class="mentorship-brand-mark">
+                        SB
+                    </div>
+
+                    <div class="mentorship-brand-name">
+                        SKILL<span>BRIDGE</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <nav class="mentorship-sidebar-nav">
+
+
+                <div class="mentorship-nav-section">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="../academician-home.html"
+                    class="mentorship-nav-item">
+
+                    <span class="mentorship-nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="mentorship-nav-item">
+
+                    <span class="mentorship-nav-icon">
+                        ◯
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../skills/skills.html"
+                    class="mentorship-nav-item">
+
+                    <span class="mentorship-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        My Expertise
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../opportunities/opportunities.html"
+                    class="mentorship-nav-item">
+
+                    <span class="mentorship-nav-icon">
+                        ◇
+                    </span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../applications/applications.html"
+                    class="mentorship-nav-item">
+
+                    <span class="mentorship-nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="mentorship-nav-section mentorship-nav-gap">
+
+                    COLLABORATION
+
+                </div>
+
+
+                <a
+                    href="../collaborations/collaborations.html"
+                    class="mentorship-nav-item">
+
+                    <span class="mentorship-nav-icon">
+                        ↔
+                    </span>
+
+                    <span>
+                        Collaborations
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="mentorship.html"
+                    class="mentorship-nav-item active">
+
+                    <span class="mentorship-nav-icon">
+                        ♧
+                    </span>
+
+                    <span>
+                        Mentorship
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="mentorship-sidebar-bottom">
+
+
+                <div class="mentorship-help">
+
+                    <div class="mentorship-help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logoutBtn"
+                    class="mentorship-logout">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="mentorship-main">
+
+
+            <header class="mentorship-topbar">
+
+
+                <button
+                    id="menuButton"
+                    class="mentorship-menu">
+
+                    ☰
+
+                </button>
+
+
+                <div class="mentorship-portal-label">
+                    ACADEMICIAN PORTAL
+                </div>
+
+
+                <div class="mentorship-top-actions">
+
+
+                    <button
+                        class="mentorship-top-button">
+
+                        ⌕
+
+                    </button>
+
+
+                    <button
+                        class="mentorship-top-button">
+
+                        ♢
+
+                        <span
+                            class="mentorship-notification-dot">
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="mentorship-top-profile">
+
+                        <div
+                            class="mentorship-top-image"
+                            id="topProfileImage">
+
+                            <span>
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div class="mentorship-top-info">
+
+                            <strong id="topName">
+                                Academician
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="mentorship-content">
+
+
+                <!-- =================================================
+                     HEADER
+                ================================================== -->
+
+                <section class="mentorship-page-header">
+
+
+                    <div>
+
+                        <span class="mentorship-eyebrow">
+                            INDUSTRY MENTORSHIP
+                        </span>
+
+                        <h1>
+                            Mentorship
+                        </h1>
+
+                        <p>
+                            Discover industry mentors, manage
+                            mentorship requests, track active
+                            mentorships and maintain your professional
+                            mentorship history.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mentorship-header-actions">
+
+
+                        <a
+                            href="../opportunities/opportunities.html"
+                            class="header-button">
+
+                            Find Opportunities
+
+                        </a>
+
+
+                        <a
+                            href="../academician-home.html"
+                            class="header-button">
+
+                            Dashboard
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     MODULE TABS
+                ================================================== -->
+
+                <div class="module-tabs">
+
+
+                    <button
+                        class="module-tab active"
+                        data-module="profile">
+
+                        MY MENTORSHIP PROFILE
+
+                        <span>
+                            1
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="module-tab"
+                        data-module="requests">
+
+                        REQUESTS
+
+                        <span
+                            id="requestTabCount">
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="module-tab"
+                        data-module="active">
+
+                        ACTIVE MENTORSHIPS
+
+                        <span
+                            id="activeTabCount">
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="module-tab"
+                        data-module="history">
+
+                        HISTORY
+
+                        <span
+                            id="historyTabCount">
+                            0
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PROFILE
+                ================================================== -->
+
+                <section
+                    class="module-section active"
+                    id="profileModule">
+
+
+                    <div class="summary-grid">
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                ACTIVE
+                            </span>
+
+                            <strong
+                                id="profileActiveCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Current mentorships
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                REQUESTS
+                            </span>
+
+                            <strong
+                                id="profileRequestCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Pending mentorship requests
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                COMPLETED
+                            </span>
+
+                            <strong
+                                id="profileCompletedCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Past mentorships
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                AVAILABILITY
+                            </span>
+
+                            <strong
+                                id="availabilitySummary">
+                                Open
+                            </strong>
+
+                            <small>
+                                Current mentorship availability
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card highlight">
+
+                            <span>
+                                PREFERRED MODE
+                            </span>
+
+                            <strong
+                                id="modeSummary">
+                                Hybrid
+                            </strong>
+
+                            <small>
+                                Your selected preference
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="profile-grid">
+
+
+                        <!-- EXPERTISE -->
+
+                        <section class="panel">
+
+
+                            <div class="panel-header">
+
+                                <div>
+
+                                    <span>
+                                        MENTORSHIP PROFILE
+                                    </span>
+
+                                    <h3>
+                                        Expertise Areas
+                                    </h3>
+
+                                    <p>
+                                        Areas where you would like
+                                        guidance or professional
+                                        mentorship.
+                                    </p>
+
+                                </div>
+
+
+                                <button
+                                    class="small-button"
+                                    id="editProfileButton">
+
+                                    Edit Profile
+
+                                </button>
+
+                            </div>
+
+
+                            <div class="profile-body">
+
+
+                                <div
+                                    class="expertise-tags"
+                                    id="profileExpertise">
+
+                                    <span class="expertise-tag">
+                                        Loading...
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    style="
+                                        margin-top:18px;
+                                        color:var(--grey-500);
+                                        font-size:8px;
+                                        line-height:1.7;
+                                    "
+                                    id="profileDescription">
+
+                                    Loading mentorship profile...
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+
+                        <!-- PREFERENCES -->
+
+                        <section class="panel">
+
+
+                            <div class="panel-header">
+
+                                <div>
+
+                                    <span>
+                                        PREFERENCES
+                                    </span>
+
+                                    <h3>
+                                        Mentorship Preferences
+                                    </h3>
+
+                                    <p>
+                                        These preferences help match
+                                        you with suitable mentors.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="profile-body">
+
+
+                                <div class="availability-grid">
+
+
+                                    <div class="info-box">
+
+                                        <span>
+                                            AVAILABILITY
+                                        </span>
+
+                                        <strong
+                                            id="profileAvailability">
+                                            Open
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="info-box">
+
+                                        <span>
+                                            MODE
+                                        </span>
+
+                                        <strong
+                                            id="profileMode">
+                                            Hybrid
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="info-box">
+
+                                        <span>
+                                            DURATION
+                                        </span>
+
+                                        <strong
+                                            id="profileDuration">
+                                            3–6 months
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="info-box">
+
+                                        <span>
+                                            WEEKLY COMMITMENT
+                                        </span>
+
+                                        <strong
+                                            id="profileCommitment">
+                                            2–4 hours
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     REQUESTS
+                ================================================== -->
+
+                <section
+                    class="module-section"
+                    id="requestsModule">
+
+
+                    <div class="request-toolbar">
+
+
+                        <div class="request-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                type="search"
+                                id="requestSearch"
+                                placeholder="Search mentor, organization or expertise...">
+
+                        </div>
+
+
+                        <select
+                            class="request-filter"
+                            id="requestFilter">
+
+                            <option value="all">
+                                All Requests
+                            </option>
+
+                            <option value="incoming">
+                                Incoming Requests
+                            </option>
+
+                            <option value="sent">
+                                Sent Requests
+                            </option>
+
+                            <option value="pending">
+                                Pending
+                            </option>
+
+                            <option value="rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        id="requestList"
+                        class="request-list">
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ACTIVE
+                ================================================== -->
+
+                <section
+                    class="module-section"
+                    id="activeModule">
+
+
+                    <div
+                        id="activeMentorshipContent">
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     HISTORY
+                ================================================== -->
+
+                <section
+                    class="module-section"
+                    id="historyModule">
+
+
+                    <div
+                        id="historyList"
+                        class="history-list">
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROFILE MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="profileModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        MENTORSHIP PROFILE
+                    </span>
+
+                    <h2>
+                        Edit Preferences
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="close-button"
+                    data-close="profileModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form
+                class="modal-form"
+                id="profileForm">
+
+
+                <div class="form-grid">
+
+
+                    <div class="field full">
+
+                        <label>
+                            Expertise Areas
+                        </label>
+
+                        <input
+                            type="text"
+                            id="profileExpertiseInput"
+                            placeholder="e.g. AI, Machine Learning, Research, Product Development">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Availability
+                        </label>
+
+                        <select
+                            id="profileAvailabilityInput">
+
+                            <option value="Open">
+                                Open
+                            </option>
+
+                            <option value="Limited">
+                                Limited
+                            </option>
+
+                            <option value="Not Available">
+                                Not Available
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Preferred Mode
+                        </label>
+
+                        <select
+                            id="profileModeInput">
+
+                            <option value="Remote">
+                                Remote
+                            </option>
+
+                            <option value="Hybrid">
+                                Hybrid
+                            </option>
+
+                            <option value="On-site">
+                                On-site
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Preferred Duration
+                        </label>
+
+                        <select
+                            id="profileDurationInput">
+
+                            <option value="1–3 months">
+                                1–3 months
+                            </option>
+
+                            <option value="3–6 months">
+                                3–6 months
+                            </option>
+
+                            <option value="6–12 months">
+                                6–12 months
+                            </option>
+
+                            <option value="Flexible">
+                                Flexible
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Weekly Commitment
+                        </label>
+
+                        <select
+                            id="profileCommitmentInput">
+
+                            <option value="1–2 hours">
+                                1–2 hours
+                            </option>
+
+                            <option value="2–4 hours">
+                                2–4 hours
+                            </option>
+
+                            <option value="4–6 hours">
+                                4–6 hours
+                            </option>
+
+                            <option value="Flexible">
+                                Flexible
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            Mentorship Goal / Description
+                        </label>
+
+                        <textarea
+                            id="profileDescriptionInput"
+                            placeholder="Describe what you want to learn or achieve through industry mentorship..."></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="profileFormMessage"
+                    class="modal-message">
+                </div>
+
+
+                <div class="modal-actions">
+
+
+                    <button
+                        type="button"
+                        class="modal-action"
+                        data-close="profileModal">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="modal-action primary">
+
+                        Save Preferences
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         REQUEST MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="requestModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        MENTORSHIP REQUEST
+                    </span>
+
+                    <h2>
+                        Send Mentorship Request
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="close-button"
+                    data-close="requestModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form
+                class="modal-form"
+                id="requestForm">
+
+
+                <input
+                    type="hidden"
+                    id="requestMentorId">
+
+
+                <input
+                    type="hidden"
+                    id="requestMentorName">
+
+
+                <div class="form-grid">
+
+
+                    <div class="field full">
+
+                        <label>
+                            Mentor
+                        </label>
+
+                        <input
+                            type="text"
+                            id="requestMentorDisplay"
+                            readonly>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Preferred Mode
+                        </label>
+
+                        <select
+                            id="requestMode">
+
+                            <option value="Remote">
+                                Remote
+                            </option>
+
+                            <option value="Hybrid">
+                                Hybrid
+                            </option>
+
+                            <option value="On-site">
+                                On-site
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Preferred Duration
+                        </label>
+
+                        <select
+                            id="requestDuration">
+
+                            <option value="1–3 months">
+                                1–3 months
+                            </option>
+
+                            <option value="3–6 months">
+                                3–6 months
+                            </option>
+
+                            <option value="6–12 months">
+                                6–12 months
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            Message
+                        </label>
+
+                        <textarea
+                            id="requestMessage"
+                            placeholder="Explain why you would like this mentorship and what you hope to achieve..."></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="requestFormMessage"
+                    class="modal-message">
+                </div>
+
+
+                <div class="modal-actions">
+
+
+                    <button
+                        type="button"
+                        class="modal-action"
+                        data-close="requestModal">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="modal-action primary">
+
+                        Send Request
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FEEDBACK MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="feedbackModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span>
+                        MENTORSHIP FEEDBACK
+                    </span>
+
+                    <h2>
+                        Add Feedback
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="close-button"
+                    data-close="feedbackModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form
+                class="modal-form"
+                id="feedbackForm">
+
+
+                <div class="field full">
+
+                    <label>
+                        Feedback
+                    </label>
+
+                    <textarea
+                        id="feedbackInput"
+                        placeholder="Share what you learned and how the mentorship helped you..."></textarea>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+
+                    <button
+                        type="button"
+                        class="modal-action"
+                        data-close="feedbackModal">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="modal-action primary">
+
+                        Save Feedback
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script type="module">
+
+
+        // =====================================================
+        // FIREBASE IMPORTS
+        // =====================================================
+
+        import {
+            initializeApp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            addDoc,
+            updateDoc,
+            collection,
+            getDocs,
+            serverTimestamp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        // =====================================================
+        // FIREBASE CONFIG
+        // =====================================================
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
+
+            authDomain:
+                "ansora-27fe4.firebaseapp.com",
+
+            projectId:
+                "ansora-27fe4",
+
+            storageBucket:
+                "ansora-27fe4.firebasestorage.app",
+
+            messagingSenderId:
+                "230795678686",
+
+            appId:
+                "1:230795678686:web:06f0ccd7b8717ac13ac34f"
+
+        };
+
+
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const auth =
+            getAuth(
+                app
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
+
+
+        // =====================================================
+        // STATE
+        // =====================================================
+
+        let currentUser =
+            null;
+
+        let userData =
+            {};
+
+        let academicianData =
+            {};
+
+        let mentorshipProfile =
+            {};
+
+        let mentorships =
+            [];
+
+        let selectedMentorshipId =
+            null;
+
+        let activeRequestFilter =
+            "all";
+
+        let feedbackMentorshipId =
+            null;
+
+
+        // =====================================================
+        // AUTH
+        // =====================================================
+
+        onAuthStateChanged(
+            auth,
+            async user => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "../../login.html";
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    user;
+
+
+                try {
+
+                    await loadUserData();
+
+                    await loadAcademicianData();
+
+                    await loadMentorshipProfile();
+
+                    await loadMentorships();
+
+                    updateTopProfile();
+
+                    renderProfile();
+
+                    updateSummary();
+
+                    renderRequests();
+
+                    renderActiveMentorships();
+
+                    renderHistory();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Mentorship loading error:",
+                        error
+                    );
+
+
+                    showToast(
+                        "Unable to load mentorship data.",
+                        "error"
+                    );
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // USER
+        // =====================================================
+
+        async function loadUserData() {
+
+            const reference =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            if (
+                snapshot.exists()
+            ) {
+
+                userData =
+                    snapshot.data();
+
+            }
+
+            else {
+
+                userData = {
+
+                    name:
+                        currentUser.displayName ||
+                        "Academician",
+
+                    email:
+                        currentUser.email ||
+                        "",
+
+                    role:
+                        "academician",
+
+                    photoURL:
+                        ""
+
+                };
+
+
+                await setDoc(
+                    reference,
+                    userData
+                );
+
+            }
+
+
+            if (
+                userData.role &&
+                userData.role !==
+                    "academician"
+            ) {
+
+                redirectByRole(
+                    userData.role
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ACADEMICIAN
+        // =====================================================
+
+        async function loadAcademicianData() {
+
+            const reference =
+                doc(
+                    db,
+                    "academicians",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            academicianData =
+                snapshot.exists()
+                    ? snapshot.data()
+                    : {};
+
+        }
+
+
+        // =====================================================
+        // MENTORSHIP PROFILE
+        // =====================================================
+
+        async function loadMentorshipProfile() {
+
+            /*
+                Dedicated mentorship profile is kept in:
+                academicians/{uid}.mentorshipProfile
+            */
+
+            mentorshipProfile =
+                academicianData.mentorshipProfile ||
+                {
+
+                    expertise:
+                        getDefaultExpertise(),
+
+                    availability:
+                        "Open",
+
+                    mode:
+                        "Hybrid",
+
+                    duration:
+                        "3–6 months",
+
+                    commitment:
+                        "2–4 hours",
+
+                    description:
+                        ""
+
+                };
+
+        }
+
+
+        // =====================================================
+        // LOAD MENTORSHIPS
+        // =====================================================
+
+        async function loadMentorships() {
+
+            mentorships =
+                [];
+
+
+            const reference =
+                collection(
+                    db,
+                    "mentorships"
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    reference
+                );
+
+
+            snapshot.forEach(
+                documentSnapshot => {
+
+                    const data =
+                        documentSnapshot.data();
+
+
+                    /*
+                        Show records where:
+                        - current user is academician
+                        - OR current user sent the request
+                        - OR current user is mentee
+                    */
+
+                    const belongsToUser =
+
+                        data.academicianId ===
+                            currentUser.uid ||
+
+                        data.menteeId ===
+                            currentUser.uid ||
+
+                        data.senderId ===
+                            currentUser.uid;
+
+
+                    if (
+                        belongsToUser
+                    ) {
+
+                        mentorships.push({
+
+                            id:
+                                documentSnapshot.id,
+
+                            ...data
+
+                        });
+
+                    }
+
+                }
+            );
+
+
+            mentorships.sort(
+                (
+                    a,
+                    b
+                ) => {
+
+                    return (
+                        getTimestamp(b) -
+                        getTimestamp(a)
+                    );
+
+                }
+            );
+
+        }
+
+
+        // =====================================================
+        // TOP PROFILE
+        // =====================================================
+
+        function updateTopProfile() {
+
+            const name =
+                userData.name ||
+                currentUser.displayName ||
+                "Academician";
+
+
+            document.getElementById(
+                "topName"
+            ).textContent =
+                name;
+
+
+            const image =
+                document.getElementById(
+                    "topProfileImage"
+                );
+
+
+            if (
+                userData.photoURL
+            ) {
+
+                image.innerHTML =
+                    "";
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    userData.photoURL;
+
+
+                img.alt =
+                    "Academician profile";
+
+
+                img.onerror =
+                    () => {
+
+                        showInitial(
+                            image,
+                            getInitial(name)
+                        );
+
+                    };
+
+
+                image.appendChild(
+                    img
+                );
+
+            }
+
+            else {
+
+                showInitial(
+                    image,
+                    getInitial(name)
+                );
+
+            }
+
+        }
+
+
+        function showInitial(
+            container,
+            initial
+        ) {
+
+            container.innerHTML =
+                `
+
+                <span>
+                    ${escapeHTML(initial)}
+                </span>
+
+                `;
+
+        }
+
+
+        // =====================================================
+        // SUMMARY
+        // =====================================================
+
+        function updateSummary() {
+
+            const active =
+                mentorships.filter(
+                    item =>
+                        normalizeStatus(
+                            item.status
+                        ) ===
+                        "active"
+                ).length;
+
+
+            const pending =
+                mentorships.filter(
+                    item =>
+                        normalizeStatus(
+                            item.status
+                        ) ===
+                        "pending"
+                ).length;
+
+
+            const completed =
+                mentorships.filter(
+                    item =>
+                        normalizeStatus(
+                            item.status
+                        ) ===
+                        "completed"
+                ).length;
+
+
+            setText(
+                "profileActiveCount",
+                active
+            );
+
+
+            setText(
+                "profileRequestCount",
+                pending
+            );
+
+
+            setText(
+                "profileCompletedCount",
+                completed
+            );
+
+
+            setText(
+                "requestTabCount",
+                pending
+            );
+
+
+            setText(
+                "activeTabCount",
+                active
+            );
+
+
+            setText(
+                "historyTabCount",
+                completed
+            );
+
+
+            setText(
+                "availabilitySummary",
+                mentorshipProfile.availability ||
+                "Open"
+            );
+
+
+            setText(
+                "modeSummary",
+                mentorshipProfile.mode ||
+                "Hybrid"
+            );
+
+        }
+
+
+        // =====================================================
+        // PROFILE
+        // =====================================================
+
+        function renderProfile() {
+
+            const expertise =
+                normalizeArray(
+                    mentorshipProfile.expertise
+                );
+
+
+            const expertiseContainer =
+                document.getElementById(
+                    "profileExpertise"
+                );
+
+
+            expertiseContainer.innerHTML =
+                expertise.length
+                    ? expertise
+                        .map(
+                            item => `
+
+                                <span class="expertise-tag">
+
+                                    ${escapeHTML(
+                                        item
+                                    )}
+
+                                </span>
+
+                            `
+                        )
+                        .join("")
+                    : `
+
+                        <span class="expertise-tag">
+                            Add expertise areas
+                        </span>
+
+                    `;
+
+
+            setText(
+                "profileAvailability",
+                mentorshipProfile.availability ||
+                "Open"
+            );
+
+
+            setText(
+                "profileMode",
+                mentorshipProfile.mode ||
+                "Hybrid"
+            );
+
+
+            setText(
+                "profileDuration",
+                mentorshipProfile.duration ||
+                "3–6 months"
+            );
+
+
+            setText(
+                "profileCommitment",
+                mentorshipProfile.commitment ||
+                "2–4 hours"
+            );
+
+
+            setText(
+                "profileDescription",
+                mentorshipProfile.description ||
+                "Add your mentorship goals and the areas where you would like industry guidance."
+            );
+
+
+            // Load current values into form.
+
+            document.getElementById(
+                "profileExpertiseInput"
+            ).value =
+                expertise.join(
+                    ", "
+                );
+
+
+            document.getElementById(
+                "profileAvailabilityInput"
+            ).value =
+                mentorshipProfile.availability ||
+                "Open";
+
+
+            document.getElementById(
+                "profileModeInput"
+            ).value =
+                mentorshipProfile.mode ||
+                "Hybrid";
+
+
+            document.getElementById(
+                "profileDurationInput"
+            ).value =
+                mentorshipProfile.duration ||
+                "3–6 months";
+
+
+            document.getElementById(
+                "profileCommitmentInput"
+            ).value =
+                mentorshipProfile.commitment ||
+                "2–4 hours";
+
+
+            document.getElementById(
+                "profileDescriptionInput"
+            ).value =
+                mentorshipProfile.description ||
+                "";
+
+        }
+
+
+        // =====================================================
+        // MODULE TABS
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                ".module-tab"
+            )
+            .forEach(
+                tab => {
+
+                    tab.addEventListener(
+                        "click",
+                        () => {
+
+                            switchModule(
+                                tab.dataset.module
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function switchModule(
+            module
+        ) {
+
+            document
+                .querySelectorAll(
+                    ".module-tab"
+                )
+                .forEach(
+                    tab => {
+
+                        tab.classList.toggle(
+                            "active",
+                            tab.dataset.module ===
+                                module
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".module-section"
+                )
+                .forEach(
+                    section => {
+
+                        section.classList.toggle(
+                            "active",
+                            section.id ===
+                                `${module}Module`
+                        );
+
+                    }
+                );
+
+
+            if (
+                module ===
+                "active"
+            ) {
+
+                renderActiveMentorships();
+
+            }
+
+
+            if (
+                module ===
+                "history"
+            ) {
+
+                renderHistory();
+
+            }
+
+
+            history.replaceState(
+                null,
+                "",
+                `#${module}`
+            );
+
+        }
+
+
+        // =====================================================
+        // PROFILE MODAL
+        // =====================================================
+
+        document
+            .getElementById(
+                "editProfileButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    renderProfile();
+
+                    openModal(
+                        "profileModal"
+                    );
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "profileForm"
+            )
+            .addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+
+                    const expertise =
+                        document.getElementById(
+                            "profileExpertiseInput"
+                        )
+                            .value
+                            .split(",")
+                            .map(
+                                item =>
+                                    item.trim()
+                            )
+                            .filter(
+                                Boolean
+                            );
+
+
+                    mentorshipProfile = {
+
+                        expertise:
+                            expertise,
+
+                        availability:
+                            document.getElementById(
+                                "profileAvailabilityInput"
+                            ).value,
+
+                        mode:
+                            document.getElementById(
+                                "profileModeInput"
+                            ).value,
+
+                        duration:
+                            document.getElementById(
+                                "profileDurationInput"
+                            ).value,
+
+                        commitment:
+                            document.getElementById(
+                                "profileCommitmentInput"
+                            ).value,
+
+                        description:
+                            document.getElementById(
+                                "profileDescriptionInput"
+                            ).value.trim()
+
+                    };
+
+
+                    try {
+
+                        await updateDoc(
+
+                            doc(
+                                db,
+                                "academicians",
+                                currentUser.uid
+                            ),
+
+                            {
+
+                                mentorshipProfile:
+                                    mentorshipProfile,
+
+                                updatedAt:
+                                    serverTimestamp()
+
+                            }
+
+                        );
+
+
+                        renderProfile();
+
+                        updateSummary();
+
+                        closeModal(
+                            "profileModal"
+                        );
+
+
+                        showToast(
+                            "Mentorship preferences saved.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showMessage(
+                            "profileFormMessage",
+                            error.message ||
+                            "Unable to save preferences.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // REQUEST FILTER
+        // =====================================================
+
+        document
+            .getElementById(
+                "requestSearch"
+            )
+            .addEventListener(
+                "input",
+                renderRequests
+            );
+
+
+        document
+            .getElementById(
+                "requestFilter"
+            )
+            .addEventListener(
+                "change",
+                () => {
+
+                    activeRequestFilter =
+                        document.getElementById(
+                            "requestFilter"
+                        ).value;
+
+
+                    renderRequests();
+
+                }
+            );
+
+
+        // =====================================================
+        // REQUESTS
+        // =====================================================
+
+        function renderRequests() {
+
+            const search =
+                document.getElementById(
+                    "requestSearch"
+                )
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const filtered =
+                mentorships.filter(
+                    mentorship => {
+
+                        const status =
+                            normalizeStatus(
+                                mentorship.status
+                            );
+
+
+                        let filterMatch =
+                            true;
+
+
+                        if (
+                            activeRequestFilter ===
+                                "pending"
+                        ) {
+
+                            filterMatch =
+                                status ===
+                                "pending";
+
+                        }
+
+
+                        else if (
+                            activeRequestFilter ===
+                                "rejected"
+                        ) {
+
+                            filterMatch =
+                                status ===
+                                "rejected";
+
+                        }
+
+
+                        else if (
+                            activeRequestFilter ===
+                                "incoming"
+                        ) {
+
+                            filterMatch =
+                                isIncoming(
+                                    mentorship
+                                );
+
+                        }
+
+
+                        else if (
+                            activeRequestFilter ===
+                                "sent"
+                        ) {
+
+                            filterMatch =
+                                !isIncoming(
+                                    mentorship
+                                );
+
+                        }
+
+
+                        const searchable =
+                            [
+
+                                mentorship.mentorName,
+
+                                mentorship.menteeName,
+
+                                mentorship.organization,
+
+                                mentorship.expertise,
+
+                                mentorship.message
+
+                            ]
+                                .filter(Boolean)
+                                .join(" ")
+                                .toLowerCase();
+
+
+                        const searchMatch =
+                            !search ||
+                            searchable.includes(
+                                search
+                            );
+
+
+                        return (
+                            filterMatch &&
+                            searchMatch
+                        );
+
+                    }
+                );
+
+
+            const container =
+                document.getElementById(
+                    "requestList"
+                );
+
+
+            if (
+                filtered.length ===
+                    0
+            ) {
+
+                container.innerHTML =
+                    `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ♧
+                        </div>
+
+                        <h3>
+                            No mentorship requests
+                        </h3>
+
+                        <p>
+                            Mentorship requests and invitations
+                            will appear here.
+                        </p>
+
+                    </div>
+
+                    `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                filtered
+                    .map(
+                        mentorship =>
+                            createRequestCard(
+                                mentorship
+                            )
+                    )
+                    .join("");
+
+
+            attachRequestEvents();
+
+        }
+
+
+        function createRequestCard(
+            mentorship
+        ) {
+
+            const incoming =
+                isIncoming(
+                    mentorship
+                );
+
+
+            const status =
+                normalizeStatus(
+                    mentorship.status
+                );
+
+
+            const person =
+                incoming
+                    ? mentorship.mentorName ||
+                      mentorship.senderName ||
+                      "Industry Mentor"
+                    : mentorship.mentorName ||
+                      "Selected Mentor";
+
+
+            return `
+
+                <article class="request-card">
+
+
+                    <div class="request-main">
+
+
+                        <div>
+
+                            <span class="request-type">
+
+                                MENTORSHIP REQUEST
+
+                            </span>
+
+
+                            <h3>
+
+                                ${escapeHTML(
+                                    mentorship.title ||
+                                    "Industry Mentorship"
+                                )}
+
+                            </h3>
+
+
+                            <p class="request-person">
+
+                                ${escapeHTML(
+                                    person
+                                )}
+
+                                ${
+                                    mentorship.organization
+                                        ? ` · ${escapeHTML(
+                                            mentorship.organization
+                                        )}`
+                                        : ""
+                                }
+
+                            </p>
+
+
+                            ${
+                                mentorship.message
+                                    ? `
+
+                                        <p class="request-message">
+
+                                            ${escapeHTML(
+                                                mentorship.message
+                                            )}
+
+                                        </p>
+
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <div class="request-status-column">
+
+
+                            <span
+                                class="request-status ${getStatusClass(
+                                    status
+                                )}">
+
+                                ${escapeHTML(
+                                    getStatusLabel(
+                                        status
+                                    )
+                                )}
+
+                            </span>
+
+
+                            <div class="request-date">
+
+                                ${formatDate(
+                                    mentorship.createdAt ||
+                                    mentorship.requestDate
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="request-actions">
+
+
+                            <button
+                                type="button"
+                                class="small-button primary"
+                                data-view-request="${escapeAttribute(
+                                    mentorship.id
+                                )}">
+
+                                View
+
+                            </button>
+
+
+                            ${
+                                incoming &&
+                                status ===
+                                    "pending"
+                                    ? `
+
+                                        <button
+                                            type="button"
+                                            class="small-button success"
+                                            data-accept-request="${escapeAttribute(
+                                                mentorship.id
+                                            )}">
+
+                                            Accept
+
+                                        </button>
+
+
+                                        <button
+                                            type="button"
+                                            class="small-button danger"
+                                            data-reject-request="${escapeAttribute(
+                                                mentorship.id
+                                            )}">
+
+                                            Reject
+
+                                        </button>
+
+                                      `
+                                    : ""
+                            }
+
+
+                            ${
+                                status ===
+                                    "active"
+                                    ? `
+
+                                        <button
+                                            type="button"
+                                            class="small-button"
+                                            data-open-active="${escapeAttribute(
+                                                mentorship.id
+                                            )}">
+
+                                            Open
+
+                                        </button>
+
+                                      `
+                                    : ""
+                            }
+
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // REQUEST EVENTS
+        // =====================================================
+
+        function attachRequestEvents() {
+
+            document
+                .querySelectorAll(
+                    "[data-accept-request]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                updateMentorshipStatus(
+                                    button.dataset.acceptRequest,
+                                    "active",
+                                    "Mentorship request accepted by academician."
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-reject-request]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                updateMentorshipStatus(
+                                    button.dataset.rejectRequest,
+                                    "rejected",
+                                    "Mentorship request rejected by academician."
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-open-active]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                selectedMentorshipId =
+                                    button.dataset.openActive;
+
+
+                                switchModule(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-view-request]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                viewRequest(
+                                    button.dataset.viewRequest
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // REQUEST VIEW
+        // =====================================================
+
+        function viewRequest(
+            mentorshipId
+        ) {
+
+            const mentorship =
+                findMentorship(
+                    mentorshipId
+                );
+
+
+            if (
+                !mentorship
+            ) {
+
+                return;
+
+            }
+
+
+            const incoming =
+                isIncoming(
+                    mentorship
+                );
+
+
+            alert(
+
+                `Mentorship Request\n\n` +
+
+                `Title: ${
+                    mentorship.title ||
+                    "Industry Mentorship"
+                }\n` +
+
+                `Mentor: ${
+                    mentorship.mentorName ||
+                    "Industry Mentor"
+                }\n` +
+
+                `Organization: ${
+                    mentorship.organization ||
+                    "Not specified"
+                }\n` +
+
+                `Mode: ${
+                    mentorship.mode ||
+                    "Not specified"
+                }\n` +
+
+                `Duration: ${
+                    mentorship.duration ||
+                    "Not specified"
+                }\n\n` +
+
+                `Message:\n${
+                    mentorship.message ||
+                    "No message provided."
+                }`
+
+            );
+
+        }
+
+
+        // =====================================================
+        // ACTIVE MENTORSHIPS
+        // =====================================================
+
+        function renderActiveMentorships() {
+
+            const container =
+                document.getElementById(
+                    "activeMentorshipContent"
+                );
+
+
+            const active =
+                mentorships.filter(
+                    mentorship =>
+                        normalizeStatus(
+                            mentorship.status
+                        ) ===
+                        "active"
+                );
+
+
+            if (
+                active.length ===
+                    0
+            ) {
+
+                container.innerHTML =
+                    `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ♧
+                        </div>
+
+                        <h3>
+                            No active mentorships
+                        </h3>
+
+                        <p>
+                            Accepted mentorships will appear here
+                            with progress, goals and feedback.
+                        </p>
+
+                    </div>
+
+                    `;
+
+                return;
+
+            }
+
+
+            /*
+                If no mentorship has been explicitly selected,
+                show the first active record.
+            */
+
+            if (
+                !active.some(
+                    item =>
+                        item.id ===
+                        selectedMentorshipId
+                )
+            ) {
+
+                selectedMentorshipId =
+                    active[0].id;
+
+            }
+
+
+            container.innerHTML =
+                active
+                    .map(
+                        mentorship =>
+                            createActiveMentorship(
+                                mentorship
+                            )
+                    )
+                    .join("");
+
+
+            attachActiveEvents();
+
+        }
+
+
+        function createActiveMentorship(
+            mentorship
+        ) {
+
+            const progress =
+                getMentorshipProgress(
+                    mentorship
+                );
+
+
+            const goals =
+                normalizeObjectArray(
+                    mentorship.goals
+                );
+
+
+            const feedback =
+                mentorship.feedback ||
+                "";
+
+
+            return `
+
+                <div class="active-layout">
+
+
+                    <section class="mentor-card">
+
+                        <div class="mentor-card-top">
+
+                            <div class="mentor-avatar">
+
+                                ${escapeHTML(
+                                    getInitial(
+                                        mentorship.mentorName ||
+                                        "M"
+                                    )
+                                )}
+
+                            </div>
+
+
+                            <span
+                                class="request-status status-active">
+
+                                ACTIVE
+
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+
+                            ${escapeHTML(
+                                mentorship.mentorName ||
+                                "Industry Mentor"
+                            )}
+
+                        </h3>
+
+
+                        <p class="mentor-role">
+
+                            ${escapeHTML(
+                                mentorship.organization ||
+                                "Industry Professional"
+                            )}
+
+                        </p>
+
+
+                        <div class="mentor-expertise">
+
+                            ${
+                                normalizeArray(
+                                    mentorship.expertise
+                                )
+                                    .slice(
+                                        0,
+                                        6
+                                    )
+                                    .map(
+                                        item => `
+
+                                            <span class="expertise-tag">
+
+                                                ${escapeHTML(
+                                                    item
+                                                )}
+
+                                            </span>
+
+                                        `
+                                    )
+                                    .join("")
+                            }
+
+                        </div>
+
+
+                        <div class="active-info">
+
+
+                            <div class="info-box">
+
+                                <span>
+                                    MODE
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        mentorship.mode ||
+                                        mentorship.preferredMode ||
+                                        "Hybrid"
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-box">
+
+                                <span>
+                                    DURATION
+                                </span>
+
+                                <strong>
+                                    ${escapeHTML(
+                                        mentorship.duration ||
+                                        "3–6 months"
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-box">
+
+                                <span>
+                                    START
+                                </span>
+
+                                <strong>
+                                    ${formatDate(
+                                        mentorship.startDate
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-box">
+
+                                <span>
+                                    END
+                                </span>
+
+                                <strong>
+                                    ${formatDate(
+                                        mentorship.endDate
+                                    )}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progress-section">
+
+
+                            <div class="progress-section-top">
+
+                                <span>
+                                    MENTORSHIP PROGRESS
+                                </span>
+
+                                <strong>
+                                    ${progress}%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="progress-bar">
+
+                                <div
+                                    style="width:${progress}%">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                display:flex;
+                                gap:7px;
+                                margin-top:15px;
+                            ">
+
+
+                            <button
+                                type="button"
+                                class="small-button"
+                                data-feedback-id="${escapeAttribute(
+                                    mentorship.id
+                                )}">
+
+                                Add Feedback
+
+                            </button>
+
+
+                            ${
+                                progress < 100
+                                    ? `
+
+                                        <button
+                                            type="button"
+                                            class="small-button success"
+                                            data-complete-mentorship="${escapeAttribute(
+                                                mentorship.id
+                                            )}">
+
+                                            Complete
+
+                                        </button>
+
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </section>
+
+
+
+                    <section class="panel">
+
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span>
+                                    MENTORSHIP GOALS
+                                </span>
+
+                                <h3>
+                                    Learning Goals
+                                </h3>
+
+                                <p>
+                                    Track what you aim to achieve
+                                    through the mentorship.
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="small-button"
+                                data-add-goal="${escapeAttribute(
+                                    mentorship.id
+                                )}">
+
+                                + Add Goal
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="goal-list">
+
+
+                            ${
+                                goals.length
+                                    ? goals
+                                        .map(
+                                            goal => `
+
+                                                <div class="goal-item ${
+                                                    goal.completed
+                                                        ? "completed"
+                                                        : ""
+                                                }">
+
+                                                    <div class="goal-check">
+
+                                                        ${
+                                                            goal.completed
+                                                                ? "✓"
+                                                                : ""
+                                                        }
+
+                                                    </div>
+
+
+                                                    <div>
+
+                                                        <div class="goal-title">
+
+                                                            ${escapeHTML(
+                                                                goal.title ||
+                                                                goal.name ||
+                                                                "Goal"
+                                                            )}
+
+                                                        </div>
+
+
+                                                        ${
+                                                            goal.note
+                                                                ? `
+
+                                                                    <div class="goal-note">
+
+                                                                        ${escapeHTML(
+                                                                            goal.note
+                                                                        )}
+
+                                                                    </div>
+
+                                                                  `
+                                                                : ""
+                                                        }
+
+                                                    </div>
+
+                                                </div>
+
+                                            `
+                                        )
+                                        .join("")
+                                    : `
+
+                                        <div
+                                            style="
+                                                padding:25px 0;
+                                                text-align:center;
+                                                color:var(--grey-500);
+                                                font-size:8px;
+                                            ">
+
+                                            No learning goals added yet.
+
+                                        </div>
+
+                                      `
+                            }
+
+                        </div>
+
+                    </section>
+
+
+
+                    <section
+                        class="panel"
+                        style="
+                            grid-column:1/-1;
+                        ">
+
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span>
+                                    FEEDBACK
+                                </span>
+
+                                <h3>
+                                    Mentorship Feedback
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div style="padding:18px;">
+
+                            <p
+                                style="
+                                    color:var(--grey-700);
+                                    font-size:8px;
+                                    line-height:1.7;
+                                ">
+
+                                ${
+                                    feedback
+                                        ? escapeHTML(
+                                            feedback
+                                        )
+                                        : "No feedback recorded yet."
+                                }
+
+                            </p>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            `;
+
+        }
+
+
+        function attachActiveEvents() {
+
+            document
+                .querySelectorAll(
+                    "[data-feedback-id]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                feedbackMentorshipId =
+                                    button.dataset.feedbackId;
+
+
+                                const mentorship =
+                                    findMentorship(
+                                        feedbackMentorshipId
+                                    );
+
+
+                                document.getElementById(
+                                    "feedbackInput"
+                                ).value =
+                                    mentorship?.feedback ||
+                                    "";
+
+
+                                openModal(
+                                    "feedbackModal"
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-complete-mentorship]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                updateMentorshipStatus(
+                                    button.dataset.completeMentorship,
+                                    "completed",
+                                    "Mentorship completed by academician."
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-add-goal]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            async () => {
+
+                                const title =
+                                    prompt(
+                                        "Enter the mentorship goal:"
+                                    );
+
+
+                                if (
+                                    !title ||
+                                    !title.trim()
+                                ) {
+
+                                    return;
+
+                                }
+
+
+                                await addGoal(
+                                    button.dataset.addGoal,
+                                    title.trim()
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // ADD GOAL
+        // =====================================================
+
+        async function addGoal(
+            mentorshipId,
+            title
+        ) {
+
+            const mentorship =
+                findMentorship(
+                    mentorshipId
+                );
+
+
+            if (
+                !mentorship
+            ) {
+
+                return;
+
+            }
+
+
+            const goals =
+                [
+                    ...normalizeObjectArray(
+                        mentorship.goals
+                    ),
+
+                    {
+
+                        title:
+                            title,
+
+                        completed:
+                            false,
+
+                        note:
+                            ""
+
+                    }
+
+                ];
+
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "mentorships",
+                        mentorshipId
+                    ),
+
+                    {
+
+                        goals:
+                            goals,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                await loadMentorships();
+
+                renderActiveMentorships();
+
+                showToast(
+                    "Mentorship goal added.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to add goal.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // HISTORY
+        // =====================================================
+
+        function renderHistory() {
+
+            const container =
+                document.getElementById(
+                    "historyList"
+                );
+
+
+            const completed =
+                mentorships.filter(
+                    mentorship =>
+                        normalizeStatus(
+                            mentorship.status
+                        ) ===
+                        "completed"
+                );
+
+
+            if (
+                completed.length ===
+                    0
+            ) {
+
+                container.innerHTML =
+                    `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ✓
+                        </div>
+
+                        <h3>
+                            No mentorship history
+                        </h3>
+
+                        <p>
+                            Completed mentorships and final feedback
+                            will appear here.
+                        </p>
+
+                    </div>
+
+                    `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                completed
+                    .map(
+                        mentorship => `
+
+                            <article class="history-card">
+
+
+                                <div>
+
+                                    <h3>
+
+                                        ${escapeHTML(
+                                            mentorship.title ||
+                                            "Industry Mentorship"
+                                        )}
+
+                                    </h3>
+
+
+                                    <p class="history-org">
+
+                                        ${escapeHTML(
+                                            mentorship.mentorName ||
+                                            "Industry Mentor"
+                                        )}
+
+                                        ${
+                                            mentorship.organization
+                                                ? ` · ${escapeHTML(
+                                                    mentorship.organization
+                                                )}`
+                                                : ""
+                                        }
+
+                                    </p>
+
+
+                                    <p class="history-date">
+
+                                        ${formatDate(
+                                            mentorship.startDate
+                                        )}
+                                        →
+                                        ${formatDate(
+                                            mentorship.completionDate ||
+                                            mentorship.endDate
+                                        )}
+
+                                    </p>
+
+
+                                    <p class="history-feedback">
+
+                                        ${
+                                            mentorship.finalFeedback ||
+                                            mentorship.feedback ||
+                                            "No final feedback recorded."
+                                        }
+
+                                    </p>
+
+                                </div>
+
+
+                                <div class="history-right">
+
+                                    <span class="request-status status-completed">
+
+                                        COMPLETED
+
+                                    </span>
+
+
+                                    <div
+                                        style="
+                                            margin-top:9px;
+                                            color:var(--grey-500);
+                                            font-size:7px;
+                                        ">
+
+                                        Progress:
+                                        100%
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // UPDATE STATUS
+        // =====================================================
+
+        async function updateMentorshipStatus(
+            mentorshipId,
+            newStatus,
+            note
+        ) {
+
+            const mentorship =
+                findMentorship(
+                    mentorshipId
+                );
+
+
+            if (
+                !mentorship
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const history =
+                    Array.isArray(
+                        mentorship.statusHistory
+                    )
+                        ? [
+                            ...mentorship.statusHistory
+                        ]
+                        : [];
+
+
+                history.push({
+
+                    status:
+                        newStatus,
+
+                    date:
+                        new Date().toISOString(),
+
+                    note:
+                        note
+
+                });
+
+
+                const data = {
+
+                    status:
+                        newStatus,
+
+                    statusHistory:
+                        history,
+
+                    updatedAt:
+                        serverTimestamp()
+
+                };
+
+
+                if (
+                    newStatus ===
+                    "active"
+                ) {
+
+                    data.startDate =
+                        mentorship.startDate ||
+                        new Date().toISOString();
+
+                }
+
+
+                if (
+                    newStatus ===
+                    "completed"
+                ) {
+
+                    data.progress =
+                        100;
+
+                    data.completionDate =
+                        new Date().toISOString();
+
+                }
+
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "mentorships",
+                        mentorshipId
+                    ),
+
+                    data
+
+                );
+
+
+                await loadMentorships();
+
+                updateSummary();
+
+                renderRequests();
+
+                renderActiveMentorships();
+
+                renderHistory();
+
+
+                showToast(
+                    `Mentorship marked as ${getStatusLabel(newStatus)}.`,
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to update mentorship.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // SEND REQUEST
+        // =====================================================
+
+        /*
+            This function is provided for future mentor discovery
+            integration.
+
+            It creates:
+            mentorships/{id}
+        */
+
+        async function sendMentorshipRequest(
+            mentor
+        ) {
+
+            try {
+
+                await addDoc(
+
+                    collection(
+                        db,
+                        "mentorships"
+                    ),
+
+                    {
+
+                        academicianId:
+                            currentUser.uid,
+
+                        menteeId:
+                            currentUser.uid,
+
+                        mentorId:
+                            mentor.id ||
+
+                            mentor.uid ||
+
+                            "",
+
+                        mentorName:
+                            mentor.name ||
+
+                            "Industry Mentor",
+
+                        organization:
+                            mentor.organization ||
+
+                            "",
+
+                        title:
+                            "Industry Mentorship",
+
+                        status:
+                            "pending",
+
+                        mode:
+                            mentor.mode ||
+
+                            mentorshipProfile.mode ||
+
+                            "Hybrid",
+
+                        duration:
+                            mentorshipProfile.duration ||
+
+                            "3–6 months",
+
+                        expertise:
+                            normalizeArray(
+                                mentor.expertise
+                            ),
+
+                        message:
+                            "",
+
+                        goals:
+                            [],
+
+                        progress:
+                            0,
+
+                        statusHistory:
+                            [
+
+                                {
+
+                                    status:
+                                        "pending",
+
+                                    date:
+                                        new Date()
+                                            .toISOString(),
+
+                                    note:
+                                        "Mentorship request sent."
+
+                                }
+
+                            ],
+
+                        createdAt:
+                            serverTimestamp(),
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                await loadMentorships();
+
+                updateSummary();
+
+                renderRequests();
+
+
+                showToast(
+                    "Mentorship request sent.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to send request.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // REQUEST FORM
+        // =====================================================
+
+        document
+            .getElementById(
+                "requestForm"
+            )
+            .addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+
+                    const mentorId =
+                        document.getElementById(
+                            "requestMentorId"
+                        ).value;
+
+
+                    const mentorName =
+                        document.getElementById(
+                            "requestMentorName"
+                        ).value;
+
+
+                    const mode =
+                        document.getElementById(
+                            "requestMode"
+                        ).value;
+
+
+                    const duration =
+                        document.getElementById(
+                            "requestDuration"
+                        ).value;
+
+
+                    const message =
+                        document.getElementById(
+                            "requestMessage"
+                        ).value.trim();
+
+
+                    if (
+                        !mentorId
+                    ) {
+
+                        showMessage(
+                            "requestFormMessage",
+                            "No mentor selected.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        await addDoc(
+
+                            collection(
+                                db,
+                                "mentorships"
+                            ),
+
+                            {
+
+                                academicianId:
+                                    currentUser.uid,
+
+                                menteeId:
+                                    currentUser.uid,
+
+                                mentorId:
+                                    mentorId,
+
+                                mentorName:
+                                    mentorName,
+
+                                title:
+                                    "Industry Mentorship",
+
+                                status:
+                                    "pending",
+
+                                mode:
+                                    mode,
+
+                                duration:
+                                    duration,
+
+                                message:
+                                    message,
+
+                                goals:
+                                    [],
+
+                                progress:
+                                    0,
+
+                                statusHistory:
+                                    [
+
+                                        {
+
+                                            status:
+                                                "pending",
+
+                                            date:
+                                                new Date()
+                                                    .toISOString(),
+
+                                            note:
+                                                "Mentorship request sent by academician."
+
+                                        }
+
+                                    ],
+
+                                createdAt:
+                                    serverTimestamp(),
+
+                                updatedAt:
+                                    serverTimestamp()
+
+                            }
+
+                        );
+
+
+                        await loadMentorships();
+
+                        updateSummary();
+
+                        renderRequests();
+
+                        closeModal(
+                            "requestModal"
+                        );
+
+
+                        showToast(
+                            "Mentorship request sent successfully.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showMessage(
+                            "requestFormMessage",
+                            error.message ||
+                            "Unable to send mentorship request.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // FEEDBACK FORM
+        // =====================================================
+
+        document
+            .getElementById(
+                "feedbackForm"
+            )
+            .addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+
+                    if (
+                        !feedbackMentorshipId
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const feedback =
+                        document.getElementById(
+                            "feedbackInput"
+                        ).value.trim();
+
+
+                    try {
+
+                        await updateDoc(
+
+                            doc(
+                                db,
+                                "mentorships",
+                                feedbackMentorshipId
+                            ),
+
+                            {
+
+                                feedback:
+                                    feedback,
+
+                                updatedAt:
+                                    serverTimestamp()
+
+                            }
+
+                        );
+
+
+                        await loadMentorships();
+
+                        closeModal(
+                            "feedbackModal"
+                        );
+
+                        renderActiveMentorships();
+
+                        renderHistory();
+
+
+                        showToast(
+                            "Mentorship feedback saved.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showToast(
+                            error.message ||
+                            "Unable to save feedback.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // MODALS
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                "[data-close]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            closeModal(
+                                button.dataset.close
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".modal"
+            )
+            .forEach(
+                modal => {
+
+                    modal.addEventListener(
+                        "click",
+                        event => {
+
+                            if (
+                                event.target ===
+                                modal
+                            ) {
+
+                                modal.classList.remove(
+                                    "show"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function openModal(
+            id
+        ) {
+
+            document
+                .getElementById(
+                    id
+                )
+                .classList.add(
+                    "show"
+                );
+
+        }
+
+
+        function closeModal(
+            id
+        ) {
+
+            document
+                .getElementById(
+                    id
+                )
+                .classList.remove(
+                    "show"
+                );
+
+        }
+
+
+        // =====================================================
+        // DATA HELPERS
+        // =====================================================
+
+        function findMentorship(
+            id
+        ) {
+
+            return mentorships.find(
+                item =>
+                    item.id ===
+                    id
+            );
+
+        }
+
+
+        function isIncoming(
+            mentorship
+        ) {
+
+            /*
+                Incoming request is one where the current
+                academician is the recipient/mentor.
+            */
+
+            if (
+                mentorship.mentorId ===
+                currentUser.uid
+            ) {
+
+                return true;
+
+            }
+
+
+            if (
+                mentorship.recipientId ===
+                currentUser.uid
+            ) {
+
+                return true;
+
+            }
+
+
+            /*
+                If an explicit direction is provided.
+            */
+
+            if (
+                mentorship.direction ===
+                    "incoming"
+            ) {
+
+                return true;
+
+            }
+
+
+            return false;
+
+        }
+
+
+        function normalizeStatus(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    "pending"
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            const allowed = [
+
+                "pending",
+                "sent",
+                "active",
+                "completed",
+                "rejected",
+                "cancelled"
+
+            ];
+
+
+            if (
+                allowed.includes(
+                    raw
+                )
+            ) {
+
+                return raw;
+
+            }
+
+
+            if (
+                raw.includes("accept")
+            ) {
+
+                return "active";
+
+            }
+
+
+            if (
+                raw.includes("complete")
+            ) {
+
+                return "completed";
+
+            }
+
+
+            if (
+                raw.includes("reject")
+            ) {
+
+                return "rejected";
+
+            }
+
+
+            return "pending";
+
+        }
+
+
+        function getStatusLabel(
+            status
+        ) {
+
+            const values = {
+
+                pending:
+                    "Pending",
+
+                sent:
+                    "Sent",
+
+                active:
+                    "Active",
+
+                completed:
+                    "Completed",
+
+                rejected:
+                    "Rejected",
+
+                cancelled:
+                    "Cancelled"
+
+            };
+
+
+            return (
+                values[
+                    status
+                ] ||
+                capitalizeWords(
+                    status
+                )
+            );
+
+        }
+
+
+        function getStatusClass(
+            status
+        ) {
+
+            const values = {
+
+                pending:
+                    "status-pending",
+
+                sent:
+                    "status-sent",
+
+                active:
+                    "status-active",
+
+                completed:
+                    "status-completed",
+
+                rejected:
+                    "status-rejected",
+
+                cancelled:
+                    "status-cancelled"
+
+            };
+
+
+            return (
+                values[
+                    status
+                ] ||
+                "status-pending"
+            );
+
+        }
+
+
+        function normalizeArray(
+            value
+        ) {
+
+            if (
+                Array.isArray(
+                    value
+                )
+            ) {
+
+                return value
+                    .map(
+                        item => {
+
+                            if (
+                                typeof item ===
+                                "string"
+                            ) {
+
+                                return item.trim();
+
+                            }
+
+
+                            return (
+                                item?.name ||
+                                item?.title ||
+                                item?.skill ||
+                                ""
+                            )
+                                .toString()
+                                .trim();
+
+                        }
+                    )
+                    .filter(
+                        Boolean
+                    );
+
+            }
+
+
+            if (
+                typeof value ===
+                "string"
+            ) {
+
+                return value
+                    .split(",")
+                    .map(
+                        item =>
+                            item.trim()
+                    )
+                    .filter(
+                        Boolean
+                    );
+
+            }
+
+
+            return [];
+
+        }
+
+
+        function normalizeObjectArray(
+            value
+        ) {
+
+            if (
+                !Array.isArray(
+                    value
+                )
+            ) {
+
+                return [];
+
+            }
+
+
+            return value;
+
+        }
+
+
+        function getDefaultExpertise() {
+
+            const skills =
+                academicianData.skills;
+
+
+            if (
+                Array.isArray(
+                    skills
+                ) &&
+                skills.length
+            ) {
+
+                return normalizeArray(
+                    skills
+                )
+                    .slice(
+                        0,
+                        8
+                    );
+
+            }
+
+
+            return [
+
+                "Industry Knowledge",
+
+                "Research Collaboration",
+
+                "Professional Development"
+
+            ];
+
+        }
+
+
+        function getMentorshipProgress(
+            mentorship
+        ) {
+
+            if (
+                mentorship.progress !==
+                    undefined &&
+                mentorship.progress !==
+                    null
+            ) {
+
+                return Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        Number(
+                            mentorship.progress
+                        ) ||
+                        0
+                    )
+                );
+
+            }
+
+
+            const goals =
+                normalizeObjectArray(
+                    mentorship.goals
+                );
+
+
+            if (
+                !goals.length
+            ) {
+
+                return 0;
+
+            }
+
+
+            const completed =
+                goals.filter(
+                    goal =>
+                        Boolean(
+                            goal.completed
+                        )
+                ).length;
+
+
+            return Math.round(
+                (
+                    completed /
+                    goals.length
+                )
+                *
+                100
+            );
+
+        }
+
+
+        function getTimestamp(
+            item
+        ) {
+
+            const date =
+                getDateValue(
+                    item.updatedAt ||
+                    item.createdAt ||
+                    item.requestDate
+                );
+
+
+            return (
+                date?.getTime() ||
+                0
+            );
+
+        }
+
+
+        function getDateValue(
+            value
+        ) {
+
+            if (
+                !value
+            ) {
+
+                return null;
+
+            }
+
+
+            if (
+                value?.toDate
+            ) {
+
+                try {
+
+                    return value.toDate();
+
+                }
+
+                catch {
+
+                    return null;
+
+                }
+
+            }
+
+
+            if (
+                value instanceof Date
+            ) {
+
+                return value;
+
+            }
+
+
+            const date =
+                new Date(
+                    value
+                );
+
+
+            return Number.isNaN(
+                date.getTime()
+            )
+                ? null
+                : date;
+
+        }
+
+
+        function formatDate(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "Not specified";
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+
+                    day:
+                        "2-digit",
+
+                    month:
+                        "short",
+
+                    year:
+                        "numeric"
+
+                }
+            );
+
+        }
+
+
+        function capitalizeWords(
+            value
+        ) {
+
+            return String(
+                value ||
+                ""
+            )
+                .replace(
+                    /-/g,
+                    " "
+                )
+                .replace(
+                    /\b\w/g,
+                    char =>
+                        char.toUpperCase()
+                );
+
+        }
+
+
+        function getInitial(
+            name
+        ) {
+
+            return (
+                String(
+                    name ||
+                    "A"
+                )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase() ||
+                "A"
+            );
+
+        }
+
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.textContent =
+                    value;
+
+            }
+
+        }
+
+
+        function showMessage(
+            id,
+            message,
+            type
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            element.textContent =
+                message;
+
+
+            element.className =
+                `modal-message ${type || ""}`;
+
+        }
+
+
+        function redirectByRole(
+            role
+        ) {
+
+            switch (
+                role
+            ) {
+
+                case "student":
+
+                    window.location.href =
+                        "../../student/student-home.html";
+
+                    break;
+
+
+                case "industry":
+
+                    window.location.href =
+                        "../../industry/industry-home.html";
+
+                    break;
+
+
+                case "institution":
+
+                    window.location.href =
+                        "../../institution/institution-home.html";
+
+                    break;
+
+
+                default:
+
+                    window.location.href =
+                        "../../login.html";
+
+            }
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ??
+                ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        function escapeAttribute(
+            value
+        ) {
+
+            return escapeHTML(
+                value
+            );
+
+        }
+
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const previous =
+                document.querySelector(
+                    ".toast"
+                );
+
+
+            if (
+                previous
+            ) {
+
+                previous.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.className =
+                `toast ${type || ""}`;
+
+
+            toast.textContent =
+                message;
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        toast.parentNode
+                    ) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                4000
+            );
+
+        }
+
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
+
+        document
+            .getElementById(
+                "menuButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "mentorshipSidebar"
+                        )
+                        .classList.toggle(
+                            "open"
+                        );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".mentorship-nav-item"
+            )
+            .forEach(
+                item => {
+
+                    item.addEventListener(
+                        "click",
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "mentorshipSidebar"
+                                )
+                                .classList.remove(
+                                    "open"
+                                );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        document
+            .getElementById(
+                "logoutBtn"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    try {
+
+                        const button =
+                            document.getElementById(
+                                "logoutBtn"
+                            );
+
+
+                        button.disabled =
+                            true;
+
+
+                        button.textContent =
+                            "Logging out...";
+
+
+                        await signOut(
+                            auth
+                        );
+
+
+                        window.location.href =
+                            "../../index.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showToast(
+                            "Unable to logout.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // HASH MODULE
+        // =====================================================
+
+        const hash =
+            window.location.hash
+                .replace(
+                    "#",
+                    ""
+                );
+
+
+        if (
+            [
+                "profile",
+                "requests",
+                "active",
+                "history"
+            ].includes(
+                hash
+            )
+        ) {
+
+            switchModule(
+                hash
+            );
+
+        }
+
+
+        // =====================================================
+        // ESCAPE MODAL
+        // =====================================================
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    document
+                        .querySelectorAll(
+                            ".modal.show"
+                        )
+                        .forEach(
+                            modal => {
+
+                                modal.classList.remove(
+                                    "show"
+                                );
+
+                            }
+                        );
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,9039 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Learning and Professional Development">
+
+    <title>
+        Learning & Professional Development | SkillBridge
+    </title>
+
+    <style>
+
+        /* =====================================================
+           SKILLBRIDGE ACADEMICIAN
+           LEARNING + FDP + TRAINING + WORKSHOPS + COURSES
+           SINGLE FILE MODULE
+        ===================================================== */
+
+        :root {
+
+            --black: #090909;
+            --black-soft: #111111;
+            --black-light: #1A1A1A;
+
+            --white: #FFFFFF;
+            --off-white: #F7F7F5;
+
+            --grey-100: #F4F4F5;
+            --grey-200: #E4E4E7;
+            --grey-300: #D4D4D8;
+            --grey-400: #A1A1AA;
+            --grey-500: #71717A;
+            --grey-600: #52525B;
+            --grey-700: #3F3F46;
+            --grey-800: #27272A;
+
+            --gold: #D4AF37;
+            --gold-dark: #A88920;
+            --gold-soft: #FBF8ED;
+
+            --green: #26734D;
+            --green-soft: #EDF7F1;
+
+            --red: #B42318;
+            --red-soft: #FFF1F0;
+
+            --blue: #315C91;
+            --blue-soft: #EEF4FB;
+
+            --orange: #A75C00;
+            --orange-soft: #FFF4E5;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        button,
+        input,
+        select,
+        textarea {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor:
+                pointer;
+
+        }
+
+
+        a {
+
+            color:
+                inherit;
+
+            text-decoration:
+                none;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .learning-app {
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .learning-sidebar {
+
+            width:
+                250px;
+
+            min-height:
+                100vh;
+
+            position:
+                fixed;
+
+            top:
+                0;
+
+            left:
+                0;
+
+            bottom:
+                0;
+
+            z-index:
+                100;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            background:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .learning-brand-wrap {
+
+            height:
+                82px;
+
+            padding:
+                0 24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .learning-brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+        }
+
+
+        .learning-brand-mark {
+
+            width:
+                36px;
+
+            height:
+                36px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .learning-brand-name {
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .learning-brand-name span {
+
+            color:
+                var(--gold);
+
+        }
+
+
+        .learning-sidebar-nav {
+
+            padding:
+                25px 14px;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .learning-nav-section {
+
+            padding:
+                0 13px;
+
+            margin-bottom:
+                10px;
+
+            color:
+                #52525B;
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.7px;
+
+        }
+
+
+        .learning-nav-gap {
+
+            margin-top:
+                28px;
+
+        }
+
+
+        .learning-nav-item {
+
+            height:
+                43px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                0 13px;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+            border-left:
+                2px solid transparent;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .learning-nav-item:hover {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+        }
+
+
+        .learning-nav-item.active {
+
+            color:
+                white;
+
+            background:
+                #171717;
+
+            border-left-color:
+                var(--gold);
+
+        }
+
+
+        .learning-nav-icon {
+
+            width:
+                18px;
+
+            text-align:
+                center;
+
+            color:
+                var(--gold);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .learning-sidebar-bottom {
+
+            margin-top:
+                auto;
+
+            padding:
+                17px 14px 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .learning-help {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            padding:
+                5px 8px 16px;
+
+        }
+
+
+        .learning-help-icon {
+
+            width:
+                24px;
+
+            height:
+                24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid #3F3F46;
+
+            color:
+                var(--gold);
+
+            font-size:
+                10px;
+
+        }
+
+
+        .learning-help strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .learning-help span {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                #71717A;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .learning-logout {
+
+            width:
+                100%;
+
+            height:
+                42px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                0 13px;
+
+            border:
+                1px solid #27272A;
+
+            background:
+                transparent;
+
+            color:
+                #A1A1AA;
+
+            font-size:
+                10px;
+
+        }
+
+
+        .learning-logout:hover {
+
+            color:
+                white;
+
+            border-color:
+                #52525B;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .learning-main {
+
+            width:
+                calc(100% - 250px);
+
+            margin-left:
+                250px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .learning-topbar {
+
+            height:
+                75px;
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                50;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 35px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .learning-menu {
+
+            display:
+                none;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .learning-portal-label {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                2px;
+
+        }
+
+
+        .learning-top-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+        }
+
+
+        .learning-top-button {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            position:
+                relative;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-600);
+
+        }
+
+
+        .learning-notification-dot {
+
+            position:
+                absolute;
+
+            top:
+                7px;
+
+            right:
+                7px;
+
+            width:
+                5px;
+
+            height:
+                5px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .learning-top-profile {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+        }
+
+
+        .learning-top-image {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--black);
+
+            color:
+                var(--gold);
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .learning-top-image img {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            object-fit:
+                cover;
+
+        }
+
+
+        .learning-top-info {
+
+            text-align:
+                left;
+
+        }
+
+
+        .learning-top-info strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .learning-top-info span {
+
+            display:
+                block;
+
+            margin-top:
+                2px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .learning-content {
+
+            max-width:
+                1500px;
+
+            margin:
+                auto;
+
+            padding:
+                35px 36px 65px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .learning-page-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            justify-content:
+                space-between;
+
+            gap:
+                25px;
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .learning-eyebrow {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.8px;
+
+        }
+
+
+        .learning-page-header h1 {
+
+            margin-top:
+                7px;
+
+            font-size:
+                34px;
+
+            font-weight:
+                600;
+
+            letter-spacing:
+                -1.3px;
+
+        }
+
+
+        .learning-page-header p {
+
+            max-width:
+                780px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                10px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .learning-header-actions {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .header-button {
+
+            min-height:
+                38px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .header-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        /* =====================================================
+           TABS
+        ===================================================== */
+
+        .learning-tabs {
+
+            display:
+                flex;
+
+            overflow-x:
+                auto;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .learning-tab {
+
+            min-height:
+                49px;
+
+            flex:
+                0 0 auto;
+
+            padding:
+                0 18px;
+
+            border:
+                none;
+
+            border-bottom:
+                2px solid transparent;
+
+            background:
+                transparent;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .learning-tab:hover {
+
+            color:
+                var(--black);
+
+        }
+
+
+        .learning-tab.active {
+
+            color:
+                var(--black);
+
+            border-bottom-color:
+                var(--gold);
+
+        }
+
+
+        .learning-tab span {
+
+            margin-left:
+                4px;
+
+            color:
+                var(--grey-400);
+
+        }
+
+
+        .learning-section {
+
+            display:
+                none;
+
+        }
+
+
+        .learning-section.active {
+
+            display:
+                block;
+
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .learning-summary {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(5,1fr);
+
+            gap:
+                10px;
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .summary-card {
+
+            min-height:
+                105px;
+
+            padding:
+                17px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .summary-card.highlight {
+
+            background:
+                var(--gold-soft);
+
+            border-color:
+                rgba(212,175,55,.45);
+
+        }
+
+
+        .summary-card span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .summary-card strong {
+
+            display:
+                block;
+
+            margin-top:
+                10px;
+
+            font-size:
+                24px;
+
+            font-weight:
+                500;
+
+        }
+
+
+        .summary-card small {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        /* =====================================================
+           SEARCH / FILTER
+        ===================================================== */
+
+        .learning-toolbar {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            padding:
+                16px;
+
+            margin-bottom:
+                12px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .learning-search {
+
+            flex:
+                1;
+
+            max-width:
+                520px;
+
+            height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .learning-search span {
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                14px;
+
+        }
+
+
+        .learning-search input {
+
+            width:
+                100%;
+
+            height:
+                100%;
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .learning-filter-group {
+
+            display:
+                flex;
+
+            gap:
+                8px;
+
+        }
+
+
+        .learning-select {
+
+            min-width:
+                145px;
+
+            height:
+                40px;
+
+            padding:
+                0 9px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            outline:
+                none;
+
+        }
+
+
+        /* =====================================================
+           PROGRAM CARDS
+        ===================================================== */
+
+        .program-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
+
+            gap:
+                12px;
+
+        }
+
+
+        .program-card {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            padding:
+                18px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            transition:
+                .2s;
+
+        }
+
+
+        .program-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                var(--gold);
+
+            box-shadow:
+                0 12px 28px rgba(0,0,0,.06);
+
+        }
+
+
+        .program-top {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+        }
+
+
+        .program-type {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .save-program {
+
+            width:
+                29px;
+
+            height:
+                29px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                13px;
+
+        }
+
+
+        .save-program.saved {
+
+            color:
+                var(--gold-dark);
+
+            background:
+                var(--gold-soft);
+
+            border-color:
+                rgba(212,175,55,.4);
+
+        }
+
+
+        .program-card h3 {
+
+            min-height:
+                38px;
+
+            margin-top:
+                8px;
+
+            font-size:
+                15px;
+
+            font-weight:
+                600;
+
+            line-height:
+                1.3;
+
+        }
+
+
+        .program-provider {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .program-description {
+
+            min-height:
+                52px;
+
+            margin-top:
+                9px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .program-tags {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                5px;
+
+            margin-top:
+                10px;
+
+        }
+
+
+        .program-tag {
+
+            padding:
+                5px 7px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .program-meta {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                9px;
+
+            margin-top:
+                14px;
+
+        }
+
+
+        .program-meta-item span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .program-meta-item strong {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .program-deadline {
+
+            margin-top:
+                13px;
+
+            padding:
+                8px 9px;
+
+            background:
+                var(--gold-soft);
+
+            border:
+                1px solid rgba(212,175,55,.18);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .program-actions {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                7px;
+
+            margin-top:
+                14px;
+
+        }
+
+
+        .program-button {
+
+            min-height:
+                35px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .program-button.primary {
+
+            background:
+                var(--black);
+
+            border-color:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        .program-button:hover {
+
+            border-color:
+                var(--gold);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .program-button.primary:hover {
+
+            background:
+                var(--black-light);
+
+            color:
+                white;
+
+        }
+
+
+        /* =====================================================
+           MY LEARNING
+        ===================================================== */
+
+        .learning-record-list {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                10px;
+
+        }
+
+
+        .learning-record {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(0,1fr)
+                180px
+                auto;
+
+            gap:
+                18px;
+
+            align-items:
+                center;
+
+            padding:
+                19px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .record-type {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.1px;
+
+        }
+
+
+        .learning-record h3 {
+
+            margin-top:
+                6px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .record-provider {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .record-dates {
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .record-status-column {
+
+            text-align:
+                center;
+
+        }
+
+
+        .record-status {
+
+            display:
+                inline-block;
+
+            padding:
+                6px 9px;
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .status-enrolled {
+
+            background:
+                var(--blue-soft);
+
+            color:
+                var(--blue);
+
+        }
+
+
+        .status-in-progress {
+
+            background:
+                var(--gold-soft);
+
+            color:
+                var(--gold-dark);
+
+        }
+
+
+        .status-completed {
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .status-applied {
+
+            background:
+                var(--orange-soft);
+
+            color:
+                var(--orange);
+
+        }
+
+
+        .record-progress {
+
+            margin-top:
+                7px;
+
+        }
+
+
+        .record-progress-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                6px;
+
+        }
+
+
+        .record-progress-bar {
+
+            height:
+                5px;
+
+            margin-top:
+                5px;
+
+            background:
+                var(--grey-200);
+
+        }
+
+
+        .record-progress-bar div {
+
+            height:
+                100%;
+
+            background:
+                var(--gold);
+
+        }
+
+
+        .record-actions {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                6px;
+
+        }
+
+
+        /* =====================================================
+           RECOMMENDATIONS
+        ===================================================== */
+
+        .recommendation-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
+
+            gap:
+                12px;
+
+        }
+
+
+        .recommendation-card {
+
+            padding:
+                19px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .recommendation-card:hover {
+
+            border-color:
+                var(--gold);
+
+        }
+
+
+        .match-score {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            padding:
+                6px 8px;
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .recommendation-card h3 {
+
+            margin-top:
+                9px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .recommendation-card p {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .recommendation-reasons {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                5px;
+
+            margin-top:
+                11px;
+
+        }
+
+
+        .reason {
+
+            padding:
+                5px 7px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                6px;
+
+        }
+
+
+        /* =====================================================
+           DETAIL MODAL
+        ===================================================== */
+
+        .modal {
+
+            position:
+                fixed;
+
+            inset:
+                0;
+
+            z-index:
+                700;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                20px;
+
+            background:
+                rgba(0,0,0,.6);
+
+            opacity:
+                0;
+
+            visibility:
+                hidden;
+
+            pointer-events:
+                none;
+
+            transition:
+                .2s;
+
+        }
+
+
+        .modal.show {
+
+            opacity:
+                1;
+
+            visibility:
+                visible;
+
+            pointer-events:
+                auto;
+
+        }
+
+
+        .modal-content {
+
+            width:
+                100%;
+
+            max-width:
+                850px;
+
+            max-height:
+                92vh;
+
+            overflow-y:
+                auto;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-header {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            padding:
+                22px 23px;
+
+            border-bottom:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-header span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .modal-header h2 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                20px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .modal-header p {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .modal-close {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .modal-body {
+
+            padding:
+                23px;
+
+        }
+
+
+        .detail-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,1fr);
+
+            gap:
+                9px;
+
+        }
+
+
+        .detail-item {
+
+            padding:
+                12px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .detail-item span {
+
+            display:
+                block;
+
+            color:
+                var(--grey-400);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .detail-item strong {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .detail-section {
+
+            margin-top:
+                20px;
+
+        }
+
+
+        .detail-section > span {
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1.2px;
+
+        }
+
+
+        .detail-section h3 {
+
+            margin-top:
+                5px;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .detail-section p {
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-600);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+            white-space:
+                pre-line;
+
+        }
+
+
+        .detail-tags {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                6px;
+
+            margin-top:
+                9px;
+
+        }
+
+
+        .detail-tag {
+
+            padding:
+                6px 8px;
+
+            background:
+                var(--off-white);
+
+            border:
+                1px solid var(--grey-200);
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .modal-footer {
+
+            display:
+                flex;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                8px;
+
+            padding:
+                18px 23px;
+
+            border-top:
+                1px solid var(--grey-200);
+
+        }
+
+
+        .modal-button {
+
+            min-height:
+                38px;
+
+            padding:
+                0 14px;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                8px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .modal-button.primary {
+
+            background:
+                var(--black);
+
+            border-color:
+                var(--black);
+
+            color:
+                white;
+
+        }
+
+
+        /* =====================================================
+           ENROLL MODAL
+        ===================================================== */
+
+        .enroll-context {
+
+            padding:
+                14px;
+
+            background:
+                var(--gold-soft);
+
+            border:
+                1px solid rgba(212,175,55,.2);
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .enroll-context span {
+
+            display:
+                block;
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                6px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .enroll-context strong {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .enroll-context small {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .form-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                13px;
+
+        }
+
+
+        .field {
+
+            min-width:
+                0;
+
+        }
+
+
+        .field.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .field label {
+
+            display:
+                block;
+
+            margin-bottom:
+                6px;
+
+            color:
+                var(--grey-700);
+
+            font-size:
+                7px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .field input,
+        .field select,
+        .field textarea {
+
+            width:
+                100%;
+
+            border:
+                1px solid var(--grey-200);
+
+            background:
+                white;
+
+            outline:
+                none;
+
+            color:
+                var(--grey-800);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .field input,
+        .field select {
+
+            height:
+                39px;
+
+            padding:
+                0 10px;
+
+        }
+
+
+        .field textarea {
+
+            min-height:
+                100px;
+
+            padding:
+                10px;
+
+            resize:
+                vertical;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+
+            border-color:
+                var(--gold);
+
+            box-shadow:
+                0 0 0 3px rgba(212,175,55,.08);
+
+        }
+
+
+        .form-message {
+
+            min-height:
+                20px;
+
+            margin-top:
+                10px;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .form-message.error {
+
+            color:
+                var(--red);
+
+        }
+
+
+        .form-message.success {
+
+            color:
+                var(--green);
+
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-state {
+
+            min-height:
+                270px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                30px;
+
+            text-align:
+                center;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .empty-icon {
+
+            width:
+                52px;
+
+            height:
+                52px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid var(--gold);
+
+            color:
+                var(--gold-dark);
+
+            font-size:
+                20px;
+
+        }
+
+
+        .empty-state h3 {
+
+            margin-top:
+                12px;
+
+            font-size:
+                14px;
+
+            font-weight:
+                550;
+
+        }
+
+
+        .empty-state p {
+
+            max-width:
+                520px;
+
+            margin-top:
+                7px;
+
+            color:
+                var(--grey-500);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            right:
+                24px;
+
+            bottom:
+                24px;
+
+            z-index:
+                1200;
+
+            max-width:
+                360px;
+
+            padding:
+                13px 16px;
+
+            background:
+                white;
+
+            border:
+                1px solid var(--grey-200);
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.12);
+
+            font-size:
+                8px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        .toast.success {
+
+            border-left:
+                3px solid var(--green);
+
+        }
+
+
+        .toast.error {
+
+            border-left:
+                3px solid var(--red);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1250px) {
+
+            .program-grid,
+            .recommendation-grid {
+
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 1150px) {
+
+            .learning-summary {
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+            }
+
+
+            .learning-record {
+
+                grid-template-columns:
+                    1fr 130px auto;
+
+            }
+
+
+            .detail-grid {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 1000px) {
+
+            .learning-summary {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+
+            .learning-toolbar {
+
+                align-items:
+                    stretch;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .learning-search {
+
+                max-width:
+                    none;
+
+            }
+
+
+            .learning-filter-group {
+
+                width:
+                    100%;
+
+            }
+
+
+            .learning-select {
+
+                flex:
+                    1;
+
+            }
+
+
+            .learning-record {
+
+                grid-template-columns:
+                    1fr auto;
+
+            }
+
+
+            .record-status-column {
+
+                text-align:
+                    left;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .learning-sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .25s ease;
+
+            }
+
+
+            .learning-sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .learning-main {
+
+                width:
+                    100%;
+
+                margin-left:
+                    0;
+
+            }
+
+
+            .learning-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .learning-topbar {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .learning-content {
+
+                padding:
+                    28px 20px 50px;
+
+            }
+
+
+            .learning-page-header {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .learning-header-actions {
+
+                width:
+                    100%;
+
+            }
+
+
+            .header-button {
+
+                flex:
+                    1;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .learning-portal-label,
+            .learning-top-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .learning-summary {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .program-grid,
+            .recommendation-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .learning-filter-group {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .learning-select {
+
+                width:
+                    100%;
+
+            }
+
+
+            .learning-record {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .record-status-column {
+
+                text-align:
+                    left;
+
+            }
+
+
+            .record-actions {
+
+                flex-direction:
+                    row;
+
+            }
+
+
+            .program-actions {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .field.full {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .detail-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .learning-content {
+
+                padding:
+                    22px 14px 40px;
+
+            }
+
+
+            .learning-page-header h1 {
+
+                font-size:
+                    28px;
+
+            }
+
+
+            .detail-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .modal-footer {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .modal-button {
+
+                width:
+                    100%;
+
+            }
+
+
+            .record-actions {
+
+                flex-direction:
+                    column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="learning-app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="learning-sidebar"
+            id="learningSidebar">
+
+
+            <div class="learning-brand-wrap">
+
+                <a
+                    href="../academician-home.html"
+                    class="learning-brand">
+
+                    <div class="learning-brand-mark">
+                        SB
+                    </div>
+
+                    <div class="learning-brand-name">
+                        SKILL<span>BRIDGE</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <nav class="learning-sidebar-nav">
+
+
+                <div class="learning-nav-section">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="../academician-home.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ◯
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../skills/skills.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        My Expertise
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../opportunities/opportunities.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ◇
+                    </span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../applications/applications.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="learning-nav-section learning-nav-gap">
+
+                    COLLABORATION
+
+                </div>
+
+
+                <a
+                    href="../collaborations/collaborations.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ↔
+                    </span>
+
+                    <span>
+                        Collaborations
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../mentorship/mentorship.html"
+                    class="learning-nav-item">
+
+                    <span class="learning-nav-icon">
+                        ♧
+                    </span>
+
+                    <span>
+                        Mentorship
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="learning.html"
+                    class="learning-nav-item active">
+
+                    <span class="learning-nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Learning & Development
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="learning-sidebar-bottom">
+
+
+                <div class="learning-help">
+
+                    <div class="learning-help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logoutBtn"
+                    class="learning-logout">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="learning-main">
+
+
+            <header class="learning-topbar">
+
+
+                <button
+                    id="menuButton"
+                    class="learning-menu">
+
+                    ☰
+
+                </button>
+
+
+                <div class="learning-portal-label">
+                    ACADEMICIAN PORTAL
+                </div>
+
+
+                <div class="learning-top-actions">
+
+
+                    <button
+                        class="learning-top-button">
+
+                        ⌕
+
+                    </button>
+
+
+                    <button
+                        class="learning-top-button">
+
+                        ♢
+
+                        <span
+                            class="learning-notification-dot">
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="learning-top-profile">
+
+                        <div
+                            class="learning-top-image"
+                            id="topProfileImage">
+
+                            <span>
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div class="learning-top-info">
+
+                            <strong id="topName">
+                                Academician
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="learning-content">
+
+
+                <!-- =================================================
+                     HEADER
+                ================================================== -->
+
+                <section class="learning-page-header">
+
+
+                    <div>
+
+                        <span class="learning-eyebrow">
+                            PROFESSIONAL DEVELOPMENT
+                        </span>
+
+                        <h1>
+                            Learning &amp; Development
+                        </h1>
+
+                        <p>
+                            Discover industry training, Faculty
+                            Development Programs, workshops, courses,
+                            certification programs and learning
+                            initiatives aligned with your professional
+                            goals and industry demand.
+                        </p>
+
+                    </div>
+
+
+                    <div class="learning-header-actions">
+
+
+                        <a
+                            href="../opportunities/opportunities.html"
+                            class="header-button">
+
+                            Find Opportunities
+
+                        </a>
+
+
+                        <a
+                            href="../academician-home.html"
+                            class="header-button">
+
+                            Dashboard
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     TABS
+                ================================================== -->
+
+                <div class="learning-tabs">
+
+
+                    <button
+                        class="learning-tab active"
+                        data-section="discover">
+
+                        DISCOVER
+
+                        <span
+                            id="discoverCount">
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="learning-tab"
+                        data-section="my-learning">
+
+                        MY LEARNING
+
+                        <span
+                            id="myLearningCount">
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="learning-tab"
+                        data-section="fdp">
+
+                        FDPS
+
+                        <span
+                            id="fdpCount">
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="learning-tab"
+                        data-section="recommendations">
+
+                        RECOMMENDED
+
+                        <span
+                            id="recommendationCount">
+                            0
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DISCOVER
+                ================================================== -->
+
+                <section
+                    class="learning-section active"
+                    id="discoverSection">
+
+
+                    <div class="learning-summary">
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                AVAILABLE
+                            </span>
+
+                            <strong
+                                id="availableCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Learning programs available
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                ENROLLED
+                            </span>
+
+                            <strong
+                                id="enrolledCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Programs in your learning journey
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                IN PROGRESS
+                            </span>
+
+                            <strong
+                                id="inProgressCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Currently being completed
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card">
+
+                            <span>
+                                COMPLETED
+                            </span>
+
+                            <strong
+                                id="completedCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Completed learning programs
+                            </small>
+
+                        </div>
+
+
+                        <div class="summary-card highlight">
+
+                            <span>
+                                RECOMMENDED
+                            </span>
+
+                            <strong
+                                id="recommendedSummaryCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Matched to your profile
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="learning-toolbar">
+
+
+                        <div class="learning-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                type="search"
+                                id="programSearch"
+                                placeholder="Search course, FDP, training, workshop or provider...">
+
+                        </div>
+
+
+                        <div class="learning-filter-group">
+
+
+                            <select
+                                class="learning-select"
+                                id="programTypeFilter">
+
+                                <option value="all">
+                                    All Types
+                                </option>
+
+                                <option value="course">
+                                    Courses
+                                </option>
+
+                                <option value="fdp">
+                                    FDP
+                                </option>
+
+                                <option value="training">
+                                    Industry Training
+                                </option>
+
+                                <option value="workshop">
+                                    Workshops
+                                </option>
+
+                                <option value="certification">
+                                    Certification Programs
+                                </option>
+
+                                <option value="mentorship">
+                                    Learning Mentorship
+                                </option>
+
+                            </select>
+
+
+                            <select
+                                class="learning-select"
+                                id="programModeFilter">
+
+                                <option value="all">
+                                    All Modes
+                                </option>
+
+                                <option value="remote">
+                                    Remote
+                                </option>
+
+                                <option value="hybrid">
+                                    Hybrid
+                                </option>
+
+                                <option value="on-site">
+                                    On-site
+                                </option>
+
+                            </select>
+
+
+                            <select
+                                class="learning-select"
+                                id="programSort">
+
+                                <option value="newest">
+                                    Newest
+                                </option>
+
+                                <option value="deadline">
+                                    Deadline
+                                </option>
+
+                                <option value="title">
+                                    Title
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        id="programGrid"
+                        class="program-grid">
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     MY LEARNING
+                ================================================== -->
+
+                <section
+                    class="learning-section"
+                    id="my-learningSection">
+
+
+                    <div
+                        id="myLearningList"
+                        class="learning-record-list">
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     FDP
+                ================================================== -->
+
+                <section
+                    class="learning-section"
+                    id="fdpSection">
+
+
+                    <div class="learning-toolbar">
+
+
+                        <div class="learning-search">
+
+                            <span>
+                                ⌕
+                            </span>
+
+                            <input
+                                type="search"
+                                id="fdpSearch"
+                                placeholder="Search FDPs...">
+
+                        </div>
+
+
+                        <select
+                            class="learning-select"
+                            id="fdpSort">
+
+                            <option value="newest">
+                                Newest
+                            </option>
+
+                            <option value="deadline">
+                                Deadline
+                            </option>
+
+                            <option value="date">
+                                Start Date
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div
+                        id="fdpGrid"
+                        class="program-grid">
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     RECOMMENDATIONS
+                ================================================== -->
+
+                <section
+                    class="learning-section"
+                    id="recommendationsSection">
+
+
+                    <div
+                        id="recommendationGrid"
+                        class="recommendation-grid">
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         PROGRAM DETAILS MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="programDetailsModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+
+                <div>
+
+                    <span
+                        id="detailType">
+                        PROGRAM
+                    </span>
+
+                    <h2
+                        id="detailTitle">
+                        Learning Program
+                    </h2>
+
+                    <p
+                        id="detailProvider">
+                        Provider
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="modal-close"
+                    data-close="programDetailsModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            MODE
+                        </span>
+
+                        <strong
+                            id="detailMode">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            DURATION
+                        </span>
+
+                        <strong
+                            id="detailDuration">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            START DATE
+                        </span>
+
+                        <strong
+                            id="detailStartDate">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            DEADLINE
+                        </span>
+
+                        <strong
+                            id="detailDeadline">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="detail-section">
+
+                    <span>
+                        OVERVIEW
+                    </span>
+
+                    <h3>
+                        Program Description
+                    </h3>
+
+                    <p
+                        id="detailDescription">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <div class="detail-section">
+
+                    <span>
+                        LEARNING OUTCOMES
+                    </span>
+
+                    <h3>
+                        What you will gain
+                    </h3>
+
+                    <p
+                        id="detailOutcomes">
+                        —
+                    </p>
+
+                </div>
+
+
+
+                <div class="detail-section">
+
+                    <span>
+                        SKILLS
+                    </span>
+
+                    <h3>
+                        Skills Covered
+                    </h3>
+
+                    <div
+                        id="detailSkills"
+                        class="detail-tags">
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="detail-section">
+
+                    <span>
+                        ELIGIBILITY
+                    </span>
+
+                    <h3>
+                        Eligibility
+                    </h3>
+
+                    <p
+                        id="detailEligibility">
+                        —
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+
+                <button
+                    class="modal-button"
+                    id="detailSaveButton">
+
+                    ☆ Save Program
+
+                </button>
+
+
+                <button
+                    class="modal-button primary"
+                    id="detailEnrollButton">
+
+                    Enroll / Apply
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         ENROLL MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="enrollModal">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+
+                <div>
+
+                    <span>
+                        LEARNING PROGRAM
+                    </span>
+
+                    <h2>
+                        Enroll / Apply
+                    </h2>
+
+                </div>
+
+
+                <button
+                    class="modal-close"
+                    data-close="enrollModal">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <form
+                class="modal-body"
+                id="enrollForm">
+
+
+                <div class="enroll-context">
+
+
+                    <span>
+                        SELECTED PROGRAM
+                    </span>
+
+                    <strong
+                        id="enrollTitle">
+                        Program
+                    </strong>
+
+                    <small
+                        id="enrollProvider">
+                        Provider
+                    </small>
+
+                </div>
+
+
+
+                <div class="form-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            Participation Mode
+                        </label>
+
+                        <select
+                            id="enrollMode">
+
+                            <option value="Remote">
+                                Remote
+                            </option>
+
+                            <option value="Hybrid">
+                                Hybrid
+                            </option>
+
+                            <option value="On-site">
+                                On-site
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Expected Start
+                        </label>
+
+                        <input
+                            type="date"
+                            id="enrollStart">
+
+                    </div>
+
+
+                    <div class="field full">
+
+                        <label>
+                            Motivation / Learning Goal
+                        </label>
+
+                        <textarea
+                            id="enrollMessage"
+                            placeholder="Explain what you want to learn or achieve through this program..."></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="enrollMessageOutput"
+                    class="form-message">
+                </div>
+
+
+                <div class="modal-footer">
+
+
+                    <button
+                        type="button"
+                        class="modal-button"
+                        data-close="enrollModal">
+
+                        Cancel
+
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        class="modal-button primary">
+
+                        Submit Application
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <script type="module">
+
+
+        // =====================================================
+        // FIREBASE IMPORTS
+        // =====================================================
+
+        import {
+            initializeApp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            addDoc,
+            updateDoc,
+            collection,
+            getDocs,
+            serverTimestamp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        // =====================================================
+        // FIREBASE CONFIG
+        // =====================================================
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
+
+            authDomain:
+                "ansora-27fe4.firebaseapp.com",
+
+            projectId:
+                "ansora-27fe4",
+
+            storageBucket:
+                "ansora-27fe4.firebasestorage.app",
+
+            messagingSenderId:
+                "230795678686",
+
+            appId:
+                "1:230795678686:web:06f0ccd7b8717ac13ac34f"
+
+        };
+
+
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const auth =
+            getAuth(
+                app
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
+
+
+        // =====================================================
+        // STATE
+        // =====================================================
+
+        let currentUser =
+            null;
+
+        let userData =
+            {};
+
+        let academicianData =
+            {};
+
+        let programs =
+            [];
+
+        let learningRecords =
+            [];
+
+        let savedProgramIds =
+            [];
+
+        let selectedProgram =
+            null;
+
+
+        // =====================================================
+        // AUTH
+        // =====================================================
+
+        onAuthStateChanged(
+            auth,
+            async user => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "../../login.html";
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    user;
+
+
+                try {
+
+                    await loadUserData();
+
+                    await loadAcademicianData();
+
+                    await loadPrograms();
+
+                    await loadLearningRecords();
+
+                    updateTopProfile();
+
+                    initializePage();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Learning page error:",
+                        error
+                    );
+
+
+                    showToast(
+                        "Unable to load learning data.",
+                        "error"
+                    );
+
+
+                    renderProgramError();
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // USER DATA
+        // =====================================================
+
+        async function loadUserData() {
+
+            const reference =
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            if (
+                snapshot.exists()
+            ) {
+
+                userData =
+                    snapshot.data();
+
+            }
+
+            else {
+
+                userData = {
+
+                    name:
+                        currentUser.displayName ||
+                        "Academician",
+
+                    email:
+                        currentUser.email ||
+                        "",
+
+                    role:
+                        "academician",
+
+                    photoURL:
+                        ""
+
+                };
+
+
+                await setDoc(
+                    reference,
+                    userData
+                );
+
+            }
+
+
+            if (
+                userData.role &&
+                userData.role !==
+                    "academician"
+            ) {
+
+                redirectByRole(
+                    userData.role
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ACADEMICIAN DATA
+        // =====================================================
+
+        async function loadAcademicianData() {
+
+            const reference =
+                doc(
+                    db,
+                    "academicians",
+                    currentUser.uid
+                );
+
+
+            const snapshot =
+                await getDoc(
+                    reference
+                );
+
+
+            academicianData =
+                snapshot.exists()
+                    ? snapshot.data()
+                    : {};
+
+        }
+
+
+        // =====================================================
+        // PROGRAMS
+        // =====================================================
+
+        async function loadPrograms() {
+
+            programs =
+                [];
+
+
+            const reference =
+                collection(
+                    db,
+                    "learningPrograms"
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    reference
+                );
+
+
+            snapshot.forEach(
+                documentSnapshot => {
+
+                    programs.push({
+
+                        id:
+                            documentSnapshot.id,
+
+                        ...documentSnapshot.data()
+
+                    });
+
+                }
+            );
+
+
+            /*
+                Also support learning programs published
+                by systems using the opportunities collection.
+            */
+
+            if (
+                programs.length ===
+                0
+            ) {
+
+                try {
+
+                    const opportunitySnapshot =
+                        await getDocs(
+                            collection(
+                                db,
+                                "opportunities"
+                            )
+                        );
+
+
+                    opportunitySnapshot.forEach(
+                        documentSnapshot => {
+
+                            const data =
+                                documentSnapshot.data();
+
+
+                            const type =
+                                normalizeProgramType(
+                                    data.type ||
+                                    data.opportunityType ||
+                                    data.category ||
+                                    ""
+                                );
+
+
+                            if (
+                                [
+                                    "course",
+                                    "fdp",
+                                    "training",
+                                    "workshop",
+                                    "certification",
+                                    "mentorship"
+                                ].includes(
+                                    type
+                                )
+                            ) {
+
+                                programs.push({
+
+                                    id:
+                                        documentSnapshot.id,
+
+                                    ...data
+
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+
+                catch (
+                    fallbackError
+                ) {
+
+                    console.warn(
+                        "Learning fallback unavailable:",
+                        fallbackError
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        // =====================================================
+        // LEARNING RECORDS
+        // =====================================================
+
+        async function loadLearningRecords() {
+
+            learningRecords =
+                [];
+
+
+            /*
+                Preferred collection:
+                learningEnrollments
+            */
+
+            try {
+
+                const reference =
+                    collection(
+                        db,
+                        "learningEnrollments"
+                    );
+
+
+                const snapshot =
+                    await getDocs(
+                        reference
+                    );
+
+
+                snapshot.forEach(
+                    documentSnapshot => {
+
+                        const data =
+                            documentSnapshot.data();
+
+
+                        if (
+                            data.academicianId ===
+                            currentUser.uid
+                        ) {
+
+                            learningRecords.push({
+
+                                id:
+                                    documentSnapshot.id,
+
+                                ...data
+
+                            });
+
+                        }
+
+                    }
+                );
+
+            }
+
+            catch (
+                error
+            ) {
+
+                console.warn(
+                    "learningEnrollments unavailable:",
+                    error
+                );
+
+            }
+
+
+            /*
+                Also support learningApplications.
+            */
+
+            if (
+                learningRecords.length ===
+                0
+            ) {
+
+                try {
+
+                    const reference =
+                        collection(
+                            db,
+                            "learningApplications"
+                        );
+
+
+                    const snapshot =
+                        await getDocs(
+                            reference
+                        );
+
+
+                    snapshot.forEach(
+                        documentSnapshot => {
+
+                            const data =
+                                documentSnapshot.data();
+
+
+                            if (
+                                data.academicianId ===
+                                currentUser.uid
+                            ) {
+
+                                learningRecords.push({
+
+                                    id:
+                                        documentSnapshot.id,
+
+                                    ...data
+
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+
+                catch (
+                    error
+                ) {
+
+                    console.warn(
+                        "learningApplications unavailable:",
+                        error
+                    );
+
+                }
+
+            }
+
+
+            learningRecords.sort(
+                (
+                    a,
+                    b
+                ) =>
+                    getTimestamp(b) -
+                    getTimestamp(a)
+            );
+
+
+            savedProgramIds =
+                normalizeSavedIds(
+                    academicianData.savedLearningPrograms
+                );
+
+        }
+
+
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        function initializePage() {
+
+            updateTopProfile();
+
+            updateSummary();
+
+            renderPrograms();
+
+            renderMyLearning();
+
+            renderFDPs();
+
+            renderRecommendations();
+
+        }
+
+
+        // =====================================================
+        // TOP PROFILE
+        // =====================================================
+
+        function updateTopProfile() {
+
+            const name =
+                userData.name ||
+                currentUser.displayName ||
+                "Academician";
+
+
+            document.getElementById(
+                "topName"
+            ).textContent =
+                name;
+
+
+            const container =
+                document.getElementById(
+                    "topProfileImage"
+                );
+
+
+            if (
+                userData.photoURL
+            ) {
+
+                container.innerHTML =
+                    "";
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    userData.photoURL;
+
+
+                img.alt =
+                    "Academician profile";
+
+
+                img.onerror =
+                    () => {
+
+                        showInitial(
+                            container,
+                            getInitial(name)
+                        );
+
+                    };
+
+
+                container.appendChild(
+                    img
+                );
+
+            }
+
+            else {
+
+                showInitial(
+                    container,
+                    getInitial(name)
+                );
+
+            }
+
+        }
+
+
+        function showInitial(
+            container,
+            initial
+        ) {
+
+            container.innerHTML =
+                `
+
+                <span>
+                    ${escapeHTML(initial)}
+                </span>
+
+                `;
+
+        }
+
+
+        // =====================================================
+        // SUMMARY
+        // =====================================================
+
+        function updateSummary() {
+
+            const enrolled =
+                learningRecords.filter(
+                    record =>
+                        [
+                            "enrolled",
+                            "in-progress",
+                            "completed",
+                            "applied"
+                        ].includes(
+                            normalizeLearningStatus(
+                                record.status
+                            )
+                        )
+                ).length;
+
+
+            const inProgress =
+                learningRecords.filter(
+                    record =>
+                        normalizeLearningStatus(
+                            record.status
+                        ) ===
+                        "in-progress"
+                ).length;
+
+
+            const completed =
+                learningRecords.filter(
+                    record =>
+                        normalizeLearningStatus(
+                            record.status
+                        ) ===
+                        "completed"
+                ).length;
+
+
+            const fdpPrograms =
+                programs.filter(
+                    program =>
+                        normalizeProgramType(
+                            getProgramType(
+                                program
+                            )
+                        ) ===
+                        "fdp"
+                ).length;
+
+
+            const recommended =
+                getRecommendations().length;
+
+
+            setText(
+                "availableCount",
+                programs.length
+            );
+
+
+            setText(
+                "enrolledCount",
+                enrolled
+            );
+
+
+            setText(
+                "inProgressCount",
+                inProgress
+            );
+
+
+            setText(
+                "completedCount",
+                completed
+            );
+
+
+            setText(
+                "recommendedSummaryCount",
+                recommended
+            );
+
+
+            setText(
+                "discoverCount",
+                programs.length
+            );
+
+
+            setText(
+                "myLearningCount",
+                learningRecords.length
+            );
+
+
+            setText(
+                "fdpCount",
+                fdpPrograms
+            );
+
+
+            setText(
+                "recommendationCount",
+                recommended
+            );
+
+        }
+
+
+        // =====================================================
+        // TABS
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                ".learning-tab"
+            )
+            .forEach(
+                tab => {
+
+                    tab.addEventListener(
+                        "click",
+                        () => {
+
+                            switchSection(
+                                tab.dataset.section
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function switchSection(
+            section
+        ) {
+
+            document
+                .querySelectorAll(
+                    ".learning-tab"
+                )
+                .forEach(
+                    tab => {
+
+                        tab.classList.toggle(
+                            "active",
+                            tab.dataset.section ===
+                                section
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    ".learning-section"
+                )
+                .forEach(
+                    element => {
+
+                        element.classList.toggle(
+                            "active",
+                            element.id ===
+                                `${section}Section`
+                        );
+
+                    }
+                );
+
+
+            history.replaceState(
+                null,
+                "",
+                `#${section}`
+            );
+
+        }
+
+
+        const initialHash =
+            window.location.hash
+                .replace(
+                    "#",
+                    ""
+                );
+
+
+        if (
+            [
+                "discover",
+                "my-learning",
+                "fdp",
+                "recommendations"
+            ].includes(
+                initialHash
+            )
+        ) {
+
+            switchSection(
+                initialHash
+            );
+
+        }
+
+
+        // =====================================================
+        // PROGRAM FILTERS
+        // =====================================================
+
+        document
+            .getElementById(
+                "programSearch"
+            )
+            .addEventListener(
+                "input",
+                renderPrograms
+            );
+
+
+        document
+            .getElementById(
+                "programTypeFilter"
+            )
+            .addEventListener(
+                "change",
+                renderPrograms
+            );
+
+
+        document
+            .getElementById(
+                "programModeFilter"
+            )
+            .addEventListener(
+                "change",
+                renderPrograms
+            );
+
+
+        document
+            .getElementById(
+                "programSort"
+            )
+            .addEventListener(
+                "change",
+                renderPrograms
+            );
+
+
+        // =====================================================
+        // RENDER PROGRAMS
+        // =====================================================
+
+        function renderPrograms() {
+
+            const search =
+                document
+                    .getElementById(
+                        "programSearch"
+                    )
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const type =
+                document.getElementById(
+                    "programTypeFilter"
+                ).value;
+
+
+            const mode =
+                document.getElementById(
+                    "programModeFilter"
+                ).value;
+
+
+            let filtered =
+                programs.filter(
+                    program => {
+
+                        const searchable =
+                            [
+
+                                getProgramTitle(program),
+
+                                getProgramProvider(program),
+
+                                getProgramDescription(program),
+
+                                getProgramDomain(program),
+
+                                ...getProgramSkills(program)
+
+                            ]
+                                .join(" ")
+                                .toLowerCase();
+
+
+                        const searchMatch =
+                            !search ||
+                            searchable.includes(
+                                search
+                            );
+
+
+                        const typeMatch =
+                            type ===
+                                "all" ||
+                            normalizeProgramType(
+                                getProgramType(
+                                    program
+                                )
+                            ) ===
+                                type;
+
+
+                        const modeMatch =
+                            mode ===
+                                "all" ||
+                            normalizeMode(
+                                getProgramMode(
+                                    program
+                                )
+                            ) ===
+                                mode;
+
+
+                        return (
+                            searchMatch &&
+                            typeMatch &&
+                            modeMatch
+                        );
+
+                    }
+                );
+
+
+            filtered =
+                sortPrograms(
+                    filtered
+                );
+
+
+            const container =
+                document.getElementById(
+                    "programGrid"
+                );
+
+
+            if (
+                filtered.length ===
+                0
+            ) {
+
+                container.innerHTML =
+                    emptyHTML(
+                        "No learning programs found",
+                        "Try changing your search or filters."
+                    );
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                filtered
+                    .map(
+                        createProgramCard
+                    )
+                    .join("");
+
+
+            attachProgramEvents();
+
+        }
+
+
+        // =====================================================
+        // SORT
+        // =====================================================
+
+        function sortPrograms(
+            list
+        ) {
+
+            const sorted =
+                [
+                    ...list
+                ];
+
+
+            const sort =
+                document.getElementById(
+                    "programSort"
+                ).value;
+
+
+            if (
+                sort ===
+                "deadline"
+            ) {
+
+                sorted.sort(
+                    (
+                        a,
+                        b
+                    ) => {
+
+                        const dateA =
+                            getDateValue(
+                                getProgramDeadline(
+                                    a
+                                )
+                            );
+
+
+                        const dateB =
+                            getDateValue(
+                                getProgramDeadline(
+                                    b
+                                )
+                            );
+
+
+                        if (!dateA)
+                            return 1;
+
+
+                        if (!dateB)
+                            return -1;
+
+
+                        return (
+                            dateA -
+                            dateB
+                        );
+
+                    }
+                );
+
+            }
+
+
+            else if (
+                sort ===
+                "title"
+            ) {
+
+                sorted.sort(
+                    (
+                        a,
+                        b
+                    ) =>
+                        getProgramTitle(a)
+                            .localeCompare(
+                                getProgramTitle(b)
+                            )
+                );
+
+            }
+
+
+            else {
+
+                sorted.sort(
+                    (
+                        a,
+                        b
+                    ) => {
+
+                        return (
+                            getDateValue(
+                                getCreatedAt(a)
+                            )?.getTime() ||
+                            0
+                        )
+                        -
+                        (
+                            getDateValue(
+                                getCreatedAt(b)
+                            )?.getTime() ||
+                            0
+                        );
+
+                    }
+                )
+                    .reverse();
+
+            }
+
+
+            return sorted;
+
+        }
+
+
+        // =====================================================
+        // PROGRAM CARD
+        // =====================================================
+
+        function createProgramCard(
+            program
+        ) {
+
+            const saved =
+                savedProgramIds.includes(
+                    program.id
+                );
+
+
+            const skills =
+                getProgramSkills(
+                    program
+                );
+
+
+            const visibleSkills =
+                skills.slice(
+                    0,
+                    4
+                );
+
+
+            const extra =
+                Math.max(
+                    0,
+                    skills.length -
+                    visibleSkills.length
+                );
+
+
+            const deadline =
+                getProgramDeadline(
+                    program
+                );
+
+
+            return `
+
+                <article class="program-card">
+
+
+                    <div class="program-top">
+
+                        <span class="program-type">
+
+                            ${escapeHTML(
+                                displayProgramType(
+                                    normalizeProgramType(
+                                        getProgramType(
+                                            program
+                                        )
+                                    )
+                                ).toUpperCase()
+                            )}
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="save-program ${
+                                saved
+                                    ? "saved"
+                                    : ""
+                            }"
+                            data-save-program="${escapeAttribute(
+                                program.id
+                            )}">
+
+                            ${
+                                saved
+                                    ? "★"
+                                    : "☆"
+                            }
+
+                        </button>
+
+                    </div>
+
+
+                    <h3>
+
+                        ${escapeHTML(
+                            getProgramTitle(
+                                program
+                            )
+                        )}
+
+                    </h3>
+
+
+                    <p class="program-provider">
+
+                        ${escapeHTML(
+                            getProgramProvider(
+                                program
+                            )
+                        )}
+
+                    </p>
+
+
+                    <p class="program-description">
+
+                        ${escapeHTML(
+                            getProgramDescription(
+                                program
+                            )
+                        )}
+
+                    </p>
+
+
+                    <div class="program-tags">
+
+                        ${
+                            visibleSkills
+                                .map(
+                                    skill => `
+
+                                        <span class="program-tag">
+
+                                            ${escapeHTML(
+                                                skill
+                                            )}
+
+                                        </span>
+
+                                    `
+                                )
+                                .join("")
+                        }
+
+
+                        ${
+                            extra > 0
+                                ? `
+
+                                    <span class="program-tag">
+
+                                        +${extra}
+                                        more
+
+                                    </span>
+
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="program-meta">
+
+
+                        <div class="program-meta-item">
+
+                            <span>
+                                MODE
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    formatMode(
+                                        getProgramMode(
+                                            program
+                                        )
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="program-meta-item">
+
+                            <span>
+                                DURATION
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    getProgramDuration(
+                                        program
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="program-meta-item">
+
+                            <span>
+                                START
+                            </span>
+
+                            <strong>
+                                ${formatDate(
+                                    getProgramStartDate(
+                                        program
+                                    )
+                                )}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="program-meta-item">
+
+                            <span>
+                                DOMAIN
+                            </span>
+
+                            <strong>
+                                ${escapeHTML(
+                                    getProgramDomain(
+                                        program
+                                    ) ||
+                                    "General"
+                                )}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="program-deadline">
+
+                        ${escapeHTML(
+                            getDeadlineLabel(
+                                deadline
+                            )
+                        )}
+
+                    </div>
+
+
+                    <div class="program-actions">
+
+
+                        <button
+                            type="button"
+                            class="program-button"
+                            data-view-program="${escapeAttribute(
+                                program.id
+                            )}">
+
+                            View Details
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="program-button primary"
+                            data-enroll-program="${escapeAttribute(
+                                program.id
+                            )}">
+
+                            Enroll / Apply
+
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // PROGRAM EVENTS
+        // =====================================================
+
+        function attachProgramEvents() {
+
+            document
+                .querySelectorAll(
+                    "[data-save-program]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            async () => {
+
+                                await toggleSavedProgram(
+                                    button.dataset.saveProgram
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-view-program]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                openProgramDetails(
+                                    button.dataset.viewProgram
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-enroll-program]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                openEnrollModal(
+                                    button.dataset.enrollProgram
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // SAVE PROGRAM
+        // =====================================================
+
+        async function toggleSavedProgram(
+            programId
+        ) {
+
+            const alreadySaved =
+                savedProgramIds.includes(
+                    programId
+                );
+
+
+            if (
+                alreadySaved
+            ) {
+
+                savedProgramIds =
+                    savedProgramIds.filter(
+                        id =>
+                            id !==
+                            programId
+                    );
+
+            }
+
+            else {
+
+                savedProgramIds = [
+
+                    ...savedProgramIds,
+
+                    programId
+
+                ];
+
+            }
+
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "academicians",
+                        currentUser.uid
+                    ),
+
+                    {
+
+                        savedLearningPrograms:
+                            savedProgramIds,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                renderPrograms();
+
+                updateSummary();
+
+
+                showToast(
+                    alreadySaved
+                        ? "Program removed from saved items."
+                        : "Program saved.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                if (
+                    alreadySaved
+                ) {
+
+                    savedProgramIds.push(
+                        programId
+                    );
+
+                }
+
+                else {
+
+                    savedProgramIds =
+                        savedProgramIds.filter(
+                            id =>
+                                id !==
+                                programId
+                        );
+
+                }
+
+
+                renderPrograms();
+
+
+                showToast(
+                    "Unable to update saved program.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // DETAILS
+        // =====================================================
+
+        function openProgramDetails(
+            programId
+        ) {
+
+            const program =
+                programs.find(
+                    item =>
+                        item.id ===
+                        programId
+                );
+
+
+            if (
+                !program
+            ) {
+
+                return;
+
+            }
+
+
+            selectedProgram =
+                program;
+
+
+            setText(
+                "detailType",
+                displayProgramType(
+                    normalizeProgramType(
+                        getProgramType(
+                            program
+                        )
+                    )
+                ).toUpperCase()
+            );
+
+
+            setText(
+                "detailTitle",
+                getProgramTitle(
+                    program
+                )
+            );
+
+
+            setText(
+                "detailProvider",
+                getProgramProvider(
+                    program
+                )
+            );
+
+
+            setText(
+                "detailMode",
+                formatMode(
+                    getProgramMode(
+                        program
+                    )
+                )
+            );
+
+
+            setText(
+                "detailDuration",
+                getProgramDuration(
+                    program
+                )
+            );
+
+
+            setText(
+                "detailStartDate",
+                formatDate(
+                    getProgramStartDate(
+                        program
+                    )
+                )
+            );
+
+
+            setText(
+                "detailDeadline",
+                formatDate(
+                    getProgramDeadline(
+                        program
+                    )
+                )
+            );
+
+
+            setText(
+                "detailDescription",
+                getProgramDescription(
+                    program
+                )
+            );
+
+
+            setText(
+                "detailOutcomes",
+                getProgramOutcomes(
+                    program
+                )
+            );
+
+
+            setText(
+                "detailEligibility",
+                getProgramEligibility(
+                    program
+                )
+            );
+
+
+            const skills =
+                document.getElementById(
+                    "detailSkills"
+                );
+
+
+            const programSkills =
+                getProgramSkills(
+                    program
+                );
+
+
+            skills.innerHTML =
+                programSkills.length
+                    ? programSkills
+                        .map(
+                            skill => `
+
+                                <span class="detail-tag">
+
+                                    ${escapeHTML(
+                                        skill
+                                    )}
+
+                                </span>
+
+                            `
+                        )
+                        .join("")
+                    : `
+
+                        <span class="detail-tag">
+                            Not specified
+                        </span>
+
+                    `;
+
+
+            updateDetailSaveButton();
+
+
+            openModal(
+                "programDetailsModal"
+            );
+
+        }
+
+
+        function updateDetailSaveButton() {
+
+            if (
+                !selectedProgram
+            ) {
+
+                return;
+
+            }
+
+
+            const button =
+                document.getElementById(
+                    "detailSaveButton"
+                );
+
+
+            const saved =
+                savedProgramIds.includes(
+                    selectedProgram.id
+                );
+
+
+            button.textContent =
+                saved
+                    ? "★ Saved"
+                    : "☆ Save Program";
+
+        }
+
+
+        document
+            .getElementById(
+                "detailSaveButton"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    if (
+                        selectedProgram
+                    ) {
+
+                        await toggleSavedProgram(
+                            selectedProgram.id
+                        );
+
+
+                        updateDetailSaveButton();
+
+                    }
+
+                }
+            );
+
+
+        document
+            .getElementById(
+                "detailEnrollButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        selectedProgram
+                    ) {
+
+                        closeModal(
+                            "programDetailsModal"
+                        );
+
+
+                        openEnrollModal(
+                            selectedProgram.id
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // ENROLL
+        // =====================================================
+
+        function openEnrollModal(
+            programId
+        ) {
+
+            const program =
+                programs.find(
+                    item =>
+                        item.id ===
+                        programId
+                );
+
+
+            if (
+                !program
+            ) {
+
+                return;
+
+            }
+
+
+            selectedProgram =
+                program;
+
+
+            setText(
+                "enrollTitle",
+                getProgramTitle(
+                    program
+                )
+            );
+
+
+            setText(
+                "enrollProvider",
+                getProgramProvider(
+                    program
+                )
+            );
+
+
+            document.getElementById(
+                "enrollMode"
+            ).value =
+                formatMode(
+                    getProgramMode(
+                        program
+                    )
+                ) ===
+                    "Not specified"
+                    ? "Remote"
+                    : formatMode(
+                        getProgramMode(
+                            program
+                        )
+                    );
+
+
+            document.getElementById(
+                "enrollStart"
+            ).value =
+                getInputDate(
+                    getProgramStartDate(
+                        program
+                    )
+                );
+
+
+            document.getElementById(
+                "enrollMessage"
+            ).value =
+                "";
+
+
+            clearMessage(
+                "enrollMessageOutput"
+            );
+
+
+            openModal(
+                "enrollModal"
+            );
+
+        }
+
+
+        document
+            .getElementById(
+                "enrollForm"
+            )
+            .addEventListener(
+                "submit",
+                async event => {
+
+                    event.preventDefault();
+
+
+                    if (
+                        !selectedProgram
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const message =
+                        document.getElementById(
+                            "enrollMessage"
+                        )
+                            .value
+                            .trim();
+
+
+                    const mode =
+                        document.getElementById(
+                            "enrollMode"
+                        ).value;
+
+
+                    const start =
+                        document.getElementById(
+                            "enrollStart"
+                        ).value;
+
+
+                    try {
+
+                        const existing =
+                            learningRecords.find(
+                                record =>
+                                    record.programId ===
+                                    selectedProgram.id
+                            );
+
+
+                        const data = {
+
+                            academicianId:
+                                currentUser.uid,
+
+                            programId:
+                                selectedProgram.id,
+
+                            programTitle:
+                                getProgramTitle(
+                                    selectedProgram
+                                ),
+
+                            provider:
+                                getProgramProvider(
+                                    selectedProgram
+                                ),
+
+                            programType:
+                                normalizeProgramType(
+                                    getProgramType(
+                                        selectedProgram
+                                    )
+                                ),
+
+                            mode:
+                                mode,
+
+                            message:
+                                message,
+
+                            expectedStart:
+                                start,
+
+                            status:
+                                "applied",
+
+                            progress:
+                                existing?.progress ||
+                                0,
+
+                            createdAt:
+                                existing?.createdAt ||
+                                serverTimestamp(),
+
+                            updatedAt:
+                                serverTimestamp()
+
+                        };
+
+
+                        if (
+                            existing
+                        ) {
+
+                            await updateDoc(
+
+                                doc(
+                                    db,
+                                    "learningEnrollments",
+                                    existing.id
+                                ),
+
+                                data
+
+                            );
+
+                        }
+
+                        else {
+
+                            await addDoc(
+
+                                collection(
+                                    db,
+                                    "learningEnrollments"
+                                ),
+
+                                data
+
+                            );
+
+                        }
+
+
+                        await loadLearningRecords();
+
+                        updateSummary();
+
+                        renderMyLearning();
+
+
+                        closeModal(
+                            "enrollModal"
+                        );
+
+
+                        showToast(
+                            "Learning application submitted successfully.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Enrollment error:",
+                            error
+                        );
+
+
+                        showMessage(
+                            "enrollMessageOutput",
+                            error.message ||
+                            "Unable to submit application.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // MY LEARNING
+        // =====================================================
+
+        function renderMyLearning() {
+
+            const container =
+                document.getElementById(
+                    "myLearningList"
+                );
+
+
+            if (
+                learningRecords.length ===
+                0
+            ) {
+
+                container.innerHTML =
+                    `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            ◫
+                        </div>
+
+                        <h3>
+                            No learning records yet
+                        </h3>
+
+                        <p>
+                            Programs you apply for or enroll in
+                            will appear here with their completion
+                            progress.
+                        </p>
+
+                    </div>
+
+                    `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                learningRecords
+                    .map(
+                        record => {
+
+                            const status =
+                                normalizeLearningStatus(
+                                    record.status
+                                );
+
+
+                            const progress =
+                                Math.max(
+                                    0,
+                                    Math.min(
+                                        100,
+                                        Number(
+                                            record.progress
+                                        ) ||
+                                        0
+                                    )
+                                );
+
+
+                            return `
+
+                                <article class="learning-record">
+
+
+                                    <div>
+
+                                        <span class="record-type">
+
+                                            ${escapeHTML(
+                                                displayProgramType(
+                                                    normalizeProgramType(
+                                                        record.programType
+                                                    )
+                                                ).toUpperCase()
+                                            )}
+
+                                        </span>
+
+
+                                        <h3>
+
+                                            ${escapeHTML(
+                                                record.programTitle ||
+                                                "Learning Program"
+                                            )}
+
+                                        </h3>
+
+
+                                        <p class="record-provider">
+
+                                            ${escapeHTML(
+                                                record.provider ||
+                                                "Provider"
+                                            )}
+
+                                        </p>
+
+
+                                        <p class="record-dates">
+
+                                            Applied:
+                                            ${formatDate(
+                                                record.createdAt
+                                            )}
+
+                                            ${
+                                                record.expectedStart
+                                                    ? ` · Start:
+                                                        ${formatDate(
+                                                            record.expectedStart
+                                                        )}`
+                                                    : ""
+                                            }
+
+                                        </p>
+
+                                    </div>
+
+
+                                    <div class="record-status-column">
+
+
+                                        <span
+                                            class="record-status ${getLearningStatusClass(
+                                                status
+                                            )}">
+
+                                            ${escapeHTML(
+                                                capitalizeWords(
+                                                    status
+                                                )
+                                            )}
+
+                                        </span>
+
+
+                                        <div class="record-progress">
+
+
+                                            <div class="record-progress-top">
+
+                                                <span>
+                                                    PROGRESS
+                                                </span>
+
+                                                <strong>
+                                                    ${progress}%
+                                                </strong>
+
+                                            </div>
+
+
+                                            <div class="record-progress-bar">
+
+                                                <div
+                                                    style="width:${progress}%">
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="record-actions">
+
+
+                                        ${
+                                            status !==
+                                                "completed"
+                                                ? `
+
+                                                    <button
+                                                        type="button"
+                                                        class="program-button"
+                                                        data-progress-record="${escapeAttribute(
+                                                            record.id
+                                                        )}">
+
+                                                        Update Progress
+
+                                                    </button>
+
+                                                  `
+                                                : ""
+                                        }
+
+
+                                        ${
+                                            record.certificateUrl
+                                                ? `
+
+                                                    <a
+                                                        href="${escapeAttribute(
+                                                            record.certificateUrl
+                                                        )}"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        class="program-button">
+
+                                                        Certificate
+
+                                                    </a>
+
+                                                  `
+                                                : ""
+                                        }
+
+                                    </div>
+
+                                </article>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+
+            attachLearningRecordEvents();
+
+        }
+
+
+        // =====================================================
+        // LEARNING RECORD EVENTS
+        // =====================================================
+
+        function attachLearningRecordEvents() {
+
+            document
+                .querySelectorAll(
+                    "[data-progress-record]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                updateRecordProgress(
+                                    button.dataset.progressRecord
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // UPDATE PROGRESS
+        // =====================================================
+
+        async function updateRecordProgress(
+            recordId
+        ) {
+
+            const record =
+                learningRecords.find(
+                    item =>
+                        item.id ===
+                        recordId
+                );
+
+
+            if (
+                !record
+            ) {
+
+                return;
+
+            }
+
+
+            const input =
+                prompt(
+                    `Enter completion percentage for "${record.programTitle}" (0-100):`,
+                    String(
+                        record.progress ||
+                        0
+                    )
+                );
+
+
+            if (
+                input ===
+                null
+            ) {
+
+                return;
+
+            }
+
+
+            const progress =
+                Number(
+                    input
+                );
+
+
+            if (
+                !Number.isFinite(
+                    progress
+                ) ||
+                progress < 0 ||
+                progress > 100
+            ) {
+
+                showToast(
+                    "Enter a progress value from 0 to 100.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const status =
+                progress >=
+                    100
+                    ? "completed"
+                    : "in-progress";
+
+
+            try {
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "learningEnrollments",
+                        recordId
+                    ),
+
+                    {
+
+                        progress:
+                            progress,
+
+                        status:
+                            status,
+
+                        updatedAt:
+                            serverTimestamp(),
+
+                        completedAt:
+                            progress >=
+                                100
+                                ? new Date().toISOString()
+                                : null
+
+                    }
+
+                );
+
+
+                await loadLearningRecords();
+
+                updateSummary();
+
+                renderMyLearning();
+
+
+                showToast(
+                    progress >= 100
+                        ? "Learning program marked completed."
+                        : "Learning progress updated.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showToast(
+                    error.message ||
+                    "Unable to update progress.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // FDP
+        // =====================================================
+
+        document
+            .getElementById(
+                "fdpSearch"
+            )
+            .addEventListener(
+                "input",
+                renderFDPs
+            );
+
+
+        document
+            .getElementById(
+                "fdpSort"
+            )
+            .addEventListener(
+                "change",
+                renderFDPs
+            );
+
+
+        function renderFDPs() {
+
+            const search =
+                document
+                    .getElementById(
+                        "fdpSearch"
+                    )
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+
+            const sort =
+                document.getElementById(
+                    "fdpSort"
+                ).value;
+
+
+            let fdps =
+                programs.filter(
+                    program =>
+                        normalizeProgramType(
+                            getProgramType(
+                                program
+                            )
+                        ) ===
+                        "fdp"
+                );
+
+
+            if (
+                search
+            ) {
+
+                fdps =
+                    fdps.filter(
+                        program => {
+
+                            const searchable =
+                                [
+
+                                    getProgramTitle(
+                                        program
+                                    ),
+
+                                    getProgramProvider(
+                                        program
+                                    ),
+
+                                    getProgramDescription(
+                                        program
+                                    ),
+
+                                    getProgramDomain(
+                                        program
+                                    ),
+
+                                    ...getProgramSkills(
+                                        program
+                                    )
+
+                                ]
+                                    .join(" ")
+                                    .toLowerCase();
+
+
+                            return searchable.includes(
+                                search
+                            );
+
+                        }
+                    );
+
+            }
+
+
+            fdps.sort(
+                (
+                    a,
+                    b
+                ) => {
+
+                    if (
+                        sort ===
+                        "deadline"
+                    ) {
+
+                        return compareDates(
+                            getProgramDeadline(a),
+                            getProgramDeadline(b)
+                        );
+
+                    }
+
+
+                    if (
+                        sort ===
+                        "date"
+                    ) {
+
+                        return compareDates(
+                            getProgramStartDate(a),
+                            getProgramStartDate(b)
+                        );
+
+                    }
+
+
+                    return (
+                        getDateValue(
+                            getCreatedAt(b)
+                        )?.getTime() ||
+                        0
+                    )
+                    -
+                    (
+                        getDateValue(
+                            getCreatedAt(a)
+                        )?.getTime() ||
+                        0
+                    );
+
+                }
+            );
+
+
+            const container =
+                document.getElementById(
+                    "fdpGrid"
+                );
+
+
+            if (
+                fdps.length ===
+                0
+            ) {
+
+                container.innerHTML =
+                    emptyHTML(
+                        "No FDPs found",
+                        "Published Faculty Development Programs will appear here."
+                    );
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                fdps
+                    .map(
+                        createProgramCard
+                    )
+                    .join("");
+
+
+            attachProgramEvents();
+
+        }
+
+
+        // =====================================================
+        // RECOMMENDATIONS
+        // =====================================================
+
+        function getRecommendations() {
+
+            const skills =
+                getAcademicianSkills();
+
+
+            const interests =
+                getAcademicianInterests();
+
+
+            const text =
+                [
+                    ...skills,
+                    ...interests
+                ]
+                    .map(
+                        item =>
+                            String(
+                                item
+                            ).toLowerCase()
+                    );
+
+
+            const recommendations =
+                programs
+                    .map(
+                        program => {
+
+                            const programSkills =
+                                getProgramSkills(
+                                    program
+                                )
+                                    .map(
+                                        skill =>
+                                            String(
+                                                skill
+                                            ).toLowerCase()
+                                    );
+
+
+                            let matched =
+                                0;
+
+
+                            const reasons =
+                                [];
+
+
+                            programSkills.forEach(
+                                skill => {
+
+                                    if (
+                                        text.some(
+                                            userSkill =>
+                                                userSkill.includes(
+                                                    skill
+                                                ) ||
+                                                skill.includes(
+                                                    userSkill
+                                                )
+                                        )
+                                    ) {
+
+                                        matched++;
+
+                                        reasons.push(
+                                            skill
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+
+                            const domain =
+                                String(
+                                    getProgramDomain(
+                                        program
+                                    ) ||
+                                    ""
+                                )
+                                    .toLowerCase();
+
+
+                            if (
+                                domain &&
+                                text.some(
+                                    item =>
+                                        item.includes(
+                                            domain
+                                        ) ||
+                                        domain.includes(
+                                            item
+                                        )
+                                )
+                            ) {
+
+                                matched +=
+                                    2;
+
+                                reasons.push(
+                                    getProgramDomain(
+                                        program
+                                    )
+                                );
+
+                            }
+
+
+                            const denominator =
+                                Math.max(
+                                    1,
+                                    programSkills.length +
+                                    2
+                                );
+
+
+                            const score =
+                                Math.min(
+                                    99,
+                                    Math.round(
+                                        (
+                                            matched /
+                                            denominator
+                                        )
+                                        *
+                                        100
+                                    )
+                                );
+
+
+                            return {
+
+                                program:
+                                    program,
+
+                                score:
+                                    score,
+
+                                reasons:
+                                    [
+                                        ...new Set(
+                                            reasons
+                                        )
+                                    ]
+
+                            };
+
+                        }
+                    )
+                    .filter(
+                        item =>
+                            item.score >
+                            0
+                    )
+                    .sort(
+                        (
+                            a,
+                            b
+                        ) =>
+                            b.score -
+                            a.score
+                    )
+                    .slice(
+                        0,
+                        9
+                    );
+
+
+            /*
+                If no skill-based match is available,
+                surface the newest programs rather than
+                leaving the section empty.
+            */
+
+            if (
+                recommendations.length ===
+                0
+            ) {
+
+                return programs
+                    .slice()
+                    .sort(
+                        (
+                            a,
+                            b
+                        ) =>
+                            (
+                                getDateValue(
+                                    getCreatedAt(b)
+                                )?.getTime() ||
+                                0
+                            )
+                            -
+                            (
+                                getDateValue(
+                                    getCreatedAt(a)
+                                )?.getTime() ||
+                                0
+                            )
+                    )
+                    .slice(
+                        0,
+                        6
+                    )
+                    .map(
+                        program => ({
+
+                            program:
+                                program,
+
+                            score:
+                                50,
+
+                            reasons:
+                                [
+
+                                    "Recently available",
+
+                                    displayProgramType(
+                                        normalizeProgramType(
+                                            getProgramType(
+                                                program
+                                            )
+                                        )
+                                    )
+
+                                ]
+
+                        })
+                    );
+
+            }
+
+
+            return recommendations;
+
+        }
+
+
+        function renderRecommendations() {
+
+            const recommendations =
+                getRecommendations();
+
+
+            const container =
+                document.getElementById(
+                    "recommendationGrid"
+                );
+
+
+            if (
+                recommendations.length ===
+                0
+            ) {
+
+                container.innerHTML =
+                    emptyHTML(
+                        "No recommendations yet",
+                        "Add more skills and professional interests to your profile to improve learning recommendations."
+                    );
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                recommendations
+                    .map(
+                        item => `
+
+                            <article class="recommendation-card">
+
+
+                                <span class="match-score">
+
+                                    ${item.score}%
+                                    MATCH
+
+                                </span>
+
+
+                                <h3>
+
+                                    ${escapeHTML(
+                                        getProgramTitle(
+                                            item.program
+                                        )
+                                    )}
+
+                                </h3>
+
+
+                                <p>
+
+                                    ${escapeHTML(
+                                        getProgramProvider(
+                                            item.program
+                                        )
+                                    )}
+
+                                </p>
+
+
+                                <div class="recommendation-reasons">
+
+                                    ${
+                                        item.reasons
+                                            .slice(
+                                                0,
+                                                4
+                                            )
+                                            .map(
+                                                reason => `
+
+                                                    <span class="reason">
+
+                                                        ${escapeHTML(
+                                                            reason
+                                                        )}
+
+                                                    </span>
+
+                                                `
+                                            )
+                                            .join("")
+                                    }
+
+                                </div>
+
+
+                                <div
+                                    style="
+                                        display:flex;
+                                        gap:7px;
+                                        margin-top:14px;
+                                    ">
+
+
+                                    <button
+                                        type="button"
+                                        class="program-button"
+                                        style="flex:1;"
+                                        data-recommend-view="${escapeAttribute(
+                                            item.program.id
+                                        )}">
+
+                                        Details
+
+                                    </button>
+
+
+                                    <button
+                                        type="button"
+                                        class="program-button primary"
+                                        style="flex:1;"
+                                        data-recommend-enroll="${escapeAttribute(
+                                            item.program.id
+                                        )}">
+
+                                        Enroll
+
+                                    </button>
+
+                                </div>
+
+                            </article>
+
+                        `
+                    )
+                    .join("");
+
+
+            attachRecommendationEvents();
+
+        }
+
+
+        function attachRecommendationEvents() {
+
+            document
+                .querySelectorAll(
+                    "[data-recommend-view]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                openProgramDetails(
+                                    button.dataset.recommendView
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            document
+                .querySelectorAll(
+                    "[data-recommend-enroll]"
+                )
+                .forEach(
+                    button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                openEnrollModal(
+                                    button.dataset.recommendEnroll
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        // =====================================================
+        // PROGRAM DATA HELPERS
+        // =====================================================
+
+        function getProgramTitle(
+            program
+        ) {
+
+            return (
+                program.title ||
+                program.name ||
+                program.programTitle ||
+                program.opportunityTitle ||
+                "Learning Program"
+            );
+
+        }
+
+
+        function getProgramProvider(
+            program
+        ) {
+
+            return (
+                program.provider ||
+                program.organization ||
+                program.organisation ||
+                program.company ||
+                program.companyName ||
+                program.institution ||
+                "Learning Provider"
+            );
+
+        }
+
+
+        function getProgramType(
+            program
+        ) {
+
+            return (
+                program.programType ||
+                program.type ||
+                program.opportunityType ||
+                program.category ||
+                "course"
+            );
+
+        }
+
+
+        function getProgramMode(
+            program
+        ) {
+
+            return (
+                program.mode ||
+                program.workMode ||
+                program.deliveryMode ||
+                "Remote"
+            );
+
+        }
+
+
+        function getProgramDuration(
+            program
+        ) {
+
+            if (
+                program.duration
+            ) {
+
+                return String(
+                    program.duration
+                );
+
+            }
+
+
+            if (
+                program.durationWeeks
+            ) {
+
+                return `${program.durationWeeks} weeks`;
+
+            }
+
+
+            if (
+                program.durationMonths
+            ) {
+
+                return `${program.durationMonths} months`;
+
+            }
+
+
+            return "Flexible";
+
+        }
+
+
+        function getProgramStartDate(
+            program
+        ) {
+
+            return (
+                program.startDate ||
+                program.startsAt ||
+                program.start ||
+                null
+            );
+
+        }
+
+
+        function getProgramDeadline(
+            program
+        ) {
+
+            return (
+                program.deadline ||
+                program.applicationDeadline ||
+                program.lastDate ||
+                null
+            );
+
+        }
+
+
+        function getCreatedAt(
+            program
+        ) {
+
+            return (
+                program.createdAt ||
+                program.publishedAt ||
+                program.created ||
+                null
+            );
+
+        }
+
+
+        function getProgramDescription(
+            program
+        ) {
+
+            return (
+                program.description ||
+                program.summary ||
+                program.details ||
+                "No description provided."
+            );
+
+        }
+
+
+        function getProgramOutcomes(
+            program
+        ) {
+
+            const value =
+                program.outcomes ||
+                program.learningOutcomes ||
+                program.learningOutcome ||
+                program.objectives;
+
+
+            if (
+                Array.isArray(
+                    value
+                )
+            ) {
+
+                return value.join(
+                    " · "
+                );
+
+            }
+
+
+            return (
+                value ||
+                "Learning outcomes have not been specified."
+            );
+
+        }
+
+
+        function getProgramEligibility(
+            program
+        ) {
+
+            const value =
+                program.eligibility ||
+                program.eligibilityCriteria ||
+                program.requirements;
+
+
+            if (
+                Array.isArray(
+                    value
+                )
+            ) {
+
+                return value.join(
+                    " · "
+                );
+
+            }
+
+
+            return (
+                value ||
+                "Eligibility has not been specified."
+            );
+
+        }
+
+
+        function getProgramDomain(
+            program
+        ) {
+
+            return (
+                program.domain ||
+                program.industry ||
+                program.specialization ||
+                program.field ||
+                ""
+            );
+
+        }
+
+
+        function getProgramSkills(
+            program
+        ) {
+
+            const fields = [
+
+                program.skills,
+
+                program.requiredSkills,
+
+                program.skillsCovered,
+
+                program.technologies,
+
+                program.expertiseRequired,
+
+                program.keySkills
+
+            ];
+
+
+            for (
+                const field
+                of
+                fields
+            ) {
+
+                if (
+                    Array.isArray(
+                        field
+                    )
+                ) {
+
+                    const values =
+                        field
+                            .map(
+                                item => {
+
+                                    if (
+                                        typeof item ===
+                                            "string"
+                                    ) {
+
+                                        return item.trim();
+
+                                    }
+
+
+                                    return (
+                                        item?.name ||
+                                        item?.skill ||
+                                        item?.title ||
+                                        ""
+                                    )
+                                        .toString()
+                                        .trim();
+
+                                }
+                            )
+                            .filter(
+                                Boolean
+                            );
+
+
+                    if (
+                        values.length
+                    ) {
+
+                        return values;
+
+                    }
+
+                }
+
+
+                if (
+                    typeof field ===
+                        "string" &&
+                    field.trim()
+                ) {
+
+                    return field
+                        .split(",")
+                        .map(
+                            item =>
+                                item.trim()
+                        )
+                        .filter(
+                            Boolean
+                        );
+
+                }
+
+            }
+
+
+            return [];
+
+        }
+
+
+        function normalizeProgramType(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    ""
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                raw === "fdp" ||
+                raw.includes("faculty development")
+            ) {
+
+                return "fdp";
+
+            }
+
+
+            if (
+                raw.includes("certif")
+            ) {
+
+                return "certification";
+
+            }
+
+
+            if (
+                raw.includes("workshop")
+            ) {
+
+                return "workshop";
+
+            }
+
+
+            if (
+                raw.includes("training") ||
+                raw.includes("industrial")
+            ) {
+
+                return "training";
+
+            }
+
+
+            if (
+                raw.includes("mentor")
+            ) {
+
+                return "mentorship";
+
+            }
+
+
+            if (
+                raw.includes("course")
+            ) {
+
+                return "course";
+
+            }
+
+
+            return raw
+                .replace(
+                    /\s+/g,
+                    "-"
+                );
+
+        }
+
+
+        function displayProgramType(
+            type
+        ) {
+
+            const values = {
+
+                course:
+                    "Course",
+
+                fdp:
+                    "Faculty Development Program",
+
+                training:
+                    "Industry Training",
+
+                workshop:
+                    "Workshop",
+
+                certification:
+                    "Certification Program",
+
+                mentorship:
+                    "Learning Mentorship"
+
+            };
+
+
+            return (
+                values[
+                    type
+                ] ||
+                capitalizeWords(
+                    type
+                )
+            );
+
+        }
+
+
+        // =====================================================
+        // MODE
+        // =====================================================
+
+        function normalizeMode(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    ""
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                raw.includes("remote") ||
+                raw.includes("online")
+            ) {
+
+                return "remote";
+
+            }
+
+
+            if (
+                raw.includes("hybrid")
+            ) {
+
+                return "hybrid";
+
+            }
+
+
+            if (
+                raw.includes("on-site") ||
+                raw.includes("onsite") ||
+                raw.includes("offline") ||
+                raw.includes("in person")
+            ) {
+
+                return "on-site";
+
+            }
+
+
+            return raw;
+
+        }
+
+
+        function formatMode(
+            value
+        ) {
+
+            const mode =
+                normalizeMode(
+                    value
+                );
+
+
+            const values = {
+
+                remote:
+                    "Remote",
+
+                hybrid:
+                    "Hybrid",
+
+                "on-site":
+                    "On-site"
+
+            };
+
+
+            return (
+                values[
+                    mode
+                ] ||
+                value ||
+                "Not specified"
+            );
+
+        }
+
+
+        // =====================================================
+        // ACADEMICIAN SKILLS / INTERESTS
+        // =====================================================
+
+        function getAcademicianSkills() {
+
+            const sources = [
+
+                academicianData.skills,
+
+                academicianData.technicalSkills,
+
+                academicianData.industrySkills,
+
+                academicianData.expertise
+
+            ];
+
+
+            return flattenStringValues(
+                sources
+            );
+
+        }
+
+
+        function getAcademicianInterests() {
+
+            const sources = [
+
+                academicianData.researchInterests,
+
+                academicianData.interests,
+
+                academicianData.researchKeywords,
+
+                academicianData.specialization,
+
+                academicianData.researchDomains
+
+            ];
+
+
+            return flattenStringValues(
+                sources
+            );
+
+        }
+
+
+        function flattenStringValues(
+            sources
+        ) {
+
+            const output =
+                [];
+
+
+            sources.forEach(
+                source => {
+
+                    if (
+                        Array.isArray(
+                            source
+                        )
+                    ) {
+
+                        source.forEach(
+                            item => {
+
+                                if (
+                                    typeof item ===
+                                    "string"
+                                ) {
+
+                                    output.push(
+                                        item
+                                    );
+
+                                }
+
+                                else if (
+                                    item
+                                ) {
+
+                                    output.push(
+
+                                        item.name ||
+                                        item.title ||
+                                        item.skill ||
+                                        ""
+
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+                    else if (
+                        typeof source ===
+                        "string"
+                    ) {
+
+                        output.push(
+                            ...source
+                                .split(",")
+                        );
+
+                    }
+
+                }
+            );
+
+
+            return output
+                .map(
+                    item =>
+                        String(
+                            item
+                        )
+                            .trim()
+                )
+                .filter(
+                    Boolean
+                );
+
+        }
+
+
+        // =====================================================
+        // STATUS
+        // =====================================================
+
+        function normalizeLearningStatus(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    "applied"
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                raw.includes("complete")
+            ) {
+
+                return "completed";
+
+            }
+
+
+            if (
+                raw.includes("progress")
+            ) {
+
+                return "in-progress";
+
+            }
+
+
+            if (
+                raw.includes("enroll")
+            ) {
+
+                return "enrolled";
+
+            }
+
+
+            return "applied";
+
+        }
+
+
+        function getLearningStatusClass(
+            status
+        ) {
+
+            const values = {
+
+                enrolled:
+                    "status-enrolled",
+
+                "in-progress":
+                    "status-in-progress",
+
+                completed:
+                    "status-completed",
+
+                applied:
+                    "status-applied"
+
+            };
+
+
+            return (
+                values[
+                    status
+                ] ||
+                "status-applied"
+            );
+
+        }
+
+
+        // =====================================================
+        // SAVED IDS
+        // =====================================================
+
+        function normalizeSavedIds(
+            value
+        ) {
+
+            if (
+                !Array.isArray(
+                    value
+                )
+            ) {
+
+                return [];
+
+            }
+
+
+            return value
+                .map(
+                    item => {
+
+                        if (
+                            typeof item ===
+                            "string"
+                        ) {
+
+                            return item;
+
+                        }
+
+
+                        return (
+                            item?.id ||
+                            item?.programId ||
+                            ""
+                        );
+
+                    }
+                )
+                .filter(
+                    Boolean
+                );
+
+        }
+
+
+        // =====================================================
+        // DATE
+        // =====================================================
+
+        function getDateValue(
+            value
+        ) {
+
+            if (
+                !value
+            ) {
+
+                return null;
+
+            }
+
+
+            if (
+                value?.toDate
+            ) {
+
+                try {
+
+                    return value.toDate();
+
+                }
+
+                catch {
+
+                    return null;
+
+                }
+
+            }
+
+
+            if (
+                value instanceof Date
+            ) {
+
+                return value;
+
+            }
+
+
+            const date =
+                new Date(
+                    value
+                );
+
+
+            return Number.isNaN(
+                date.getTime()
+            )
+                ? null
+                : date;
+
+        }
+
+
+        function formatDate(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "Not specified";
+
+            }
+
+
+            return date.toLocaleDateString(
+                "en-IN",
+                {
+
+                    day:
+                        "2-digit",
+
+                    month:
+                        "short",
+
+                    year:
+                        "numeric"
+
+                }
+            );
+
+        }
+
+
+        function getInputDate(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "";
+
+            }
+
+
+            return `${date.getFullYear()}-${String(
+                date.getMonth()+1
+            ).padStart(2,"0")}-${String(
+                date.getDate()
+            ).padStart(2,"0")}`;
+
+        }
+
+
+        function compareDates(
+            a,
+            b
+        ) {
+
+            return (
+                getDateValue(a)?.getTime() ||
+                0
+            )
+            -
+            (
+                getDateValue(b)?.getTime() ||
+                0
+            );
+
+        }
+
+
+        function getDeadlineLabel(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value
+                );
+
+
+            if (
+                !date
+            ) {
+
+                return "Deadline not specified";
+
+            }
+
+
+            const diff =
+                Math.ceil(
+                    (
+                        date -
+                        new Date()
+                    )
+                    /
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
+                );
+
+
+            if (
+                diff < 0
+            ) {
+
+                return `Deadline passed · ${formatDate(value)}`;
+
+            }
+
+
+            if (
+                diff === 0
+            ) {
+
+                return "Deadline today";
+
+            }
+
+
+            if (
+                diff === 1
+            ) {
+
+                return "Deadline tomorrow";
+
+            }
+
+
+            if (
+                diff <= 7
+            ) {
+
+                return `Deadline in ${diff} days · ${formatDate(value)}`;
+
+            }
+
+
+            return `Deadline · ${formatDate(value)}`;
+
+        }
+
+
+        function getTimestamp(
+            value
+        ) {
+
+            const date =
+                getDateValue(
+                    value.updatedAt ||
+                    value.createdAt ||
+                    value.startDate
+                );
+
+
+            return (
+                date?.getTime() ||
+                0
+            );
+
+        }
+
+
+        // =====================================================
+        // MODALS
+        // =====================================================
+
+        document
+            .querySelectorAll(
+                "[data-close]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            closeModal(
+                                button.dataset.close
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".modal"
+            )
+            .forEach(
+                modal => {
+
+                    modal.addEventListener(
+                        "click",
+                        event => {
+
+                            if (
+                                event.target ===
+                                modal
+                            ) {
+
+                                modal.classList.remove(
+                                    "show"
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+
+        function openModal(
+            id
+        ) {
+
+            document
+                .getElementById(
+                    id
+                )
+                .classList.add(
+                    "show"
+                );
+
+        }
+
+
+        function closeModal(
+            id
+        ) {
+
+            document
+                .getElementById(
+                    id
+                )
+                .classList.remove(
+                    "show"
+                );
+
+        }
+
+
+        // =====================================================
+        // MESSAGES
+        // =====================================================
+
+        function showMessage(
+            id,
+            message,
+            type
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            element.textContent =
+                message;
+
+
+            element.className =
+                `form-message ${type || ""}`;
+
+        }
+
+
+        function clearMessage(
+            id
+        ) {
+
+            showMessage(
+                id,
+                "",
+                ""
+            );
+
+        }
+
+
+        // =====================================================
+        // EMPTY
+        // =====================================================
+
+        function emptyHTML(
+            title,
+            message
+        ) {
+
+            return `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ◫
+                    </div>
+
+                    <h3>
+                        ${escapeHTML(title)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(message)}
+                    </p>
+
+                </div>
+
+            `;
+
+        }
+
+
+        function renderProgramError() {
+
+            document.getElementById(
+                "programGrid"
+            ).innerHTML =
+                emptyHTML(
+                    "Unable to load learning programs",
+                    "Please refresh the page and try again."
+                );
+
+        }
+
+
+        // =====================================================
+        // TEXT
+        // =====================================================
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.textContent =
+                    value;
+
+            }
+
+        }
+
+
+        function capitalizeWords(
+            value
+        ) {
+
+            return String(
+                value ||
+                ""
+            )
+                .replace(
+                    /-/g,
+                    " "
+                )
+                .replace(
+                    /\b\w/g,
+                    char =>
+                        char.toUpperCase()
+                );
+
+        }
+
+
+        function getInitial(
+            name
+        ) {
+
+            return (
+                String(
+                    name ||
+                    "A"
+                )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase() ||
+                "A"
+            );
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ??
+                ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        function escapeAttribute(
+            value
+        ) {
+
+            return escapeHTML(
+                value
+            );
+
+        }
+
+
+        // =====================================================
+        // TOAST
+        // =====================================================
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const previous =
+                document.querySelector(
+                    ".toast"
+                );
+
+
+            if (
+                previous
+            ) {
+
+                previous.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.className =
+                `toast ${type || ""}`;
+
+
+            toast.textContent =
+                message;
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        toast.parentNode
+                    ) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                4000
+            );
+
+        }
+
+
+        // =====================================================
+        // ROLE REDIRECT
+        // =====================================================
+
+        function redirectByRole(
+            role
+        ) {
+
+            switch (
+                role
+            ) {
+
+                case "student":
+
+                    window.location.href =
+                        "../../student/student-home.html";
+
+                    break;
+
+
+                case "industry":
+
+                    window.location.href =
+                        "../../industry/industry-home.html";
+
+                    break;
+
+
+                case "institution":
+
+                    window.location.href =
+                        "../../institution/institution-home.html";
+
+                    break;
+
+
+                default:
+
+                    window.location.href =
+                        "../../login.html";
+
+            }
+
+        }
+
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
+
+        document
+            .getElementById(
+                "menuButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "learningSidebar"
+                        )
+                        .classList.toggle(
+                            "open"
+                        );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".learning-nav-item"
+            )
+            .forEach(
+                item => {
+
+                    item.addEventListener(
+                        "click",
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "learningSidebar"
+                                )
+                                .classList.remove(
+                                    "open"
+                                );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        document
+            .getElementById(
+                "logoutBtn"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const button =
+                        document.getElementById(
+                            "logoutBtn"
+                        );
+
+
+                    try {
+
+                        button.disabled =
+                            true;
+
+
+                        button.textContent =
+                            "Logging out...";
+
+
+                        await signOut(
+                            auth
+                        );
+
+
+                        window.location.href =
+                            "../../index.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        button.disabled =
+                            false;
+
+
+                        button.innerHTML =
+                            `
+                            <span>↪</span>
+                            Logout
+                            `;
+
+
+                        showToast(
+                            "Unable to logout.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // ESC
+        // =====================================================
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    document
+                        .querySelectorAll(
+                            ".modal.show"
+                        )
+                        .forEach(
+                            modal => {
+
+                                modal.classList.remove(
+                                    "show"
+                                );
+
+                            }
+                        );
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,7450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="SkillBridge Academician Analytics and Insights">
+
+    <title>
+        Analytics & Insights | SkillBridge
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           SKILLBRIDGE ACADEMICIAN
+           ANALYTICS + INSIGHTS
+           SINGLE FILE MODULE
+        ===================================================== */
+
+        :root {
+
+            --black: #090909;
+            --black-soft: #111111;
+            --black-light: #1A1A1A;
+
+            --white: #FFFFFF;
+            --off-white: #F7F7F5;
+
+            --grey-100: #F4F4F5;
+            --grey-200: #E4E4E7;
+            --grey-300: #D4D4D8;
+            --grey-400: #A1A1AA;
+            --grey-500: #71717A;
+            --grey-600: #52525B;
+            --grey-700: #3F3F46;
+            --grey-800: #27272A;
+
+            --gold: #D4AF37;
+            --gold-dark: #A88920;
+            --gold-soft: #FBF8ED;
+
+            --green: #26734D;
+            --green-soft: #EDF7F1;
+
+            --red: #B42318;
+            --red-soft: #FFF1F0;
+
+            --blue: #315C91;
+            --blue-soft: #EEF4FB;
+
+            --orange: #A75C00;
+            --orange-soft: #FFF4E5;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                var(--off-white);
+
+            color:
+                var(--black);
+
+        }
+
+
+        button,
+        input,
+        select {
+
+            font: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ===================================================== */
+
+        .analytics-app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .analytics-sidebar {
+
+            width: 250px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            z-index: 100;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: var(--black);
+
+            color: white;
+
+        }
+
+
+        .analytics-brand-wrap {
+
+            height: 82px;
+
+            padding: 0 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .analytics-brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+        }
+
+
+        .analytics-brand-mark {
+
+            width: 36px;
+
+            height: 36px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid var(--gold);
+
+            color: var(--gold);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .analytics-brand-name {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+
+        }
+
+
+        .analytics-brand-name span {
+
+            color: var(--gold);
+
+        }
+
+
+        .analytics-sidebar-nav {
+
+            padding: 25px 14px;
+
+            overflow-y: auto;
+
+        }
+
+
+        .analytics-nav-section {
+
+            padding: 0 13px;
+
+            margin-bottom: 10px;
+
+            color: #52525B;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.7px;
+
+        }
+
+
+        .analytics-nav-gap {
+
+            margin-top: 28px;
+
+        }
+
+
+        .analytics-nav-item {
+
+            height: 43px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 0 13px;
+
+            color: #A1A1AA;
+
+            font-size: 10px;
+
+            border-left: 2px solid transparent;
+
+            transition: .2s;
+
+        }
+
+
+        .analytics-nav-item:hover {
+
+            color: white;
+
+            background: #171717;
+
+        }
+
+
+        .analytics-nav-item.active {
+
+            color: white;
+
+            background: #171717;
+
+            border-left-color: var(--gold);
+
+        }
+
+
+        .analytics-nav-icon {
+
+            width: 18px;
+
+            text-align: center;
+
+            color: var(--gold);
+
+            font-size: 14px;
+
+        }
+
+
+        .analytics-sidebar-bottom {
+
+            margin-top: auto;
+
+            padding: 17px 14px 20px;
+
+            border-top: 1px solid rgba(255,255,255,.08);
+
+        }
+
+
+        .analytics-help {
+
+            display: flex;
+
+            gap: 10px;
+
+            padding: 5px 8px 16px;
+
+        }
+
+
+        .analytics-help-icon {
+
+            width: 24px;
+
+            height: 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid #3F3F46;
+
+            color: var(--gold);
+
+            font-size: 10px;
+
+        }
+
+
+        .analytics-help strong {
+
+            display: block;
+
+            font-size: 9px;
+
+        }
+
+
+        .analytics-help span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: #71717A;
+
+            font-size: 8px;
+
+        }
+
+
+        .analytics-logout {
+
+            width: 100%;
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 0 13px;
+
+            border: 1px solid #27272A;
+
+            background: transparent;
+
+            color: #A1A1AA;
+
+            font-size: 10px;
+
+        }
+
+
+        .analytics-logout:hover {
+
+            color: white;
+
+            border-color: #52525B;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .analytics-main {
+
+            width: calc(100% - 250px);
+
+            margin-left: 250px;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .analytics-topbar {
+
+            height: 75px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 50;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            background: white;
+
+            border-bottom: 1px solid var(--grey-200);
+
+        }
+
+
+        .analytics-menu {
+
+            display: none;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 20px;
+
+        }
+
+
+        .analytics-portal-label {
+
+            color: var(--grey-500);
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .analytics-top-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+
+        .analytics-top-button {
+
+            width: 35px;
+
+            height: 35px;
+
+            position: relative;
+
+            border: 1px solid var(--grey-200);
+
+            background: white;
+
+            color: var(--grey-600);
+
+        }
+
+
+        .analytics-notification-dot {
+
+            position: absolute;
+
+            top: 7px;
+
+            right: 7px;
+
+            width: 5px;
+
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: var(--gold);
+
+        }
+
+
+        .analytics-top-profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            border: none;
+
+            background: transparent;
+
+        }
+
+
+        .analytics-top-image {
+
+            width: 34px;
+
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            background: var(--black);
+
+            color: var(--gold);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+        }
+
+
+        .analytics-top-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .analytics-top-info {
+
+            text-align: left;
+
+        }
+
+
+        .analytics-top-info strong {
+
+            display: block;
+
+            font-size: 9px;
+
+        }
+
+
+        .analytics-top-info span {
+
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--grey-500);
+
+            font-size: 7px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .analytics-content {
+
+            max-width: 1500px;
+
+            margin: auto;
+
+            padding: 35px 36px 65px;
+
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .analytics-page-header {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .analytics-eyebrow {
+
+            color: var(--gold-dark);
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+
+        }
+
+
+        .analytics-page-header h1 {
+
+            margin-top: 7px;
+
+            font-size: 34px;
+
+            font-weight: 600;
+
+            letter-spacing: -1.3px;
+
+        }
+
+
+        .analytics-page-header p {
+
+            max-width: 820px;
+
+            margin-top: 9px;
+
+            color: var(--grey-500);
+
+            font-size: 10px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .analytics-header-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+
+        .header-button {
+
+            min-height: 38px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 0 14px;
+
+            border: 1px solid var(--grey-200);
+
+            background: white;
+
+            color: var(--grey-700);
+
+            font-size: 8px;
+
+            font-weight: 600;
+
+        }
+
+
+        .header-button:hover {
+
+            border-color: var(--gold);
+
+            color: var(--gold-dark);
+
+        }
+
+
+        /* =====================================================
+           HERO SCORE
+        ===================================================== */
+
+        .readiness-grid {
+
+            display: grid;
+
+            grid-template-columns: .85fr 1.15fr;
+
+            gap: 12px;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .readiness-card {
+
+            min-height: 255px;
+
+            padding: 25px;
+
+            background: var(--black);
+
+            color: white;
+
+            border: 1px solid var(--black);
+
+        }
+
+
+        .readiness-card-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+        }
+
+
+        .readiness-card-header span {
+
+            color: var(--gold);
+
+            font-size: 7px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.4px;
+
+        }
+
+
+        .readiness-card-header small {
+
+            color: #A1A1AA;
+
+            font-size: 7px;
+
+        }
+
+
+        .readiness-score-layout {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+
+            margin-top: 23px;
+
+        }
+
+
+        .score-ring {
+
+            width: 145px;
+
+            height: 145px;
+
+            flex: 0 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            position: relative;
+
+            background:
+                conic-gradient(
+                    var(--gold)
+                    var(--score, 0%),
+                    #292929 0
+                );
+
+        }
+
+
+        .score-ring::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 111px;
+
+            height: 111px;
+
+            border-radius: 50%;
+
+            background: var(--black);
+
+        }
+
+
+        .score-ring-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+
+        }
+
+
+        .score-ring-content strong {
+
+            display: block;
+
+            font-size: 31px;
+
+            font-weight: 500;
+
+        }
+
+
+        .score-ring-content span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: #A1A1AA;
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+            letter-spacing: .8px;
+
+        }
+
+
+        .readiness-copy h2 {
+
+            font-size: 19px;
+
+            font-weight: 550;
+
+        }
+
+
+        .readiness-copy p {
+
+            max-width: 330px;
+
+            margin-top: 7px;
+
+            color: #A1A1AA;
+
+            font-size: 8px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .readiness-level {
+
+            display: inline-flex;
+
+            margin-top: 12px;
+
+            padding: 7px 9px;
+
+            background: #1C1C1C;
+
+            border: 1px solid #323232;
+
+            color: var(--gold);
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+            letter-spacing: .8px;
+
+        }
+
+
+        /* =====================================================
+           KPI GRID
+        ===================================================== */
+
+        .kpi-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0,1fr));
+
+            gap: 10px;
+
+        }
+
+
+        .kpi-card {
+
+            padding: 18px;
+
+            background: white;
+
+            border: 1px solid var(--grey-200);
+
+        }
+
+
+        .kpi-card.highlight {
+
+            background: var(--gold-soft);
+
+            border-color: rgba(212,175,55,.35);
+
+        }
+
+
+        .kpi-card span {
+
+            display: block;
+
+            color: var(--grey-500);
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .kpi-card strong {
+
+            display: block;
+
+            margin-top: 10px;
+
+            font-size: 26px;
+
+            font-weight: 500;
+
+        }
+
+
+        .kpi-card small {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: var(--grey-500);
+
+            font-size: 6px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .kpi-trend {
+
+            display: inline-block;
+
+            margin-top: 7px;
+
+            padding: 4px 6px;
+
+            background: var(--green-soft);
+
+            color: var(--green);
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           ANALYTICS GRID
+        ===================================================== */
+
+        .analytics-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+
+            margin-top: 12px;
+
+        }
+
+
+        .analytics-card {
+
+            background: white;
+
+            border: 1px solid var(--grey-200);
+
+        }
+
+
+        .analytics-card.full {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        .analytics-card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            padding: 17px 18px;
+
+            border-bottom: 1px solid var(--grey-200);
+
+        }
+
+
+        .analytics-card-header span {
+
+            color: var(--gold-dark);
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+
+        }
+
+
+        .analytics-card-header h3 {
+
+            margin-top: 5px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+        .analytics-card-header small {
+
+            color: var(--grey-400);
+
+            font-size: 6px;
+
+        }
+
+
+        .analytics-card-body {
+
+            padding: 18px;
+
+        }
+
+
+        /* =====================================================
+           HORIZONTAL BARS
+        ===================================================== */
+
+        .bar-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+
+        }
+
+
+        .bar-item-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .bar-item-top span {
+
+            color: var(--grey-700);
+
+            font-size: 7px;
+
+            font-weight: 600;
+
+        }
+
+
+        .bar-item-top strong {
+
+            color: var(--grey-500);
+
+            font-size: 7px;
+
+        }
+
+
+        .bar-track {
+
+            width: 100%;
+
+            height: 7px;
+
+            background: var(--grey-200);
+
+        }
+
+
+        .bar-fill {
+
+            height: 100%;
+
+            background: var(--gold);
+
+            transition: width .5s ease;
+
+        }
+
+
+        .bar-fill.blue {
+
+            background: var(--blue);
+
+        }
+
+
+        .bar-fill.green {
+
+            background: var(--green);
+
+        }
+
+
+        .bar-fill.red {
+
+            background: var(--red);
+
+        }
+
+
+        /* =====================================================
+           SKILL GAP
+        ===================================================== */
+
+        .gap-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        .gap-column {
+
+            padding: 14px;
+
+            border: 1px solid var(--grey-200);
+
+            background: var(--off-white);
+
+        }
+
+
+        .gap-column h4 {
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+        }
+
+
+        .gap-column p {
+
+            margin-top: 4px;
+
+            color: var(--grey-500);
+
+            font-size: 6px;
+
+        }
+
+
+        .gap-tags {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 5px;
+
+            margin-top: 11px;
+
+        }
+
+
+        .gap-tag {
+
+            padding: 6px 7px;
+
+            font-size: 6px;
+
+            border: 1px solid var(--grey-200);
+
+            background: white;
+
+            color: var(--grey-700);
+
+        }
+
+
+        .gap-tag.strength {
+
+            color: var(--green);
+
+            background: var(--green-soft);
+
+            border-color: rgba(38,115,77,.15);
+
+        }
+
+
+        .gap-tag.missing {
+
+            color: var(--red);
+
+            background: var(--red-soft);
+
+            border-color: rgba(180,35,24,.15);
+
+        }
+
+
+        /* =====================================================
+           APPLICATION FUNNEL
+        ===================================================== */
+
+        .funnel {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+
+        .funnel-row {
+
+            display: grid;
+
+            grid-template-columns: 115px minmax(0,1fr) 45px;
+
+            gap: 10px;
+
+            align-items: center;
+
+        }
+
+
+        .funnel-row > span {
+
+            color: var(--grey-600);
+
+            font-size: 7px;
+
+        }
+
+
+        .funnel-track {
+
+            height: 21px;
+
+            background: var(--off-white);
+
+            border: 1px solid var(--grey-200);
+
+        }
+
+
+        .funnel-fill {
+
+            height: 100%;
+
+            min-width: 2px;
+
+            background: var(--gold);
+
+        }
+
+
+        .funnel-value {
+
+            text-align: right;
+
+            font-size: 7px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           DONUT
+        ===================================================== */
+
+        .donut-layout {
+
+            display: grid;
+
+            grid-template-columns: 180px 1fr;
+
+            gap: 25px;
+
+            align-items: center;
+
+        }
+
+
+        .donut {
+
+            width: 155px;
+
+            height: 155px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    var(--gold) 0 25%,
+                    var(--blue) 25% 50%,
+                    var(--green) 50% 72%,
+                    #7D7D7D 72% 100%
+                );
+
+        }
+
+
+        .donut::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 103px;
+
+            height: 103px;
+
+            border-radius: 50%;
+
+            background: white;
+
+        }
+
+
+        .donut-center {
+
+            position: relative;
+
+            z-index: 2;
+
+            text-align: center;
+
+        }
+
+
+        .donut-center strong {
+
+            display: block;
+
+            font-size: 22px;
+
+            font-weight: 500;
+
+        }
+
+
+        .donut-center span {
+
+            display: block;
+
+            margin-top: 3px;
+
+            color: var(--grey-500);
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+        }
+
+
+        .legend {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 11px;
+
+        }
+
+
+        .legend-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+        }
+
+
+        .legend-name {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: var(--grey-700);
+
+            font-size: 7px;
+
+        }
+
+
+        .legend-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            flex: 0 0 auto;
+
+        }
+
+
+        .legend-dot.gold {
+
+            background: var(--gold);
+
+        }
+
+
+        .legend-dot.blue {
+
+            background: var(--blue);
+
+        }
+
+
+        .legend-dot.green {
+
+            background: var(--green);
+
+        }
+
+
+        .legend-dot.grey {
+
+            background: #7D7D7D;
+
+        }
+
+
+        .legend-item strong {
+
+            font-size: 7px;
+
+        }
+
+
+        /* =====================================================
+           INSIGHTS
+        ===================================================== */
+
+        .insight-list {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
+
+            gap: 10px;
+
+        }
+
+
+        .insight-card {
+
+            padding: 17px;
+
+            border: 1px solid var(--grey-200);
+
+            background: var(--off-white);
+
+        }
+
+
+        .insight-icon {
+
+            width: 32px;
+
+            height: 32px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid var(--gold);
+
+            color: var(--gold-dark);
+
+            font-size: 12px;
+
+        }
+
+
+        .insight-card h4 {
+
+            margin-top: 10px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+        }
+
+
+        .insight-card p {
+
+            margin-top: 5px;
+
+            color: var(--grey-500);
+
+            font-size: 7px;
+
+            line-height: 1.65;
+
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .analytics-table-wrap {
+
+            overflow-x: auto;
+
+        }
+
+
+        .analytics-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        .analytics-table th {
+
+            padding: 10px 8px;
+
+            text-align: left;
+
+            color: var(--grey-400);
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+            letter-spacing: .7px;
+
+            border-bottom: 1px solid var(--grey-200);
+
+        }
+
+
+        .analytics-table td {
+
+            padding: 11px 8px;
+
+            color: var(--grey-700);
+
+            font-size: 7px;
+
+            border-bottom: 1px solid var(--grey-200);
+
+        }
+
+
+        .analytics-table tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        .status-pill {
+
+            display: inline-block;
+
+            padding: 5px 7px;
+
+            font-size: 6px;
+
+            font-weight: 700;
+
+        }
+
+
+        .status-success {
+
+            color: var(--green);
+
+            background: var(--green-soft);
+
+        }
+
+
+        .status-warning {
+
+            color: var(--gold-dark);
+
+            background: var(--gold-soft);
+
+        }
+
+
+        .status-neutral {
+
+            color: var(--grey-600);
+
+            background: var(--grey-100);
+
+        }
+
+
+        .status-danger {
+
+            color: var(--red);
+
+            background: var(--red-soft);
+
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1500;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: rgba(255,255,255,.9);
+
+            transition: .2s;
+
+        }
+
+
+        .loading-overlay.hidden {
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+        }
+
+
+        .loading-box {
+
+            text-align: center;
+
+        }
+
+
+        .loading-spinner {
+
+            width: 34px;
+
+            height: 34px;
+
+            margin: auto;
+
+            border: 2px solid var(--grey-200);
+
+            border-top-color: var(--gold);
+
+            border-radius: 50%;
+
+            animation: spin .8s linear infinite;
+
+        }
+
+
+        .loading-box p {
+
+            margin-top: 10px;
+
+            color: var(--grey-500);
+
+            font-size: 8px;
+
+        }
+
+
+        @keyframes spin {
+
+            to {
+
+                transform: rotate(360deg);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position: fixed;
+
+            right: 24px;
+
+            bottom: 24px;
+
+            z-index: 1700;
+
+            max-width: 380px;
+
+            padding: 13px 16px;
+
+            background: white;
+
+            border: 1px solid var(--grey-200);
+
+            box-shadow: 0 12px 35px rgba(0,0,0,.12);
+
+            font-size: 8px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .toast.success {
+
+            border-left: 3px solid var(--green);
+
+        }
+
+
+        .toast.error {
+
+            border-left: 3px solid var(--red);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .readiness-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .kpi-grid {
+
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+            }
+
+
+            .insight-list {
+
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 1000px) {
+
+            .analytics-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .analytics-card.full {
+
+                grid-column: auto;
+
+            }
+
+
+            .donut-layout {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .analytics-sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform .25s ease;
+
+            }
+
+
+            .analytics-sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .analytics-main {
+
+                width: 100%;
+
+                margin-left: 0;
+
+            }
+
+
+            .analytics-menu {
+
+                display: block;
+
+            }
+
+
+            .analytics-topbar {
+
+                padding: 0 20px;
+
+            }
+
+
+            .analytics-content {
+
+                padding: 28px 20px 50px;
+
+            }
+
+
+            .analytics-page-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+
+            .analytics-header-actions {
+
+                width: 100%;
+
+            }
+
+
+            .header-button {
+
+                flex: 1;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .analytics-portal-label,
+            .analytics-top-info {
+
+                display: none;
+
+            }
+
+
+            .kpi-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .gap-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .insight-list {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .readiness-score-layout {
+
+                flex-direction: column;
+
+                text-align: center;
+
+            }
+
+
+            .readiness-copy p {
+
+                margin-left: auto;
+
+                margin-right: auto;
+
+            }
+
+
+            .funnel-row {
+
+                grid-template-columns:
+                    90px minmax(0,1fr) 35px;
+
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .analytics-content {
+
+                padding: 22px 14px 40px;
+
+            }
+
+
+            .analytics-page-header h1 {
+
+                font-size: 28px;
+
+            }
+
+
+            .readiness-card {
+
+                padding: 20px;
+
+            }
+
+
+            .score-ring {
+
+                width: 125px;
+
+                height: 125px;
+
+            }
+
+
+            .score-ring::after {
+
+                width: 95px;
+
+                height: 95px;
+
+            }
+
+
+            .funnel-row {
+
+                grid-template-columns:
+                    75px minmax(0,1fr) 30px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+
+  
+
+
+    <div class="analytics-app">
+
+
+        <!-- =================================================
+             SIDEBAR
+        ================================================== -->
+
+        <aside
+            class="analytics-sidebar"
+            id="analyticsSidebar">
+
+
+            <div class="analytics-brand-wrap">
+
+                <a
+                    href="../academician-home.html"
+                    class="analytics-brand">
+
+                    <div class="analytics-brand-mark">
+                        SB
+                    </div>
+
+                    <div class="analytics-brand-name">
+                        SKILL<span>BRIDGE</span>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <nav class="analytics-sidebar-nav">
+
+
+                <div class="analytics-nav-section">
+                    MAIN
+                </div>
+
+
+                <a
+                    href="../academician-home.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../profile/profile.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ◯
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../skills/skills.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        My Expertise
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../opportunities/opportunities.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ◇
+                    </span>
+
+                    <span>
+                        Opportunities
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../applications/applications.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ▤
+                    </span>
+
+                    <span>
+                        Applications
+                    </span>
+
+                </a>
+
+
+                <div
+                    class="analytics-nav-section analytics-nav-gap">
+
+                    COLLABORATION
+
+                </div>
+
+
+                <a
+                    href="../collaborations/collaborations.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ↔
+                    </span>
+
+                    <span>
+                        Collaborations
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../mentorship/mentorship.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ♧
+                    </span>
+
+                    <span>
+                        Mentorship
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../learning/learning.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ◫
+                    </span>
+
+                    <span>
+                        Learning & Development
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../credentials/credentials.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ★
+                    </span>
+
+                    <span>
+                        Credentials
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="../portfolio/portfolio.html"
+                    class="analytics-nav-item">
+
+                    <span class="analytics-nav-icon">
+                        ◈
+                    </span>
+
+                    <span>
+                        Professional Portfolio
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="analytics.html"
+                    class="analytics-nav-item active">
+
+                    <span class="analytics-nav-icon">
+                        ◒
+                    </span>
+
+                    <span>
+                        Analytics & Insights
+                    </span>
+
+                </a>
+
+            </nav>
+
+
+            <div class="analytics-sidebar-bottom">
+
+
+                <div class="analytics-help">
+
+                    <div class="analytics-help-icon">
+                        ?
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Need help?
+                        </strong>
+
+                        <span>
+                            Support center
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logoutBtn"
+                    class="analytics-logout">
+
+                    <span>
+                        ↪
+                    </span>
+
+                    Logout
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+             MAIN
+        ================================================== -->
+
+        <main class="analytics-main">
+
+
+            <header class="analytics-topbar">
+
+
+                <button
+                    id="menuButton"
+                    class="analytics-menu">
+
+                    ☰
+
+                </button>
+
+
+                <div class="analytics-portal-label">
+                    ACADEMICIAN PORTAL
+                </div>
+
+
+                <div class="analytics-top-actions">
+
+
+                    <button
+                        class="analytics-top-button">
+
+                        ⌕
+
+                    </button>
+
+
+                    <button
+                        class="analytics-top-button">
+
+                        ♢
+
+                        <span
+                            class="analytics-notification-dot">
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="analytics-top-profile">
+
+                        <div
+                            class="analytics-top-image"
+                            id="topProfileImage">
+
+                            <span>
+                                A
+                            </span>
+
+                        </div>
+
+
+                        <div class="analytics-top-info">
+
+                            <strong id="topName">
+                                Academician
+                            </strong>
+
+                            <span>
+                                Academician
+                            </span>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="analytics-content">
+
+
+                <!-- =================================================
+                     PAGE HEADER
+                ================================================== -->
+
+                <section
+                    class="analytics-page-header">
+
+
+                    <div>
+
+                        <span class="analytics-eyebrow">
+                            PERFORMANCE &amp; INSIGHTS
+                        </span>
+
+                        <h1>
+                            Analytics &amp; Insights
+                        </h1>
+
+                        <p>
+                            Understand your industry readiness,
+                            professional development, research
+                            activity, opportunities, applications,
+                            collaborations and skill gaps using the
+                            data already stored in your Academician
+                            profile.
+                        </p>
+
+                    </div>
+
+
+                    <div class="analytics-header-actions">
+
+
+                        <button
+                            type="button"
+                            class="header-button"
+                            id="refreshAnalyticsButton">
+
+                            ↻ Refresh
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="header-button"
+                            id="portfolioButton">
+
+                            View Portfolio
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     READINESS
+                ================================================== -->
+
+                <section
+                    class="readiness-grid">
+
+
+                    <article
+                        class="readiness-card">
+
+
+                        <div
+                            class="readiness-card-header">
+
+                            <div>
+
+                                <span>
+                                    INDUSTRY READINESS
+                                </span>
+
+                                <div
+                                    style="
+                                        margin-top:4px;
+                                        font-size:7px;
+                                        color:#A1A1AA;
+                                    ">
+
+                                    Calculated from your profile
+
+                                </div>
+
+                            </div>
+
+
+                            <small>
+                                LIVE
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="readiness-score-layout">
+
+
+                            <div
+                                class="score-ring"
+                                id="scoreRing">
+
+
+                                <div
+                                    class="score-ring-content">
+
+                                    <strong
+                                        id="readinessScore">
+                                        0%
+                                    </strong>
+
+                                    <span>
+                                        READINESS
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="readiness-copy">
+
+
+                                <h2
+                                    id="readinessTitle">
+                                    Building
+                                </h2>
+
+
+                                <p
+                                    id="readinessDescription">
+
+                                    Your readiness score will be
+                                    calculated from profile completeness,
+                                    skills, industry experience, research,
+                                    credentials, applications,
+                                    collaborations and professional
+                                    development.
+
+                                </p>
+
+
+                                <span
+                                    class="readiness-level"
+                                    id="readinessLevel">
+
+                                    STARTING
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    PROFILE HEALTH
+                                </span>
+
+                                <h3>
+                                    Profile Completion
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                OVERALL
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    align-items:flex-end;
+                                    justify-content:space-between;
+                                    gap:15px;
+                                    margin-bottom:12px;
+                                ">
+
+
+                                <div>
+
+                                    <strong
+                                        style="
+                                            font-size:34px;
+                                            font-weight:500;
+                                        "
+                                        id="profileCompletion">
+
+                                        0%
+
+                                    </strong>
+
+
+                                    <div
+                                        style="
+                                            margin-top:4px;
+                                            color:var(--grey-500);
+                                            font-size:7px;
+                                        ">
+
+                                        Profile completeness
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    style="
+                                        text-align:right;
+                                    ">
+
+                                    <span
+                                        style="
+                                            display:block;
+                                            color:var(--grey-400);
+                                            font-size:6px;
+                                            font-weight:700;
+                                        ">
+
+                                        COMPLETED FIELDS
+
+                                    </span>
+
+
+                                    <strong
+                                        style="
+                                            display:block;
+                                            margin-top:5px;
+                                            font-size:15px;
+                                        "
+                                        id="completedFields">
+
+                                        0 / 0
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="bar-track">
+
+                                <div
+                                    class="bar-fill"
+                                    id="profileProgressBar"
+                                    style="width:0%;">
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="info-list"
+                                style="
+                                    margin-top:16px;
+                                ">
+
+
+                                <div
+                                    class="bar-item-top">
+
+                                    <span>
+                                        Identity &amp; Institution
+                                    </span>
+
+                                    <strong
+                                        id="identityScore">
+                                        0%
+                                    </strong>
+
+                                </div>
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill blue"
+                                        id="identityBar"
+                                        style="width:0%;">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    style="
+                                        margin-top:13px;
+                                    "
+                                    class="bar-item-top">
+
+                                    <span>
+                                        Professional Profile
+                                    </span>
+
+                                    <strong
+                                        id="professionalScore">
+                                        0%
+                                    </strong>
+
+                                </div>
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill green"
+                                        id="professionalBar"
+                                        style="width:0%;">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    style="
+                                        margin-top:13px;
+                                    "
+                                    class="bar-item-top">
+
+                                    <span>
+                                        Research &amp; Expertise
+                                    </span>
+
+                                    <strong
+                                        id="researchScore">
+                                        0%
+                                    </strong>
+
+                                </div>
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill"
+                                        id="researchBar"
+                                        style="width:0%;">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     KPI CARDS
+                ================================================== -->
+
+                <section
+                    class="kpi-grid">
+
+
+                    <article class="kpi-card highlight">
+
+                        <span>
+                            SKILLS
+                        </span>
+
+                        <strong
+                            id="skillCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Skills and expertise areas
+                        </small>
+
+                        <span
+                            class="kpi-trend"
+                            id="skillStatus">
+                            BUILDING
+                        </span>
+
+                    </article>
+
+
+                    <article class="kpi-card">
+
+                        <span>
+                            RESEARCH ACTIVITY
+                        </span>
+
+                        <strong
+                            id="researchCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Publications and patents
+                        </small>
+
+                    </article>
+
+
+                    <article class="kpi-card">
+
+                        <span>
+                            PROJECTS
+                        </span>
+
+                        <strong
+                            id="projectCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Academic and industry projects
+                        </small>
+
+                    </article>
+
+
+                    <article class="kpi-card">
+
+                        <span>
+                            CREDENTIALS
+                        </span>
+
+                        <strong
+                            id="credentialCount">
+                            0
+                        </strong>
+
+                        <small>
+                            Certifications and achievements
+                        </small>
+
+                    </article>
+
+                </section>
+
+
+
+                <!-- =================================================
+                     ANALYTICS GRID
+                ================================================== -->
+
+                <section
+                    class="analytics-grid">
+
+
+                    <!-- SKILLS -->
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    SKILL DISTRIBUTION
+                                </span>
+
+                                <h3>
+                                    Your Skill Mix
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                PROFILE DATA
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="bar-list"
+                                id="skillDistribution">
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- APPLICATIONS -->
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    APPLICATIONS
+                                </span>
+
+                                <h3>
+                                    Application Outcomes
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                HISTORY
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="donut-layout">
+
+
+                                <div
+                                    class="donut"
+                                    id="applicationDonut">
+
+
+                                    <div
+                                        class="donut-center">
+
+                                        <strong
+                                            id="applicationTotal">
+                                            0
+                                        </strong>
+
+                                        <span>
+                                            TOTAL
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="legend"
+                                    id="applicationLegend">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- SKILL GAPS -->
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    SKILL MAPPING
+                                </span>
+
+                                <h3>
+                                    Strengths &amp; Skill Gaps
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                INDUSTRY ALIGNMENT
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="gap-grid">
+
+
+                                <div
+                                    class="gap-column">
+
+                                    <h4>
+                                        Strong Areas
+                                    </h4>
+
+                                    <p>
+                                        Skills already represented
+                                        strongly in your profile.
+                                    </p>
+
+
+                                    <div
+                                        class="gap-tags"
+                                        id="strengthTags">
+
+                                    </div>
+
+                                </div>
+
+
+                                <div
+                                    class="gap-column">
+
+                                    <h4>
+                                        Development Areas
+                                    </h4>
+
+                                    <p>
+                                        Skills that may strengthen
+                                        your industry alignment.
+                                    </p>
+
+
+                                    <div
+                                        class="gap-tags"
+                                        id="missingTags">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- PROFESSIONAL DEVELOPMENT -->
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    PROFESSIONAL DEVELOPMENT
+                                </span>
+
+                                <h3>
+                                    Learning Activity
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                LEARNING
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="bar-list"
+                                id="learningDistribution">
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- APPLICATION FUNNEL -->
+
+                    <article
+                        class="analytics-card full">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    APPLICATION PIPELINE
+                                </span>
+
+                                <h3>
+                                    Opportunity Application Funnel
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                STATUS DISTRIBUTION
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="funnel"
+                                id="applicationFunnel">
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- RESEARCH + COLLABORATION -->
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    RESEARCH
+                                </span>
+
+                                <h3>
+                                    Research Activity
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                PROFILE
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="bar-list"
+                                id="researchDistribution">
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article
+                        class="analytics-card">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    COLLABORATION
+                                </span>
+
+                                <h3>
+                                    Collaboration Activity
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                PARTNERSHIPS
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="bar-list"
+                                id="collaborationDistribution">
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- INSIGHTS -->
+
+                    <article
+                        class="analytics-card full">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    PROFESSIONAL INSIGHTS
+                                </span>
+
+                                <h3>
+                                    What Your Data Says
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                GENERATED FROM PROFILE DATA
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="insight-list"
+                                id="insightList">
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- SUMMARY TABLE -->
+
+                    <article
+                        class="analytics-card full">
+
+
+                        <div
+                            class="analytics-card-header">
+
+                            <div>
+
+                                <span>
+                                    ACTIVITY SUMMARY
+                                </span>
+
+                                <h3>
+                                    Academician Professional Activity
+                                </h3>
+
+                            </div>
+
+
+                            <small>
+                                CURRENT
+                            </small>
+
+                        </div>
+
+
+                        <div
+                            class="analytics-card-body">
+
+
+                            <div
+                                class="analytics-table-wrap">
+
+
+                                <table
+                                    class="analytics-table">
+
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>
+                                                AREA
+                                            </th>
+
+                                            <th>
+                                                RECORDS
+                                            </th>
+
+                                            <th>
+                                                STATUS
+                                            </th>
+
+                                            <th>
+                                                INSIGHT
+                                            </th>
+
+                                        </tr>
+
+                                    </thead>
+
+
+                                    <tbody
+                                        id="activityTableBody">
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <script type="module">
+
+
+        // =====================================================
+        // FIREBASE IMPORTS
+        // =====================================================
+
+        import {
+            initializeApp
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            collection,
+            getDocs
+        } from
+        "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+
+        // =====================================================
+        // FIREBASE CONFIG
+        // =====================================================
+
+        const firebaseConfig = {
+
+            apiKey:
+                "AIzaSyDKCs2W0KEcsPTiwdw1eHLdtq5zJQi4cmI",
+
+            authDomain:
+                "ansora-27fe4.firebaseapp.com",
+
+            projectId:
+                "ansora-27fe4",
+
+            storageBucket:
+                "ansora-27fe4.firebasestorage.app",
+
+            messagingSenderId:
+                "230795678686",
+
+            appId:
+                "1:230795678686:web:06f0ccd7b8717ac13ac34f"
+
+        };
+
+
+        // =====================================================
+        // INIT
+        // =====================================================
+
+        const app =
+            initializeApp(
+                firebaseConfig
+            );
+
+
+        const auth =
+            getAuth(
+                app
+            );
+
+
+        const db =
+            getFirestore(
+                app
+            );
+
+
+        // =====================================================
+        // STATE
+        // =====================================================
+
+        let currentUser =
+            null;
+
+        let userData =
+            {};
+
+        let academicianData =
+            {};
+
+        let skills =
+            [];
+
+        let publications =
+            [];
+
+        let patents =
+            [];
+
+        let projects =
+            [];
+
+        let experiences =
+            [];
+
+        let certifications =
+            [];
+
+        let achievements =
+            [];
+
+        let opportunities =
+            [];
+
+        let applications =
+            [];
+
+        let collaborations =
+            [];
+
+        let learning =
+            [];
+
+        let documents =
+            [];
+
+
+        // =====================================================
+        // AUTH
+        // =====================================================
+
+        onAuthStateChanged(
+            auth,
+            async user => {
+
+                if (!user) {
+
+                    window.location.href =
+                        "../../login.html";
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    user;
+
+
+                try {
+
+                    await loadAllData();
+
+                    renderAnalytics();
+
+                    hideLoading();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Analytics loading error:",
+                        error
+                    );
+
+
+                    hideLoading();
+
+
+                    showToast(
+                        "Some analytics data could not be loaded.",
+                        "error"
+                    );
+
+
+                    renderAnalytics();
+
+                }
+
+            }
+        );
+
+
+        // =====================================================
+        // LOAD ALL DATA
+        // =====================================================
+
+        async function loadAllData() {
+
+            await loadUserData();
+
+            await loadAcademicianData();
+
+
+            await Promise.all(
+
+                [
+
+                    loadOwnedCollection(
+                        "publications",
+                        publications
+                    ),
+
+                    loadOwnedCollection(
+                        "patents",
+                        patents
+                    ),
+
+                    loadOwnedCollection(
+                        "projects",
+                        projects
+                    ),
+
+                    loadOwnedCollection(
+                        "industryExperience",
+                        experiences
+                    ),
+
+                    loadOwnedCollection(
+                        "experiences",
+                        experiences
+                    ),
+
+                    loadOwnedCollection(
+                        "certifications",
+                        certifications
+                    ),
+
+                    loadOwnedCollection(
+                        "achievements",
+                        achievements
+                    ),
+
+                    loadOwnedCollection(
+                        "opportunities",
+                        opportunities
+                    ),
+
+                    loadApplications(),
+
+                    loadOwnedCollection(
+                        "collaborations",
+                        collaborations
+                    ),
+
+                    loadOwnedCollection(
+                        "learningEnrollments",
+                        learning
+                    ),
+
+                    loadOwnedCollection(
+                        "learningApplications",
+                        learning
+                    ),
+
+                    loadOwnedCollection(
+                        "documents",
+                        documents
+                    )
+
+                ]
+
+            );
+
+
+            normalizeData();
+
+
+            skills =
+                getAcademicianSkills();
+
+        }
+
+
+        // =====================================================
+        // USER
+        // =====================================================
+
+        async function loadUserData() {
+
+            const snapshot =
+                await getDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    )
+
+                );
+
+
+            userData =
+                snapshot.exists()
+                    ? snapshot.data()
+                    : {};
+
+
+            if (
+                !snapshot.exists()
+            ) {
+
+                userData = {
+
+                    name:
+                        currentUser.displayName ||
+                        "Academician",
+
+                    email:
+                        currentUser.email ||
+                        "",
+
+                    role:
+                        "academician",
+
+                    photoURL:
+                        ""
+
+                };
+
+
+                await setDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    ),
+
+                    userData
+
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // ACADEMICIAN
+        // =====================================================
+
+        async function loadAcademicianData() {
+
+            const snapshot =
+                await getDoc(
+
+                    doc(
+                        db,
+                        "academicians",
+                        currentUser.uid
+                    )
+
+                );
+
+
+            academicianData =
+                snapshot.exists()
+                    ? snapshot.data()
+                    : {};
+
+        }
+
+
+        // =====================================================
+        // COLLECTION
+        // =====================================================
+
+        async function loadOwnedCollection(
+            collectionName,
+            targetArray
+        ) {
+
+            try {
+
+                const snapshot =
+                    await getDocs(
+
+                        collection(
+                            db,
+                            collectionName
+                        )
+
+                    );
+
+
+                snapshot.forEach(
+                    documentSnapshot => {
+
+                        const data =
+                            documentSnapshot.data();
+
+
+                        /*
+                            Different modules use slightly
+                            different ownership field names.
+                        */
+
+                        const owner =
+                            data.academicianId ||
+                            data.userId ||
+                            data.uid ||
+                            data.ownerId;
+
+
+                        if (
+                            owner ===
+                            currentUser.uid
+                        ) {
+
+                            targetArray.push({
+
+                                id:
+                                    documentSnapshot.id,
+
+                                ...data
+
+                            });
+
+                        }
+
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    `${collectionName} could not be loaded:`,
+                    error
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // APPLICATIONS
+        // =====================================================
+
+        async function loadApplications() {
+
+            const collectionsToTry = [
+
+                "applications",
+
+                "opportunityApplications"
+
+            ];
+
+
+            for (
+                const collectionName
+                of
+                collectionsToTry
+            ) {
+
+                try {
+
+                    const snapshot =
+                        await getDocs(
+
+                            collection(
+                                db,
+                                collectionName
+                            )
+
+                        );
+
+
+                    snapshot.forEach(
+                        documentSnapshot => {
+
+                            const data =
+                                documentSnapshot.data();
+
+
+                            const owner =
+                                data.academicianId ||
+                                data.userId ||
+                                data.uid ||
+                                data.applicantId;
+
+
+                            if (
+                                owner ===
+                                currentUser.uid
+                            ) {
+
+                                applications.push({
+
+                                    id:
+                                        documentSnapshot.id,
+
+                                    ...data
+
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.warn(
+                        `${collectionName} unavailable:`,
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+
+
+        // =====================================================
+        // NORMALIZE
+        // =====================================================
+
+        function normalizeData() {
+
+            publications =
+                uniqueById(
+                    publications
+                );
+
+
+            patents =
+                uniqueById(
+                    patents
+                );
+
+
+            projects =
+                uniqueById(
+                    projects
+                );
+
+
+            experiences =
+                uniqueById(
+                    experiences
+                );
+
+
+            certifications =
+                uniqueById(
+                    certifications
+                );
+
+
+            achievements =
+                uniqueById(
+                    achievements
+                );
+
+
+            applications =
+                uniqueById(
+                    applications
+                );
+
+
+            collaborations =
+                uniqueById(
+                    collaborations
+                );
+
+
+            learning =
+                uniqueById(
+                    learning
+                );
+
+
+            documents =
+                uniqueById(
+                    documents
+                );
+
+        }
+
+
+        // =====================================================
+        // RENDER ALL
+        // =====================================================
+
+        function renderAnalytics() {
+
+            updateTopProfile();
+
+            const profile =
+                calculateProfileCompletion();
+
+
+            const readiness =
+                calculateReadiness(
+                    profile
+                );
+
+
+            renderReadiness(
+                readiness
+            );
+
+
+            renderProfileHealth(
+                profile
+            );
+
+
+            renderKPIs();
+
+
+            renderSkillDistribution();
+
+
+            renderApplications();
+
+
+            renderSkillGaps();
+
+
+            renderLearning();
+
+
+            renderApplicationFunnel();
+
+
+            renderResearch();
+
+
+            renderCollaborations();
+
+
+            renderInsights(
+                profile,
+                readiness
+            );
+
+
+            renderActivityTable();
+
+        }
+
+
+        // =====================================================
+        // TOP PROFILE
+        // =====================================================
+
+        function updateTopProfile() {
+
+            const name =
+                getAcademicianName();
+
+
+            setText(
+                "topName",
+                name
+            );
+
+
+            const container =
+                document.getElementById(
+                    "topProfileImage"
+                );
+
+
+            const image =
+                getProfileImage();
+
+
+            if (
+                image
+            ) {
+
+                container.innerHTML =
+                    "";
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    image;
+
+
+                img.alt =
+                    "Profile photo";
+
+
+                img.onerror =
+                    () => {
+
+                        container.innerHTML =
+                            `<span>${escapeHTML(
+                                getInitial(
+                                    name
+                                )
+                            )}</span>`;
+
+                    };
+
+
+                container.appendChild(
+                    img
+                );
+
+            }
+
+            else {
+
+                container.innerHTML =
+                    `<span>${escapeHTML(
+                        getInitial(
+                            name
+                        )
+                    )}</span>`;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // PROFILE COMPLETION
+        // =====================================================
+
+        function calculateProfileCompletion() {
+
+            const identityFields = [
+
+                academicianData.name ||
+                academicianData.fullName ||
+                userData.name,
+
+                academicianData.institution ||
+                academicianData.institutionName,
+
+                academicianData.department,
+
+                academicianData.designation,
+
+                academicianData.employeeId ||
+                academicianData.facultyId,
+
+                academicianData.highestQualification
+
+            ];
+
+
+            const professionalFields = [
+
+                academicianData.professionalHeadline ||
+                academicianData.headline,
+
+                academicianData.bio ||
+                academicianData.professionalSummary,
+
+                academicianData.phone ||
+                academicianData.phoneNumber,
+
+                academicianData.specialization,
+
+                academicianData.yearsOfExperience,
+
+                academicianData.linkedin ||
+                academicianData.linkedIn
+
+            ];
+
+
+            const researchFields = [
+
+                academicianData.researchInterests,
+
+                academicianData.researchDomains,
+
+                academicianData.currentResearchFocus ||
+                academicianData.researchFocus,
+
+                academicianData.researchKeywords,
+
+                academicianData.researchSpecialization,
+
+                skills.length >
+
+                0
+
+            ];
+
+
+            const identity =
+                percentageFromFields(
+                    identityFields
+                );
+
+
+            const professional =
+                percentageFromFields(
+                    professionalFields
+                );
+
+
+            const research =
+                percentageFromFields(
+                    researchFields
+                );
+
+
+            const additional = [
+
+                certifications.length >
+                0,
+
+                achievements.length >
+                0,
+
+                projects.length >
+                0,
+
+                publications.length >
+                0,
+
+                experiences.length >
+                0,
+
+                collaborations.length >
+                0,
+
+                documents.length >
+                0
+
+            ];
+
+
+            const additionalScore =
+                percentageFromFields(
+                    additional
+                );
+
+
+            const overall =
+                Math.round(
+                    (
+                        identity +
+                        professional +
+                        research +
+                        additionalScore
+                    ) /
+                    4
+                );
+
+
+            const allTotal =
+                identityFields.length +
+                professionalFields.length +
+                researchFields.length +
+                additional.length;
+
+
+            const allCompleted =
+                countCompleted(
+                    identityFields
+                ) +
+                countCompleted(
+                    professionalFields
+                ) +
+                countCompleted(
+                    researchFields
+                ) +
+                countCompleted(
+                    additional
+                );
+
+
+            return {
+
+                overall:
+                    overall,
+
+                identity:
+                    identity,
+
+                professional:
+                    professional,
+
+                research:
+                    research,
+
+                completed:
+                    allCompleted,
+
+                total:
+                    allTotal
+
+            };
+
+        }
+
+
+        function percentageFromFields(
+            fields
+        ) {
+
+            if (
+                !fields.length
+            ) {
+
+                return 0;
+
+            }
+
+
+            return Math.round(
+
+                (
+                    countCompleted(
+                        fields
+                    ) /
+                    fields.length
+                )
+                *
+                100
+
+            );
+
+        }
+
+
+        function countCompleted(
+            fields
+        ) {
+
+            return fields.filter(
+                value => {
+
+                    if (
+                        typeof value ===
+                        "boolean"
+                    ) {
+
+                        return value;
+
+                    }
+
+
+                    if (
+                        Array.isArray(
+                            value
+                        )
+                    ) {
+
+                        return value.length >
+                            0;
+
+                    }
+
+
+                    return (
+                        value !==
+                            undefined &&
+                        value !==
+                            null &&
+                        String(
+                            value
+                        )
+                            .trim()
+                            .length >
+                            0
+                    );
+
+                }
+            ).length;
+
+        }
+
+
+        // =====================================================
+        // READINESS
+        // =====================================================
+
+        function calculateReadiness(
+            profile
+        ) {
+
+            const skillScore =
+                Math.min(
+                    100,
+                    skills.length *
+                    8
+                );
+
+
+            const researchScore =
+                Math.min(
+
+                    100,
+
+                    (
+                        publications.length *
+                        7
+                    )
+                    +
+                    (
+                        patents.length *
+                        9
+                    )
+
+                );
+
+
+            const projectScore =
+                Math.min(
+                    100,
+                    projects.length *
+                    10
+                );
+
+
+            const experienceScore =
+                Math.min(
+                    100,
+                    experiences.length *
+                    15
+                );
+
+
+            const credentialScore =
+                Math.min(
+                    100,
+                    certifications.length *
+                    10
+                );
+
+
+            const collaborationScore =
+                Math.min(
+                    100,
+                    collaborations.length *
+                    12
+                );
+
+
+            const learningScore =
+                Math.min(
+                    100,
+                    learning.length *
+                    12
+                );
+
+
+            const readiness =
+                Math.round(
+
+                    (
+                        profile.overall *
+                        .22
+
+                        +
+
+                        skillScore *
+                        .19
+
+                        +
+
+                        researchScore *
+                        .10
+
+                        +
+
+                        projectScore *
+                        .14
+
+                        +
+
+                        experienceScore *
+                        .12
+
+                        +
+
+                        credentialScore *
+                        .09
+
+                        +
+
+                        collaborationScore *
+                        .07
+
+                        +
+
+                        learningScore *
+                        .07
+
+                    )
+
+                );
+
+
+            return {
+
+                score:
+                    Math.min(
+                        100,
+                        readiness
+                    ),
+
+                skillScore:
+                    skillScore,
+
+                researchScore:
+                    researchScore,
+
+                projectScore:
+                    projectScore,
+
+                experienceScore:
+                    experienceScore,
+
+                credentialScore:
+                    credentialScore,
+
+                collaborationScore:
+                    collaborationScore,
+
+                learningScore:
+                    learningScore
+
+            };
+
+        }
+
+
+        function renderReadiness(
+            readiness
+        ) {
+
+            const score =
+                readiness.score;
+
+
+            setText(
+                "readinessScore",
+                `${score}%`
+            );
+
+
+            const ring =
+                document.getElementById(
+                    "scoreRing"
+                );
+
+
+            ring.style.setProperty(
+                "--score",
+                `${score}%`
+            );
+
+
+            let title =
+                "Building";
+
+
+            let level =
+                "STARTING";
+
+
+            let description =
+                "Continue building your profile with skills, projects, industry experience and professional credentials.";
+
+
+            if (
+                score >=
+                80
+            ) {
+
+                title =
+                    "Industry Ready";
+
+
+                level =
+                    "STRONG";
+
+
+                description =
+                    "Your profile demonstrates strong readiness for industry collaboration and professional opportunities.";
+
+            }
+
+            else if (
+                score >=
+                60
+            ) {
+
+                title =
+                    "Nearly Ready";
+
+
+                level =
+                    "ADVANCING";
+
+
+                description =
+                    "Your professional profile is developing well. Strengthening a few areas can improve your industry readiness.";
+
+            }
+
+            else if (
+                score >=
+                40
+            ) {
+
+                title =
+                    "Developing";
+
+
+                level =
+                    "DEVELOPING";
+
+
+                description =
+                    "You have a growing professional foundation. Add evidence of skills, projects and industry exposure to improve your score.";
+
+            }
+
+
+            setText(
+                "readinessTitle",
+                title
+            );
+
+
+            setText(
+                "readinessLevel",
+                level
+            );
+
+
+            setText(
+                "readinessDescription",
+                description
+            );
+
+        }
+
+
+        // =====================================================
+        // PROFILE HEALTH
+        // =====================================================
+
+        function renderProfileHealth(
+            profile
+        ) {
+
+            setText(
+                "profileCompletion",
+                `${profile.overall}%`
+            );
+
+
+            setText(
+                "completedFields",
+                `${profile.completed} / ${profile.total}`
+            );
+
+
+            setText(
+                "identityScore",
+                `${profile.identity}%`
+            );
+
+
+            setText(
+                "professionalScore",
+                `${profile.professional}%`
+            );
+
+
+            setText(
+                "researchScore",
+                `${profile.research}%`
+            );
+
+
+            setWidth(
+                "profileProgressBar",
+                profile.overall
+            );
+
+
+            setWidth(
+                "identityBar",
+                profile.identity
+            );
+
+
+            setWidth(
+                "professionalBar",
+                profile.professional
+            );
+
+
+            setWidth(
+                "researchBar",
+                profile.research
+            );
+
+        }
+
+
+        // =====================================================
+        // KPI
+        // =====================================================
+
+        function renderKPIs() {
+
+            const researchTotal =
+                publications.length +
+                patents.length;
+
+
+            const credentialTotal =
+                certifications.length +
+                achievements.length;
+
+
+            setText(
+                "skillCount",
+                skills.length
+            );
+
+
+            setText(
+                "researchCount",
+                researchTotal
+            );
+
+
+            setText(
+                "projectCount",
+                projects.length
+            );
+
+
+            setText(
+                "credentialCount",
+                credentialTotal
+            );
+
+
+            setText(
+                "skillStatus",
+                skills.length >= 10
+                    ? "STRONG"
+                    : skills.length >= 5
+                        ? "DEVELOPING"
+                        : "BUILDING"
+            );
+
+        }
+
+
+        // =====================================================
+        // SKILL DISTRIBUTION
+        // =====================================================
+
+        function renderSkillDistribution() {
+
+            const groups = {
+
+                "Technical Skills":
+                    academicianData.technicalSkills,
+
+                "Domain Expertise":
+                    academicianData.domainExpertise,
+
+                "Research Skills":
+                    academicianData.researchSkills,
+
+                "Software / Tools":
+                    academicianData.softwareTools,
+
+                "Industry Skills":
+                    academicianData.industrySkills,
+
+                "Soft Skills":
+                    academicianData.softSkills
+
+            };
+
+
+            const values =
+                Object.entries(
+                    groups
+                )
+                    .map(
+                        (
+                            [
+                                name,
+                                value
+                            ]
+                        ) => ({
+
+                            name:
+                                name,
+
+                            count:
+                                normalizeArray(
+                                    value
+                                ).length
+
+                        })
+                    )
+                    .filter(
+                        item =>
+                            item.count >
+                            0
+                    );
+
+
+            const fallback =
+                values.length
+                    ? values
+                    : [
+
+                        {
+
+                            name:
+                                "General Expertise",
+
+                            count:
+                                skills.length
+
+                        }
+
+                    ];
+
+
+            const max =
+                Math.max(
+                    1,
+                    ...fallback.map(
+                        item =>
+                            item.count
+                    )
+                );
+
+
+            const container =
+                document.getElementById(
+                    "skillDistribution"
+                );
+
+
+            container.innerHTML =
+                fallback
+                    .map(
+                        item => `
+
+                            <div>
+
+                                <div
+                                    class="bar-item-top">
+
+                                    <span>
+                                        ${escapeHTML(
+                                            item.name
+                                        )}
+                                    </span>
+
+                                    <strong>
+                                        ${item.count}
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill"
+                                        style="
+                                            width:${
+                                                Math.round(
+                                                    (
+                                                        item.count /
+                                                        max
+                                                    )
+                                                    *
+                                                    100
+                                                )
+                                            }%;
+                                        ">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // APPLICATION ANALYTICS
+        // =====================================================
+
+        function getApplicationStatuses() {
+
+            const counts = {
+
+                submitted:
+                    0,
+
+                review:
+                    0,
+
+                shortlisted:
+                    0,
+
+                interview:
+                    0,
+
+                accepted:
+                    0,
+
+                rejected:
+                    0,
+
+                withdrawn:
+                    0,
+
+                completed:
+                    0
+
+            };
+
+
+            applications.forEach(
+                application => {
+
+                    const status =
+                        normalizeApplicationStatus(
+                            application.status
+                        );
+
+
+                    if (
+                        counts[
+                            status
+                        ] !==
+                        undefined
+                    ) {
+
+                        counts[
+                            status
+                        ]++;
+
+                    }
+
+                }
+            );
+
+
+            return counts;
+
+        }
+
+
+        function renderApplications() {
+
+            const counts =
+                getApplicationStatuses();
+
+
+            const total =
+                applications.length;
+
+
+            setText(
+                "applicationTotal",
+                total
+            );
+
+
+            const values = [
+
+                [
+                    "Submitted",
+                    counts.submitted,
+                    "gold"
+                ],
+
+                [
+                    "Under Review",
+                    counts.review,
+                    "blue"
+                ],
+
+                [
+                    "Shortlisted",
+                    counts.shortlisted,
+                    "green"
+                ],
+
+                [
+                    "Interview",
+                    counts.interview,
+                    "grey"
+                ]
+
+            ];
+
+
+            const colorValues = {
+
+                gold:
+                    "var(--gold)",
+
+                blue:
+                    "var(--blue)",
+
+                green:
+                    "var(--green)",
+
+                grey:
+                    "#7D7D7D"
+
+            };
+
+
+            const denominator =
+                Math.max(
+                    1,
+                    total
+                );
+
+
+            let current =
+                0;
+
+
+            const segments =
+                values
+                    .filter(
+                        item =>
+                            item[1] >
+                            0
+                    );
+
+
+            if (
+                !segments.length
+            ) {
+
+                document
+                    .getElementById(
+                        "applicationDonut"
+                    )
+                    .style.background =
+                    "#E4E4E7";
+
+            }
+
+            else {
+
+                const gradient =
+                    [];
+
+
+                segments.forEach(
+                    item => {
+
+                        const start =
+                            current;
+
+
+                        current +=
+                            (
+                                item[1] /
+                                denominator
+                            )
+                            *
+                            100;
+
+
+                        gradient.push(
+
+                            `${colorValues[item[2]]} ${start}% ${current}%`
+
+                        );
+
+                    }
+                );
+
+
+                if (
+                    current <
+                    100
+                ) {
+
+                    gradient.push(
+                        `#7D7D7D ${current}% 100%`
+                    );
+
+                }
+
+
+                document
+                    .getElementById(
+                        "applicationDonut"
+                    )
+                    .style.background =
+                    `conic-gradient(${gradient.join(",")})`;
+
+            }
+
+
+            const legend =
+                document.getElementById(
+                    "applicationLegend"
+                );
+
+
+            legend.innerHTML =
+                values
+                    .map(
+                        item => `
+
+                            <div
+                                class="legend-item">
+
+
+                                <div
+                                    class="legend-name">
+
+                                    <span
+                                        class="legend-dot ${
+                                            item[2]
+                                        }">
+                                    </span>
+
+                                    ${escapeHTML(
+                                        item[0]
+                                    )}
+
+                                </div>
+
+
+                                <strong>
+                                    ${item[1]}
+                                </strong>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // APPLICATION FUNNEL
+        // =====================================================
+
+        function renderApplicationFunnel() {
+
+            const counts =
+                getApplicationStatuses();
+
+
+            const rows = [
+
+                [
+                    "Submitted",
+                    counts.submitted
+                ],
+
+                [
+                    "Under Review",
+                    counts.review
+                ],
+
+                [
+                    "Shortlisted",
+                    counts.shortlisted
+                ],
+
+                [
+                    "Interview",
+                    counts.interview
+                ],
+
+                [
+                    "Accepted",
+                    counts.accepted
+                ],
+
+                [
+                    "Completed",
+                    counts.completed
+                ],
+
+                [
+                    "Rejected",
+                    counts.rejected
+                ],
+
+                [
+                    "Withdrawn",
+                    counts.withdrawn
+                ]
+
+            ];
+
+
+            const max =
+                Math.max(
+                    1,
+                    ...rows.map(
+                        row =>
+                            row[1]
+                    )
+                );
+
+
+            const container =
+                document.getElementById(
+                    "applicationFunnel"
+                );
+
+
+            container.innerHTML =
+                rows
+                    .map(
+                        row => `
+
+                            <div
+                                class="funnel-row">
+
+
+                                <span>
+                                    ${escapeHTML(
+                                        row[0]
+                                    )}
+                                </span>
+
+
+                                <div
+                                    class="funnel-track">
+
+                                    <div
+                                        class="funnel-fill"
+                                        style="
+                                            width:${
+                                                Math.round(
+                                                    (
+                                                        row[1] /
+                                                        max
+                                                    ) *
+                                                    100
+                                                )
+                                            }%;
+                                        ">
+
+                                    </div>
+
+                                </div>
+
+
+                                <span
+                                    class="funnel-value">
+
+                                    ${row[1]}
+
+                                </span>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // SKILL GAPS
+        // =====================================================
+
+        function renderSkillGaps() {
+
+            const strength =
+                getSkillStrengths();
+
+
+            const development =
+                getSkillDevelopmentAreas();
+
+
+            renderTags(
+                "strengthTags",
+                strength,
+                "strength"
+            );
+
+
+            renderTags(
+                "missingTags",
+                development,
+                "missing"
+            );
+
+        }
+
+
+        function getSkillStrengths() {
+
+            const result =
+                [];
+
+
+            skills.forEach(
+                skill => {
+
+                    result.push(
+                        skill
+                    );
+
+                }
+            );
+
+
+            return uniqueStrings(
+                result
+            )
+                .slice(
+                    0,
+                    10
+                );
+
+        }
+
+
+        function getSkillDevelopmentAreas() {
+
+            const recommendationPool = [
+
+                "Industry Project Management",
+
+                "Technical Documentation",
+
+                "Industry Collaboration",
+
+                "Data Analytics",
+
+                "Emerging Technologies",
+
+                "Innovation & Entrepreneurship",
+
+                "Professional Communication",
+
+                "Digital Transformation"
+
+            ];
+
+
+            const normalized =
+                skills.map(
+                    skill =>
+                        String(
+                            skill
+                        )
+                            .toLowerCase()
+                );
+
+
+            return recommendationPool
+                .filter(
+                    skill =>
+                        !normalized.some(
+                            userSkill =>
+                                userSkill.includes(
+                                    skill.toLowerCase()
+                                ) ||
+                                skill
+                                    .toLowerCase()
+                                    .includes(
+                                        userSkill
+                                    )
+                        )
+                )
+                .slice(
+                    0,
+                    6
+                );
+
+        }
+
+
+        function renderTags(
+            id,
+            values,
+            className
+        ) {
+
+            const container =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                !values.length
+            ) {
+
+                container.innerHTML =
+                    `
+
+                        <span
+                            class="gap-tag ${className}">
+
+                            No major gaps detected
+
+                        </span>
+
+                    `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                values
+                    .map(
+                        value => `
+
+                            <span
+                                class="gap-tag ${className}">
+
+                                ${escapeHTML(
+                                    value
+                                )}
+
+                            </span>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // LEARNING
+        // =====================================================
+
+        function renderLearning() {
+
+            const enrolled =
+                learning.filter(
+                    item =>
+                        normalizeLearningStatus(
+                            item.status
+                        ) ===
+                        "enrolled"
+                ).length;
+
+
+            const progress =
+                learning.filter(
+                    item =>
+                        normalizeLearningStatus(
+                            item.status
+                        ) ===
+                        "in-progress"
+                ).length;
+
+
+            const completed =
+                learning.filter(
+                    item =>
+                        normalizeLearningStatus(
+                            item.status
+                        ) ===
+                        "completed"
+                ).length;
+
+
+            const applicationsCount =
+                learning.filter(
+                    item =>
+                        normalizeLearningStatus(
+                            item.status
+                        ) ===
+                        "applied"
+                ).length;
+
+
+            const rows = [
+
+                [
+                    "Applied",
+                    applicationsCount
+                ],
+
+                [
+                    "Enrolled",
+                    enrolled
+                ],
+
+                [
+                    "In Progress",
+                    progress
+                ],
+
+                [
+                    "Completed",
+                    completed
+                ]
+
+            ];
+
+
+            const max =
+                Math.max(
+                    1,
+                    ...rows.map(
+                        row =>
+                            row[1]
+                    )
+                );
+
+
+            const container =
+                document.getElementById(
+                    "learningDistribution"
+                );
+
+
+            container.innerHTML =
+                rows
+                    .map(
+                        row => `
+
+                            <div>
+
+                                <div
+                                    class="bar-item-top">
+
+                                    <span>
+                                        ${row[0]}
+                                    </span>
+
+                                    <strong>
+                                        ${row[1]}
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill blue"
+                                        style="
+                                            width:${
+                                                Math.round(
+                                                    (
+                                                        row[1] /
+                                                        max
+                                                    ) *
+                                                    100
+                                                )
+                                            }%;
+                                        ">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // RESEARCH
+        // =====================================================
+
+        function renderResearch() {
+
+            const rows = [
+
+                [
+                    "Journal / Conference Publications",
+                    publications.length
+                ],
+
+                [
+                    "Patents / Intellectual Property",
+                    patents.length
+                ],
+
+                [
+                    "Research Projects",
+                    projects.filter(
+                        project =>
+                            String(
+                                project.type ||
+                                project.projectType ||
+                                ""
+                            )
+                                .toLowerCase()
+                                .includes(
+                                    "research"
+                                )
+                    ).length
+                ],
+
+                [
+                    "Research Interests",
+                    getAcademicianInterests().length
+                ]
+
+            ];
+
+
+            const max =
+                Math.max(
+                    1,
+                    ...rows.map(
+                        row =>
+                            row[1]
+                    )
+                );
+
+
+            const container =
+                document.getElementById(
+                    "researchDistribution"
+                );
+
+
+            container.innerHTML =
+                rows
+                    .map(
+                        row => `
+
+                            <div>
+
+                                <div
+                                    class="bar-item-top">
+
+                                    <span>
+                                        ${escapeHTML(
+                                            row[0]
+                                        )}
+                                    </span>
+
+                                    <strong>
+                                        ${row[1]}
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill green"
+                                        style="
+                                            width:${
+                                                Math.round(
+                                                    (
+                                                        row[1] /
+                                                        max
+                                                    )
+                                                    *
+                                                    100
+                                                )
+                                            }%;
+                                        ">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // COLLABORATIONS
+        // =====================================================
+
+        function renderCollaborations() {
+
+            const active =
+                collaborations.filter(
+                    item => {
+
+                        const status =
+                            String(
+                                item.status ||
+                                ""
+                            )
+                                .toLowerCase();
+
+
+                        return !status.includes(
+                            "cancel"
+                        );
+
+                    }
+                ).length;
+
+
+            const completed =
+                collaborations.filter(
+                    item =>
+                        String(
+                            item.status ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .includes(
+                                "complete"
+                            )
+                ).length;
+
+
+            const proposed =
+                collaborations.filter(
+                    item =>
+                        String(
+                            item.status ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .includes(
+                                "propos"
+                            )
+                ).length;
+
+
+            const mentorship =
+                collaborations.filter(
+                    item =>
+                        String(
+                            item.type ||
+                            ""
+                        )
+                            .toLowerCase()
+                            .includes(
+                                "mentor"
+                            )
+                ).length;
+
+
+            const rows = [
+
+                [
+                    "Active / Ongoing",
+                    active
+                ],
+
+                [
+                    "Completed",
+                    completed
+                ],
+
+                [
+                    "Proposed",
+                    proposed
+                ],
+
+                [
+                    "Mentorship",
+                    mentorship
+                ]
+
+            ];
+
+
+            const max =
+                Math.max(
+                    1,
+                    ...rows.map(
+                        row =>
+                            row[1]
+                    )
+                );
+
+
+            const container =
+                document.getElementById(
+                    "collaborationDistribution"
+                );
+
+
+            container.innerHTML =
+                rows
+                    .map(
+                        row => `
+
+                            <div>
+
+                                <div
+                                    class="bar-item-top">
+
+                                    <span>
+                                        ${escapeHTML(
+                                            row[0]
+                                        )}
+                                    </span>
+
+                                    <strong>
+                                        ${row[1]}
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="bar-track">
+
+                                    <div
+                                        class="bar-fill"
+                                        style="
+                                            width:${
+                                                Math.round(
+                                                    (
+                                                        row[1] /
+                                                        max
+                                                    ) *
+                                                    100
+                                                )
+                                            }%;
+                                        ">
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // INSIGHTS
+        // =====================================================
+
+        function renderInsights(
+            profile,
+            readiness
+        ) {
+
+            const insights =
+                [];
+
+
+            // Profile insight
+
+            if (
+                profile.overall <
+                70
+            ) {
+
+                insights.push({
+
+                    icon:
+                        "◯",
+
+                    title:
+                        "Complete your profile",
+
+                    description:
+                        `Your current profile completion is ${profile.overall}%. Adding missing professional and research information can improve your industry visibility.`
+
+                });
+
+            }
+
+            else {
+
+                insights.push({
+
+                    icon:
+                        "✓",
+
+                    title:
+                        "Profile foundation is strong",
+
+                    description:
+                        `Your profile is ${profile.overall}% complete. Keep your credentials, projects and research records updated.`
+
+                });
+
+            }
+
+
+            // Skills insight
+
+            if (
+                skills.length <
+                8
+            ) {
+
+                insights.push({
+
+                    icon:
+                        "✦",
+
+                    title:
+                        "Expand your skills",
+
+                    description:
+                        "Adding more industry-relevant technical, domain and professional skills gives the matching engine more information to work with."
+
+                });
+
+            }
+
+            else {
+
+                insights.push({
+
+                    icon:
+                        "✦",
+
+                    title:
+                        "Good skill coverage",
+
+                    description:
+                        `${skills.length} skill areas are represented in your profile. Continue adding verified and industry-relevant expertise.`
+
+                });
+
+            }
+
+
+            // Research
+
+            if (
+                publications.length ===
+                0
+            ) {
+
+                insights.push({
+
+                    icon:
+                        "◎",
+
+                    title:
+                        "Add research activity",
+
+                    description:
+                        "Adding publications, patents and research projects will strengthen your research-facing professional profile."
+
+                });
+
+            }
+
+            else {
+
+                insights.push({
+
+                    icon:
+                        "◎",
+
+                    title:
+                        "Research visibility",
+
+                    description:
+                        `Your profile currently includes ${publications.length} publication record${publications.length === 1 ? "" : "s"} and ${patents.length} patent record${patents.length === 1 ? "" : "s"}.`
+
+                });
+
+            }
+
+
+            // Opportunities
+
+            if (
+                applications.length ===
+                0
+            ) {
+
+                insights.push({
+
+                    icon:
+                        "◇",
+
+                    title:
+                        "Start exploring opportunities",
+
+                    description:
+                        "Applying to relevant industry opportunities is the next step toward converting your Academician profile into real collaboration activity."
+
+                });
+
+            }
+
+            else {
+
+                insights.push({
+
+                    icon:
+                        "◇",
+
+                    title:
+                        "Opportunity activity",
+
+                    description:
+                        `You have ${applications.length} application record${applications.length === 1 ? "" : "s"}. Track the funnel and improve applications based on outcomes.`
+
+                });
+
+            }
+
+
+            // Collaboration
+
+            if (
+                collaborations.length ===
+                0
+            ) {
+
+                insights.push({
+
+                    icon:
+                        "↔",
+
+                    title:
+                        "Build industry connections",
+
+                    description:
+                        "Industry collaborations, consultancy projects, mentorship and workshops can increase your practical exposure."
+
+                });
+
+            }
+
+            else {
+
+                insights.push({
+
+                    icon:
+                        "↔",
+
+                    title:
+                        "Collaboration momentum",
+
+                    description:
+                        `Your profile contains ${collaborations.length} collaboration record${collaborations.length === 1 ? "" : "s"}. Keep milestone and outcome information updated.`
+
+                });
+
+            }
+
+
+            // Readiness
+
+            insights.push({
+
+                icon:
+                    "◒",
+
+                title:
+                    `Industry readiness: ${readiness.score}%`,
+
+                description:
+                    readiness.score >= 70
+                        ? "Your current profile demonstrates strong readiness for industry-facing activity."
+                        : "The biggest readiness gains will come from strengthening your skills, projects, experience and verified credentials."
+
+            });
+
+
+            const container =
+                document.getElementById(
+                    "insightList"
+                );
+
+
+            container.innerHTML =
+                insights
+                    .slice(
+                        0,
+                        6
+                    )
+                    .map(
+                        insight => `
+
+                            <article
+                                class="insight-card">
+
+
+                                <div
+                                    class="insight-icon">
+
+                                    ${escapeHTML(
+                                        insight.icon
+                                    )}
+
+                                </div>
+
+
+                                <h4>
+
+                                    ${escapeHTML(
+                                        insight.title
+                                    )}
+
+                                </h4>
+
+
+                                <p>
+
+                                    ${escapeHTML(
+                                        insight.description
+                                    )}
+
+                                </p>
+
+                            </article>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // ACTIVITY TABLE
+        // =====================================================
+
+        function renderActivityTable() {
+
+            const table =
+                document.getElementById(
+                    "activityTableBody"
+                );
+
+
+            const rows = [
+
+                {
+
+                    area:
+                        "Skills & Expertise",
+
+                    records:
+                        skills.length,
+
+                    status:
+                        skills.length >= 8
+                            ? "Strong"
+                            : skills.length >= 4
+                                ? "Developing"
+                                : "Needs Attention",
+
+                    className:
+                        skills.length >= 8
+                            ? "status-success"
+                            : skills.length >= 4
+                                ? "status-warning"
+                                : "status-danger",
+
+                    insight:
+                        skills.length >= 8
+                            ? "Good skill coverage."
+                            : "Add more industry-relevant skills."
+
+                },
+
+
+                {
+
+                    area:
+                        "Research",
+
+                    records:
+                        publications.length +
+                        patents.length,
+
+                    status:
+                        publications.length +
+                        patents.length >
+                        0
+                            ? "Active"
+                            : "Limited",
+
+                    className:
+                        publications.length +
+                        patents.length >
+                        0
+                            ? "status-success"
+                            : "status-warning",
+
+                    insight:
+                        publications.length +
+                        patents.length >
+                        0
+                            ? "Research activity is represented."
+                            : "Add publications or patents."
+
+                },
+
+
+                {
+
+                    area:
+                        "Projects",
+
+                    records:
+                        projects.length,
+
+                    status:
+                        projects.length >
+                        0
+                            ? "Active"
+                            : "Limited",
+
+                    className:
+                        projects.length >
+                        0
+                            ? "status-success"
+                            : "status-warning",
+
+                    insight:
+                        projects.length >
+                        0
+                            ? "Project evidence is available."
+                            : "Add academic and industry projects."
+
+                },
+
+
+                {
+
+                    area:
+                        "Industry Experience",
+
+                    records:
+                        experiences.length,
+
+                    status:
+                        experiences.length >
+                        0
+                            ? "Present"
+                            : "Not Added",
+
+                    className:
+                        experiences.length >
+                        0
+                            ? "status-success"
+                            : "status-warning",
+
+                    insight:
+                        experiences.length >
+                        0
+                            ? "Industry exposure is represented."
+                            : "Add previous industry experience."
+
+                },
+
+
+                {
+
+                    area:
+                        "Credentials",
+
+                    records:
+                        certifications.length +
+                        achievements.length,
+
+                    status:
+                        certifications.length >
+                        0
+                            ? "Established"
+                            : "Build",
+
+                    className:
+                        certifications.length >
+                        0
+                            ? "status-success"
+                            : "status-warning",
+
+                    insight:
+                        certifications.length >
+                        0
+                            ? "Professional credentials are present."
+                            : "Add certifications and achievements."
+
+                },
+
+
+                {
+
+                    area:
+                        "Collaborations",
+
+                    records:
+                        collaborations.length,
+
+                    status:
+                        collaborations.length >
+                        0
+                            ? "Active"
+                            : "Start",
+
+                    className:
+                        collaborations.length >
+                        0
+                            ? "status-success"
+                            : "status-warning",
+
+                    insight:
+                        collaborations.length >
+                        0
+                            ? "Collaboration activity is visible."
+                            : "Explore industry collaboration."
+
+                }
+
+            ];
+
+
+            table.innerHTML =
+                rows
+                    .map(
+                        row => `
+
+                            <tr>
+
+                                <td>
+                                    ${escapeHTML(
+                                        row.area
+                                    )}
+                                </td>
+
+
+                                <td>
+                                    ${row.records}
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="status-pill ${
+                                            row.className
+                                        }">
+
+                                        ${escapeHTML(
+                                            row.status
+                                        )}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    ${escapeHTML(
+                                        row.insight
+                                    )}
+                                </td>
+
+                            </tr>
+
+                        `
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // LEARNING STATUS
+        // =====================================================
+
+        function normalizeLearningStatus(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    ""
+                )
+                    .toLowerCase();
+
+
+            if (
+                raw.includes(
+                    "complete"
+                )
+            ) {
+
+                return "completed";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "progress"
+                )
+            ) {
+
+                return "in-progress";
+
+            }
+
+
+            if (
+                raw.includes(
+                    "enroll"
+                )
+            ) {
+
+                return "enrolled";
+
+            }
+
+
+            return "applied";
+
+        }
+
+
+        // =====================================================
+        // APPLICATION STATUS
+        // =====================================================
+
+        function normalizeApplicationStatus(
+            value
+        ) {
+
+            const raw =
+                String(
+                    value ||
+                    "submitted"
+                )
+                    .toLowerCase()
+                    .replace(
+                        /[-_]/g,
+                        " "
+                    );
+
+
+            if (
+                raw.includes("accept")
+            ) {
+
+                return "accepted";
+
+            }
+
+
+            if (
+                raw.includes("reject")
+            ) {
+
+                return "rejected";
+
+            }
+
+
+            if (
+                raw.includes("withdraw")
+            ) {
+
+                return "withdrawn";
+
+            }
+
+
+            if (
+                raw.includes("complete")
+            ) {
+
+                return "completed";
+
+            }
+
+
+            if (
+                raw.includes("interview") ||
+                raw.includes("discussion")
+            ) {
+
+                return "interview";
+
+            }
+
+
+            if (
+                raw.includes("shortlist")
+            ) {
+
+                return "shortlisted";
+
+            }
+
+
+            if (
+                raw.includes("review")
+            ) {
+
+                return "review";
+
+            }
+
+
+            return "submitted";
+
+        }
+
+
+        // =====================================================
+        // ACADEMICIAN SKILLS
+        // =====================================================
+
+        function getAcademicianSkills() {
+
+            const sources = [
+
+                academicianData.skills,
+
+                academicianData.technicalSkills,
+
+                academicianData.domainExpertise,
+
+                academicianData.researchSkills,
+
+                academicianData.softwareTools,
+
+                academicianData.industrySkills,
+
+                academicianData.softSkills,
+
+                academicianData.expertise
+
+            ];
+
+
+            return uniqueStrings(
+                flattenValues(
+                    sources
+                )
+            );
+
+        }
+
+
+        function getAcademicianInterests() {
+
+            const sources = [
+
+                academicianData.researchInterests,
+
+                academicianData.researchDomains,
+
+                academicianData.researchKeywords,
+
+                academicianData.researchSpecialization,
+
+                academicianData.specialization
+
+            ];
+
+
+            return uniqueStrings(
+                flattenValues(
+                    sources
+                )
+            );
+
+        }
+
+
+        function flattenValues(
+            values
+        ) {
+
+            const result =
+                [];
+
+
+            values.forEach(
+                value => {
+
+                    if (
+                        Array.isArray(
+                            value
+                        )
+                    ) {
+
+                        value.forEach(
+                            item => {
+
+                                if (
+                                    typeof item ===
+                                    "string"
+                                ) {
+
+                                    result.push(
+                                        item
+                                    );
+
+                                }
+
+                                else if (
+                                    item &&
+                                    typeof item ===
+                                    "object"
+                                ) {
+
+                                    result.push(
+
+                                        item.name ||
+                                        item.title ||
+                                        item.skill ||
+                                        item.expertise ||
+                                        item.domain ||
+                                        ""
+
+                                    );
+
+                                }
+
+                            }
+                        );
+
+                    }
+
+                    else if (
+                        typeof value ===
+                        "string"
+                    ) {
+
+                        result.push(
+                            ...value.split(",")
+                        );
+
+                    }
+
+                }
+            );
+
+
+            return result;
+
+        }
+
+
+        function normalizeArray(
+            value
+        ) {
+
+            if (
+                Array.isArray(
+                    value
+                )
+            ) {
+
+                return value
+                    .map(
+                        item => {
+
+                            if (
+                                typeof item ===
+                                "string"
+                            ) {
+
+                                return item.trim();
+
+                            }
+
+
+                            return (
+
+                                item?.name ||
+                                item?.title ||
+                                item?.skill ||
+                                item?.domain ||
+                                ""
+
+                            )
+                                .toString()
+                                .trim();
+
+                        }
+                    )
+                    .filter(
+                        Boolean
+                    );
+
+            }
+
+
+            if (
+                typeof value ===
+                "string"
+            ) {
+
+                return value
+                    .split(",")
+                    .map(
+                        item =>
+                            item.trim()
+                    )
+                    .filter(
+                        Boolean
+                    );
+
+            }
+
+
+            return [];
+
+        }
+
+
+        function uniqueStrings(
+            list
+        ) {
+
+            return [
+
+                ...new Set(
+
+                    list
+                        .map(
+                            item =>
+                                String(
+                                    item
+                                )
+                                    .trim()
+                        )
+                        .filter(
+                            Boolean
+                        )
+
+                )
+
+            ];
+
+        }
+
+
+        function uniqueById(
+            list
+        ) {
+
+            const map =
+                new Map();
+
+
+            list.forEach(
+                item => {
+
+                    if (
+                        item.id
+                    ) {
+
+                        map.set(
+                            item.id,
+                            item
+                        );
+
+                    }
+
+                }
+            );
+
+
+            return [
+                ...map.values()
+            ];
+
+        }
+
+
+        // =====================================================
+        // PROFILE HELPERS
+        // =====================================================
+
+        function getAcademicianName() {
+
+            return (
+
+                academicianData.name ||
+
+                academicianData.fullName ||
+
+                academicianData.displayName ||
+
+                userData.name ||
+
+                currentUser.displayName ||
+
+                "Academician"
+
+            );
+
+        }
+
+
+        function getProfileImage() {
+
+            return (
+
+                academicianData.photoURL ||
+
+                academicianData.profilePhoto ||
+
+                academicianData.profileImage ||
+
+                userData.photoURL ||
+
+                ""
+
+            );
+
+        }
+
+
+        function getInitial(
+            value
+        ) {
+
+            return (
+
+                String(
+                    value ||
+                    "A"
+                )
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase()
+
+                ||
+
+                "A"
+
+            );
+
+        }
+
+
+        // =====================================================
+        // DOM
+        // =====================================================
+
+        function setText(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.textContent =
+                    value;
+
+            }
+
+        }
+
+
+        function setWidth(
+            id,
+            value
+        ) {
+
+            const element =
+                document.getElementById(
+                    id
+                );
+
+
+            if (
+                element
+            ) {
+
+                element.style.width =
+                    `${Math.max(
+                        0,
+                        Math.min(
+                            100,
+                            Number(
+                                value
+                            ) ||
+                            0
+                        )
+                    )}%`;
+
+            }
+
+        }
+
+
+        function escapeHTML(
+            value
+        ) {
+
+            return String(
+                value ??
+                ""
+            )
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        // =====================================================
+        // LOADING
+        // =====================================================
+
+        function hideLoading() {
+
+            document
+                .getElementById(
+                    "loadingOverlay"
+                )
+                .classList.add(
+                    "hidden"
+                );
+
+        }
+
+
+        // =====================================================
+        // TOAST
+        // =====================================================
+
+        function showToast(
+            message,
+            type
+        ) {
+
+            const previous =
+                document.querySelector(
+                    ".toast"
+                );
+
+
+            if (
+                previous
+            ) {
+
+                previous.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.className =
+                `toast ${type || ""}`;
+
+
+            toast.textContent =
+                message;
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        toast.parentNode
+                    ) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                4000
+            );
+
+        }
+
+
+        // =====================================================
+        // MOBILE MENU
+        // =====================================================
+
+        document
+            .getElementById(
+                "menuButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .getElementById(
+                            "analyticsSidebar"
+                        )
+                        .classList.toggle(
+                            "open"
+                        );
+
+                }
+            );
+
+
+        document
+            .querySelectorAll(
+                ".analytics-nav-item"
+            )
+            .forEach(
+                item => {
+
+                    item.addEventListener(
+                        "click",
+                        () => {
+
+                            document
+                                .getElementById(
+                                    "analyticsSidebar"
+                                )
+                                .classList.remove(
+                                    "open"
+                                );
+
+                        }
+                    );
+
+                }
+            );
+
+
+        // =====================================================
+        // REFRESH
+        // =====================================================
+
+        document
+            .getElementById(
+                "refreshAnalyticsButton"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const button =
+                        document.getElementById(
+                            "refreshAnalyticsButton"
+                        );
+
+
+                    const original =
+                        button.textContent;
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.textContent =
+                        "Refreshing...";
+
+
+                    try {
+
+                        resetArrays();
+
+
+                        await loadAllData();
+
+                        renderAnalytics();
+
+
+                        showToast(
+                            "Analytics refreshed.",
+                            "success"
+                        );
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        showToast(
+                            "Unable to refresh analytics.",
+                            "error"
+                        );
+
+                    }
+
+                    finally {
+
+                        button.disabled =
+                            false;
+
+
+                        button.textContent =
+                            original;
+
+                    }
+
+                }
+            );
+
+
+        function resetArrays() {
+
+            skills =
+                [];
+
+
+            publications =
+                [];
+
+
+            patents =
+                [];
+
+
+            projects =
+                [];
+
+
+            experiences =
+                [];
+
+
+            certifications =
+                [];
+
+
+            achievements =
+                [];
+
+
+            opportunities =
+                [];
+
+
+            applications =
+                [];
+
+
+            collaborations =
+                [];
+
+
+            learning =
+                [];
+
+
+            documents =
+                [];
+
+        }
+
+
+        // =====================================================
+        // PORTFOLIO
+        // =====================================================
+
+        document
+            .getElementById(
+                "portfolioButton"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    window.location.href =
+                        "../portfolio/portfolio.html";
+
+                }
+            );
+
+
+        // =====================================================
+        // LOGOUT
+        // =====================================================
+
+        document
+            .getElementById(
+                "logoutBtn"
+            )
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const button =
+                        document.getElementById(
+                            "logoutBtn"
+                        );
+
+
+                    try {
+
+                        button.disabled =
+                            true;
+
+
+                        button.textContent =
+                            "Logging out...";
+
+
+                        await signOut(
+                            auth
+                        );
+
+
+                        window.location.href =
+                            "../../index.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+
+                        button.disabled =
+                            false;
+
+
+                        button.innerHTML =
+                            `
+                                <span>↪</span>
+                                Logout
+                            `;
+
+
+                        showToast(
+                            "Unable to logout.",
+                            "error"
+                        );
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // KEYBOARD
+        // =====================================================
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "r" &&
+                    (
+                        event.ctrlKey ||
+                        event.metaKey
+                    )
+                ) {
+
+                    return;
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -29,12 +29,6 @@ import {
     getDoc,
     setDoc,
     updateDoc,
-    collection,
-    getDocs,
-    query,
-    where,
-    orderBy,
-    limit,
     serverTimestamp
 } from
 "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
@@ -67,22 +61,26 @@ const firebaseConfig = {
 };
 
 
-// Initialize Firebase
+// =====================================================
+// INITIALIZE FIREBASE
+// =====================================================
 
 const app =
-    initializeApp(firebaseConfig);
+    initializeApp(
+        firebaseConfig
+    );
 
-
-// Firebase Authentication
 
 const auth =
-    getAuth(app);
+    getAuth(
+        app
+    );
 
-
-// Firestore
 
 const db =
-    getFirestore(app);
+    getFirestore(
+        app
+    );
 
 
 // =====================================================
@@ -112,13 +110,15 @@ let currentAcademicianData = {};
 // GET ELEMENTS
 // =====================================================
 
-
-// Welcome
+// -----------------------------------------------------
+// WELCOME
+// -----------------------------------------------------
 
 const welcomeName =
     document.getElementById(
         "welcomeName"
     );
+
 
 const currentDate =
     document.getElementById(
@@ -126,17 +126,21 @@ const currentDate =
     );
 
 
-// Top profile
+// -----------------------------------------------------
+// TOP PROFILE
+// -----------------------------------------------------
 
 const topName =
     document.getElementById(
         "topName"
     );
 
+
 const topInitial =
     document.getElementById(
         "topInitial"
     );
+
 
 const topProfileImage =
     document.getElementById(
@@ -144,22 +148,27 @@ const topProfileImage =
     );
 
 
-// Main profile
+// -----------------------------------------------------
+// MAIN PROFILE
+// -----------------------------------------------------
 
 const profileName =
     document.getElementById(
         "profileName"
     );
 
+
 const profileEmail =
     document.getElementById(
         "profileEmail"
     );
 
+
 const profileInitial =
     document.getElementById(
         "profileInitial"
     );
+
 
 const profileImage =
     document.getElementById(
@@ -167,37 +176,45 @@ const profileImage =
     );
 
 
-// Profile details
+// -----------------------------------------------------
+// PROFILE DETAILS
+// -----------------------------------------------------
 
 const institutionValue =
     document.getElementById(
         "institutionValue"
     );
 
+
 const departmentValue =
     document.getElementById(
         "departmentValue"
     );
+
 
 const designationValue =
     document.getElementById(
         "designationValue"
     );
 
+
 const qualificationValue =
     document.getElementById(
         "qualificationValue"
     );
+
 
 const experienceValue =
     document.getElementById(
         "experienceValue"
     );
 
+
 const specializationValue =
     document.getElementById(
         "specializationValue"
     );
+
 
 const locationValue =
     document.getElementById(
@@ -205,27 +222,33 @@ const locationValue =
     );
 
 
-// Completion
+// -----------------------------------------------------
+// PROFILE COMPLETION
+// -----------------------------------------------------
 
 const completionInitial =
     document.getElementById(
         "completionInitial"
     );
 
+
 const completionAvatar =
     document.getElementById(
         "completionAvatar"
     );
+
 
 const completionPercent =
     document.getElementById(
         "completionPercent"
     );
 
+
 const profileProgress =
     document.getElementById(
         "profileProgress"
     );
+
 
 const profileScore =
     document.getElementById(
@@ -233,17 +256,21 @@ const profileScore =
     );
 
 
-// Statistics
+// -----------------------------------------------------
+// STATISTICS
+// -----------------------------------------------------
 
 const studentsCount =
     document.getElementById(
         "studentsCount"
     );
 
+
 const opportunitiesCount =
     document.getElementById(
         "opportunitiesCount"
     );
+
 
 const researchCount =
     document.getElementById(
@@ -251,17 +278,21 @@ const researchCount =
     );
 
 
-// Research statistics
+// -----------------------------------------------------
+// RESEARCH STATISTICS
+// -----------------------------------------------------
 
 const researchProjects =
     document.getElementById(
         "researchProjects"
     );
 
+
 const researchPartners =
     document.getElementById(
         "researchPartners"
     );
+
 
 const researchStudents =
     document.getElementById(
@@ -269,7 +300,9 @@ const researchStudents =
     );
 
 
-// Profile image
+// -----------------------------------------------------
+// PROFILE PHOTO
+// -----------------------------------------------------
 
 const profilePhotoInput =
     document.getElementById(
@@ -277,7 +310,9 @@ const profilePhotoInput =
     );
 
 
-// Logout
+// -----------------------------------------------------
+// LOGOUT
+// -----------------------------------------------------
 
 const logoutBtn =
     document.getElementById(
@@ -285,12 +320,15 @@ const logoutBtn =
     );
 
 
-// Mobile menu
+// -----------------------------------------------------
+// MOBILE MENU
+// -----------------------------------------------------
 
 const menuButton =
     document.getElementById(
         "menuButton"
     );
+
 
 const sidebar =
     document.getElementById(
@@ -299,7 +337,7 @@ const sidebar =
 
 
 // =====================================================
-// MODAL
+// PROFILE MODAL
 // =====================================================
 
 const profileModal =
@@ -307,35 +345,36 @@ const profileModal =
         "profileModal"
     );
 
-const editProfileButton =
-    document.getElementById(
-        "editProfileButton"
-    );
 
 const completeProfileButton =
     document.getElementById(
         "completeProfileBtn"
     );
 
+
 const closeModal =
     document.getElementById(
         "closeModal"
     );
+
 
 const cancelModal =
     document.getElementById(
         "cancelModal"
     );
 
+
 const profileForm =
     document.getElementById(
         "profileForm"
     );
 
+
 const profileSaveMessage =
     document.getElementById(
         "profileSaveMessage"
     );
+
 
 const saveProfileButton =
     document.getElementById(
@@ -343,52 +382,63 @@ const saveProfileButton =
     );
 
 
-// Modal fields
+// =====================================================
+// PROFILE MODAL FIELDS
+// =====================================================
 
 const editName =
     document.getElementById(
         "editName"
     );
 
+
 const editEmail =
     document.getElementById(
         "editEmail"
     );
+
 
 const editInstitution =
     document.getElementById(
         "editInstitution"
     );
 
+
 const editDepartment =
     document.getElementById(
         "editDepartment"
     );
+
 
 const editDesignation =
     document.getElementById(
         "editDesignation"
     );
 
+
 const editQualification =
     document.getElementById(
         "editQualification"
     );
+
 
 const editExperience =
     document.getElementById(
         "editExperience"
     );
 
+
 const editSpecialization =
     document.getElementById(
         "editSpecialization"
     );
 
+
 const editLocation =
     document.getElementById(
         "editLocation"
     );
+
 
 const editBio =
     document.getElementById(
@@ -403,10 +453,6 @@ const editBio =
 onAuthStateChanged(
     auth,
     async (user) => {
-
-        // ---------------------------------------------
-        // USER NOT LOGGED IN
-        // ---------------------------------------------
 
         if (!user) {
 
@@ -435,6 +481,12 @@ onAuthStateChanged(
             console.error(
                 "Dashboard loading error:",
                 error
+            );
+
+
+            showMessage(
+                "Unable to load your dashboard.",
+                "error"
             );
 
         }
@@ -530,7 +582,7 @@ async function loadAcademicianData(
 
 
     // =================================================
-    // LOAD ACADEMICIAN-SPECIFIC DATA
+    // LOAD ACADEMICIAN DATA
     // =================================================
 
     const academicianRef =
@@ -599,6 +651,9 @@ async function loadAcademicianData(
             studentsMentored:
                 0,
 
+            opportunityCount:
+                0,
+
             createdAt:
                 serverTimestamp()
 
@@ -614,7 +669,7 @@ async function loadAcademicianData(
 
 
     // =================================================
-    // UPDATE UI
+    // UPDATE DASHBOARD
     // =================================================
 
     updateDashboard();
@@ -655,154 +710,262 @@ function updateDashboard() {
     // NAME
     // =================================================
 
-    welcomeName.textContent =
-        firstName(
-            name
-        );
+    if (welcomeName) {
+
+        welcomeName.textContent =
+            firstName(
+                name
+            );
+
+    }
 
 
-    topName.textContent =
-        name;
+    if (topName) {
+
+        topName.textContent =
+            name;
+
+    }
 
 
-    profileName.textContent =
-        name;
+    if (profileName) {
+
+        profileName.textContent =
+            name;
+
+    }
 
 
     // =================================================
     // EMAIL
     // =================================================
 
-    profileEmail.textContent =
-        email;
+    if (profileEmail) {
+
+        profileEmail.textContent =
+            email;
+
+    }
 
 
-    editEmail.value =
-        email;
+    if (editEmail) {
+
+        editEmail.value =
+            email;
+
+    }
 
 
     // =================================================
-    // INITIAL
+    // INITIALS
     // =================================================
 
-    topInitial.textContent =
-        initial;
+    if (topInitial) {
+
+        topInitial.textContent =
+            initial;
+
+    }
 
 
-    profileInitial.textContent =
-        initial;
+    if (profileInitial) {
+
+        profileInitial.textContent =
+            initial;
+
+    }
 
 
-    completionInitial.textContent =
-        initial;
+    if (completionInitial) {
+
+        completionInitial.textContent =
+            initial;
+
+    }
 
 
     // =================================================
     // PROFILE DETAILS
     // =================================================
 
-    institutionValue.textContent =
-        currentAcademicianData.institution ||
-        "Not added";
+    if (institutionValue) {
+
+        institutionValue.textContent =
+            currentAcademicianData.institution ||
+            "Not added";
+
+    }
 
 
-    departmentValue.textContent =
-        currentAcademicianData.department ||
-        "Not added";
+    if (departmentValue) {
+
+        departmentValue.textContent =
+            currentAcademicianData.department ||
+            "Not added";
+
+    }
 
 
-    designationValue.textContent =
-        currentAcademicianData.designation ||
-        "Not added";
+    if (designationValue) {
+
+        designationValue.textContent =
+            currentAcademicianData.designation ||
+            "Not added";
+
+    }
 
 
-    qualificationValue.textContent =
-        currentAcademicianData.qualification ||
-        "Not added";
+    if (qualificationValue) {
+
+        qualificationValue.textContent =
+            currentAcademicianData.qualification ||
+            "Not added";
+
+    }
 
 
-    experienceValue.textContent =
-        currentAcademicianData.experience
-            ? `${currentAcademicianData.experience} years`
-            : "Not added";
+    if (experienceValue) {
+
+        experienceValue.textContent =
+            currentAcademicianData.experience
+                ? `${currentAcademicianData.experience} years`
+                : "Not added";
+
+    }
 
 
-    specializationValue.textContent =
-        currentAcademicianData.specialization ||
-        "Not added";
+    if (specializationValue) {
+
+        specializationValue.textContent =
+            currentAcademicianData.specialization ||
+            "Not added";
+
+    }
 
 
-    locationValue.textContent =
-        currentAcademicianData.location ||
-        "Not added";
+    if (locationValue) {
 
+        locationValue.textContent =
+            currentAcademicianData.location ||
+            "Not added";
 
-    // =================================================
-    // FILL EDIT FORM
-    // =================================================
-
-    editName.value =
-        name;
-
-
-    editInstitution.value =
-        currentAcademicianData.institution ||
-        "";
-
-
-    editDepartment.value =
-        currentAcademicianData.department ||
-        "";
-
-
-    editDesignation.value =
-        currentAcademicianData.designation ||
-        "";
-
-
-    editQualification.value =
-        currentAcademicianData.qualification ||
-        "";
-
-
-    editExperience.value =
-        currentAcademicianData.experience ||
-        "";
-
-
-    editSpecialization.value =
-        currentAcademicianData.specialization ||
-        "";
-
-
-    editLocation.value =
-        currentAcademicianData.location ||
-        "";
-
-
-    editBio.value =
-        currentAcademicianData.bio ||
-        "";
+    }
 
 
     // =================================================
-    // COMPLETION
+    // FILL PROFILE MODAL
+    // =================================================
+
+    if (editName) {
+
+        editName.value =
+            name;
+
+    }
+
+
+    if (editInstitution) {
+
+        editInstitution.value =
+            currentAcademicianData.institution ||
+            "";
+
+    }
+
+
+    if (editDepartment) {
+
+        editDepartment.value =
+            currentAcademicianData.department ||
+            "";
+
+    }
+
+
+    if (editDesignation) {
+
+        editDesignation.value =
+            currentAcademicianData.designation ||
+            "";
+
+    }
+
+
+    if (editQualification) {
+
+        editQualification.value =
+            currentAcademicianData.qualification ||
+            "";
+
+    }
+
+
+    if (editExperience) {
+
+        editExperience.value =
+            currentAcademicianData.experience ||
+            "";
+
+    }
+
+
+    if (editSpecialization) {
+
+        editSpecialization.value =
+            currentAcademicianData.specialization ||
+            "";
+
+    }
+
+
+    if (editLocation) {
+
+        editLocation.value =
+            currentAcademicianData.location ||
+            "";
+
+    }
+
+
+    if (editBio) {
+
+        editBio.value =
+            currentAcademicianData.bio ||
+            "";
+
+    }
+
+
+    // =================================================
+    // PROFILE COMPLETION
     // =================================================
 
     const completion =
         calculateProfileCompletion();
 
 
-    completionPercent.textContent =
-        `${completion}%`;
+    if (completionPercent) {
+
+        completionPercent.textContent =
+            `${completion}%`;
+
+    }
 
 
-    profileScore.textContent =
-        `${completion}%`;
+    if (profileScore) {
+
+        profileScore.textContent =
+            `${completion}%`;
+
+    }
 
 
-    profileProgress.style.width =
-        `${completion}%`;
+    if (profileProgress) {
+
+        profileProgress.style.width =
+            `${completion}%`;
+
+    }
 
 
     // =================================================
@@ -830,38 +993,62 @@ function updateDashboard() {
         );
 
 
-    researchProjects.textContent =
-        projects;
+    if (researchProjects) {
+
+        researchProjects.textContent =
+            projects;
+
+    }
 
 
-    researchPartners.textContent =
-        partners;
+    if (researchPartners) {
+
+        researchPartners.textContent =
+            partners;
+
+    }
 
 
-    researchStudents.textContent =
-        researchStudentsValue;
+    if (researchStudents) {
+
+        researchStudents.textContent =
+            researchStudentsValue;
+
+    }
 
 
-    researchCount.textContent =
-        projects;
+    if (researchCount) {
+
+        researchCount.textContent =
+            projects;
+
+    }
 
 
     // =================================================
     // STUDENTS
     // =================================================
 
-    studentsCount.textContent =
-        currentAcademicianData.studentsMentored ||
-        0;
+    if (studentsCount) {
+
+        studentsCount.textContent =
+            currentAcademicianData.studentsMentored ||
+            0;
+
+    }
 
 
     // =================================================
     // OPPORTUNITIES
     // =================================================
 
-    opportunitiesCount.textContent =
-        currentAcademicianData.opportunityCount ||
-        0;
+    if (opportunitiesCount) {
+
+        opportunitiesCount.textContent =
+            currentAcademicianData.opportunityCount ||
+            0;
+
+    }
 
 
     // =================================================
@@ -894,126 +1081,6 @@ function updateDashboard() {
 
     }
 
-    syncAcademicianEcosystemData();
-
-}
-
-
-// =====================================================
-// LIVE ECOSYSTEM DATA SYNC (Firestore)
-// =====================================================
-
-async function syncAcademicianEcosystemData() {
-    try {
-        // 1. Live Opportunities
-        const oppsSnap = await getDocs(collection(db, "opportunities"));
-        const oppListEl = document.getElementById("academicianOppList");
-        const opps = [];
-
-        oppsSnap.forEach(d => opps.push({ id: d.id, ...d.data() }));
-
-        if (opportunitiesCount) {
-            opportunitiesCount.textContent = opps.length || 3;
-        }
-
-        if (oppListEl) {
-            if (opps.length === 0) {
-                oppListEl.innerHTML = `
-                    <div style="padding: 1.5rem; text-align: center; color: #888;">
-                        No active opportunities posted yet. Live industry programs will appear here.
-                    </div>
-                `;
-            } else {
-                oppListEl.innerHTML = opps.slice(0, 4).map(opp => {
-                    const title = opp.title || opp.role || "Opportunity";
-                    const org = opp.organization || opp.companyName || opp.company || "Industry Partner";
-                    const typeLabel = (opp.type || "Program").toUpperCase();
-                    const initials = org.slice(0, 2).toUpperCase();
-
-                    return `
-                        <div class="opportunity" style="cursor: pointer;" onclick="alert('${escapeHTML(title)}\\n\\nOrganization: ${escapeHTML(org)}\\nSkills: ${(opp.skills || []).join(', ')}\\nDuration: ${opp.duration || 'Flexible'}')">
-                            <div class="opportunity-icon">${initials}</div>
-                            <div class="opportunity-info">
-                                <span>${typeLabel}</span>
-                                <h3>${escapeHTML(title)}</h3>
-                                <p>${escapeHTML(org)} · ${opp.location || 'Hybrid'}</p>
-                            </div>
-                            <div class="opportunity-tag">
-                                92%
-                                <small>MATCH</small>
-                            </div>
-                        </div>
-                    `;
-                }).join("");
-            }
-        }
-
-        // 2. Live Projects & Challenges
-        const projSnap = await getDocs(collection(db, "projects"));
-        const chalSnap = await getDocs(collection(db, "challenges"));
-        const collabListEl = document.getElementById("academicianCollabList");
-
-        const projs = [];
-        projSnap.forEach(d => projs.push({ id: d.id, ...d.data(), kind: "project" }));
-        chalSnap.forEach(d => chals.push({ id: d.id, ...d.data(), kind: "challenge" }));
-
-        const totalCollabs = projs.length + chalSnap.size;
-        if (researchCount) {
-            researchCount.textContent = totalCollabs || 4;
-        }
-
-        if (collabListEl) {
-            const combined = [...projs, ...chalSnap.docs.map(d => ({ id: d.id, ...d.data(), kind: "challenge" }))];
-
-            if (combined.length === 0) {
-                collabListEl.innerHTML = `
-                    <div class="collaboration-item" style="cursor: pointer;" onclick="alert('Live Industry Project: Autonomous Edge Intelligence')">
-                        <div class="collaboration-number">01</div>
-                        <div>
-                            <h3>Industry Research Collaboration</h3>
-                            <p>Partner with enterprise AI labs on model distillation and edge deployment.</p>
-                        </div>
-                        <span class="collaboration-arrow">→</span>
-                    </div>
-                    <div class="collaboration-item" style="cursor: pointer;" onclick="alert('Live Challenge: Distributed Consensus Hackathon')">
-                        <div class="collaboration-number">02</div>
-                        <div>
-                            <h3>Industry Innovation Challenge</h3>
-                            <p>Engage student mentees in high-impact problem statements with industry prizes.</p>
-                        </div>
-                        <span class="collaboration-arrow">→</span>
-                    </div>
-                `;
-            } else {
-                collabListEl.innerHTML = combined.slice(0, 4).map((c, i) => {
-                    const title = c.title || (c.kind === 'challenge' ? 'Innovation Challenge' : 'Industry Project');
-                    const comp = c.companyName || 'Enterprise Partner';
-                    const desc = c.description || (c.kind === 'challenge' ? `Prize pool: ${c.prize || 'Award'}` : `Domain: ${c.domain || 'Tech'}`);
-                    const num = String(i + 1).padStart(2, '0');
-
-                    return `
-                        <div class="collaboration-item" style="cursor: pointer;" onclick="alert('${escapeHTML(title)}\\n\\nCompany: ${escapeHTML(comp)}\\n${escapeHTML(desc)}')">
-                            <div class="collaboration-number">${num}</div>
-                            <div>
-                                <h3>${escapeHTML(title)}</h3>
-                                <p>${escapeHTML(comp)} · ${escapeHTML(desc.slice(0, 70))}...</p>
-                            </div>
-                            <span class="collaboration-arrow">→</span>
-                        </div>
-                    `;
-                }).join("");
-            }
-        }
-
-        // 3. Students Cohort Count
-        const studentsSnap = await getDocs(query(collection(db, "users"), where("role", "==", "student")));
-        if (studentsCount) {
-            studentsCount.textContent = studentsSnap.size || 12;
-        }
-
-    } catch (err) {
-        console.warn("Academician ecosystem sync notice:", err);
-    }
 }
 
 
@@ -1086,6 +1153,13 @@ function renderSkills() {
         );
 
 
+    if (!skillsList) {
+
+        return;
+
+    }
+
+
     const skills =
         Array.isArray(
             currentAcademicianData.skills
@@ -1123,8 +1197,6 @@ function renderSkills() {
     }
 
 
-    // Limit first 6 skills
-
     const visibleSkills =
         skills.slice(
             0,
@@ -1139,15 +1211,27 @@ function renderSkills() {
                 const skillName =
                     typeof skill === "string"
                         ? skill
-                        : skill.name || "Skill";
+                        : skill.name ||
+                          "Skill";
 
 
                 const level =
                     typeof skill === "object"
                         ? Number(
-                            skill.level || 70
+                            skill.level ||
+                            70
                         )
                         : 70;
+
+
+                const safeLevel =
+                    Math.max(
+                        0,
+                        Math.min(
+                            100,
+                            level
+                        )
+                    );
 
 
                 return `
@@ -1171,14 +1255,14 @@ function renderSkills() {
 
                             <div
                                 class="skill-bar-fill"
-                                style="width:${level}%">
+                                style="width:${safeLevel}%">
                             </div>
 
                         </div>
 
 
                         <strong>
-                            ${level}%
+                            ${safeLevel}%
                         </strong>
 
                     </div>
@@ -1195,372 +1279,346 @@ function renderSkills() {
 // PROFILE PHOTO UPLOAD
 // =====================================================
 
-profilePhotoInput.addEventListener(
-    "change",
-    async () => {
+if (profilePhotoInput) {
 
-        const file =
-            profilePhotoInput.files[0];
+    profilePhotoInput.addEventListener(
+        "change",
+        async () => {
 
-
-        if (!file) {
-
-            return;
-
-        }
+            const file =
+                profilePhotoInput.files[0];
 
 
-        // ---------------------------------------------
-        // TYPE VALIDATION
-        // ---------------------------------------------
+            if (!file) {
 
-        const allowedTypes = [
+                return;
 
-            "image/jpeg",
-
-            "image/png",
-
-            "image/webp"
-
-        ];
+            }
 
 
-        if (
-            !allowedTypes.includes(
-                file.type
-            )
-        ) {
+            // -------------------------------------------------
+            // TYPE VALIDATION
+            // -------------------------------------------------
 
-            showMessage(
-                "Please select a JPG, PNG or WebP image.",
-                "error"
-            );
+            const allowedTypes = [
 
-            profilePhotoInput.value =
-                "";
+                "image/jpeg",
 
-            return;
+                "image/png",
 
-        }
+                "image/webp"
 
+            ];
 
-        // ---------------------------------------------
-        // SIZE VALIDATION
-        // ---------------------------------------------
-
-        const maxSize =
-            5 * 1024 * 1024;
-
-
-        if (
-            file.size >
-            maxSize
-        ) {
-
-            showMessage(
-                "Image must be smaller than 5 MB.",
-                "error"
-            );
-
-            profilePhotoInput.value =
-                "";
-
-            return;
-
-        }
-
-
-        // ---------------------------------------------
-        // BUTTON
-        // ---------------------------------------------
-
-        const photoButton =
-            document.querySelector(
-                ".photo-button"
-            );
-
-
-        if (photoButton) {
-
-            photoButton.style.pointerEvents =
-                "none";
-
-            photoButton.style.opacity =
-                "0.5";
-
-        }
-
-
-        // ---------------------------------------------
-        // LOCAL PREVIEW
-        // ---------------------------------------------
-
-        const localURL =
-            URL.createObjectURL(
-                file
-            );
-
-
-        setProfileImage(
-            localURL
-        );
-
-
-        try {
-
-            console.log(
-                "Uploading academician image to Cloudinary..."
-            );
-
-
-            // -----------------------------------------
-            // FORM DATA
-            // -----------------------------------------
-
-            const formData =
-                new FormData();
-
-
-            formData.append(
-                "file",
-                file
-            );
-
-
-            formData.append(
-                "upload_preset",
-                CLOUDINARY_UPLOAD_PRESET
-            );
-
-
-            // -----------------------------------------
-            // CLOUDINARY
-            // -----------------------------------------
-
-            const response =
-                await fetch(
-
-                    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-
-                    {
-
-                        method:
-                            "POST",
-
-                        body:
-                            formData
-
-                    }
-
-                );
-
-
-            const cloudinaryData =
-                await response.json();
-
-
-            // -----------------------------------------
-            // CHECK
-            // -----------------------------------------
 
             if (
-                !response.ok
+                !allowedTypes.includes(
+                    file.type
+                )
             ) {
 
-                throw new Error(
-                    cloudinaryData
-                        ?.error
-                        ?.message ||
-                    "Cloudinary upload failed."
+                showMessage(
+                    "Please select a JPG, PNG or WebP image.",
+                    "error"
                 );
+
+
+                profilePhotoInput.value =
+                    "";
+
+                return;
 
             }
 
 
-            const imageURL =
-                cloudinaryData.secure_url;
+            // -------------------------------------------------
+            // SIZE VALIDATION
+            // -------------------------------------------------
 
+            const maxSize =
+                5 *
+                1024 *
+                1024;
 
-            if (!imageURL) {
-
-                throw new Error(
-                    "Cloudinary did not return an image URL."
-                );
-
-            }
-
-
-            console.log(
-                "Cloudinary URL:",
-                imageURL
-            );
-
-
-            // -----------------------------------------
-            // SAVE TO USERS COLLECTION
-            // -----------------------------------------
-
-            await updateDoc(
-
-                doc(
-                    db,
-                    "users",
-                    currentUser.uid
-                ),
-
-                {
-
-                    photoURL:
-                        imageURL,
-
-                    updatedAt:
-                        serverTimestamp()
-
-                }
-
-            );
-
-
-            // -----------------------------------------
-            // SAVE LOCAL DATA
-            // -----------------------------------------
-
-            currentUserData.photoURL =
-                imageURL;
-
-
-            // -----------------------------------------
-            // UPDATE AUTH PROFILE
-            // -----------------------------------------
-
-            try {
-
-                await updateProfile(
-                    currentUser,
-                    {
-                        photoURL:
-                            imageURL
-                    }
-                );
-
-            }
-
-            catch (authError) {
-
-                console.warn(
-                    "Firebase Auth photo update warning:",
-                    authError
-                );
-
-            }
-
-
-            // -----------------------------------------
-            // DISPLAY
-            // -----------------------------------------
-
-            setProfileImage(
-                imageURL
-            );
-
-
-            // -----------------------------------------
-            // UPDATE COMPLETION
-            // -----------------------------------------
-
-            const completion =
-                calculateProfileCompletion();
-
-
-            completionPercent.textContent =
-                `${completion}%`;
-
-
-            profileScore.textContent =
-                `${completion}%`;
-
-
-            profileProgress.style.width =
-                `${completion}%`;
-
-
-            // -----------------------------------------
-            // SUCCESS
-            // -----------------------------------------
-
-            showMessage(
-                "Profile picture uploaded successfully.",
-                "success"
-            );
-
-        }
-
-
-        catch (error) {
-
-            console.error(
-                "Cloudinary upload error:",
-                error
-            );
-
-
-            // Restore previous photo
 
             if (
-                currentUserData.photoURL
+                file.size >
+                maxSize
             ) {
 
-                setProfileImage(
-                    currentUserData.photoURL
+                showMessage(
+                    "Image must be smaller than 5 MB.",
+                    "error"
                 );
 
-            }
 
-            else {
+                profilePhotoInput.value =
+                    "";
 
-                showProfileInitial(
-                    getInitial(
-                        currentUserData.name
-                    )
-                );
+                return;
 
             }
 
 
-            showMessage(
-                error.message ||
-                "Unable to upload profile picture.",
-                "error"
-            );
+            // -------------------------------------------------
+            // PHOTO BUTTON
+            // -------------------------------------------------
 
-        }
+            const photoButton =
+                document.querySelector(
+                    ".photo-button"
+                );
 
-
-        finally {
 
             if (photoButton) {
 
                 photoButton.style.pointerEvents =
-                    "auto";
+                    "none";
 
                 photoButton.style.opacity =
-                    "1";
+                    "0.5";
 
             }
 
 
-            profilePhotoInput.value =
-                "";
+            // -------------------------------------------------
+            // LOCAL PREVIEW
+            // -------------------------------------------------
+
+            const localURL =
+                URL.createObjectURL(
+                    file
+                );
 
 
-            URL.revokeObjectURL(
+            setProfileImage(
                 localURL
             );
 
-        }
 
-    }
-);
+            try {
+
+                // -------------------------------------------------
+                // FORM DATA
+                // -------------------------------------------------
+
+                const formData =
+                    new FormData();
+
+
+                formData.append(
+                    "file",
+                    file
+                );
+
+
+                formData.append(
+                    "upload_preset",
+                    CLOUDINARY_UPLOAD_PRESET
+                );
+
+
+                // -------------------------------------------------
+                // CLOUDINARY UPLOAD
+                // -------------------------------------------------
+
+                const response =
+                    await fetch(
+
+                        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+
+                        {
+
+                            method:
+                                "POST",
+
+                            body:
+                                formData
+
+                        }
+
+                    );
+
+
+                const cloudinaryData =
+                    await response.json();
+
+
+                if (
+                    !response.ok
+                ) {
+
+                    throw new Error(
+
+                        cloudinaryData
+                            ?.error
+                            ?.message ||
+                        "Cloudinary upload failed."
+
+                    );
+
+                }
+
+
+                const imageURL =
+                    cloudinaryData.secure_url;
+
+
+                if (!imageURL) {
+
+                    throw new Error(
+                        "Cloudinary did not return an image URL."
+                    );
+
+                }
+
+
+                // -------------------------------------------------
+                // SAVE IMAGE URL
+                // -------------------------------------------------
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    ),
+
+                    {
+
+                        photoURL:
+                            imageURL,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                // -------------------------------------------------
+                // LOCAL DATA
+                // -------------------------------------------------
+
+                currentUserData.photoURL =
+                    imageURL;
+
+
+                // -------------------------------------------------
+                // UPDATE AUTH
+                // -------------------------------------------------
+
+                try {
+
+                    await updateProfile(
+
+                        currentUser,
+
+                        {
+
+                            photoURL:
+                                imageURL
+
+                        }
+
+                    );
+
+                }
+
+                catch (authError) {
+
+                    console.warn(
+                        "Firebase Auth photo update warning:",
+                        authError
+                    );
+
+                }
+
+
+                // -------------------------------------------------
+                // UPDATE DISPLAY
+                // -------------------------------------------------
+
+                setProfileImage(
+                    imageURL
+                );
+
+
+                updateDashboard();
+
+
+                showMessage(
+                    "Profile photo updated successfully.",
+                    "success"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Profile photo upload error:",
+                    error
+                );
+
+
+                if (
+                    currentUserData.photoURL
+                ) {
+
+                    setProfileImage(
+                        currentUserData.photoURL
+                    );
+
+                }
+
+                else {
+
+                    showProfileInitial(
+                        getInitial(
+                            currentUserData.name
+                        )
+                    );
+
+                }
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to upload profile photo.",
+                    "error"
+                );
+
+            }
+
+            finally {
+
+                profilePhotoInput.value =
+                    "";
+
+                URL.revokeObjectURL(
+                    localURL
+                );
+
+
+                if (photoButton) {
+
+                    photoButton.style.pointerEvents =
+                        "";
+
+                    photoButton.style.opacity =
+                        "";
+
+                }
+
+            }
+
+        }
+    );
+
+}
 
 
 // =====================================================
@@ -1571,455 +1629,499 @@ function setProfileImage(
     imageURL
 ) {
 
-    // Main profile
+    if (profileImage) {
 
-    profileImage.innerHTML =
-        "";
+        profileImage.innerHTML =
+            "";
 
-
-    const mainImage =
-        document.createElement(
-            "img"
-        );
-
-
-    mainImage.src =
-        imageURL;
-
-
-    mainImage.alt =
-        "Academician profile picture";
-
-
-    mainImage.onerror =
-        () => {
-
-            showProfileInitial(
-                getInitial(
-                    currentUserData.name
-                )
+        const mainImage =
+            document.createElement(
+                "img"
             );
 
-        };
+
+        mainImage.src =
+            imageURL;
 
 
-    profileImage.appendChild(
-        mainImage
-    );
+        mainImage.alt =
+            "Academician profile picture";
 
 
-    // Top profile
+        mainImage.onerror =
+            () => {
 
-    topProfileImage.innerHTML =
-        "";
+                showProfileInitial(
+                    getInitial(
+                        currentUserData.name
+                    )
+                );
+
+            };
 
 
-    const topImage =
-        document.createElement(
-            "img"
+        profileImage.appendChild(
+            mainImage
         );
 
-
-    topImage.src =
-        imageURL;
+    }
 
 
-    topImage.alt =
-        "Academician profile picture";
+    if (topProfileImage) {
+
+        topProfileImage.innerHTML =
+            "";
+
+        const topImage =
+            document.createElement(
+                "img"
+            );
 
 
-    topImage.onerror =
-        () => {
-
-            topProfileImage.innerHTML =
-                `
-                <span id="topInitial">
-                    ${getInitial(currentUserData.name)}
-                </span>
-                `;
-
-        };
+        topImage.src =
+            imageURL;
 
 
-    topProfileImage.appendChild(
-        topImage
-    );
+        topImage.alt =
+            "Academician profile picture";
 
 
-    // Completion image
+        topImage.onerror =
+            () => {
 
-    completionAvatar.innerHTML =
-        "";
+                topProfileImage.innerHTML =
+                    `
+
+                    <span id="topInitial">
+                        ${escapeHTML(
+                            getInitial(
+                                currentUserData.name
+                            )
+                        )}
+                    </span>
+
+                    `;
+
+            };
 
 
-    const completionImage =
-        document.createElement(
-            "img"
+        topProfileImage.appendChild(
+            topImage
         );
 
-
-    completionImage.src =
-        imageURL;
+    }
 
 
-    completionImage.alt =
-        "Academician profile picture";
+    if (completionAvatar) {
+
+        completionAvatar.innerHTML =
+            "";
+
+        const completionImage =
+            document.createElement(
+                "img"
+            );
 
 
-    completionAvatar.appendChild(
-        completionImage
-    );
+        completionImage.src =
+            imageURL;
+
+
+        completionImage.alt =
+            "Academician profile picture";
+
+
+        completionAvatar.appendChild(
+            completionImage
+        );
+
+    }
 
 }
 
 
 // =====================================================
-// SHOW INITIAL
+// SHOW PROFILE INITIAL
 // =====================================================
 
 function showProfileInitial(
     initial
 ) {
 
-    profileImage.innerHTML =
-        `
-        <span id="profileInitial">
-            ${initial}
-        </span>
-        `;
+    if (profileImage) {
+
+        profileImage.innerHTML =
+            `
+
+            <span id="profileInitial">
+                ${escapeHTML(initial)}
+            </span>
+
+            `;
+
+    }
 
 
-    topProfileImage.innerHTML =
-        `
-        <span id="topInitial">
-            ${initial}
-        </span>
-        `;
+    if (topProfileImage) {
+
+        topProfileImage.innerHTML =
+            `
+
+            <span id="topInitial">
+                ${escapeHTML(initial)}
+            </span>
+
+            `;
+
+    }
 
 
-    completionAvatar.innerHTML =
-        `
-        <span id="completionInitial">
-            ${initial}
-        </span>
-        `;
+    if (completionAvatar) {
+
+        completionAvatar.innerHTML =
+            `
+
+            <span id="completionInitial">
+                ${escapeHTML(initial)}
+            </span>
+
+            `;
+
+    }
 
 }
 
 
 // =====================================================
-// SAVE PROFILE
+// PROFILE SAVE
 // =====================================================
 
-profileForm.addEventListener(
-    "submit",
-    async (event) => {
+if (profileForm) {
 
-        event.preventDefault();
+    profileForm.addEventListener(
+        "submit",
+        async (event) => {
 
+            event.preventDefault();
 
-        if (!currentUser) {
 
-            return;
+            if (!currentUser) {
 
-        }
-
-
-        // ---------------------------------------------
-        // VALUES
-        // ---------------------------------------------
-
-        const name =
-            editName.value.trim();
-
-
-        const institution =
-            editInstitution.value.trim();
-
-
-        const department =
-            editDepartment.value.trim();
-
-
-        const designation =
-            editDesignation.value;
-
-
-        const qualification =
-            editQualification.value.trim();
-
-
-        const experience =
-            editExperience.value;
-
-
-        const specialization =
-            editSpecialization.value.trim();
-
-
-        const location =
-            editLocation.value.trim();
-
-
-        const bio =
-            editBio.value.trim();
-
-
-        // ---------------------------------------------
-        // VALIDATION
-        // ---------------------------------------------
-
-        if (!name) {
-
-            showFormMessage(
-                "Please enter your name.",
-                "error"
-            );
-
-            return;
-
-        }
-
-
-        // ---------------------------------------------
-        // LOADING
-        // ---------------------------------------------
-
-        saveProfileButton.disabled =
-            true;
-
-
-        saveProfileButton.textContent =
-            "Saving...";
-
-
-        try {
-
-            // =========================================
-            // UPDATE COMMON USERS DOCUMENT
-            // =========================================
-
-            await updateDoc(
-
-                doc(
-                    db,
-                    "users",
-                    currentUser.uid
-                ),
-
-                {
-
-                    name:
-                        name,
-
-                    updatedAt:
-                        serverTimestamp()
-
-                }
-
-            );
-
-
-            // =========================================
-            // UPDATE ACADEMICIAN DOCUMENT
-            // =========================================
-
-            await updateDoc(
-
-                doc(
-                    db,
-                    "academicians",
-                    currentUser.uid
-                ),
-
-                {
-
-                    institution:
-                        institution,
-
-                    department:
-                        department,
-
-                    designation:
-                        designation,
-
-                    qualification:
-                        qualification,
-
-                    experience:
-                        experience,
-
-                    specialization:
-                        specialization,
-
-                    location:
-                        location,
-
-                    bio:
-                        bio,
-
-                    updatedAt:
-                        serverTimestamp()
-
-                }
-
-            );
-
-
-            // =========================================
-            // UPDATE FIREBASE AUTH DISPLAY NAME
-            // =========================================
-
-            try {
-
-                await updateProfile(
-                    currentUser,
-                    {
-                        displayName:
-                            name
-                    }
+                showFormMessage(
+                    "Authentication session not available.",
+                    "error"
                 );
 
-            }
-
-            catch (authError) {
-
-                console.warn(
-                    "Auth display name update warning:",
-                    authError
-                );
+                return;
 
             }
 
 
-            // =========================================
-            // UPDATE LOCAL OBJECTS
-            // =========================================
-
-            currentUserData.name =
-                name;
+            const name =
+                editName.value.trim();
 
 
-            currentAcademicianData.institution =
-                institution;
+            const institution =
+                editInstitution.value.trim();
 
 
-            currentAcademicianData.department =
-                department;
+            const department =
+                editDepartment.value.trim();
 
 
-            currentAcademicianData.designation =
-                designation;
+            const designation =
+                editDesignation.value.trim();
 
 
-            currentAcademicianData.qualification =
-                qualification;
+            const qualification =
+                editQualification.value.trim();
 
 
-            currentAcademicianData.experience =
-                experience;
+            const experience =
+                editExperience.value.trim();
 
 
-            currentAcademicianData.specialization =
-                specialization;
+            const specialization =
+                editSpecialization.value.trim();
 
 
-            currentAcademicianData.location =
-                location;
+            const location =
+                editLocation.value.trim();
 
 
-            currentAcademicianData.bio =
-                bio;
+            const bio =
+                editBio.value.trim();
 
 
-            // =========================================
-            // UPDATE UI
-            // =========================================
+            if (!name) {
 
-            updateDashboard();
+                showFormMessage(
+                    "Full name is required.",
+                    "error"
+                );
 
+                editName.focus();
 
-            // =========================================
-            // SUCCESS
-            // =========================================
+                return;
 
-            showFormMessage(
-                "Profile saved successfully.",
-                "success"
-            );
+            }
 
-
-            setTimeout(
-                () => {
-
-                    closeProfileModal();
-
-                },
-                800
-            );
-
-        }
-
-
-        catch (error) {
-
-            console.error(
-                "Profile save error:",
-                error
-            );
-
-
-            showFormMessage(
-                error.message ||
-                "Unable to save your profile.",
-                "error"
-            );
-
-        }
-
-
-        finally {
 
             saveProfileButton.disabled =
-                false;
+                true;
 
 
             saveProfileButton.innerHTML =
-                `
-                Save Profile
-                <span>→</span>
-                `;
+                "Saving...";
+
+
+            clearFormMessage();
+
+
+            try {
+
+                // =============================================
+                // USERS
+                // =============================================
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    ),
+
+                    {
+
+                        name:
+                            name,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                // =============================================
+                // ACADEMICIAN
+                // =============================================
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        "academicians",
+                        currentUser.uid
+                    ),
+
+                    {
+
+                        institution:
+                            institution,
+
+                        department:
+                            department,
+
+                        designation:
+                            designation,
+
+                        qualification:
+                            qualification,
+
+                        experience:
+                            experience,
+
+                        specialization:
+                            specialization,
+
+                        location:
+                            location,
+
+                        bio:
+                            bio,
+
+                        updatedAt:
+                            serverTimestamp()
+
+                    }
+
+                );
+
+
+                // =============================================
+                // FIREBASE AUTH
+                // =============================================
+
+                try {
+
+                    await updateProfile(
+
+                        currentUser,
+
+                        {
+
+                            displayName:
+                                name
+
+                        }
+
+                    );
+
+                }
+
+                catch (authError) {
+
+                    console.warn(
+                        "Auth display name update warning:",
+                        authError
+                    );
+
+                }
+
+
+                // =============================================
+                // LOCAL DATA
+                // =============================================
+
+                currentUserData.name =
+                    name;
+
+
+                currentAcademicianData.institution =
+                    institution;
+
+
+                currentAcademicianData.department =
+                    department;
+
+
+                currentAcademicianData.designation =
+                    designation;
+
+
+                currentAcademicianData.qualification =
+                    qualification;
+
+
+                currentAcademicianData.experience =
+                    experience;
+
+
+                currentAcademicianData.specialization =
+                    specialization;
+
+
+                currentAcademicianData.location =
+                    location;
+
+
+                currentAcademicianData.bio =
+                    bio;
+
+
+                // =============================================
+                // UI
+                // =============================================
+
+                updateDashboard();
+
+
+                showFormMessage(
+                    "Profile saved successfully.",
+                    "success"
+                );
+
+
+                showMessage(
+                    "Profile saved successfully.",
+                    "success"
+                );
+
+
+                setTimeout(
+                    () => {
+
+                        closeProfileModal();
+
+                    },
+                    800
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Profile save error:",
+                    error
+                );
+
+
+                showFormMessage(
+                    error.message ||
+                    "Unable to save your profile.",
+                    "error"
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to save your profile.",
+                    "error"
+                );
+
+            }
+
+            finally {
+
+                saveProfileButton.disabled =
+                    false;
+
+
+                saveProfileButton.innerHTML =
+                    `
+                    Save Profile
+                    <span>→</span>
+                    `;
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 // =====================================================
 // OPEN PROFILE MODAL
 // =====================================================
 
-editProfileButton.addEventListener(
-    "click",
-    openProfileModal
-);
+if (completeProfileButton) {
 
+    completeProfileButton.addEventListener(
+        "click",
+        openProfileModal
+    );
 
-completeProfileButton.addEventListener(
-    "click",
-    openProfileModal
-);
+}
 
 
 function openProfileModal() {
 
-    profileSaveMessage.textContent =
-        "";
+    if (!profileModal) {
+
+        return;
+
+    }
 
 
-    profileSaveMessage.className =
-        "form-message";
+    updateDashboard();
+
+
+    clearFormMessage();
 
 
     profileModal.classList.add(
@@ -2033,19 +2135,34 @@ function openProfileModal() {
 // CLOSE PROFILE MODAL
 // =====================================================
 
-closeModal.addEventListener(
-    "click",
-    closeProfileModal
-);
+if (closeModal) {
+
+    closeModal.addEventListener(
+        "click",
+        closeProfileModal
+    );
+
+}
 
 
-cancelModal.addEventListener(
-    "click",
-    closeProfileModal
-);
+if (cancelModal) {
+
+    cancelModal.addEventListener(
+        "click",
+        closeProfileModal
+    );
+
+}
 
 
 function closeProfileModal() {
+
+    if (!profileModal) {
+
+        return;
+
+    }
+
 
     profileModal.classList.remove(
         "show"
@@ -2058,21 +2175,25 @@ function closeProfileModal() {
 // CLICK OUTSIDE MODAL
 // =====================================================
 
-profileModal.addEventListener(
-    "click",
-    (event) => {
+if (profileModal) {
 
-        if (
-            event.target ===
-            profileModal
-        ) {
+    profileModal.addEventListener(
+        "click",
+        (event) => {
 
-            closeProfileModal();
+            if (
+                event.target ===
+                profileModal
+            ) {
+
+                closeProfileModal();
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 // =====================================================
@@ -2084,12 +2205,31 @@ function showFormMessage(
     type
 ) {
 
+    if (!profileSaveMessage) {
+
+        return;
+
+    }
+
+
     profileSaveMessage.textContent =
         message;
 
 
     profileSaveMessage.className =
-        `form-message ${type}`;
+        type
+            ? `form-message ${type}`
+            : "form-message";
+
+}
+
+
+function clearFormMessage() {
+
+    showFormMessage(
+        "",
+        ""
+    );
 
 }
 
@@ -2157,6 +2297,14 @@ function showMessage(
             "10px";
 
 
+        element.style.maxWidth =
+            "340px";
+
+
+        element.style.lineHeight =
+            "1.5";
+
+
         document.body.appendChild(
             element
         );
@@ -2183,7 +2331,14 @@ function showMessage(
         setTimeout(
             () => {
 
-                element.remove();
+                if (
+                    element &&
+                    element.parentNode
+                ) {
+
+                    element.remove();
+
+                }
 
             },
             4000
@@ -2196,33 +2351,62 @@ function showMessage(
 // LOGOUT
 // =====================================================
 
-logoutBtn.addEventListener(
-    "click",
-    async () => {
+if (logoutBtn) {
 
-        try {
+    logoutBtn.addEventListener(
+        "click",
+        async () => {
 
-            await signOut(
-                auth
-            );
+            try {
+
+                logoutBtn.disabled =
+                    true;
 
 
-            window.location.href =
-                "../index.html";
+                logoutBtn.textContent =
+                    "Logging out...";
+
+
+                await signOut(
+                    auth
+                );
+
+
+                window.location.href =
+                    "../index.html";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+
+                logoutBtn.disabled =
+                    false;
+
+
+                logoutBtn.innerHTML =
+                    `
+                    <span>↪</span>
+                    Logout
+                    `;
+
+
+                showMessage(
+                    "Unable to logout. Please try again.",
+                    "error"
+                );
+
+            }
 
         }
+    );
 
-        catch (error) {
-
-            console.error(
-                "Logout error:",
-                error
-            );
-
-        }
-
-    }
-);
+}
 
 
 // =====================================================
@@ -2235,6 +2419,7 @@ if (currentDate) {
         new Date().toLocaleDateString(
             "en-IN",
             {
+
                 day:
                     "2-digit",
 
@@ -2273,7 +2458,9 @@ if (
 }
 
 
-// Close mobile navigation
+// =====================================================
+// CLOSE MOBILE SIDEBAR ON NAVIGATION
+// =====================================================
 
 document
     .querySelectorAll(
@@ -2286,9 +2473,13 @@ document
                 "click",
                 () => {
 
-                    sidebar.classList.remove(
-                        "open"
-                    );
+                    if (sidebar) {
+
+                        sidebar.classList.remove(
+                            "open"
+                        );
+
+                    }
 
                 }
             );
@@ -2305,7 +2496,9 @@ function redirectByRole(
     role
 ) {
 
-    switch (role) {
+    switch (
+        role
+    ) {
 
         case "student":
 
@@ -2318,7 +2511,7 @@ function redirectByRole(
         case "industry":
 
             window.location.href =
-                "../industry/index.html";
+                "../industry/industry-home.html";
 
             break;
 
@@ -2349,14 +2542,17 @@ function getInitial(
     name
 ) {
 
-    if (!name) {
+    if (
+        !name ||
+        !String(name).trim()
+    ) {
 
         return "A";
 
     }
 
 
-    return name
+    return String(name)
         .trim()
         .charAt(0)
         .toUpperCase();
@@ -2368,14 +2564,17 @@ function firstName(
     name
 ) {
 
-    if (!name) {
+    if (
+        !name ||
+        !String(name).trim()
+    ) {
 
         return "Academician";
 
     }
 
 
-    return name
+    return String(name)
         .trim()
         .split(/\s+/)[0];
 
