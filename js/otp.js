@@ -2,31 +2,28 @@
 // SKILLBRIDGE OTP VERIFICATION
 // ==========================================
 
-const API_URL =
-    "https://ansora-sim.onrender.com";
+const API_URL = "http://localhost:5000";
 
 
 // ==========================================
-// READ SIGNUP DATA
+// GET SIGNUP DATA
 // ==========================================
 
-const signupDataString =
-    sessionStorage.getItem("signupData");
-
-
-let signupData;
-
+let signupData = null;
 
 try {
 
     signupData =
         JSON.parse(
-            signupDataString
+            sessionStorage.getItem("signupData")
         );
 
-} catch {
+} catch (error) {
 
-    signupData = null;
+    console.error(
+        "Unable to read signup data:",
+        error
+    );
 
 }
 
@@ -93,7 +90,7 @@ if (emailDisplay) {
 
 
 // ==========================================
-// OTP INPUTS
+// OTP INPUT BEHAVIOUR
 // ==========================================
 
 otpInputs.forEach(
@@ -131,7 +128,7 @@ otpInputs.forEach(
 
 
         // ======================================
-        // KEYBOARD
+        // KEYBOARD NAVIGATION
         // ======================================
 
         input.addEventListener(
@@ -142,8 +139,7 @@ otpInputs.forEach(
                 // BACKSPACE
 
                 if (
-                    event.key ===
-                    "Backspace" &&
+                    event.key === "Backspace" &&
                     !input.value &&
                     index > 0
                 ) {
@@ -155,11 +151,10 @@ otpInputs.forEach(
                 }
 
 
-                // LEFT
+                // LEFT ARROW
 
                 if (
-                    event.key ===
-                    "ArrowLeft" &&
+                    event.key === "ArrowLeft" &&
                     index > 0
                 ) {
 
@@ -170,11 +165,10 @@ otpInputs.forEach(
                 }
 
 
-                // RIGHT
+                // RIGHT ARROW
 
                 if (
-                    event.key ===
-                    "ArrowRight" &&
+                    event.key === "ArrowRight" &&
                     index <
                         otpInputs.length - 1
                 ) {
@@ -300,7 +294,6 @@ function updateTimer() {
             timeLeft / 60
         );
 
-
     const seconds =
         timeLeft % 60;
 
@@ -328,8 +321,12 @@ function startTimer() {
     updateTimer();
 
 
-    resendButton.disabled =
-        true;
+    if (resendButton) {
+
+        resendButton.disabled =
+            true;
+
+    }
 
 
     timerInterval =
@@ -359,8 +356,12 @@ function startTimer() {
                     }
 
 
-                    resendButton.disabled =
-                        false;
+                    if (resendButton) {
+
+                        resendButton.disabled =
+                            false;
+
+                    }
 
 
                     return;
@@ -388,19 +389,24 @@ function setVerifyLoading(
     loading
 ) {
 
+    if (!verifyButton) {
+        return;
+    }
+
+
     verifyButton.disabled =
         loading;
 
 
-    const text =
+    const buttonText =
         verifyButton.querySelector(
             "span"
         );
 
 
-    if (text) {
+    if (buttonText) {
 
-        text.textContent =
+        buttonText.textContent =
             loading
                 ? "Verifying..."
                 : "Verify Email";
@@ -426,7 +432,7 @@ otpForm.addEventListener(
 
 
         // ======================================
-        // VALIDATE
+        // VALIDATE OTP
         // ======================================
 
         if (
@@ -462,7 +468,7 @@ otpForm.addEventListener(
         try {
 
             console.log(
-                "Verifying OTP with Render..."
+                "Verifying OTP..."
             );
 
 
@@ -478,8 +484,10 @@ otpForm.addEventListener(
                         method: "POST",
 
                         headers: {
+
                             "Content-Type":
                                 "application/json"
+
                         },
 
                         body:
@@ -497,25 +505,8 @@ otpForm.addEventListener(
                 );
 
 
-            const text =
-                await response.text();
-
-
-            let data;
-
-
-            try {
-
-                data =
-                    JSON.parse(text);
-
-            } catch {
-
-                throw new Error(
-                    "The OTP server returned an invalid response."
-                );
-
-            }
+            const data =
+                await response.json();
 
 
             // ======================================
@@ -552,7 +543,7 @@ otpForm.addEventListener(
 
 
             // ======================================
-            // SAVE STATUS
+            // SAVE VERIFICATION STATUS
             // ======================================
 
             sessionStorage.setItem(
@@ -629,6 +620,9 @@ resendButton.addEventListener(
         otpMessage.textContent =
             "";
 
+        otpMessage.className =
+            "otp-message";
+
 
         try {
 
@@ -667,26 +661,13 @@ resendButton.addEventListener(
                 );
 
 
-            const text =
-                await response.text();
+            const data =
+                await response.json();
 
 
-            let data;
-
-
-            try {
-
-                data =
-                    JSON.parse(text);
-
-            } catch {
-
-                throw new Error(
-                    "The OTP server returned an invalid response."
-                );
-
-            }
-
+            // ======================================
+            // CHECK RESPONSE
+            // ======================================
 
             if (
                 !response.ok ||
@@ -733,7 +714,7 @@ resendButton.addEventListener(
 
 
             // ======================================
-            // FOCUS
+            // FOCUS FIRST INPUT
             // ======================================
 
             if (

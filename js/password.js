@@ -12,12 +12,10 @@ import {
     db
 } from "./firebase-config.js";
 
-
 import {
     createUserWithEmailAndPassword,
     updateProfile
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
 
 import {
     doc,
@@ -30,9 +28,22 @@ import {
 // GET SIGNUP DATA
 // ==========================================
 
-const signupData = JSON.parse(
-    sessionStorage.getItem("signupData")
-);
+let signupData = null;
+
+try {
+
+    signupData = JSON.parse(
+        sessionStorage.getItem("signupData")
+    );
+
+} catch (error) {
+
+    console.error(
+        "Could not read signup data:",
+        error
+    );
+
+}
 
 
 // ==========================================
@@ -53,6 +64,7 @@ if (
     window.location.href = "signup.html";
 
     throw new Error("Missing signup data.");
+
 }
 
 
@@ -61,11 +73,14 @@ if (
 // ==========================================
 
 const userRole =
-    signupData.role.toString().trim().toLowerCase();
+    signupData.role
+        .toString()
+        .trim()
+        .toLowerCase();
 
 
 // ==========================================
-// GET HTML ELEMENTS
+// ELEMENTS
 // ==========================================
 
 const passwordForm =
@@ -88,7 +103,28 @@ const createAccountButton =
 
 
 // ==========================================
-// PASSWORD REQUIREMENT ELEMENTS
+// CHECK ELEMENTS
+// ==========================================
+
+if (!passwordForm) {
+    console.error("passwordForm not found.");
+}
+
+if (!passwordInput) {
+    console.error("password input not found.");
+}
+
+if (!confirmPasswordInput) {
+    console.error("confirmPassword input not found.");
+}
+
+if (!createAccountButton) {
+    console.error("createAccountButton not found.");
+}
+
+
+// ==========================================
+// PASSWORD REQUIREMENTS
 // ==========================================
 
 const lengthRequirement =
@@ -160,6 +196,7 @@ function checkPassword(password) {
 
 
     return rules;
+
 }
 
 
@@ -169,7 +206,7 @@ function checkPassword(password) {
 
 function updateRequirement(
     element,
-    isValid
+    valid
 ) {
 
     if (!element) {
@@ -177,7 +214,7 @@ function updateRequirement(
     }
 
 
-    if (isValid) {
+    if (valid) {
 
         element.classList.add("valid");
 
@@ -187,51 +224,7 @@ function updateRequirement(
 
     }
 
-
-    const icon =
-        element.querySelector("span");
-
-
-    if (icon) {
-
-        icon.textContent =
-            isValid ? "✓" : "✓";
-
-    }
-
 }
-
-
-// ==========================================
-// PASSWORD INPUT
-// ==========================================
-
-passwordInput.addEventListener(
-    "input",
-    () => {
-
-        checkPassword(
-            passwordInput.value
-        );
-
-        checkPasswordMatch();
-
-    }
-);
-
-
-// ==========================================
-// CONFIRM PASSWORD INPUT
-// ==========================================
-
-confirmPasswordInput.addEventListener(
-    "input",
-    () => {
-
-        checkPasswordMatch();
-
-    }
-);
 
 
 // ==========================================
@@ -259,7 +252,10 @@ function checkPasswordMatch() {
     }
 
 
-    if (password === confirmPassword) {
+    if (
+        password ===
+        confirmPassword
+    ) {
 
         matchMessage.textContent =
             "Passwords match.";
@@ -284,28 +280,52 @@ function checkPasswordMatch() {
 
 
 // ==========================================
+// PASSWORD INPUT
+// ==========================================
+
+passwordInput.addEventListener(
+    "input",
+    () => {
+
+        checkPassword(
+            passwordInput.value
+        );
+
+        checkPasswordMatch();
+
+    }
+);
+
+
+// ==========================================
+// CONFIRM PASSWORD
+// ==========================================
+
+confirmPasswordInput.addEventListener(
+    "input",
+    () => {
+
+        checkPasswordMatch();
+
+    }
+);
+
+
+// ==========================================
 // SHOW / HIDE PASSWORD
 // ==========================================
 
-const showPasswordButtons =
-    document.querySelectorAll(
-        ".show-password"
-    );
-
-
-showPasswordButtons.forEach(
-    button => {
+document
+    .querySelectorAll(".show-password")
+    .forEach(button => {
 
         button.addEventListener(
             "click",
             () => {
 
-                const targetId =
-                    button.dataset.target;
-
                 const target =
                     document.getElementById(
-                        targetId
+                        button.dataset.target
                     );
 
 
@@ -315,12 +335,10 @@ showPasswordButtons.forEach(
 
 
                 if (
-                    target.type ===
-                    "password"
+                    target.type === "password"
                 ) {
 
-                    target.type =
-                        "text";
+                    target.type = "text";
 
                     button.textContent =
                         "Hide";
@@ -338,34 +356,35 @@ showPasswordButtons.forEach(
             }
         );
 
-    }
-);
+    });
 
 
 // ==========================================
-// ROLE-BASED REDIRECT
+// ROLE REDIRECT
 // ==========================================
 
-function redirectAfterSignup(role) {
+function redirectByRole(role) {
 
     const normalizedRole =
-        role.toString().trim().toLowerCase();
+        role
+            .toString()
+            .trim()
+            .toLowerCase();
 
 
     console.log(
-        "Redirecting user with role:",
+        "Final signup role:",
         normalizedRole
     );
 
 
     switch (normalizedRole) {
 
-
-        // ==================================
-        // STUDENT
-        // ==================================
-
         case "student":
+
+            console.log(
+                "Redirecting to student..."
+            );
 
             window.location.href =
                 "student/student-home.html";
@@ -373,11 +392,11 @@ function redirectAfterSignup(role) {
             break;
 
 
-        // ==================================
-        // ACADEMICIAN
-        // ==================================
-
         case "academician":
+
+            console.log(
+                "Redirecting to academician..."
+            );
 
             window.location.href =
                 "academician/academician-home.html";
@@ -385,11 +404,11 @@ function redirectAfterSignup(role) {
             break;
 
 
-        // ==================================
-        // INDUSTRY
-        // ==================================
-
         case "industry":
+
+            console.log(
+                "Redirecting to industry..."
+            );
 
             window.location.href =
                 "industry/index.html";
@@ -397,11 +416,11 @@ function redirectAfterSignup(role) {
             break;
 
 
-        // ==================================
-        // INSTITUTION
-        // ==================================
-
         case "institution":
+
+            console.log(
+                "Redirecting to institution..."
+            );
 
             window.location.href =
                 "institution/institution-home.html";
@@ -409,30 +428,11 @@ function redirectAfterSignup(role) {
             break;
 
 
-        // ==================================
-        // INVALID ROLE
-        // ==================================
-
         default:
 
-            console.error(
-                "Unknown role:",
-                normalizedRole
+            throw new Error(
+                `Unknown role: ${normalizedRole}`
             );
-
-            passwordMessage.textContent =
-                "Account created, but the selected role is invalid.";
-
-            passwordMessage.className =
-                "password-message error";
-
-            createAccountButton.disabled =
-                false;
-
-            createAccountButton.querySelector(
-                "span"
-            ).textContent =
-                "Create Account";
 
     }
 
@@ -450,7 +450,13 @@ passwordForm.addEventListener(
         event.preventDefault();
 
 
-        passwordMessage.textContent = "";
+        console.log(
+            "Create Account button clicked."
+        );
+
+
+        passwordMessage.textContent =
+            "";
 
         passwordMessage.className =
             "password-message";
@@ -463,15 +469,15 @@ passwordForm.addEventListener(
             confirmPasswordInput.value;
 
 
-        // ==================================
-        // CHECK PASSWORD
-        // ==================================
+        // ======================================
+        // VALIDATE PASSWORD
+        // ======================================
 
         const rules =
             checkPassword(password);
 
 
-        const passwordIsValid =
+        const valid =
             rules.length &&
             rules.uppercase &&
             rules.lowercase &&
@@ -479,7 +485,7 @@ passwordForm.addEventListener(
             rules.special;
 
 
-        if (!passwordIsValid) {
+        if (!valid) {
 
             passwordMessage.textContent =
                 "Please satisfy all password requirements.";
@@ -492,9 +498,9 @@ passwordForm.addEventListener(
         }
 
 
-        // ==================================
-        // CHECK PASSWORD MATCH
-        // ==================================
+        // ======================================
+        // CONFIRM PASSWORD
+        // ======================================
 
         if (
             password !==
@@ -512,9 +518,9 @@ passwordForm.addEventListener(
         }
 
 
-        // ==================================
-        // SHOW LOADING
-        // ==================================
+        // ======================================
+        // LOADING
+        // ======================================
 
         createAccountButton.disabled =
             true;
@@ -536,16 +542,16 @@ passwordForm.addEventListener(
 
         try {
 
-            // ==================================
+            // ======================================
             // CREATE FIREBASE AUTH ACCOUNT
-            // ==================================
+            // ======================================
 
             console.log(
-                "Creating Firebase account..."
+                "Creating Firebase Authentication account..."
             );
 
 
-            const userCredential =
+            const credential =
                 await createUserWithEmailAndPassword(
                     auth,
                     signupData.email,
@@ -554,18 +560,22 @@ passwordForm.addEventListener(
 
 
             const user =
-                userCredential.user;
+                credential.user;
 
 
             console.log(
-                "Firebase account created:",
+                "Firebase Auth account created."
+            );
+
+            console.log(
+                "UID:",
                 user.uid
             );
 
 
-            // ==================================
-            // SAVE DISPLAY NAME
-            // ==================================
+            // ======================================
+            // UPDATE DISPLAY NAME
+            // ======================================
 
             await updateProfile(
                 user,
@@ -577,20 +587,24 @@ passwordForm.addEventListener(
 
 
             console.log(
-                "Display name saved."
+                "Display name updated."
             );
 
 
-            // ==================================
-            // SAVE USER TO FIRESTORE
-            // ==================================
+            // ======================================
+            // CREATE FIRESTORE USER DOCUMENT
+            // ======================================
 
-            await setDoc(
+            const userRef =
                 doc(
                     db,
                     "users",
                     user.uid
-                ),
+                );
+
+
+            await setDoc(
+                userRef,
                 {
 
                     name:
@@ -609,7 +623,7 @@ passwordForm.addEventListener(
                         false,
 
                     emailVerified:
-                        false,
+                        true,
 
                     createdAt:
                         serverTimestamp()
@@ -619,18 +633,19 @@ passwordForm.addEventListener(
 
 
             console.log(
-                "User profile saved to Firestore."
+                "Firestore user document created."
             );
 
 
-            // ==================================
-            // SAVE LOGIN DATA
-            // ==================================
+            // ======================================
+            // SAVE SESSION
+            // ======================================
 
             sessionStorage.setItem(
-                "userRole",
-                userRole
+                "userUID",
+                user.uid
             );
+
 
             sessionStorage.setItem(
                 "userEmail",
@@ -638,21 +653,18 @@ passwordForm.addEventListener(
             );
 
 
-            // ==================================
-            // REMOVE TEMP SIGNUP DATA
-            // ==================================
-
-            sessionStorage.removeItem(
-                "signupData"
+            sessionStorage.setItem(
+                "userRole",
+                userRole
             );
 
 
-            // ==================================
-            // SUCCESS
-            // ==================================
+            // ======================================
+            // SUCCESS MESSAGE
+            // ======================================
 
             passwordMessage.textContent =
-                "Account created successfully! Redirecting...";
+                "Account created successfully.";
 
             passwordMessage.className =
                 "password-message success";
@@ -663,16 +675,62 @@ passwordForm.addEventListener(
             );
 
 
-            // ==================================
+            // ======================================
+            // REMOVE TEMP DATA
+            // ======================================
+
+            sessionStorage.removeItem(
+                "signupData"
+            );
+
+
+            // ======================================
             // REDIRECT
-            // ==================================
+            // ======================================
 
             setTimeout(
                 () => {
 
-                    redirectAfterSignup(
-                        userRole
+                    console.log(
+                        "Starting role redirect..."
                     );
+
+
+                    try {
+
+                        redirectByRole(
+                            userRole
+                        );
+
+                    }
+
+                    catch (redirectError) {
+
+                        console.error(
+                            "Redirect error:",
+                            redirectError
+                        );
+
+
+                        passwordMessage.textContent =
+                            "Account created, but the selected role page could not be opened.";
+
+                        passwordMessage.className =
+                            "password-message error";
+
+
+                        createAccountButton.disabled =
+                            false;
+
+
+                        if (buttonText) {
+
+                            buttonText.textContent =
+                                "Create Account";
+
+                        }
+
+                    }
 
                 },
                 700
@@ -684,17 +742,38 @@ passwordForm.addEventListener(
         catch (error) {
 
             console.error(
-                "Firebase account creation error:",
+                "================================"
+            );
+
+            console.error(
+                "ACCOUNT CREATION ERROR"
+            );
+
+            console.error(
+                "Code:",
+                error.code
+            );
+
+            console.error(
+                "Message:",
+                error.message
+            );
+
+            console.error(
+                "Full error:",
                 error
             );
 
+            console.error(
+                "================================"
+            );
 
-            // ==================================
-            // ERROR HANDLING
-            // ==================================
+
+            // ======================================
+            // FIREBASE ERRORS
+            // ======================================
 
             switch (error.code) {
-
 
                 case "auth/email-already-in-use":
 
@@ -715,7 +794,7 @@ passwordForm.addEventListener(
                 case "auth/weak-password":
 
                     passwordMessage.textContent =
-                        "Firebase rejected this password as too weak.";
+                        "The password is too weak.";
 
                     break;
 
@@ -730,10 +809,8 @@ passwordForm.addEventListener(
 
                 case "permission-denied":
 
-                case "firestore/permission-denied":
-
                     passwordMessage.textContent =
-                        "Account created, but Firestore permission was denied.";
+                        "Firebase Authentication succeeded, but Firestore permission was denied.";
 
                     break;
 
@@ -742,7 +819,7 @@ passwordForm.addEventListener(
 
                     passwordMessage.textContent =
                         error.message ||
-                        "Unable to create your account.";
+                        "Unable to create account.";
 
             }
 
@@ -750,10 +827,6 @@ passwordForm.addEventListener(
             passwordMessage.className =
                 "password-message error";
 
-
-            // ==================================
-            // ENABLE BUTTON
-            // ==================================
 
             createAccountButton.disabled =
                 false;
