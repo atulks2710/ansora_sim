@@ -1,13 +1,49 @@
 require("dotenv").config();
 
 const express = require("express");
-const nodemailer = require("nodemailer");
 const cors = require("cors");
 const crypto = require("crypto");
+const { Resend } = require("resend");
 
 const app = express();
 
+
+// ==========================================
+// CONFIGURATION
+// ==========================================
+
+const PORT = process.env.PORT || 5000;
+
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const EMAIL_FROM = process.env.EMAIL_FROM;
+
+
+// ==========================================
+// CHECK ENVIRONMENT VARIABLES
+// ==========================================
+
+if (!RESEND_API_KEY) {
+    console.error("ERROR: RESEND_API_KEY is missing.");
+}
+
+if (!EMAIL_FROM) {
+    console.error("ERROR: EMAIL_FROM is missing.");
+}
+
+
+// ==========================================
+// RESEND
+// ==========================================
+
+const resend = new Resend(RESEND_API_KEY);
+
+
+// ==========================================
+// MIDDLEWARE
+// ==========================================
+
 app.use(cors());
+
 app.use(express.json());
 
 
@@ -16,22 +52,6 @@ app.use(express.json());
 // ==========================================
 
 const otpStore = {};
-
-
-// ==========================================
-// EMAIL TRANSPORTER
-// ==========================================
-
-const transporter = nodemailer.createTransport({
-
-    service: "gmail",
-
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-
-});
 
 
 // ==========================================
@@ -48,92 +68,185 @@ function generateOTP() {
 
 
 // ==========================================
+// HEALTH CHECK
+// ==========================================
+
+app.get("/", (req, res) => {
+
+    res.json({
+        success: true,
+        message: "SkillBridge OTP server is running."
+    });
+
+});
+
+
+// ==========================================
 // SEND OTP
 // ==========================================
 
 app.post("/send-otp", async (req, res) => {
 
-    const { email } = req.body;
-
-
-    if (!email) {
-
-        return res.status(400).json({
-            success: false,
-            message: "Email is required"
-        });
-
-    }
-
-
-    // Generate OTP on SERVER
-
-    const otp = generateOTP();
-
-
-    // Store OTP
-
-    otpStore[email] = {
-
-        otp: otp,
-
-        expiresAt:
-            Date.now() + 5 * 60 * 1000,
-
-        attempts: 0
-
-    };
-
-
     try {
 
-        await transporter.sendMail({
+        const email =
+            String(req.body.email || "")
+                .trim()
+                .toLowerCase();
 
-            from:
-                `"Ansora" <${process.env.EMAIL_USER}>`,
 
-            to: email,
+        // --------------------------------------
+        // CHECK EMAIL
+        // --------------------------------------
 
-            subject:
-                "Your Ansora OTP",
+        if (!email) {
 
-            html: `
+            return res.status(400).json({
 
-                <div style="
-                    font-family: Arial;
-                    padding: 30px;
-                ">
+                success: false,
 
-                    <h2>Ansora</h2>
+                message:
+                    "Email is required."
 
-                    <p>
-                        Your verification code is:
-                    </p>
+            });
 
-                    <h1 style="
-                        letter-spacing: 8px;
+        }
+
+
+        // --------------------------------------
+        // GENERATE OTP
+        // --------------------------------------
+
+        const otp =
+            generateOTP();
+
+
+        // --------------------------------------
+        // STORE OTP
+        // --------------------------------------
+
+        otpStore[email] = {
+
+            otp: otp,
+
+            expiresAt:
+                Date.now() +
+                5 * 60 * 1000,
+
+            attempts: 0
+
+        };
+
+
+        // --------------------------------------
+        // SEND EMAIL
+        // --------------------------------------
+
+        const { data, error } =
+            await resend.emails.send({
+
+                from: EMAIL_FROM,
+
+                to: [email],
+
+                subject:
+                    "Your SkillBridge Verification Code",
+
+                html: `
+
+                    <div style="
+                        font-family: Arial, sans-serif;
+                        max-width: 600px;
+                        margin: auto;
+                        padding: 30px;
+                        color: #222;
                     ">
-                        ${otp}
-                    </h1>
 
-                    <p>
-                        This OTP is valid for
-                        <b>5 minutes</b>.
-                    </p>
+                        <h1>
+                            SkillBridge
+                        </h1>
 
-                    <p>
-                        Do not share this OTP with anyone.
-                    </p>
+                        <p>
+                            Hello,
+                        </p>
 
-                </div>
+                        <p>
+                            Your verification code is:
+                        </p>
 
-            `
+                        <div style="
+                            font-size: 36px;
+                            font-weight: bold;
+                            letter-spacing: 10px;
+                            margin: 25px 0;
+                        ">
 
-        });
+                            ${otp}
 
+                        </div>
+
+                        <p>
+                            This OTP is valid for
+                            <strong>5 minutes</strong>.
+                        </p>
+
+                        <p>
+                            Do not share this code
+                            with anyone.
+                        </p>
+
+                        <hr>
+
+                        <p style="
+                            color: #777;
+                            font-size: 13px;
+                        ">
+
+                            This email was sent by
+                            SkillBridge.
+
+                        </p>
+
+                    </div>
+
+                `
+
+            });
+
+
+        // --------------------------------------
+        // RESEND ERROR
+        // --------------------------------------
+
+        if (error) {
+
+            console.error(
+                "Resend email error:",
+                error
+            );
+
+
+            delete otpStore[email];
+
+
+            return res.status(500).json({
+
+                success: false,
+
+                message:
+                    "Failed to send OTP."
+
+            });
+
+        }
+
+
+        // --------------------------------------
+        // SUCCESS
+        // --------------------------------------
 
         console.log(
-            `OTP sent to ${email}`
+            `OTP sent successfully to ${email}`
         );
 
 
@@ -142,21 +255,19 @@ app.post("/send-otp", async (req, res) => {
             success: true,
 
             message:
-                "OTP sent successfully"
+                "OTP sent successfully."
 
         });
 
     }
 
+
     catch (error) {
 
         console.error(
-            "Email error:",
+            "Send OTP error:",
             error
         );
-
-
-        delete otpStore[email];
 
 
         res.status(500).json({
@@ -164,7 +275,7 @@ app.post("/send-otp", async (req, res) => {
             success: false,
 
             message:
-                "Failed to send OTP"
+                "Failed to send OTP."
 
         });
 
@@ -179,111 +290,181 @@ app.post("/send-otp", async (req, res) => {
 
 app.post("/verify-otp", (req, res) => {
 
-    const { email, otp } = req.body;
+    try {
+
+        const email =
+            String(req.body.email || "")
+                .trim()
+                .toLowerCase();
+
+        const otp =
+            String(req.body.otp || "")
+                .trim();
 
 
-    if (!email || !otp) {
+        // --------------------------------------
+        // CHECK INPUT
+        // --------------------------------------
 
-        return res.status(400).json({
+        if (!email || !otp) {
 
-            success: false,
+            return res.status(400).json({
 
-            message:
-                "Email and OTP are required"
+                success: false,
 
-        });
+                message:
+                    "Email and OTP are required."
 
-    }
+            });
 
-
-    const storedData =
-        otpStore[email];
-
-
-    if (!storedData) {
-
-        return res.status(400).json({
-
-            success: false,
-
-            message:
-                "OTP not found. Please request a new OTP."
-
-        });
-
-    }
+        }
 
 
-    // Check expiry
+        // --------------------------------------
+        // GET STORED OTP
+        // --------------------------------------
 
-    if (
-        Date.now() >
-        storedData.expiresAt
-    ) {
+        const storedData =
+            otpStore[email];
+
+
+        if (!storedData) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "OTP not found. Please request a new OTP."
+
+            });
+
+        }
+
+
+        // --------------------------------------
+        // CHECK EXPIRY
+        // --------------------------------------
+
+        if (
+            Date.now() >
+            storedData.expiresAt
+        ) {
+
+            delete otpStore[email];
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "OTP expired. Please request a new OTP."
+
+            });
+
+        }
+
+
+        // --------------------------------------
+        // CHECK ATTEMPTS
+        // --------------------------------------
+
+        if (
+            storedData.attempts >= 5
+        ) {
+
+            delete otpStore[email];
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Too many incorrect attempts. Please request a new OTP."
+
+            });
+
+        }
+
+
+        // --------------------------------------
+        // CHECK OTP
+        // --------------------------------------
+
+        if (
+            storedData.otp !== otp
+        ) {
+
+            storedData.attempts++;
+
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Invalid OTP."
+
+            });
+
+        }
+
+
+        // --------------------------------------
+        // OTP CORRECT
+        // --------------------------------------
 
         delete otpStore[email];
 
 
-        return res.status(400).json({
+        res.json({
 
-            success: false,
+            success: true,
 
             message:
-                "OTP expired. Please request a new OTP."
+                "Email verified successfully."
 
         });
 
     }
 
 
-    // Check OTP
+    catch (error) {
 
-    if (storedData.otp !== otp) {
+        console.error(
+            "Verify OTP error:",
+            error
+        );
 
-        storedData.attempts++;
 
-
-        return res.status(400).json({
+        res.status(500).json({
 
             success: false,
 
             message:
-                "Invalid OTP"
+                "Unable to verify OTP."
 
         });
 
     }
 
-
-    // OTP correct
-
-    delete otpStore[email];
-
-
-    res.json({
-
-        success: true,
-
-        message:
-            "Email verified successfully"
-
-    });
-
 });
 
 
 // ==========================================
-// SERVER
+// START SERVER
 // ==========================================
 
-const PORT =
-    process.env.PORT || 5000;
+app.listen(
+    PORT,
+    "0.0.0.0",
+    () => {
 
+        console.log(
+            `SkillBridge OTP server running on port ${PORT}`
+        );
 
-app.listen(PORT, () => {
-
-    console.log(
-        `Server running on http://localhost:${PORT}`
-    );
-
-});
+    }
+);
