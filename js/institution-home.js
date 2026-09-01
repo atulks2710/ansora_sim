@@ -360,14 +360,18 @@ function renderStats() {
 }
 
 function renderSkillGapMatrix() {
-    const container = document.getElementById("skillGapContainer");
-    if (!container) return;
+    const containers = [
+        document.getElementById("skillGapContainer"),
+        document.getElementById("skillGapContainerDedicated")
+    ].filter(Boolean);
 
-    container.innerHTML = `
-        <div style="background:var(--white); border:1px solid var(--grey-200); border-radius:12px; padding:20px; margin-bottom:24px; box-shadow:var(--shadow-sm);">
+    if (!containers.length) return;
+
+    const htmlContent = `
+        <div style="background:var(--pure-white); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:24px; box-shadow:var(--shadow-sm);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
                 <div>
-                    <h3 style="font-size:16px; font-weight:800; color:var(--black); margin:0;">📊 Campus Skill Gap & Industry Demand Radar</h3>
+                    <h3 style="font-size:16px; font-weight:800; color:var(--deep-black); margin:0;">📊 Campus Skill Gap & Industry Demand Radar</h3>
                     <p style="font-size:12px; color:var(--grey-600); margin:4px 0 0 0;">Identifies real competency discrepancies between Industry Hiring Needs and Student Cohort Readiness.</p>
                 </div>
                 <button class="btn btn-gold btn-sm" onclick="window.generateTrainingPlan()">⚡ Generate Training Roadmap</button>
@@ -376,7 +380,7 @@ function renderSkillGapMatrix() {
             <div style="overflow-x:auto;">
                 <table style="width:100%; border-collapse:collapse; font-size:13px; text-align:left;">
                     <thead>
-                        <tr style="border-bottom:2px solid var(--grey-200); color:var(--grey-600); font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">
+                        <tr style="border-bottom:2px solid var(--border); color:var(--grey-600); font-size:11px; text-transform:uppercase; letter-spacing:0.5px;">
                             <th style="padding:10px;">Competency</th>
                             <th style="padding:10px;">Industry Benchmark</th>
                             <th style="padding:10px;">Cohort Average</th>
@@ -392,9 +396,9 @@ function renderSkillGapMatrix() {
 
                             return `
                                 <tr style="border-bottom:1px solid var(--grey-100);">
-                                    <td style="padding:12px 10px; font-weight:700; color:var(--black);">${g.skill}</td>
+                                    <td style="padding:12px 10px; font-weight:700; color:var(--deep-black);">${g.skill}</td>
                                     <td style="padding:12px 10px; color:var(--grey-600);">${g.industryTarget}% min</td>
-                                    <td style="padding:12px 10px; font-weight:700; color:var(--black);">${g.cohortProficiency}%</td>
+                                    <td style="padding:12px 10px; font-weight:700; color:var(--deep-black);">${g.cohortProficiency}%</td>
                                     <td style="padding:12px 10px; font-weight:800; color:${gapColor};">-${g.gap}%</td>
                                     <td style="padding:12px 10px;"><span class="badge ${badgeColor}">${g.priority}</span></td>
                                     <td style="padding:12px 10px; color:var(--grey-600); font-size:12px;">${g.recommendation}</td>
@@ -406,6 +410,10 @@ function renderSkillGapMatrix() {
             </div>
         </div>
     `;
+
+    containers.forEach(c => {
+        c.innerHTML = htmlContent;
+    });
 }
 
 function renderCohortTable() {
@@ -426,7 +434,7 @@ function renderCohortTable() {
         return `
             <tr style="border-bottom:1px solid var(--grey-100);">
                 <td style="padding:12px 10px;">
-                    <div style="font-weight:700; color:var(--black);">${name}</div>
+                    <div style="font-weight:700; color:var(--deep-black);">${name}</div>
                     <div style="font-size:11px; color:var(--grey-500);">${email}</div>
                 </td>
                 <td style="padding:12px 10px; color:var(--grey-600);">${s.degree || "B.Tech CSE"}</td>
@@ -448,6 +456,7 @@ function renderCohortTable() {
 function renderOpportunityCards(filterType = "all", searchQuery = "", domainQuery = "") {
     const containers = [
         { id: "allOppGrid", type: "all" },
+        { id: "opportunitiesGrid", type: "all" },
         { id: "fdpGrid", type: "fdp" },
         { id: "internshipGrid", type: "internship" },
         { id: "trainingGrid", type: "training" },

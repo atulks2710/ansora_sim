@@ -41,7 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const copilotFab = document.querySelector('.copilot-fab');
     if (copilotFab) {
         copilotFab.addEventListener('click', () => {
-            alert('SkillBridge AI Copilot is analyzing your profile...');
+            if (window.skillBridgeAICopilot) {
+                window.skillBridgeAICopilot.toggleModal(true);
+            }
         });
     }
 });
