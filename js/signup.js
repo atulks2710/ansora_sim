@@ -252,16 +252,19 @@ signupForm.addEventListener(
         setLoading(true);
 
 
+        // ======================================
+        // FETCH WITH TIMEOUT (25 seconds)
+        // ======================================
+
+        const controller = new AbortController();
+        const fetchTimeout = setTimeout(() => {
+            controller.abort();
+        }, 25000);
+
+
         try {
 
-            console.log(
-                "Sending OTP request..."
-            );
-
-            console.log(
-                "API:",
-                `${API_URL}/send-otp`
-            );
+            console.log("Sending OTP request to:", `${API_URL}/send-otp`);
 
 
             // ======================================
@@ -282,7 +285,9 @@ signupForm.addEventListener(
                         body:
                             JSON.stringify({
                                 email: email
-                            })
+                            }),
+
+                        signal: controller.signal
                     }
                 );
 
@@ -312,9 +317,7 @@ signupForm.addEventListener(
             }
 
 
-            console.log(
-                "OTP sent successfully."
-            );
+            console.log("OTP sent successfully.");
 
 
             // ======================================
@@ -367,20 +370,45 @@ signupForm.addEventListener(
 
 
             let message =
-                error.message ||
-                "Unable to send OTP.";
+                "Unable to send verification code. Please try again.";
+
+
+            // ======================================
+            // TIMEOUT ERROR
+            // ======================================
+
+            if (
+                error.name === "AbortError"
+            ) {
+
+                message =
+                    "Request timed out. The server took too long to respond. Please try again.";
+
+            }
 
 
             // ======================================
             // NETWORK ERROR
             // ======================================
 
-            if (
-                error instanceof TypeError
+            else if (
+                error instanceof TypeError &&
+                error.message.includes("fetch")
             ) {
 
                 message =
-                    "Unable to connect to the OTP server. Make sure server.js is running.";
+                    "Cannot connect to the server. Please check your internet connection and try again.";
+
+            }
+
+
+            // ======================================
+            // SERVER ERROR MESSAGE
+            // ======================================
+
+            else if (error.message) {
+
+                message = error.message;
 
             }
 
@@ -390,10 +418,19 @@ signupForm.addEventListener(
                 message
             );
 
+        }
 
+
+        // ======================================
+        // ALWAYS STOP SPINNER
+        // ======================================
+
+        finally {
+
+            clearTimeout(fetchTimeout);
             setLoading(false);
 
         }
 
     }
-);
+);
