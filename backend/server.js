@@ -78,18 +78,24 @@ if (EMAIL_USER && EMAIL_PASS) {
 
 
 // ==========================================
-// GMAIL TRANSPORTER
+// GMAIL TRANSPORTER — port 587 STARTTLS
+// (Render free tier blocks port 465/SMTPS)
 // ==========================================
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,          // STARTTLS (NOT SSL — port 465 is blocked on Render free)
+    requireTLS: true,       // Force upgrade to TLS
     auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS
     },
-    connectionTimeout: 10000,   // 10 seconds to connect
-    greetingTimeout: 10000,     // 10 seconds for SMTP greeting
-    socketTimeout: 15000        // 15 seconds for socket
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    socketTimeout: 20000,
+    logger: false,
+    debug: false
 });
 
 
