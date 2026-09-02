@@ -78,15 +78,16 @@ if (EMAIL_USER && EMAIL_PASS) {
 
 
 // ==========================================
-// GMAIL TRANSPORTER — port 587 STARTTLS
-// (Render free tier blocks port 465/SMTPS)
+// GMAIL TRANSPORTER — port 587 STARTTLS, IPv4 forced
+// (Render free: port 465 blocked, IPv6 unreachable)
 // ==========================================
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
-    secure: false,          // STARTTLS (NOT SSL — port 465 is blocked on Render free)
-    requireTLS: true,       // Force upgrade to TLS
+    secure: false,          // STARTTLS (not SSL)
+    requireTLS: true,
+    family: 4,              // Force IPv4 — Render free has no outbound IPv6
     auth: {
         user: EMAIL_USER,
         pass: EMAIL_PASS
@@ -97,6 +98,7 @@ const transporter = nodemailer.createTransport({
     logger: false,
     debug: false
 });
+
 
 
 // ==========================================
