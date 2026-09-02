@@ -1,13 +1,15 @@
 // ==========================================
 // SKILLBRIDGE OTP BACKEND
+// Uses Brevo HTTP API for email (HTTPS port 443)
+// Render free tier blocks all outbound SMTP
 // ==========================================
 
 require("dotenv").config();
 
 const express = require("express");
-const nodemailer = require("nodemailer");
 const cors = require("cors");
 const crypto = require("crypto");
+const https = require("https");
 
 const app = express();
 
@@ -27,18 +29,9 @@ const ALLOWED_ORIGINS = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (mobile apps, curl, Render health checks)
         if (!origin) return callback(null, true);
-
-        if (ALLOWED_ORIGINS.includes(origin)) {
-            return callback(null, true);
-        }
-
-        // Also allow any vercel.app subdomain for preview deployments
-        if (/\.vercel\.app$/.test(origin)) {
-            return callback(null, true);
-        }
-
+        if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+        if (/\.vercel\.app$/.test(origin)) return callback(null, true);
         console.warn("[CORS] Blocked origin:", origin);
         return callback(new Error("Not allowed by CORS"));
     },
@@ -58,63 +51,86 @@ const otpStore = {};
 
 
 // ==========================================
-// EMAIL CONFIGURATION CHECK
+// CONFIGURATION CHECK
 // ==========================================
 
-const EMAIL_USER = process.env.EMAIL_USER;
-const EMAIL_PASS = process.env.EMAIL_PASS;
+const EMAIL_USER  = process.env.EMAIL_USER;
+const BREVO_KEY   = process.env.BREVO_API_KEY;
 
-if (!EMAIL_USER) {
-    console.error("[CONFIG] FATAL: EMAIL_USER environment variable is missing.");
-}
+if (!EMAIL_USER)  console.error("[CONFIG] FATAL: EMAIL_USER is not set.");
+if (!BREVO_KEY)   console.error("[CONFIG] FATAL: BREVO_API_KEY is not set.");
 
-if (!EMAIL_PASS) {
-    console.error("[CONFIG] FATAL: EMAIL_PASS environment variable is missing.");
-}
-
-if (EMAIL_USER && EMAIL_PASS) {
-    console.log("[CONFIG] Email credentials loaded for:", EMAIL_USER);
+if (EMAIL_USER && BREVO_KEY) {
+    console.log("[CONFIG] Brevo email service configured for sender:", EMAIL_USER);
 }
 
 
 // ==========================================
-// GMAIL TRANSPORTER — port 587 STARTTLS, IPv4 forced
-// (Render free: port 465 blocked, IPv6 unreachable)
+// SEND EMAIL VIA BREVO HTTP API
+// (Uses HTTPS port 443 — allowed on Render free)
 // ==========================================
 
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,          // STARTTLS (not SSL)
-    requireTLS: true,
-    family: 4,              // Force IPv4 — Render free has no outbound IPv6
-    auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASS
-    },
-    connectionTimeout: 15000,
-    greetingTimeout: 15000,
-    socketTimeout: 20000,
-    logger: false,
-    debug: false
-});
+function sendBrevoEmail(toEmail, otp) {
+    return new Promise((resolve, reject) => {
 
+        const htmlContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f7f7f7;">
+                <div style="background: white; padding: 30px; border-radius: 10px; border-top: 4px solid #C9A227;">
+                    <h2 style="margin-bottom: 10px; color: #0B0B0D;">SkillBridge</h2>
+                    <p style="color: #555;">Hello,</p>
+                    <p style="color: #555;">Your email verification code is:</p>
+                    <div style="font-size: 40px; font-weight: bold; letter-spacing: 12px; margin: 25px 0; color: #C9A227; font-family: monospace;">
+                        ${otp}
+                    </div>
+                    <p style="color: #555;">This code is valid for <strong>5 minutes</strong>.</p>
+                    <p style="color: #555;">Do not share this code with anyone.</p>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                    <p style="color: #999; font-size: 12px;">This email was sent by SkillBridge. If you did not request this, please ignore it.</p>
+                </div>
+            </div>
+        `;
 
+        const payload = JSON.stringify({
+            sender: { name: "SkillBridge", email: EMAIL_USER },
+            to: [{ email: toEmail }],
+            subject: "Your SkillBridge Verification Code",
+            htmlContent: htmlContent,
+            textContent: `Your SkillBridge verification code is: ${otp}. This code is valid for 5 minutes. Do not share it with anyone.`
+        });
 
-// ==========================================
-// VERIFY TRANSPORTER ON STARTUP
-// ==========================================
+        const options = {
+            hostname: "api.brevo.com",
+            port: 443,
+            path: "/v3/smtp/email",
+            method: "POST",
+            headers: {
+                "api-key": BREVO_KEY,
+                "Content-Type": "application/json",
+                "Content-Length": Buffer.byteLength(payload)
+            }
+        };
 
-if (EMAIL_USER && EMAIL_PASS) {
-    transporter.verify(function (error) {
-        if (error) {
-            console.error("[EMAIL] Transporter verification FAILED:", error.message);
-        } else {
-            console.log("[EMAIL] Transporter is ready. Gmail SMTP connection verified.");
-        }
+        const req = https.request(options, (res) => {
+            let data = "";
+            res.on("data", chunk => data += chunk);
+            res.on("end", () => {
+                if (res.statusCode >= 200 && res.statusCode < 300) {
+                    resolve({ success: true, statusCode: res.statusCode });
+                } else {
+                    reject(new Error(`Brevo API returned ${res.statusCode}: ${data}`));
+                }
+            });
+        });
+
+        req.on("error", reject);
+
+        req.setTimeout(20000, () => {
+            req.destroy(new Error("Brevo API request timed out after 20 seconds"));
+        });
+
+        req.write(payload);
+        req.end();
     });
-} else {
-    console.error("[EMAIL] Skipping transporter verification — credentials missing.");
 }
 
 
@@ -147,8 +163,12 @@ app.get("/health", (req, res) => {
     res.status(200).json({
         success: true,
         server: "running",
-        emailConfigured: !!(EMAIL_USER && EMAIL_PASS),
-        emailUser: EMAIL_USER ? EMAIL_USER.replace(/(.{2}).*(@.*)/, "$1***$2") : "NOT SET"
+        emailProvider: "Brevo HTTP API",
+        emailConfigured: !!(EMAIL_USER && BREVO_KEY),
+        emailUser: EMAIL_USER
+            ? EMAIL_USER.replace(/(.{2}).*(@.*)/, "$1***$2")
+            : "NOT SET",
+        brevoKeySet: !!BREVO_KEY
     });
 });
 
@@ -161,46 +181,28 @@ app.post("/send-otp", async (req, res) => {
 
     console.log("[OTP] Request received — send-otp");
 
-    // ------------------------------------------
-    // Guard: Email credentials must be configured
-    // ------------------------------------------
-
-    if (!EMAIL_USER || !EMAIL_PASS) {
-        console.error("[OTP] Cannot send — EMAIL_USER or EMAIL_PASS is not configured on the server.");
+    // Guard: credentials must be set
+    if (!EMAIL_USER || !BREVO_KEY) {
+        console.error("[OTP] Cannot send — EMAIL_USER or BREVO_API_KEY is not configured.");
         return res.status(503).json({
             success: false,
             message: "Email service is not configured. Please contact the administrator."
         });
     }
 
-
-    // ------------------------------------------
     // Validate email
-    // ------------------------------------------
-
     const email = req.body?.email?.trim().toLowerCase();
 
     if (!email) {
-        return res.status(400).json({
-            success: false,
-            message: "Email is required."
-        });
+        return res.status(400).json({ success: false, message: "Email is required." });
     }
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
     if (!emailPattern.test(email)) {
-        return res.status(400).json({
-            success: false,
-            message: "Please provide a valid email address."
-        });
+        return res.status(400).json({ success: false, message: "Please provide a valid email address." });
     }
 
-
-    // ------------------------------------------
-    // Rate limiting — 1 OTP per 30 seconds
-    // ------------------------------------------
-
+    // Rate limiting — 1 OTP per 30 seconds per email
     const existing = otpStore[email];
     if (existing) {
         const secondsSinceLast = (Date.now() - (existing.createdAt || 0)) / 1000;
@@ -213,68 +215,24 @@ app.post("/send-otp", async (req, res) => {
         }
     }
 
-
-    // ------------------------------------------
-    // Generate OTP
-    // ------------------------------------------
-
+    // Generate and store OTP
     const otp = generateOTP();
     console.log("[OTP] OTP generated for:", email);
-
-
-    // ------------------------------------------
-    // Store OTP
-    // ------------------------------------------
 
     otpStore[email] = {
         otp: otp,
         createdAt: Date.now(),
-        expiresAt: Date.now() + 5 * 60 * 1000,  // 5 minutes
+        expiresAt: Date.now() + 5 * 60 * 1000,
         attempts: 0
     };
 
     console.log("[OTP] OTP stored with 5-minute expiry");
-
-
-    // ------------------------------------------
-    // Send Email — with explicit timeout
-    // ------------------------------------------
-
-    console.log("[OTP] Sending email...");
-
-    const sendTimeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Email send timeout after 20 seconds")), 20000)
-    );
+    console.log("[OTP] Sending email via Brevo...");
 
     try {
 
-        await Promise.race([
-            transporter.sendMail({
-                from: `"SkillBridge" <${EMAIL_USER}>`,
-                to: email,
-                subject: "Your SkillBridge Verification Code",
-                text: `Your SkillBridge verification code is: ${otp}\n\nThis code is valid for 5 minutes. Do not share it with anyone.`,
-                html: `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 30px; background: #f7f7f7;">
-                        <div style="background: white; padding: 30px; border-radius: 10px; border-top: 4px solid #C9A227;">
-                            <h2 style="margin-bottom: 10px; color: #0B0B0D;">SkillBridge</h2>
-                            <p style="color: #555;">Hello,</p>
-                            <p style="color: #555;">Your email verification code is:</p>
-                            <div style="font-size: 40px; font-weight: bold; letter-spacing: 12px; margin: 25px 0; color: #C9A227; font-family: monospace;">
-                                ${otp}
-                            </div>
-                            <p style="color: #555;">This code is valid for <strong>5 minutes</strong>.</p>
-                            <p style="color: #555;">Do not share this code with anyone.</p>
-                            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
-                            <p style="color: #999; font-size: 12px;">This email was sent by SkillBridge. If you did not request this, please ignore it.</p>
-                        </div>
-                    </div>
-                `
-            }),
-            sendTimeout
-        ]);
-
-        console.log("[OTP] Email sent successfully to:", email);
+        await sendBrevoEmail(email, otp);
+        console.log("[OTP] Email sent successfully via Brevo to:", email);
 
         return res.status(200).json({
             success: true,
@@ -283,17 +241,17 @@ app.post("/send-otp", async (req, res) => {
 
     } catch (error) {
 
-        // Clean up stored OTP since email failed
         delete otpStore[email];
 
         const safeError = error.message || "Unknown error";
-        console.error("[OTP] Email sending FAILED:", safeError);
+        console.error("[OTP] Brevo email send FAILED:", safeError);
 
-        // Detect specific error types for better logging
-        if (safeError.includes("Invalid login") || safeError.includes("535") || safeError.includes("Username and Password")) {
-            console.error("[OTP] Root cause: Gmail authentication failed — check EMAIL_USER and EMAIL_PASS in Render environment variables.");
-        } else if (safeError.includes("timeout") || safeError.includes("ETIMEDOUT") || safeError.includes("ECONNREFUSED")) {
-            console.error("[OTP] Root cause: Gmail SMTP connection timed out or refused.");
+        if (safeError.includes("401") || safeError.includes("unauthorized")) {
+            console.error("[OTP] Root cause: Invalid BREVO_API_KEY — check Render environment variable.");
+        } else if (safeError.includes("400")) {
+            console.error("[OTP] Root cause: Sender email not verified in Brevo, or bad request.");
+        } else if (safeError.includes("timeout")) {
+            console.error("[OTP] Root cause: Brevo API request timed out.");
         }
 
         return res.status(500).json({
@@ -316,7 +274,7 @@ app.post("/verify-otp", (req, res) => {
     try {
 
         const email = req.body?.email?.trim().toLowerCase();
-        const otp = req.body?.otp?.trim();
+        const otp   = req.body?.otp?.trim();
 
         if (!email || !otp) {
             return res.status(400).json({
@@ -335,7 +293,6 @@ app.post("/verify-otp", (req, res) => {
             });
         }
 
-        // Check expiry
         if (Date.now() > storedData.expiresAt) {
             delete otpStore[email];
             console.log("[OTP] OTP expired for:", email);
@@ -345,7 +302,6 @@ app.post("/verify-otp", (req, res) => {
             });
         }
 
-        // Check attempts
         if (storedData.attempts >= 5) {
             delete otpStore[email];
             console.log("[OTP] Too many attempts for:", email);
@@ -355,7 +311,6 @@ app.post("/verify-otp", (req, res) => {
             });
         }
 
-        // Check OTP
         if (storedData.otp !== otp) {
             storedData.attempts++;
             console.log("[OTP] Wrong OTP attempt", storedData.attempts, "for:", email);
@@ -365,9 +320,8 @@ app.post("/verify-otp", (req, res) => {
             });
         }
 
-        // OTP correct — clean up immediately (single-use)
+        // Correct — single-use, delete immediately
         delete otpStore[email];
-
         console.log("[OTP] OTP verified successfully for:", email);
 
         return res.status(200).json({
@@ -376,9 +330,7 @@ app.post("/verify-otp", (req, res) => {
         });
 
     } catch (error) {
-
         console.error("[OTP] Verification error:", error.message);
-
         return res.status(500).json({
             success: false,
             message: "Unable to verify OTP. Please try again."
@@ -393,10 +345,7 @@ app.post("/verify-otp", (req, res) => {
 // ==========================================
 
 app.use((req, res) => {
-    res.status(404).json({
-        success: false,
-        message: "Endpoint not found."
-    });
+    res.status(404).json({ success: false, message: "Endpoint not found." });
 });
 
 
@@ -406,16 +355,10 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
     if (err.message === "Not allowed by CORS") {
-        return res.status(403).json({
-            success: false,
-            message: "CORS: Origin not allowed."
-        });
+        return res.status(403).json({ success: false, message: "CORS: Origin not allowed." });
     }
     console.error("[SERVER] Unhandled error:", err.message);
-    return res.status(500).json({
-        success: false,
-        message: "Internal server error."
-    });
+    return res.status(500).json({ success: false, message: "Internal server error." });
 });
 
 
