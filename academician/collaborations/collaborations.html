@@ -5670,6 +5670,28 @@
                 }
             );
 
+            try {
+                const drivesSnap = await getDocs(collection(db, "campus_drives"));
+                drivesSnap.forEach(d => {
+                    const data = d.data();
+                    if (data.status === "Accepted") {
+                        collaborations.push({
+                            id: d.id,
+                            title: `${data.driveType || "Campus Drive"}: ${data.driveRole || "Technical Immersion"}`,
+                            organization: data.companyName || "Industry Partner",
+                            partner: data.companyName || "Industry Partner",
+                            type: "Campus Drive",
+                            status: "Approved & Scheduled",
+                            academicianId: currentUser.uid,
+                            description: `Approved by Institution (${data.institutionName || 'Campus'}). Date: ${data.driveDate || 'TBD'} | Cohort: ${data.cohortSize || 50} students. ${data.notes || ''}`,
+                            createdAt: data.createdAt || data.acceptedAt || new Date().toISOString()
+                        });
+                    }
+                });
+            } catch (e) {
+                console.warn("Notice: Could not load campus drives in academician view", e);
+            }
+
 
             collaborations.sort(
                 (
@@ -7017,6 +7039,15 @@
 
                             academicianId:
                                 currentUser.uid,
+
+                            ownerId:
+                                currentUser.uid,
+
+                            academicianName:
+                                userData.name || currentUser.displayName || "Academician Faculty",
+
+                            institutionId:
+                                userData.institutionId || currentUser.uid,
 
                             title:
                                 title,

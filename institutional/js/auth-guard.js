@@ -8,11 +8,11 @@
  * DEV_MODE = false → Full Firebase auth + role check.
  *                    Set to false when connecting real backend.
  */
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 const MOCK_USER = {
   uid: "dev_user",
-  role: "academician",
+  role: "institution",
   name: "Dr. Priya Nair",
   fullName: "Dr. Priya Nair",
   designation: "Associate Professor",
@@ -21,7 +21,7 @@ const MOCK_USER = {
 };
 
 /**
- * Guards a page: requires authenticated academician.
+ * Guards a page: requires authenticated institution or faculty.
  * Returns the user data on success.
  */
 export async function requireFacultyAuth() {
@@ -42,7 +42,7 @@ export async function requireFacultyAuth() {
       unsubscribe();
 
       if (!user) {
-        window.location.href = "../../login.html";
+        window.location.href = "../login.html";
         return;
       }
 
@@ -50,14 +50,17 @@ export async function requireFacultyAuth() {
         const snap = await getDoc(doc(db, "users", user.uid));
 
         if (!snap.exists()) {
-          window.location.href = "../../login.html";
+          window.location.href = "../login.html";
           return;
         }
 
         const userData = snap.data();
+        const role = String(userData.role || "").trim().toLowerCase();
 
-        if (userData.role !== "academician") {
-          window.location.href = "../../index.html";
+        const validRoles = ["institution", "institutional", "academician", "educator"];
+        if (!validRoles.includes(role)) {
+          console.warn("Unauthorized role for institutional portal:", role);
+          window.location.href = "../index.html";
           return;
         }
 
@@ -66,9 +69,8 @@ export async function requireFacultyAuth() {
 
       } catch (error) {
         console.error("Auth guard error:", error);
-        // Network/Firestore error — fall through with mock
-        updateUIFromAuth(MOCK_USER);
-        resolve(MOCK_USER);
+        // Network/Firestore error — fall through with user if auth valid
+        resolve({ uid: user.uid, email: user.email, role: "institution", name: user.displayName || "Institutional User" });
       }
     });
   });

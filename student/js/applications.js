@@ -47,9 +47,20 @@ function listenToLiveApplications() {
             where("studentId", "==", currentUser.uid)
         );
 
-        unsubscribeApps = onSnapshot(appsQuery, (snapshot) => {
+        unsubscribeApps = onSnapshot(appsQuery, async (snapshot) => {
             if (snapshot.empty) {
-                // Fallback check demo applications
+                // Fallback check student subcollection
+                try {
+                    const subSnap = await getDocs(collection(db, "students", currentUser.uid, "applications"));
+                    if (!subSnap.empty) {
+                        const subApps = [];
+                        subSnap.forEach(d => subApps.push({ id: d.id, ...d.data() }));
+                        renderApplications(grid, subApps);
+                        return;
+                    }
+                } catch (subErr) {
+                    console.warn("Subcollection fallback error:", subErr);
+                }
                 renderEmptyApplications(grid);
                 return;
             }

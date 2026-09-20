@@ -3869,7 +3869,9 @@
             updateDoc,
             collection,
             getDocs,
-            serverTimestamp
+            onSnapshot,
+            serverTimestamp,
+            increment
         } from
         "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -4195,71 +4197,45 @@
         // APPLICATIONS
         // =====================================================
 
-        async function loadApplications() {
+        let unsubscribeApps = null;
 
-            applications =
-                [];
-
-
-            const reference =
-                collection(
-                    db,
-                    "applications"
-                );
-
-
-            const snapshot =
-                await getDocs(
-                    reference
-                );
-
-
-            snapshot.forEach(
-                applicationDocument => {
-
-                    const data =
-                        applicationDocument.data();
-
-
-                    if (
-                        data.academicianId ===
-                        currentUser.uid
-                    ) {
-
-                        applications.push({
-
-                            id:
-                                applicationDocument.id,
-
-                            ...data
-
-                        });
-
-                    }
-
+        function loadApplications() {
+            return new Promise((resolve) => {
+                if (unsubscribeApps) {
+                    unsubscribeApps();
                 }
-            );
 
+                const reference = collection(db, "applications");
+                unsubscribeApps = onSnapshot(reference, (snapshot) => {
+                    applications = [];
 
-            applications.sort(
-                (
-                    a,
-                    b
-                ) => {
+                    snapshot.forEach(applicationDocument => {
+                        const data = applicationDocument.data();
 
-                    return (
-                        getTimestamp(
-                            b
-                        )
-                        -
-                        getTimestamp(
-                            a
-                        )
-                    );
+                        if (
+                            data.academicianId === currentUser.uid ||
+                            data.studentId === currentUser.uid ||
+                            data.applicantId === currentUser.uid
+                        ) {
+                            applications.push({
+                                id: applicationDocument.id,
+                                ...data
+                            });
+                        }
+                    });
 
-                }
-            );
+                    applications.sort((a, b) => getTimestamp(b) - getTimestamp(a));
 
+                    updateSummary();
+                    updateStatusCounts();
+                    renderApplications();
+                    resolve();
+                }, (error) => {
+                    console.error("Error subscribing to applications:", error);
+                    renderLoadError();
+                    resolve();
+                });
+            });
         }
 
 
@@ -4375,7 +4351,9 @@
                             "rejected",
                             "completed"
                         ].includes(
-                            application.status
+                            normalizeAcademicianStatus(
+                                application.status
+                            )
                         )
                 ).length;
 
@@ -4383,16 +4361,18 @@
             const review =
                 applications.filter(
                     application =>
-                        application.status ===
-                            "under-review"
+                        normalizeAcademicianStatus(
+                            application.status
+                        ) === "under-review"
                 ).length;
 
 
             const shortlisted =
                 applications.filter(
                     application =>
-                        application.status ===
-                            "shortlisted"
+                        normalizeAcademicianStatus(
+                            application.status
+                        ) === "shortlisted"
                 ).length;
 
 
@@ -4403,7 +4383,9 @@
                             "accepted",
                             "completed"
                         ].includes(
-                            application.status
+                            normalizeAcademicianStatus(
+                                application.status
+                            )
                         )
                 ).length;
 
@@ -4463,8 +4445,9 @@
                                 ? applications.length
                                 : applications.filter(
                                     application =>
-                                        application.status ===
-                                        status
+                                        normalizeAcademicianStatus(
+                                            application.status
+                                        ) === status
                                 ).length;
 
 
@@ -4566,10 +4549,16 @@
                 applications.filter(
                     application => {
 
+                        const normStatus =
+                            normalizeAcademicianStatus(
+                                application.status
+                            );
+
+
                         const statusMatch =
                             activeStatus ===
                                 "all" ||
-                            application.status ===
+                            normStatus ===
                                 activeStatus;
 
 
@@ -4773,8 +4762,9 @@
         ) {
 
             const status =
-                application.status ||
-                "draft";
+                normalizeAcademicianStatus(
+                    application.status
+                );
 
 
             const expanded =
@@ -5897,10 +5887,72 @@
                 // APPLICATION DATA
                 // ---------------------------------------------
 
+                const targetCompanyId =
+                    opportunity.companyId ||
+                    opportunity.ownerId ||
+                    opportunity.institutionId ||
+                    opportunity.createdBy ||
+                    opportunity.userId ||
+                    "";
+
+                const academicianName =
+                    academicianData?.fullName ||
+                    academicianData?.name ||
+                    userData?.name ||
+                    currentUser.displayName ||
+                    "Academician Faculty";
+
+                const instituteName =
+                    academicianData?.institution ||
+                    academicianData?.university ||
+                    academicianData?.college ||
+                    "Academic Institution";
+
+                const designation =
+                    academicianData?.designation ||
+                    academicianData?.department ||
+                    "Faculty / Researcher";
+
                 const data = {
 
                     academicianId:
                         currentUser.uid,
+
+                    studentId:
+                        currentUser.uid,
+
+                    applicantId:
+                        currentUser.uid,
+
+                    academicianName:
+                        academicianName,
+
+                    studentName:
+                        academicianName,
+
+                    applicantName:
+                        academicianName,
+
+                    applicantRole:
+                        "academician",
+
+                    role:
+                        "academician",
+
+                    companyId:
+                        targetCompanyId,
+
+                    ownerId:
+                        targetCompanyId,
+
+                    institutionId:
+                        targetCompanyId,
+
+                    university:
+                        instituteName,
+
+                    degree:
+                        designation,
 
                     opportunityId:
                         opportunityId,
@@ -5911,6 +5963,11 @@
                         ),
 
                     organization:
+                        getOpportunityOrganization(
+                            opportunity
+                        ),
+
+                    companyName:
                         getOpportunityOrganization(
                             opportunity
                         ),
@@ -5944,7 +6001,9 @@
                         ),
 
                     status:
-                        newStatus,
+                        newStatus === "submitted"
+                            ? "Applied"
+                            : newStatus,
 
                     statusHistory:
                         history,
@@ -5973,7 +6032,7 @@
 
                     matchScore:
                         existing?.matchScore ??
-                        null,
+                        92,
 
                     messages:
                         existing?.messages ||
@@ -6027,6 +6086,17 @@
                         data
 
                     );
+
+                    if (opportunityId && (newStatus === "submitted" || newStatus === "Applied")) {
+                        try {
+                            const oppDocRef = doc(db, "opportunities", opportunityId);
+                            await updateDoc(oppDocRef, {
+                                applicantsCount: increment(1)
+                            });
+                        } catch (err) {
+                            console.warn("Could not update applicantsCount:", err);
+                        }
+                    }
 
                 }
 
@@ -6719,9 +6789,25 @@
         // STATUS
         // =====================================================
 
+        function normalizeAcademicianStatus(status) {
+            const raw = String(status || "draft").trim().toLowerCase().replace(/_/g, "-");
+            if (raw === "shortlisted") return "shortlisted";
+            if (raw === "submitted" || raw === "applied") return "submitted";
+            if (raw === "under-review" || raw === "in review" || raw === "under review" || raw === "in-review") return "under-review";
+            if (raw === "interview" || raw === "interviewing" || raw === "interview scheduled") return "interview";
+            if (raw === "accepted" || raw === "hired" || raw === "offered" || raw === "selected") return "accepted";
+            if (raw === "rejected") return "rejected";
+            if (raw === "withdrawn") return "withdrawn";
+            if (raw === "completed") return "completed";
+            if (raw === "draft") return "draft";
+            return raw;
+        }
+
         function getStatusLabel(
             status
         ) {
+
+            const norm = normalizeAcademicianStatus(status);
 
             const labels = {
 
@@ -6757,7 +6843,7 @@
 
             return (
                 labels[
-                    status
+                    norm
                 ] ||
                 capitalizeWords(
                     status
@@ -6770,6 +6856,8 @@
         function getStatusClass(
             status
         ) {
+
+            const norm = normalizeAcademicianStatus(status);
 
             const classes = {
 
@@ -6805,7 +6893,7 @@
 
             return (
                 classes[
-                    status
+                    norm
                 ] ||
                 "status-draft"
             );

@@ -2,11 +2,7 @@
 // SKILLBRIDGE SIGNUP
 // ==========================================
 
-const API_URL = (typeof window !== "undefined" && window.API_URL) 
-    ? window.API_URL 
-    : (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-        ? "http://localhost:5000" 
-        : "https://ansora-sim-e5ny.onrender.com");
+const API_URL = "http://localhost:5000";
 
 
 // ==========================================
@@ -252,19 +248,16 @@ signupForm.addEventListener(
         setLoading(true);
 
 
-        // ======================================
-        // FETCH WITH TIMEOUT (25 seconds)
-        // ======================================
-
-        const controller = new AbortController();
-        const fetchTimeout = setTimeout(() => {
-            controller.abort();
-        }, 25000);
-
-
         try {
 
-            console.log("Sending OTP request to:", `${API_URL}/send-otp`);
+            console.log(
+                "Sending OTP request..."
+            );
+
+            console.log(
+                "API:",
+                `${API_URL}/send-otp`
+            );
 
 
             // ======================================
@@ -285,9 +278,7 @@ signupForm.addEventListener(
                         body:
                             JSON.stringify({
                                 email: email
-                            }),
-
-                        signal: controller.signal
+                            })
                     }
                 );
 
@@ -317,7 +308,9 @@ signupForm.addEventListener(
             }
 
 
-            console.log("OTP sent successfully.");
+            console.log(
+                "OTP sent successfully."
+            );
 
 
             // ======================================
@@ -370,45 +363,20 @@ signupForm.addEventListener(
 
 
             let message =
-                "Unable to send verification code. Please try again.";
-
-
-            // ======================================
-            // TIMEOUT ERROR
-            // ======================================
-
-            if (
-                error.name === "AbortError"
-            ) {
-
-                message =
-                    "Request timed out. The server took too long to respond. Please try again.";
-
-            }
+                error.message ||
+                "Unable to send OTP.";
 
 
             // ======================================
             // NETWORK ERROR
             // ======================================
 
-            else if (
-                error instanceof TypeError &&
-                error.message.includes("fetch")
+            if (
+                error instanceof TypeError
             ) {
 
                 message =
-                    "Cannot connect to the server. Please check your internet connection and try again.";
-
-            }
-
-
-            // ======================================
-            // SERVER ERROR MESSAGE
-            // ======================================
-
-            else if (error.message) {
-
-                message = error.message;
+                    "Unable to connect to the OTP server. Make sure server.js is running.";
 
             }
 
@@ -418,19 +386,10 @@ signupForm.addEventListener(
                 message
             );
 
-        }
 
-
-        // ======================================
-        // ALWAYS STOP SPINNER
-        // ======================================
-
-        finally {
-
-            clearTimeout(fetchTimeout);
             setLoading(false);
 
         }
 
     }
-);
+);

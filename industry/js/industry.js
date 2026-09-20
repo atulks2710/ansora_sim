@@ -140,16 +140,21 @@ function initRealtimeData(user) {
     state.unsubscribers.push(unsubOpps);
 
     // 3. Canonical application listener for this industry company.
-    // Applications are the bridge between Student and Industry.
-    const companyAppsQuery = query(
-        collection(db, "applications"),
-        where("companyId", "==", user.uid)
-    );
+    // Applications are the bridge between Student, Academician, and Industry.
+    const companyAppsQuery = collection(db, "applications");
     const unsubCompanyApps = onSnapshot(companyAppsQuery, (snap) => {
-        state.companyApplications = snap.docs.map(d => ({
-            id: d.id,
-            ...d.data()
-        }));
+        const myOppIds = new Set(state.opportunities.map(o => o.id));
+        state.companyApplications = snap.docs
+            .map(d => ({
+                id: d.id,
+                ...d.data()
+            }))
+            .filter(app => 
+                app.companyId === user.uid ||
+                app.ownerId === user.uid ||
+                app.institutionId === user.uid ||
+                (app.opportunityId && myOppIds.has(app.opportunityId))
+            );
 
         const statuses = {};
         state.companyApplications.forEach(app => {
@@ -213,21 +218,26 @@ function initRealtimeData(user) {
     state.unsubscribers.push(unsubChallenges);
 
     // 7. Academic Partners Real-Time Listener
-    const instQuery = query(collection(db, "users"), where("role", "==", "institution"));
+    const instQuery = query(collection(db, "users"));
     const unsubInsts = onSnapshot(instQuery, (snap) => {
-        const registeredInsts = snap.docs.map(d => ({
-            id: d.id,
-            name: d.data().institutionName || d.data().name || "Academic Institution",
-            location: d.data().location || "India",
-            relationship: d.data().relationship || "Active Partner",
-            studentsEngaged: d.data().studentsCount || 0,
-            projects: d.data().projectsCount || 0,
-            internships: d.data().internshipsCount || 0,
-            workshops: d.data().workshopsCount || 0,
-            strengths: Array.isArray(d.data().strengths) ? d.data().strengths : ["Computer Science", "Engineering"],
-            matchingStudents: d.data().matchingStudents || 0,
-            avgSkill: d.data().avgSkill || "78%"
-        }));
+        const registeredInsts = snap.docs
+            .filter(d => {
+                const r = String(d.data().role || "").toLowerCase();
+                return r === "institution" || r === "institutional" || r === "academician" || r === "educator";
+            })
+            .map(d => ({
+                id: d.id,
+                name: d.data().institutionName || d.data().institution || d.data().name || "Academic Partner",
+                location: d.data().location || "India",
+                relationship: d.data().relationship || (d.data().role === "academician" ? "Academic Faculty" : "Academic Partner"),
+                studentsEngaged: d.data().studentsCount || d.data().researchStudents || 0,
+                projects: d.data().projectsCount || d.data().researchProjects || 0,
+                internships: d.data().internshipsCount || 0,
+                workshops: d.data().workshopsCount || 0,
+                strengths: Array.isArray(d.data().strengths) ? d.data().strengths : (d.data().specialization ? [d.data().specialization] : ["Computer Science", "Engineering"]),
+                matchingStudents: d.data().matchingStudents || 50,
+                avgSkill: d.data().avgSkill || "80%"
+            }));
 
         state.registeredInstitutions = registeredInsts;
         mergeAndRenderInstitutions();
@@ -247,6 +257,52 @@ function initRealtimeData(user) {
         console.error("Academic partners subscription error:", error);
     });
     state.unsubscribers.push(unsubPartners);
+
+    // 7b. Collaborations Real-Time Listener (Academician <-> Industry bridge)
+    const collabQuery = query(collection(db, "collaborations"));
+    const unsubCollab = onSnapshot(collabQuery, (snap) => {
+        state.collaborationsList = snap.docs.map(d => ({
+            id: d.id,
+            ...d.data()
+        }));
+
+        const collabPartners = snap.docs.map(d => {
+            const data = d.data();
+            return {
+                id: d.id,
+                name: data.academicianName || data.organization || data.title || "Academic R&D Project",
+                academicianId: data.academicianId || data.ownerId || "",
+                location: data.location || "India",
+                relationship: `R&D Proposal (${data.type || "Research"})`,
+                studentsEngaged: data.studentsCount || 10,
+                projects: 1,
+                internships: 0,
+                workshops: 0,
+                strengths: [data.type || "Research Collaboration"],
+                matchingStudents: 25,
+                avgSkill: "85%"
+            };
+        });
+        state.collabPartners = collabPartners;
+        mergeAndRenderInstitutions();
+        renderAcademicCollaborationsFeed();
+    }, (error) => {
+        console.warn("Collaborations realtime error:", error);
+    });
+    state.unsubscribers.push(unsubCollab);
+
+    // 7c. Campus Drives Real-Time Listener (Industry -> Institution -> Academician & Student pipeline)
+    const drivesQuery = query(collection(db, "campus_drives"));
+    const unsubDrives = onSnapshot(drivesQuery, (snap) => {
+        state.campusDrivesList = snap.docs.map(d => ({
+            id: d.id,
+            ...d.data()
+        }));
+        renderIndustryCampusDrivesStatus();
+    }, (error) => {
+        console.warn("Campus drives realtime error:", error);
+    });
+    state.unsubscribers.push(unsubDrives);
 
     // 8. Activity Stream Real-Time Listener
     const actQuery = query(
@@ -271,6 +327,7 @@ function mergeAndRenderInstitutions() {
     const allMap = new Map();
     (state.registeredInstitutions || []).forEach(inst => allMap.set(inst.id, inst));
     (state.customPartners || []).forEach(p => allMap.set(p.id, p));
+    (state.collabPartners || []).forEach(c => allMap.set(c.id, c));
     state.institutions = Array.from(allMap.values());
     renderAcademicPartners();
     renderInstitutionTalent();
@@ -358,12 +415,13 @@ function recalculateTalentMatches() {
             ? `${gaps[0]} (Develop proficiency for enterprise benchmarks)`
             : "None (Exceeds baseline competency benchmarks)";
 
-        const displayName = application.studentName || student.name || student.fullName || "Student Candidate";
+        const displayName = application.applicantName || application.academicianName || application.studentName || student.name || student.fullName || "Academic Applicant";
         const initials = getInitials(displayName);
         const status = application.status || "Applied";
+        const isAcademician = application.applicantRole === "academician" || Boolean(application.academicianId);
 
         return {
-            id: application.studentId,
+            id: application.applicantId || application.studentId || application.academicianId || application.id,
             applicationId: application.id,
             opportunityId: application.opportunityId || "",
             opportunityTitle: application.opportunityTitle || "Industry Opportunity",
@@ -371,9 +429,9 @@ function recalculateTalentMatches() {
             companyName: application.companyName || state.company.name,
             name: displayName,
             initials,
-            university: application.university || student.college || student.university || "Academic Institute",
-            degree: application.degree || `${student.course || "B.Tech Computer Science"} ${student.year ? `(Year ${student.year})` : ""}`.trim(),
-            targetRole: student.targetRole || application.opportunityTitle || "Software Engineering Specialist",
+            university: application.university || application.institution || student.college || student.university || "Academic Institute",
+            degree: application.degree || application.designation || (isAcademician ? "Faculty / Academician" : `${student.course || "B.Tech Computer Science"} ${student.year ? `(Year ${student.year})` : ""}`.trim()),
+            targetRole: student.targetRole || application.opportunityTitle || (isAcademician ? "Research & Academic Collaboration" : "Software Engineering Specialist"),
             matchRate,
             status,
             verifiedSkillsCount: studentSkills.length,
@@ -382,7 +440,7 @@ function recalculateTalentMatches() {
             skills: skillsBreakdown,
             strongest: strongest.length > 0 ? strongest : ["Core Stack", "Problem Solving"],
             primaryGap,
-            summary: student.bio || `Applied for ${application.opportunityTitle || "an industry opportunity"}.`,
+            summary: application.coverNote || student.bio || `Applied for ${application.opportunityTitle || "an industry opportunity"}.`,
             projects: Array.isArray(student.projects) ? student.projects : []
         };
     }).sort((a, b) => b.matchRate - a.matchRate);
@@ -1270,21 +1328,26 @@ window.advanceCandidateStage = async function(applicationId, nextStage) {
 
         await updateDoc(applicationRef, nextUpdate);
 
-        try {
-            await setDoc(
-                doc(db, "students", application.studentId, "applications", applicationId),
-                nextUpdate,
-                { merge: true }
-            );
-        } catch (syncErr) {
-            console.warn("Student application mirror update failed:", syncErr);
+        const applicantId = application.studentId || application.academicianId || application.applicantId;
+        if (applicantId) {
+            try {
+                const parentCol = (application.applicantRole === "academician" || application.academicianId) ? "academicians" : "students";
+                await setDoc(
+                    doc(db, parentCol, applicantId, "applications", applicationId),
+                    nextUpdate,
+                    { merge: true }
+                );
+            } catch (syncErr) {
+                console.warn("Application mirror update failed:", syncErr);
+            }
         }
 
         await setDoc(
             doc(db, `companies/${state.currentUser.uid}/pipeline`, applicationId),
             {
                 applicationId,
-                studentId: application.studentId,
+                studentId: applicantId || "",
+                applicantId: applicantId || "",
                 opportunityId: application.opportunityId || "",
                 candidateName: candName,
                 status: nextStage,
@@ -1526,22 +1589,30 @@ function initCampusDriveModal() {
             const instName = inst ? inst.name : "Academic Partner";
 
             try {
-                await addDoc(collection(db, `companies/${state.currentUser.uid}/campus_drives`), {
-                    instId: instId,
+                const compName = state.companyDna?.companyName || state.currentUser.displayName || "Industry Partner";
+                const drivePayload = {
+                    companyId: state.currentUser.uid,
+                    companyName: compName,
+                    instId: instId || "",
                     instName: instName,
+                    institutionName: instName,
                     driveType: driveType,
                     driveDate: driveDate,
                     driveRole: driveRole,
                     cohortSize: cohortSize,
                     notes: notes,
-                    status: "Scheduled",
-                    createdAt: serverTimestamp()
-                });
+                    status: "Pending Institution Review",
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
 
-                await logActivity("🤝", driveType, `Scheduled with ${instName} for ${driveDate}`, "Campus Drive");
+                await addDoc(collection(db, "campus_drives"), drivePayload);
+                await addDoc(collection(db, `companies/${state.currentUser.uid}/campus_drives`), drivePayload);
+
+                await logActivity("🤝", driveType, `Drive proposal sent to ${instName} for ${driveDate}`, "Campus Drive");
                 closeModal();
                 form.reset();
-                showToast(`Engagement confirmed: ${driveType} with ${instName}!`);
+                showToast(`Campus drive proposal submitted! Waiting for ${instName} institution approval.`);
             } catch (err) {
                 console.error("Failed to schedule campus drive:", err);
                 alert("Failed to schedule drive in Firestore: " + err.message);
@@ -2060,11 +2131,29 @@ function initAcademicPartners() {
             };
 
             try {
+                const compName = state.companyDna?.companyName || state.currentUser.displayName || "Industry Partner";
+                const partnerDrivePayload = {
+                    companyId: state.currentUser.uid,
+                    companyName: compName,
+                    instId: "",
+                    instName: name,
+                    institutionName: name,
+                    driveType: "Partnership Connection",
+                    driveRole: relationship,
+                    cohortSize: students,
+                    location: location,
+                    notes: `Institutional Strengths: ${(strengths.length > 0 ? strengths : ["Computer Science", "Software Systems"]).join(", ")}`,
+                    status: "Pending Institution Review",
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+
+                await addDoc(collection(db, "campus_drives"), partnerDrivePayload);
                 await addDoc(collection(db, `companies/${state.currentUser.uid}/academic_partners`), newPartner);
-                await logActivity("🤝", "New Academic Partner", `Connected ${name} (${location})`, "Partnership");
+                await logActivity("🤝", "College Partnership Request", `Sent connection proposal to ${name} (${location})`, "Partnership");
                 closePartnerModal();
                 partnerForm.reset();
-                showToast(`Connected ${name} (${location}) to Academic Partners!`);
+                showToast(`Partnership request submitted! Sent connection proposal to ${name} for Institution approval.`);
             } catch (err) {
                 console.error("Failed to connect partner:", err);
                 alert("Failed to save partner to Firestore: " + err.message);
@@ -2126,6 +2215,159 @@ function renderAcademicPartners() {
             <button class="btn-secondary-action" style="width:100%;justify-content:center;margin-top:10px;" onclick="window.partnerWithCollege('${inst.id}')">
                 Schedule Campus Drive / Workshop →
             </button>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function renderAcademicCollaborationsFeed() {
+    const feedGrid = document.getElementById("academicCollabsFeedGrid");
+    if (!feedGrid) return;
+    feedGrid.innerHTML = "";
+
+    const list = state.collaborationsList || [];
+    if (list.length === 0) {
+        feedGrid.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: 28px; text-align: center; color: var(--text-muted); font-size: 12px; background: var(--soft-grey); border-radius: 6px; border: 1px dashed var(--border);">
+                No active academician collaboration proposals found in Firestore. New collaborations created by academicians will appear here automatically.
+            </div>
+        `;
+        return;
+    }
+
+    list.forEach(collab => {
+        const card = document.createElement("div");
+        card.className = "partner-card";
+        const acadId = collab.academicianId || collab.ownerId || "";
+        const acadName = collab.academicianName || collab.partnerContact || "Academician Faculty";
+        const title = collab.title || "Academic Collaboration Proposal";
+        const type = collab.type || "Research";
+        const status = collab.status || "Proposed";
+        const org = collab.organization || collab.institution || "Academic Institution";
+        const desc = collab.description || "No description provided.";
+        const dates = (collab.startDate || collab.endDate) ? `${collab.startDate || ''} to ${collab.endDate || 'Ongoing'}` : 'Timeline flexible';
+
+        card.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div>
+                    <h3 style="font-size:15px;font-weight:800;color:var(--deep-black);margin-bottom:2px;">${title}</h3>
+                    <span style="font-size:11px;color:var(--strategic-gold);font-weight:700;">👨‍🏫 ${acadName} • ${org}</span>
+                </div>
+                <span class="badge badge-gold">${status}</span>
+            </div>
+
+            <div style="font-size:11px;color:var(--text-muted);margin:6px 0;">
+                <span class="badge badge-soft" style="margin-right:6px;">${type}</span>
+                <span>📅 ${dates}</span>
+            </div>
+
+            <p style="font-size:12px;color:var(--graphite);margin:8px 0;line-height:1.4;">${desc}</p>
+            ${collab.responsibilities ? `<div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;"><strong>Focus / Scope:</strong> ${collab.responsibilities}</div>` : ''}
+
+            <div style="display:flex;gap:8px;margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
+                <button class="btn-primary-action" style="flex:1;justify-content:center;font-size:11px;padding:8px 10px;" onclick="window.viewAcademicianPortfolio('${acadId}')">
+                    👤 View Academician Portfolio
+                </button>
+            </div>
+        `;
+        feedGrid.appendChild(card);
+    });
+}
+
+window.viewAcademicianPortfolio = async function(academicianId) {
+    if (!academicianId) {
+        alert("Academician ID is missing for this collaboration proposal.");
+        return;
+    }
+
+    try {
+        let isPublic = false;
+        const acadRef = doc(db, "academicians", academicianId);
+        const acadSnap = await getDoc(acadRef);
+
+        if (acadSnap.exists()) {
+            const data = acadSnap.data();
+            isPublic = 
+                data.settings?.portfolioVisible === true ||
+                data.portfolioSettings?.publicPortfolio === true ||
+                data.portfolioSettings?.portfolioVisible === true ||
+                data.portfolioVisible === true ||
+                data.isPublicPortfolio === true ||
+                data.isPortfolioPublic === true;
+        } else {
+            const userRef = doc(db, "users", academicianId);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+                const udata = userSnap.data();
+                isPublic = 
+                    udata.settings?.portfolioVisible === true ||
+                    udata.portfolioSettings?.publicPortfolio === true ||
+                    udata.portfolioVisible === true ||
+                    udata.isPublicPortfolio === true;
+            }
+        }
+
+        if (isPublic) {
+            window.open(`../academician/portfolio/portfolio.html?uid=${academicianId}&public=1`, '_blank');
+        } else {
+            alert("🔒 Portfolio Privacy Notice\n\nThis Academician has set their portfolio to Private.\nViewing is restricted unless the Academician enables public portfolio access in settings.");
+        }
+    } catch (err) {
+        console.error("Failed to check Academician portfolio privacy:", err);
+        alert("Could not load portfolio privacy status: " + err.message);
+    }
+};
+
+function renderIndustryCampusDrivesStatus() {
+    const grid = document.getElementById("industryCampusDrivesStatusGrid");
+    if (!grid) return;
+    grid.innerHTML = "";
+
+    const list = (state.campusDrivesList || []).filter(d => d.companyId === state.currentUser?.uid || !d.companyId);
+    if (list.length === 0) {
+        grid.innerHTML = `
+            <div style="grid-column: 1 / -1; padding: 24px; text-align: center; color: var(--text-muted); font-size: 12px; background: var(--soft-grey); border-radius: 6px; border: 1px dashed var(--border);">
+                No campus drives or college partnership proposals submitted yet. Use <strong>+ Connect New College</strong> or schedule a Campus Drive to initiate proposals for Institution review.
+            </div>
+        `;
+        return;
+    }
+
+    list.forEach(drive => {
+        const card = document.createElement("div");
+        card.className = "partner-card";
+        
+        let statusBadge = `<span class="badge" style="background:#fff3cd;color:#856404;border:1px solid #ffeeba;">⏳ Pending Institution Review</span>`;
+        if (drive.status === "Accepted") {
+            statusBadge = `<span class="badge badge-green" style="background:#d4edda;color:#155724;">✅ Accepted (Published to Campus)</span>`;
+        } else if (drive.status === "Rejected") {
+            statusBadge = `<span class="badge badge-red" style="background:#f8d7da;color:#721c24;">❌ Rejected by Institution</span>`;
+        }
+
+        const driveType = drive.driveType || "Campus Drive";
+        const instName = drive.institutionName || drive.instName || "Institution Partner";
+        const role = drive.driveRole || "Technical Role / Immersion";
+        const date = drive.driveDate || "Flexible Timeline";
+        const cohort = drive.cohortSize || 50;
+
+        card.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                <div>
+                    <h3 style="font-size:14px;font-weight:800;color:var(--deep-black);margin-bottom:2px;">${driveType}: ${role}</h3>
+                    <span style="font-size:11px;color:var(--text-muted);font-weight:600;">🏢 ${instName}</span>
+                </div>
+                ${statusBadge}
+            </div>
+
+            <div style="font-size:11px;color:var(--text-muted);margin:6px 0;">
+                <span>📅 Date/Timeline: <strong>${date}</strong></span> • <span>👥 Target Cohort: <strong>${cohort} Students</strong></span>
+            </div>
+
+            ${drive.notes ? `<p style="font-size:12px;color:var(--graphite);margin:8px 0;line-height:1.4;">${drive.notes}</p>` : ''}
+
+            <div style="font-size:10px;color:var(--text-muted);margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
+                ${drive.status === "Accepted" ? `✨ <strong>Status Note:</strong> Institution approved this proposal. Published live to Academicians and Student cohorts.` : (drive.status === "Rejected" ? `⚠️ <strong>Status Note:</strong> Institution reviewed and declined this proposal.` : `⏳ <strong>Status Note:</strong> Proposal submitted. Waiting for Institution Administrator to review.`)}
+            </div>
         `;
         grid.appendChild(card);
     });

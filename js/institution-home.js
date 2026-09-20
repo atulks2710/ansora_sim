@@ -23,6 +23,7 @@ import {
     query,
     where,
     orderBy,
+    onSnapshot,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
@@ -51,6 +52,7 @@ let studentsList = [];
 let liveProjects = [];
 let liveChallenges = [];
 let skillGapAnalysis = [];
+let campusDrives = [];
 
 // =====================================================
 // INIT & FIREBASE AUTH SYNC
@@ -144,10 +146,14 @@ async function syncAllFirestoreData() {
         projSnap.forEach(d => projs.push({ id: d.id, ...d.data() }));
         liveProjects = projs;
 
-        const chalSnap = await getDocs(collection(db, "challenges"));
-        const chals = [];
-        chalSnap.forEach(d => chals.push({ id: d.id, ...d.data() }));
-        liveChallenges = chals;
+        // 5. Campus Drives & Proposals (Real-Time Listener)
+        const drivesQuery = query(collection(db, "campus_drives"));
+        onSnapshot(drivesQuery, (snap) => {
+            campusDrives = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderCampusDrives();
+        }, (err) => {
+            console.warn("Campus drives realtime notice:", err);
+        });
 
     } catch (e) {
         console.warn("Notice: Syncing with default dataset", e);
@@ -325,6 +331,7 @@ function renderAll() {
     renderOpportunityCards();
     renderApplicationsTable();
     renderCohortTable();
+    renderCampusDrives();
 }
 
 function renderStats() {
@@ -564,6 +571,136 @@ function renderApplicationsTable() {
         `;
     }).join("");
 }
+
+function renderCampusDrives() {
+    const tableBody = document.getElementById("campusDrivesTableBody");
+    const dashContainer = document.getElementById("dashboardCampusDrivesContainer");
+    const countEl = document.getElementById("navDriveCount");
+
+    if (countEl) countEl.textContent = campusDrives.length;
+
+    if (tableBody) {
+        if (campusDrives.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:24px; color:var(--grey-500)">No incoming campus drives or partnership requests yet. Proposals submitted by Industry partners will appear here automatically.</td></tr>`;
+        } else {
+            tableBody.innerHTML = campusDrives.map(drive => {
+                const compName = drive.companyName || "Industry Partner";
+                const type = drive.driveType || "Campus Drive";
+                const role = drive.driveRole || "Technical Role";
+                const date = drive.driveDate || "Flexible Timeline";
+                const cohort = drive.cohortSize || 50;
+
+                let statusBadge = `<span class="badge badge-gold">⏳ Pending Review</span>`;
+                if (drive.status === "Accepted") {
+                    statusBadge = `<span class="badge badge-green">✅ Accepted & Published</span>`;
+                } else if (drive.status === "Rejected") {
+                    statusBadge = `<span class="badge badge-red">❌ Rejected</span>`;
+                }
+
+                const isPending = !drive.status || drive.status === "Pending Institution Review" || drive.status === "Pending Review" || drive.status === "Proposed";
+
+                return `
+                    <tr style="border-bottom:1px solid var(--grey-100);">
+                        <td style="padding:12px 10px;">
+                            <div style="font-weight:700; color:var(--black);">${compName}</div>
+                            <div style="font-size:11px; color:var(--grey-500);">${drive.institutionName || 'Target College'}</div>
+                        </td>
+                        <td style="padding:12px 10px;"><span class="badge badge-purple">${type}</span></td>
+                        <td style="padding:12px 10px; color:var(--grey-600); font-weight:600;">${role}</td>
+                        <td style="padding:12px 10px; color:var(--black); font-size:12px;">📅 ${date} • 👥 ${cohort} Students</td>
+                        <td style="padding:12px 10px;">${statusBadge}</td>
+                        <td style="padding:12px 10px; text-align:right;">
+                            ${isPending ? `
+                                <button class="btn btn-gold btn-sm" style="margin-right:6px;" onclick="window.acceptCampusDrive('${drive.id}')">✅ Accept & Publish</button>
+                                <button class="btn btn-outline btn-sm" style="color:var(--red); border-color:var(--red);" onclick="window.rejectCampusDrive('${drive.id}')">❌ Reject</button>
+                            ` : `
+                                <span style="font-size:11px; color:var(--grey-500); font-style:italic;">Decision Recorded</span>
+                            `}
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+    }
+
+    if (dashContainer) {
+        const pendingCount = campusDrives.filter(d => !d.status || d.status.includes("Pending") || d.status === "Proposed").length;
+        
+        dashContainer.innerHTML = `
+            <div style="background:var(--pure-white); border:1px solid var(--border); border-radius:12px; padding:20px; box-shadow:var(--shadow-sm);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                    <div>
+                        <h3 style="font-size:16px; font-weight:800; color:var(--deep-black); margin:0;">🏢 Industry Campus Drives & Connection Proposals</h3>
+                        <p style="font-size:12px; color:var(--grey-600); margin:4px 0 0 0;">${pendingCount} drive proposal(s) currently awaiting institutional review.</p>
+                    </div>
+                    <span class="badge ${pendingCount > 0 ? 'badge-gold' : 'badge-green'}">${pendingCount} Pending</span>
+                </div>
+
+                ${campusDrives.length === 0 ? `
+                    <div style="padding:16px; text-align:center; font-size:12px; color:var(--grey-500); background:var(--grey-100); border-radius:8px;">
+                        No pending drive proposals from Industry at the moment.
+                    </div>
+                ` : `
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        ${campusDrives.slice(0, 3).map(drive => {
+                            const isPending = !drive.status || drive.status.includes("Pending") || drive.status === "Proposed";
+                            return `
+                                <div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border:1px solid var(--border); border-radius:8px; background:var(--grey-50);">
+                                    <div>
+                                        <div style="font-size:13px; font-weight:700; color:var(--black);">${drive.companyName || 'Industry Partner'} — <span style="color:var(--gold);">${drive.driveType || 'Drive'}</span></div>
+                                        <div style="font-size:11px; color:var(--grey-600); margin-top:2px;">Role: ${drive.driveRole || 'Technical Role'} • Date: ${drive.driveDate || 'Flexible'} • Cohort: ${drive.cohortSize || 50} students</div>
+                                    </div>
+                                    <div style="display:flex; gap:6px; align-items:center;">
+                                        ${isPending ? `
+                                            <button class="btn btn-gold btn-sm" onclick="window.acceptCampusDrive('${drive.id}')">✅ Accept & Publish</button>
+                                            <button class="btn btn-outline btn-sm" style="color:var(--red);" onclick="window.rejectCampusDrive('${drive.id}')">❌ Reject</button>
+                                        ` : `
+                                            <span class="badge ${drive.status === 'Accepted' ? 'badge-green' : 'badge-red'}">${drive.status}</span>
+                                        `}
+                                    </div>
+                                </div>
+                            `;
+                        }).join("")}
+                    </div>
+                `}
+            </div>
+        `;
+    }
+}
+
+window.acceptCampusDrive = async function(driveId) {
+    if (!driveId) return;
+    try {
+        const driveRef = doc(db, "campus_drives", driveId);
+        await updateDoc(driveRef, {
+            status: "Accepted",
+            acceptedAt: serverTimestamp(),
+            acceptedBy: currentProfile.name || "Institution Admin",
+            updatedAt: serverTimestamp()
+        });
+        alert("✅ Campus Drive Proposal Accepted!\n\nThis drive is now published live to Academicians and Student cohorts across the campus network.");
+    } catch (e) {
+        console.error("Error accepting campus drive:", e);
+        alert("Failed to accept proposal: " + e.message);
+    }
+};
+
+window.rejectCampusDrive = async function(driveId) {
+    if (!driveId) return;
+    try {
+        const driveRef = doc(db, "campus_drives", driveId);
+        await updateDoc(driveRef, {
+            status: "Rejected",
+            rejectedAt: serverTimestamp(),
+            rejectedBy: currentProfile.name || "Institution Admin",
+            updatedAt: serverTimestamp()
+        });
+        alert("❌ Campus Drive Proposal Rejected.\n\nThe proposal status has been updated to Rejected.");
+    } catch (e) {
+        console.error("Error rejecting campus drive:", e);
+        alert("Failed to reject proposal: " + e.message);
+    }
+};
 
 // =====================================================
 // INTERACTIVE HELPERS

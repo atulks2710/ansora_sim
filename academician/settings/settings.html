@@ -5821,6 +5821,21 @@
             settings
         ) {
 
+            const isPublic = !!settings.portfolioVisible;
+            const payload = {
+                settings: settings,
+                portfolioSettings: {
+                    publicPortfolio: isPublic,
+                    portfolioVisible: isPublic,
+                    showInstitution: !!settings.institutionVisible,
+                    showContact: !!settings.contactVisible,
+                    showCredentials: !!settings.credentialsVisible
+                },
+                portfolioVisible: isPublic,
+                isPublicPortfolio: isPublic,
+                updatedAt: serverTimestamp()
+            };
+
             const reference =
                 doc(
                     db,
@@ -5828,60 +5843,21 @@
                     currentUser.uid
                 );
 
+            await setDoc(
+                reference,
+                payload,
+                { merge: true }
+            );
 
-            const snapshot =
-                await getDoc(
-                    reference
-                );
-
-
-            if (
-                snapshot.exists()
-            ) {
-
-                await updateDoc(
-
-                    reference,
-
-                    {
-
-                        settings:
-                            settings,
-
-                        updatedAt:
-                            serverTimestamp()
-
-                    }
-
-                );
-
-            }
-
-            else {
-
-                await setDoc(
-
-                    reference,
-
-                    {
-
-                        settings:
-                            settings,
-
-                        updatedAt:
-                            serverTimestamp()
-
-                    },
-
-                    {
-
-                        merge:
-                            true
-
-                    }
-
-                );
-
+            try {
+                const userRef = doc(db, "users", currentUser.uid);
+                await setDoc(userRef, {
+                    settings: settings,
+                    portfolioVisible: isPublic,
+                    isPublicPortfolio: isPublic
+                }, { merge: true });
+            } catch(e) {
+                console.warn("Could not mirror settings to users collection:", e);
             }
 
         }

@@ -5232,9 +5232,17 @@
                 };
 
 
+            const isPublicPortfolio = 
+                portfolioSettings.publicPortfolio === true ||
+                portfolioSettings.portfolioVisible === true ||
+                academicianData.settings?.portfolioVisible === true ||
+                academicianData.settings?.publicPortfolio === true ||
+                academicianData.portfolioVisible === true ||
+                academicianData.isPublicPortfolio === true;
+
             if (
                 publicMode &&
-                !portfolioSettings.publicPortfolio
+                !isPublicPortfolio
             ) {
 
                 showPublicError(

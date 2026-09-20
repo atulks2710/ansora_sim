@@ -43,10 +43,23 @@ async function getById(path) {
 }
 
 async function getCollection(name, filters = []) {
-  const constraints = filters.map(([field, op, value]) => where(field, op, value));
-  const q = query(collection(db, name), ...constraints);
-  const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  try {
+    const constraints = filters.map(([field, op, value]) => where(field, op, value));
+    const q = query(collection(db, name), ...constraints);
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    }
+  } catch (err) {
+    console.warn(`Filtered query on collection '${name}' failed, falling back:`, err);
+  }
+  try {
+    const snap = await getDocs(collection(db, name));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err2) {
+    console.error(`Fetch collection '${name}' error:`, err2);
+    return [];
+  }
 }
 
 async function addInstitutionalRecord(uid, collectionName, data) {

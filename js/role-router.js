@@ -18,7 +18,9 @@ const rolePages = {
 
     industry: "industry/index.html",
 
-    institution: "institution/institution-home.html"
+    institution: "institutional/index.html",
+
+    institutional: "institutional/index.html"
 
 };
 

@@ -4,6 +4,7 @@ import {
     getDocs, 
     addDoc, 
     doc, 
+    getDoc,
     setDoc, 
     updateDoc, 
     increment, 
@@ -16,6 +17,7 @@ import { requireAuth } from './auth-guard.js';
 let currentUser = null;
 let currentProfile = null;
 let existingApplications = new Map(); // oppId -> application doc
+let allItems = []; // Contains opportunities + collaborations
 
 document.addEventListener('DOMContentLoaded', () => {
     requireAuth(async (user, profileData) => {
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentProfile = profileData;
         await loadExistingApplications();
         await initOpportunities();
+        setupFilterTabs();
     });
 });
 
@@ -44,9 +47,6 @@ async function loadExistingApplications() {
 
 /**
  * Standard Explainable Match Score Algorithm
- * @param {Object} studentSkills - Student's skill map (e.g. { "React": 88, "Node.js": 80 })
- * @param {Array} requiredSkills - List of required skills from opportunity
- * @param {number} readiness - Student overall readiness index (0-100)
  */
 function calculateExplainableMatch(studentSkills = {}, requiredSkills = [], readiness = 75) {
     if (!requiredSkills || requiredSkills.length === 0) {
@@ -75,11 +75,6 @@ function calculateExplainableMatch(studentSkills = {}, requiredSkills = [], read
     const techRatio = matched.length / requiredSkills.length;
     const avgScore = matched.length > 0 ? (totalScoreOfMatched / matched.length) : 50;
 
-    // Explainable Weights:
-    // Technical Match: 40%
-    // Proficiency Level: 25%
-    // Role & Project Alignment: 20%
-    // Student Readiness Factor: 15%
     const techComponent = techRatio * 40;
     const profComponent = (avgScore / 100) * 25;
     const roleComponent = (matched.length > 0 ? 18 : 10);
@@ -105,10 +100,11 @@ async function initOpportunities() {
     const oppGrid = document.getElementById('opp-grid');
     if (!oppGrid) return;
     
-    oppGrid.innerHTML = '<p class="text-secondary p-4"><i class="fa-solid fa-spinner fa-spin text-accent"></i> Loading live industry opportunities from Firestore...</p>';
+    oppGrid.innerHTML = '<p class="text-secondary p-4"><i class="fa-solid fa-spinner fa-spin text-accent"></i> Loading live opportunities and collaborations from Firestore...</p>';
 
     let opportunities = [];
 
+    // 1. Fetch industry opportunities
     try {
         const querySnapshot = await getDocs(collection(db, "opportunities"));
         querySnapshot.forEach((docSnap) => {
@@ -116,6 +112,8 @@ async function initOpportunities() {
             opportunities.push({ 
                 id: docSnap.id, 
                 ...data,
+                isCollaboration: false,
+                companyId: data.companyId || data.ownerId || data.institutionId || '',
                 role: data.title || data.role || "Software Engineering Role",
                 company: data.companyName || data.company || "Industry Partner",
                 location: data.location || "Hybrid / Remote",
@@ -130,75 +128,203 @@ async function initOpportunities() {
         console.error("Error fetching opportunities from Firebase:", e);
     }
 
-    // Only real Firestore opportunities are shown. Demo opportunities are disabled
-    // so student applications always reference a real industry opportunity.
+    // 2. Fetch academician collaborations
+    let collaborations = [];
+    try {
+        const collabSnap = await getDocs(collection(db, "collaborations"));
+        collabSnap.forEach((docSnap) => {
+            const cdata = docSnap.data();
+            collaborations.push({
+                id: docSnap.id,
+                ...cdata,
+                isCollaboration: true,
+                role: cdata.title || "Academic Collaboration Proposal",
+                company: cdata.organization || cdata.institution || "Academic Institution",
+                location: "Academic R&D",
+                duration: (cdata.startDate || cdata.endDate) ? `${cdata.startDate || ''} to ${cdata.endDate || 'Ongoing'}` : "Flexible Timeline",
+                stipend: "Academic Grant / R&D Project",
+                type: "Academic Collaboration",
+                deadline: "Open for Collaboration",
+                academicianId: cdata.academicianId || cdata.ownerId || "",
+                academicianName: cdata.academicianName || cdata.partnerContact || "Academician Faculty",
+                description: cdata.description || "No description provided.",
+                responsibilities: cdata.responsibilities || ""
+            });
+        });
+    } catch (e) {
+        console.warn("Could not fetch academician collaborations for student view:", e);
+    }
+
+    // 3. Fetch approved campus recruitment drives and workshops
+    let approvedDrives = [];
+    try {
+        const drivesSnap = await getDocs(collection(db, "campus_drives"));
+        drivesSnap.forEach((docSnap) => {
+            const ddata = docSnap.data();
+            if (ddata.status === "Accepted") {
+                approvedDrives.push({
+                    id: docSnap.id,
+                    ...ddata,
+                    isCampusDrive: true,
+                    role: `${ddata.driveType || "Campus Drive"}: ${ddata.driveRole || "Technical Immersion"}`,
+                    company: ddata.companyName || "Industry Partner",
+                    location: ddata.location || "Campus Venue / Hybrid",
+                    duration: ddata.driveDate ? `Scheduled Date: ${ddata.driveDate}` : "Flexible Timeline",
+                    stipend: `Target Cohort: ${ddata.cohortSize || 50} Students`,
+                    type: "Campus Drive / Workshop",
+                    deadline: "Campus Drive Approved by Institution",
+                    description: `Approved by Institution (${ddata.institutionName || 'IIIT'}). Notes: ${ddata.notes || 'Participation open to eligible students.'}`,
+                    skills: ["Campus Placement", "Technical Workshop"]
+                });
+            }
+        });
+    } catch (e) {
+        console.warn("Could not fetch campus drives for student view:", e);
+    }
+
+    allItems = [...opportunities, ...collaborations, ...approvedDrives];
+    renderOpportunitiesGrid(allItems);
+}
+
+function setupFilterTabs() {
+    const filterBtns = document.querySelectorAll('.opp-filters .filter-btn');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            
+            const filterType = e.currentTarget.getAttribute('data-type') || 'all';
+            filterOpportunities(filterType);
+        });
+    });
+}
+
+function filterOpportunities(filterType) {
+    if (filterType === 'all') {
+        renderOpportunitiesGrid(allItems);
+    } else if (filterType === 'Academic Collaboration') {
+        const filtered = allItems.filter(item => item.isCollaboration || item.type === 'Academic Collaboration');
+        renderOpportunitiesGrid(filtered);
+    } else if (filterType === 'Campus Drive') {
+        const filtered = allItems.filter(item => item.isCampusDrive || (item.type || '').toLowerCase().includes('campus drive'));
+        renderOpportunitiesGrid(filtered);
+    } else {
+        const filtered = allItems.filter(item => !item.isCollaboration && !item.isCampusDrive && (item.type || '').toLowerCase().includes(filterType.toLowerCase()));
+        renderOpportunitiesGrid(filtered);
+    }
+}
+
+function renderOpportunitiesGrid(items) {
+    const oppGrid = document.getElementById('opp-grid');
+    if (!oppGrid) return;
 
     oppGrid.innerHTML = '';
-    
-    opportunities.forEach(opp => {
-        const studentSkills = currentProfile?.skills || {};
-        const matchResult = calculateExplainableMatch(studentSkills, opp.skills, currentProfile?.readiness || 80);
 
+    if (!items || items.length === 0) {
+        oppGrid.innerHTML = '<p class="text-secondary p-4" style="grid-column: 1/-1; text-align: center;">No opportunities found for the selected filter.</p>';
+        return;
+    }
+
+    items.forEach(opp => {
         const card = document.createElement('div');
         card.className = 'opp-card';
-        
-        const haveHtml = matchResult.matchedSkills.map(s => `<span class="skill-tag have"><i class="fa-solid fa-check"></i> ${s}</span>`).join('');
-        const missHtml = matchResult.skillGaps.map(s => `<span class="skill-tag miss"><i class="fa-solid fa-triangle-exclamation"></i> ${s}</span>`).join('');
-        
-        let deadlineHtml = '';
-        if (opp.deadlineStatus === 'urgent') {
-            deadlineHtml = `<div class="deadline-alert urgent"><i class="fa-solid fa-circle-exclamation"></i> 🔴 Priority Hiring - ${opp.deadline} left</div>`;
-        } else {
-            deadlineHtml = `<div class="deadline-alert soon"><i class="fa-solid fa-clock"></i> 🟠 Application Window: ${opp.deadline}</div>`;
-        }
 
-        const isAlreadyApplied = existingApplications.has(opp.id);
-
-        card.innerHTML = `
-            <div class="match-badge">${matchResult.matchScore}% MATCH</div>
-            <div class="opp-header">
-                <h2 class="opp-role">${opp.role}</h2>
-                <div class="opp-company">${opp.company}</div>
-            </div>
-            
-            ${deadlineHtml}
-            
-            <div class="opp-meta">
-                <div><i class="fa-solid fa-location-dot"></i> ${opp.location}</div>
-                <div><i class="fa-regular fa-clock"></i> ${opp.duration}</div>
-                <div><i class="fa-solid fa-money-bill"></i> ${opp.stipend}</div>
-                <div><i class="fa-solid fa-layer-group"></i> ${opp.type}</div>
-            </div>
-            
-            <div class="opp-match-reason">
-                <div class="reason-title">SkillDNA Match Analysis</div>
-                <p style="font-size: 0.85rem; margin-bottom: 0.8rem; color: var(--text-primary);">${matchResult.reason}</p>
-                <div class="skills-list">
-                    ${haveHtml}
-                    ${missHtml}
+        if (opp.isCollaboration) {
+            // Render Academician Collaboration Card
+            card.innerHTML = `
+                <div class="match-badge" style="background: linear-gradient(135deg, #d4af37, #aa7c11); color: #000; font-weight:800;">R&D COLLAB</div>
+                <div class="opp-header">
+                    <h2 class="opp-role">${opp.role}</h2>
+                    <div class="opp-company" style="color: var(--accent); font-weight: 700;">👨‍🏫 ${opp.academicianName} • ${opp.company}</div>
                 </div>
-            </div>
+                
+                <div class="deadline-alert soon"><i class="fa-solid fa-graduation-cap"></i> Academician Collaboration Request</div>
+                
+                <div class="opp-meta">
+                    <div><i class="fa-solid fa-location-dot"></i> ${opp.location}</div>
+                    <div><i class="fa-regular fa-clock"></i> ${opp.duration}</div>
+                    <div><i class="fa-solid fa-layer-group"></i> ${opp.type}</div>
+                </div>
+                
+                <div class="opp-match-reason">
+                    <div class="reason-title">Collaboration Overview & Scope</div>
+                    <p style="font-size: 0.85rem; margin-bottom: 0.6rem; color: var(--text-primary); line-height:1.4;">${opp.description}</p>
+                    ${opp.responsibilities ? `<p style="font-size: 0.8rem; color: var(--text-secondary);"><strong>Focus / Responsibilities:</strong> ${opp.responsibilities}</p>` : ''}
+                </div>
+                
+                <div class="opp-actions" style="flex-direction:column; gap:8px;">
+                    <button class="btn-action btn-full" style="justify-content:center; gap:8px;" onclick="window.viewAcademicianPortfolio('${opp.academicianId}')">
+                        <i class="fa-solid fa-id-badge"></i> View Academician Portfolio
+                    </button>
+                    <button class="btn-primary-small btn-full" style="justify-content:center;" onclick="alert('Collaboration Proposal: ${opp.role}\\nFaculty: ${opp.academicianName}\\nScope: ${opp.responsibilities || opp.description}')">
+                        Express Interest
+                    </button>
+                </div>
+            `;
+        } else {
+            // Render Standard Industry Opportunity Card
+            const studentSkills = currentProfile?.skills || {};
+            const matchResult = calculateExplainableMatch(studentSkills, opp.skills, currentProfile?.readiness || 80);
             
-            <div class="opp-actions">
-                <button class="btn-action btn-full" onclick="alert('${opp.role} at ${opp.company}\\n\\nRequired Competencies: ${opp.skills.join(', ')}\\nLocation: ${opp.location}\\nCompensation: ${opp.stipend}')">View Details</button>
-                <button class="btn-full ${isAlreadyApplied ? 'btn-done' : 'btn-primary-small btn-apply'}" 
-                    data-opp-id="${opp.id}" 
-                    data-opp-title="${opp.role}" 
-                    data-comp-id="${opp.companyId || ''}" 
-                    data-comp-name="${opp.company}"
-                    data-match="${matchResult.matchScore}"
-                    data-matched="${encodeURIComponent(JSON.stringify(matchResult.matchedSkills))}"
-                    data-gaps="${encodeURIComponent(JSON.stringify(matchResult.skillGaps))}"
-                    ${isAlreadyApplied ? 'disabled' : ''}>
-                    ${isAlreadyApplied ? '✓ Applied' : 'Apply Now'}
-                </button>
-            </div>
-        `;
+            const haveHtml = matchResult.matchedSkills.map(s => `<span class="skill-tag have"><i class="fa-solid fa-check"></i> ${s}</span>`).join('');
+            const missHtml = matchResult.skillGaps.map(s => `<span class="skill-tag miss"><i class="fa-solid fa-triangle-exclamation"></i> ${s}</span>`).join('');
+            
+            let deadlineHtml = '';
+            if (opp.deadlineStatus === 'urgent') {
+                deadlineHtml = `<div class="deadline-alert urgent"><i class="fa-solid fa-circle-exclamation"></i> 🔴 Priority Hiring - ${opp.deadline} left</div>`;
+            } else {
+                deadlineHtml = `<div class="deadline-alert soon"><i class="fa-solid fa-clock"></i> 🟠 Application Window: ${opp.deadline}</div>`;
+            }
+
+            const isAlreadyApplied = existingApplications.has(opp.id);
+            const resolvedCompanyId = opp.companyId || opp.ownerId || opp.institutionId || 'system';
+
+            card.innerHTML = `
+                <div class="match-badge">${matchResult.matchScore}% MATCH</div>
+                <div class="opp-header">
+                    <h2 class="opp-role">${opp.role}</h2>
+                    <div class="opp-company">${opp.company}</div>
+                </div>
+                
+                ${deadlineHtml}
+                
+                <div class="opp-meta">
+                    <div><i class="fa-solid fa-location-dot"></i> ${opp.location}</div>
+                    <div><i class="fa-regular fa-clock"></i> ${opp.duration}</div>
+                    <div><i class="fa-solid fa-money-bill"></i> ${opp.stipend}</div>
+                    <div><i class="fa-solid fa-layer-group"></i> ${opp.type}</div>
+                </div>
+                
+                <div class="opp-match-reason">
+                    <div class="reason-title">SkillDNA Match Analysis</div>
+                    <p style="font-size: 0.85rem; margin-bottom: 0.8rem; color: var(--text-primary);">${matchResult.reason}</p>
+                    <div class="skills-list">
+                        ${haveHtml}
+                        ${missHtml}
+                    </div>
+                </div>
+                
+                <div class="opp-actions">
+                    <button class="btn-action btn-full" onclick="alert('${opp.role} at ${opp.company}\\n\\nRequired Competencies: ${opp.skills.join(', ')}\\nLocation: ${opp.location}\\nCompensation: ${opp.stipend}')">View Details</button>
+                    <button class="btn-full ${isAlreadyApplied ? 'btn-done' : 'btn-primary-small btn-apply'}" 
+                        data-opp-id="${opp.id}" 
+                        data-opp-title="${opp.role}" 
+                        data-comp-id="${resolvedCompanyId}" 
+                        data-comp-name="${opp.company}"
+                        data-match="${matchResult.matchScore}"
+                        data-matched="${encodeURIComponent(JSON.stringify(matchResult.matchedSkills))}"
+                        data-gaps="${encodeURIComponent(JSON.stringify(matchResult.skillGaps))}"
+                        ${isAlreadyApplied ? 'disabled' : ''}>
+                        ${isAlreadyApplied ? '✓ Applied' : 'Apply Now'}
+                    </button>
+                </div>
+            `;
+        }
         
         oppGrid.appendChild(card);
     });
 
-    // Attach click listeners to Apply buttons
+    // Attach click listeners to Apply buttons for industry opportunities
     document.querySelectorAll('.btn-apply').forEach(btn => {
         btn.addEventListener('click', async (e) => {
             const btnEl = e.currentTarget;
@@ -206,14 +332,9 @@ async function initOpportunities() {
 
             const oppId = btnEl.getAttribute('data-opp-id');
             const oppTitle = btnEl.getAttribute('data-opp-title');
-            const compId = btnEl.getAttribute('data-comp-id');
+            const compId = btnEl.getAttribute('data-comp-id') || 'system';
             const compName = btnEl.getAttribute('data-comp-name');
 
-            if (!compId) {
-                alert('This opportunity is missing its industry owner. It cannot be applied to yet.');
-                btnEl.disabled = false;
-                return;
-            }
             const matchScore = parseInt(btnEl.getAttribute('data-match'), 10) || 85;
             const matchedSkills = JSON.parse(decodeURIComponent(btnEl.getAttribute('data-matched') || '[]'));
             const skillGaps = JSON.parse(decodeURIComponent(btnEl.getAttribute('data-gaps') || '[]'));
@@ -225,7 +346,6 @@ async function initOpportunities() {
                 const studentName = currentProfile?.name || currentProfile?.fullName || currentUser.displayName || "Student Candidate";
                 const studentEmail = currentUser.email || currentProfile?.email || "student@skillbridge.edu";
 
-                // 1. Create canonical application record in Firestore "applications" collection
                 const applicationData = {
                     studentId: currentUser.uid,
                     studentName: studentName,
@@ -236,6 +356,8 @@ async function initOpportunities() {
                     opportunityId: oppId,
                     opportunityTitle: oppTitle,
                     companyId: compId,
+                    ownerId: compId,
+                    institutionId: compId,
                     companyName: compName,
                     matchScore: matchScore,
                     matchedSkills: matchedSkills,
@@ -249,7 +371,6 @@ async function initOpportunities() {
                 const appDocRef = await addDoc(collection(db, "applications"), applicationData);
                 const appId = appDocRef.id;
 
-                // 2. Also save to student's subcollection for instant local lookup
                 await setDoc(doc(db, "students", currentUser.uid, "applications", appId), {
                     id: appId,
                     oppId: oppId,
@@ -261,14 +382,13 @@ async function initOpportunities() {
                     appliedAt: serverTimestamp()
                 });
 
-                // 3. Increment applicant count on opportunity if doc exists in Firestore
                 try {
                     const oppDocRef = doc(db, "opportunities", oppId);
                     await updateDoc(oppDocRef, {
                         applicantsCount: increment(1)
                     });
                 } catch (err) {
-                    // Opportunity might be a demo item, ignore
+                    // Ignore demo opportunity
                 }
 
                 existingApplications.set(oppId, { id: appId, ...applicationData });
@@ -288,3 +408,47 @@ async function initOpportunities() {
         });
     });
 }
+
+window.viewAcademicianPortfolio = async function(academicianId) {
+    if (!academicianId) {
+        alert("Academician profile ID is missing for this collaboration proposal.");
+        return;
+    }
+
+    try {
+        let isPublic = false;
+        const acadRef = doc(db, "academicians", academicianId);
+        const acadSnap = await getDoc(acadRef);
+
+        if (acadSnap.exists()) {
+            const data = acadSnap.data();
+            isPublic = 
+                data.settings?.portfolioVisible === true ||
+                data.portfolioSettings?.publicPortfolio === true ||
+                data.portfolioSettings?.portfolioVisible === true ||
+                data.portfolioVisible === true ||
+                data.isPublicPortfolio === true ||
+                data.isPortfolioPublic === true;
+        } else {
+            const userRef = doc(db, "users", academicianId);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists()) {
+                const udata = userSnap.data();
+                isPublic = 
+                    udata.settings?.portfolioVisible === true ||
+                    udata.portfolioSettings?.publicPortfolio === true ||
+                    udata.portfolioVisible === true ||
+                    udata.isPublicPortfolio === true;
+            }
+        }
+
+        if (isPublic) {
+            window.open(`../academician/portfolio/portfolio.html?uid=${academicianId}&public=1`, '_blank');
+        } else {
+            alert("🔒 Portfolio Privacy Notice\n\nThis Academician has set their portfolio to Private.\nViewing is restricted unless the Academician enables public portfolio access in settings.");
+        }
+    } catch (err) {
+        console.error("Failed to check Academician portfolio privacy status:", err);
+        alert("Could not check portfolio privacy status: " + err.message);
+    }
+};

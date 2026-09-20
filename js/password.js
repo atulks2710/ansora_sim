@@ -417,13 +417,14 @@ function redirectByRole(role) {
 
 
         case "institution":
+        case "institutional":
 
             console.log(
                 "Redirecting to institution..."
             );
 
             window.location.href =
-                "institution/institution-home.html";
+                "institutional/index.html";
 
             break;
 
